@@ -5,12 +5,12 @@ It manages all **UI components, pages, client-side logic, and integration with t
 
 > **Note:** This repository does **not** contain backend business logic, architecture documentation, or organizational guidelines.
 
-### Documentation
+## Documentation
 
 For full documentation of the application architecture, frontend design patterns, and system structure, see the **OhMyUniversity! Docs** repository:
 [Architecture Documentation](https://github.com/ohmyopensource/ohmyuniversity-docs/tree/main/docs/architecture)
 
-### Guidelines
+## Guidelines
 
 For any additional information, contribution rules, code of conduct, and organizational standards, refer to the **OhMyOpenSource! Guidelines** repository:
 [Guidelines](https://github.com/ohmyopensource/ohmyopensource-guidelines)
