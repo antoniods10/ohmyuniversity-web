@@ -1,0 +1,111 @@
+<app-business-hero
+  title="Come funziona la visibilità"
+  subtitle="OhMyUniversity non è un banner o un annuncio. Le tue opportunità vengono mostrate agli studenti giusti, nel momento giusto, in un contesto in cui sono già attivamente concentrati sulla propria carriera." />
+
+<!-- Come funziona step by step -->
+<section class="bg-white px-4 pb-16 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-3xl">
+    <h2 class="mb-10 text-center text-xl font-bold text-gray-900">Il percorso di un'opportunità</h2>
+    <div class="space-y-6">
+      @for (step of steps; track step.number) {
+        <div class="flex items-start gap-5">
+          <div
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">
+            {{ step.number }}
+          </div>
+          <div class="rounded-xl border border-gray-100 bg-white p-5 shadow-sm flex-1">
+            <p class="font-semibold text-gray-900">{{ step.title }}</p>
+            <p class="mt-1 text-sm leading-relaxed text-gray-500">{{ step.description }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Targeting -->
+<section class="border-t border-gray-100 bg-gray-50 px-4 py-16 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-4xl">
+    <h2 class="text-center text-xl font-bold text-gray-900">Opzioni di targeting disponibili</h2>
+    <p class="mx-auto mt-3 max-w-xl text-center text-sm text-gray-500">
+      Più il targeting è preciso, più alta è la qualità delle candidature che ricevi.
+    </p>
+    <div class="mt-8 overflow-hidden rounded-xl border border-gray-200 bg-white">
+      <table class="w-full text-sm">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500">Criterio</th>
+            <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500">Cosa fa</th>
+            <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500">Disponibile in</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          @for (opt of targetingOptions; track opt.label) {
+            <tr>
+              <td class="px-5 py-3 font-medium text-gray-800">{{ opt.label }}</td>
+              <td class="px-5 py-3 text-gray-500">{{ opt.description }}</td>
+              <td class="px-5 py-3">
+                <span
+                  class="rounded-full px-2.5 py-0.5 text-xs font-medium"
+                  [class]="planColor[opt.available]">
+                  {{ planLabel[opt.available] }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Analytics preview -->
+<section class="bg-white px-4 py-16 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-4xl">
+    <h2 class="text-center text-xl font-bold text-gray-900">Misuri tutto, in tempo reale</h2>
+    <p class="mx-auto mt-3 max-w-xl text-center text-sm text-gray-500">
+      La dashboard analytics ti mostra cosa funziona e cosa ottimizzare.
+    </p>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      @for (
+        metric of [
+          {
+            label: 'Visualizzazioni',
+            desc: 'Quanti studenti hanno visto la tua opportunità',
+            icon: '👁️',
+          },
+          {
+            label: 'Click sul profilo',
+            desc: 'Quanti hanno cliccato per saperne di più',
+            icon: '🖱️',
+          },
+          {
+            label: 'Candidature ricevute',
+            desc: 'Quanti hanno inviato la loro candidatura',
+            icon: '📬',
+          },
+          {
+            label: 'Tasso di conversione',
+            desc: 'Rapporto tra visualizzazioni e candidature',
+            icon: '📈',
+          },
+        ];
+        track metric.label
+      ) {
+        <div class="rounded-xl border border-gray-100 bg-gray-50 p-5 text-center">
+          <span class="text-2xl">{{ metric.icon }}</span>
+          <p class="mt-3 font-semibold text-gray-900">{{ metric.label }}</p>
+          <p class="mt-1 text-xs leading-relaxed text-gray-500">{{ metric.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<app-business-cta
+  title="Pronto a raggiungere gli studenti giusti?"
+  subtitle="Inizia con 14 giorni di prova gratuita. Pubblica la tua prima opportunità in meno di 5 minuti."
+  primaryLabel="Crea il tuo profilo"
+  primaryLink="/business/registrazione"
+  secondaryLabel="Vedi i piani"
+  secondaryLink="/business/prezzi" />

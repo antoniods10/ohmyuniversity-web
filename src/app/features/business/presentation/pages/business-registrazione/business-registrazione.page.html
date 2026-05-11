@@ -1,0 +1,112 @@
+<app-business-hero
+  title="Come creare un profilo organizzazione"
+  subtitle="Il processo di onboarding è semplice e assistito dal nostro team. Dalla prima email all'account attivo in meno di una settimana." />
+
+<!-- Steps -->
+<section class="bg-white px-4 pb-16 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-3xl">
+    <h2 class="mb-10 text-center text-xl font-bold text-gray-900">Il processo, passo dopo passo</h2>
+    <div class="space-y-4">
+      @for (step of steps; track step.number) {
+        <div class="flex items-start gap-5">
+          <div class="flex flex-col items-center">
+            <div
+              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">
+              {{ step.number }}
+            </div>
+            @if (step.number < steps.length) {
+              <div class="mt-1 h-full min-h-8 w-px bg-gray-200"></div>
+            }
+          </div>
+          <div class="flex-1 rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
+            <div class="flex items-start justify-between gap-4">
+              <p class="font-semibold text-gray-900">{{ step.title }}</p>
+              <span class="shrink-0 rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-500">
+                ~{{ step.duration }}
+              </span>
+            </div>
+            <p class="mt-1 text-sm leading-relaxed text-gray-500">{{ step.description }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Cosa serve -->
+<section class="border-t border-gray-100 bg-gray-50 px-4 py-16 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-3xl">
+    <h2 class="text-center text-xl font-bold text-gray-900">Cosa ti serve per iniziare</h2>
+    <div class="mt-8 grid gap-6 sm:grid-cols-2">
+      <div>
+        <p class="mb-4 text-sm font-semibold text-gray-700">Per le aziende</p>
+        <ul class="space-y-3">
+          @for (r of requirements; track r.label) {
+            @if (r.forType === 'azienda' || r.forType === 'entrambi') {
+              <li class="flex items-start gap-2.5">
+                <div
+                  class="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-blue-100">
+                  <div class="h-1.5 w-1.5 rounded-full bg-blue-500"></div>
+                </div>
+                <span class="text-sm text-gray-600">{{ r.label }}</span>
+              </li>
+            }
+          }
+        </ul>
+      </div>
+      <div>
+        <p class="mb-4 text-sm font-semibold text-gray-700">Per i collettivi studenteschi</p>
+        <ul class="space-y-3">
+          @for (r of requirements; track r.label) {
+            @if (r.forType === 'collettivo' || r.forType === 'entrambi') {
+              <li class="flex items-start gap-2.5">
+                <div
+                  class="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-blue-100">
+                  <div class="h-1.5 w-1.5 rounded-full bg-blue-500"></div>
+                </div>
+                <span class="text-sm text-gray-600">{{ r.label }}</span>
+              </li>
+            }
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ mini -->
+<section class="bg-white px-4 py-16 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-3xl">
+    <h2 class="mb-8 text-center text-xl font-bold text-gray-900">
+      Domande frequenti sull'onboarding
+    </h2>
+    <div class="space-y-4">
+      @for (item of faq; track item.q) {
+        <div class="rounded-xl border border-gray-100 p-5">
+          <p class="text-sm font-semibold text-gray-900">{{ item.q }}</p>
+          <p class="mt-2 text-sm leading-relaxed text-gray-500">{{ item.a }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Form CTA -->
+<section class="border-t border-gray-100 bg-blue-600 px-4 py-16 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-xl text-center">
+    <h2 class="text-2xl font-bold text-white">Inizia ora - è gratis per 14 giorni</h2>
+    <p class="mt-3 text-sm text-blue-100">
+      Inviaci un'email con il nome della tua organizzazione e ti ricontattiamo entro 2 giorni
+      lavorativi.
+    </p>
+    <a
+      href="mailto:business@ohmyuniversity.it?subject=Richiesta%20onboarding%20organizzazione"
+      class="mt-6 inline-block rounded-lg bg-white px-8 py-3 text-sm font-medium text-blue-600 transition hover:bg-blue-50">
+      Invia richiesta di onboarding
+    </a>
+    <p class="mt-4 text-xs text-blue-200">
+      Oppure scrivici direttamente a
+      <span class="font-medium text-white">business@ohmyuniversity.it</span>
+    </p>
+  </div>
+</section>

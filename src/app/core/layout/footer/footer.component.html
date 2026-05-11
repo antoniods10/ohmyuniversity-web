@@ -1,0 +1,214 @@
+<footer class="border-t border-gray-100 bg-white">
+  <!-- ═══════════════════════════════════════════════
+       SEZIONE 1 - Colonne principali
+  ════════════════════════════════════════════════ -->
+  <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-6">
+      <!-- COL 1 - Brand + logo -->
+      <div class="lg:col-span-1">
+        <a routerLink="/" class="inline-flex items-center gap-2">
+          <!-- Logo SVG inline (grande, per footer) -->
+          <app-logo size="lg" class="text-blue-600" />
+          <span class="text-base font-bold text-gray-900">OhMyUniversity</span>
+        </a>
+
+        <div class="mt-4 space-y-1 text-xs text-gray-400">
+          <p class="flex items-center gap-1.5">
+            <svg
+              class="h-3.5 w-3.5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+            </svg>
+            Italia
+          </p>
+        </div>
+
+        <p class="mt-4 text-xs leading-relaxed text-gray-400">
+          Another open source project from
+          <a
+            href="https://github.com/ohmyopensource"
+            target="_blank"
+            rel="noopener"
+            class="font-medium text-blue-500 hover:underline">
+            OhMyOpenSource!
+          </a>
+        </p>
+      </div>
+
+      <!-- COL 2 - Navigazione -->
+      <div class="lg:col-span-1">
+        <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Navigazione</p>
+        <ul class="space-y-2.5">
+          @for (link of navLinks; track link.path) {
+            <li>
+              <a
+                [routerLink]="link.path"
+                class="text-sm text-gray-500 transition hover:text-blue-600">
+                {{ link.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- COL 3 - Business -->
+      <div class="lg:col-span-1">
+        <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+          Per le organizzazioni
+        </p>
+        <ul class="space-y-2.5">
+          @for (link of businessLinks; track link.path) {
+            <li>
+              <a
+                [routerLink]="link.path"
+                class="text-sm text-gray-500 transition hover:text-blue-600">
+                {{ link.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- COL 4 - Legal -->
+      <div class="lg:col-span-1">
+        <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Legale</p>
+        <ul class="space-y-2.5">
+          @for (link of legalLinks; track link.path) {
+            <li>
+              <a
+                [routerLink]="link.path"
+                class="text-sm text-gray-500 transition hover:text-blue-600">
+                {{ link.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- COL 5 - Contatti + social -->
+      <div class="lg:col-span-1">
+        <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Contatti</p>
+        <a href="mailto:hello@ohmyuniversity.it" class="text-sm text-blue-600 hover:underline">
+          hello@ohmyuniversity.it
+        </a>
+
+        <p class="mb-3 mt-5 text-xs font-semibold uppercase tracking-wider text-gray-400">
+          Seguici
+        </p>
+        <div class="grid grid-cols-2 gap-2">
+          @for (social of socials; track social.label) {
+            <a
+              [href]="social.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center gap-1.5 rounded-lg border border-gray-200 px-2.5 py-2 text-xs text-gray-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-600">
+              <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                <path [attr.d]="social.icon" />
+              </svg>
+              {{ social.label }}
+            </a>
+          }
+        </div>
+      </div>
+
+      <!-- COL 6 - Supportaci CTA -->
+      <div class="lg:col-span-1">
+        <p class="mb-1 text-xs font-semibold uppercase tracking-wider text-gray-400">
+          Supporta il progetto
+        </p>
+        <p class="mb-4 text-xs leading-relaxed text-gray-400">
+          OhMyUniversity è gratuito e open source. Se ti è utile, considera una donazione per
+          aiutarci a mantenerlo e migliorarlo.
+        </p>
+        <div class="flex flex-col gap-2">
+          @for (s of supportLinks; track s.label) {
+            <a
+              [href]="s.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-center justify-center rounded-lg px-4 py-2.5 text-xs font-semibold text-white transition"
+              [class]="s.color">
+              {{ s.label }}
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SEZIONE 2 - Loghi università
+  ════════════════════════════════════════════════ -->
+  <div class="border-t border-gray-100 bg-gray-50 py-8">
+    <p class="mb-5 text-center text-xs font-semibold uppercase tracking-wider text-gray-400">
+      Atenei convenzionati
+    </p>
+
+    <!-- Desktop: griglia -->
+    <div class="mx-auto hidden max-w-7xl grid-cols-5 gap-6 px-8 sm:grid lg:grid-cols-8">
+      @for (uni of universities; track uni.name) {
+        <div class="flex items-center justify-center">
+          <img
+            [src]="uni.logo"
+            [alt]="uni.name"
+            [title]="uni.name"
+            class="h-10 w-auto object-contain opacity-50 grayscale transition hover:opacity-80 hover:grayscale-0"
+            loading="lazy" />
+        </div>
+      }
+    </div>
+
+    <!-- Mobile: marquee -->
+    <div class="relative overflow-hidden sm:hidden">
+      <div class="flex animate-[marquee_5s_linear_infinite] gap-8 whitespace-nowrap">
+        @for (uni of universities; track uni.name) {
+          <img
+            [src]="uni.logo"
+            [alt]="uni.name"
+            class="h-8 w-auto object-contain opacity-50 grayscale"
+            loading="lazy" />
+        }
+        <!-- Duplicati per loop seamless -->
+        @for (uni of universities; track uni.name + '_dup') {
+          <img
+            [src]="uni.logo"
+            [alt]="uni.name"
+            class="h-8 w-auto object-contain opacity-50 grayscale"
+            loading="lazy"
+            aria-hidden="true" />
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SEZIONE 3 - Copyright bar
+  ════════════════════════════════════════════════ -->
+  <div class="border-t border-gray-200 bg-white py-5">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col items-center gap-1 text-center">
+        <p class="text-xs text-gray-400">P. IVA: {{ vatNumber }}</p>
+        <p class="text-xs text-gray-400">
+          © {{ currentYear }} OhMyUniversity - un prodotto open source di
+          <a
+            href="https://github.com/ohmyopensource"
+            target="_blank"
+            rel="noopener"
+            class="font-medium text-gray-500 hover:text-blue-600 hover:underline">
+            OhMyOpenSource!
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>

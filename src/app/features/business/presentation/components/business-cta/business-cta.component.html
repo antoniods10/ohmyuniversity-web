@@ -1,0 +1,18 @@
+<section class="border-t border-gray-100 bg-blue-600 px-4 py-14 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-2xl text-center">
+    <h2 class="text-2xl font-bold text-white">{{ title() }}</h2>
+    <p class="mt-3 text-sm leading-relaxed text-blue-100">{{ subtitle() }}</p>
+    <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+      <a
+        [routerLink]="primaryLink()"
+        class="w-full rounded-lg bg-white px-6 py-3 text-center text-sm font-medium text-blue-600 transition hover:bg-blue-50 sm:w-auto">
+        {{ primaryLabel() }}
+      </a>
+      <a
+        [routerLink]="secondaryLink()"
+        class="w-full rounded-lg border border-blue-400 px-6 py-3 text-center text-sm font-medium text-white transition hover:bg-blue-500 sm:w-auto">
+        {{ secondaryLabel() }}
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,315 @@
+<div
+  class="flex min-h-[calc(100vh-64px)] items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+  <div class="w-full max-w-lg">
+    <!-- Logo / brand -->
+    <div class="mb-8 text-center">
+      <a routerLink="/" class="text-2xl font-bold text-gray-900">OhMyUniversity</a>
+      <p class="mt-1 text-sm text-gray-500">by OhMyOpenSource!</p>
+    </div>
+
+    <!-- STEP 1 - Selezione tipo utente -->
+    @if (step() === 1) {
+      <div class="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+        <h1 class="text-xl font-semibold text-gray-900">Benvenuto</h1>
+        <p class="mt-1 text-sm text-gray-500">
+          Come vuoi accedere? Scegli la categoria che ti appartiene.
+        </p>
+
+        <div class="mt-6 space-y-3">
+          @for (option of userTypeOptions; track option.id) {
+            <button
+              type="button"
+              (click)="selectType(option.id)"
+              class="group relative w-full rounded-xl border-2 p-4 text-left transition-all"
+              [class.border-blue-500]="selectedType() === option.id"
+              [class.bg-blue-50]="selectedType() === option.id"
+              [class.border-gray-200]="selectedType() !== option.id"
+              [class.hover:border-gray-300]="selectedType() !== option.id"
+              [class.bg-white]="selectedType() !== option.id">
+              <div class="flex items-start gap-4">
+                <!-- Icona -->
+                <div
+                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-colors"
+                  [class.bg-blue-600]="selectedType() === option.id"
+                  [class.bg-gray-100]="selectedType() !== option.id">
+                  <svg
+                    class="h-5 w-5"
+                    [class.text-white]="selectedType() === option.id"
+                    [class.text-gray-500]="selectedType() !== option.id"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="option.icon" />
+                  </svg>
+                </div>
+
+                <!-- Testo -->
+                <div class="flex-1 min-w-0">
+                  <div class="flex items-center justify-between gap-2">
+                    <span class="text-sm font-medium text-gray-900">{{ option.label }}</span>
+                    <span
+                      class="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium"
+                      [class.bg-blue-100]="option.id !== 'organization'"
+                      [class.text-blue-700]="option.id !== 'organization'"
+                      [class.bg-amber-100]="option.id === 'organization'"
+                      [class.text-amber-700]="option.id === 'organization'">
+                      {{ option.sublabel }}
+                    </span>
+                  </div>
+                  <p class="mt-0.5 text-xs text-gray-500">{{ option.description }}</p>
+                </div>
+
+                <!-- Radio indicator -->
+                <div
+                  class="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 transition-colors"
+                  [class.border-blue-500]="selectedType() === option.id"
+                  [class.border-gray-300]="selectedType() !== option.id">
+                  @if (selectedType() === option.id) {
+                    <div class="h-2 w-2 rounded-full bg-blue-500"></div>
+                  }
+                </div>
+              </div>
+            </button>
+          }
+        </div>
+
+        <button
+          type="button"
+          (click)="goToStep2()"
+          [disabled]="!selectedType()"
+          class="mt-6 w-full rounded-lg px-4 py-3 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-40"
+          [class.bg-blue-600]="selectedType()"
+          [class.text-white]="selectedType()"
+          [class.hover:bg-blue-700]="selectedType()"
+          [class.bg-gray-100]="!selectedType()"
+          [class.text-gray-400]="!selectedType()">
+          Continua
+          <span class="ml-1">→</span>
+        </button>
+
+        <p class="mt-6 text-center text-xs text-gray-400">
+          Non sai cosa scegliere?
+          <a routerLink="/chi-siamo" class="text-blue-600 hover:underline">Scopri come funziona</a>
+        </p>
+      </div>
+    }
+
+    <!-- STEP 2A - SSO universitario (studenti e staff) -->
+    @if (step() === 2 && isAcademicFlow()) {
+      <div class="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+        <!-- Breadcrumb / back -->
+        <button
+          type="button"
+          (click)="goBack()"
+          class="mb-6 flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700">
+          <svg
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+          </svg>
+          Torna indietro
+        </button>
+
+        <h1 class="text-xl font-semibold text-gray-900">Accedi con il tuo ateneo</h1>
+        <p class="mt-1 text-sm text-gray-500">
+          Cerca la tua università. Sarai reindirizzato al portale SSO del tuo ateneo per accedere in
+          modo sicuro.
+        </p>
+
+        <!-- Search input -->
+        <div class="relative mt-6">
+          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+            <svg
+              class="h-4 w-4 text-gray-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803 7.5 7.5 0 0016.803 15.803z" />
+            </svg>
+          </div>
+          <input
+            type="text"
+            placeholder="Es. UniMol, Bologna, Politecnico..."
+            [value]="universitySearch()"
+            (input)="onSearchInput($any($event.target).value)"
+            class="block w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+        </div>
+
+        <!-- Lista atenei -->
+        <div class="mt-3 space-y-1.5 max-h-64 overflow-y-auto">
+          @if (filteredUniversities().length === 0) {
+            <p class="py-4 text-center text-sm text-gray-400">
+              Nessun ateneo trovato. Prova con un altro nome.
+            </p>
+          }
+          @for (uni of filteredUniversities(); track uni.id) {
+            <button
+              type="button"
+              (click)="selectUniversity(uni)"
+              class="flex w-full items-center justify-between rounded-lg px-4 py-3 text-left text-sm transition-colors"
+              [class.bg-blue-50]="selectedUniversity()?.id === uni.id"
+              [class.border]="selectedUniversity()?.id === uni.id"
+              [class.border-blue-200]="selectedUniversity()?.id === uni.id"
+              [class.hover:bg-gray-50]="selectedUniversity()?.id !== uni.id"
+              [class.border-transparent]="selectedUniversity()?.id !== uni.id">
+              <div>
+                <span class="font-medium text-gray-900">{{ uni.shortName }}</span>
+                <span class="ml-2 text-xs text-gray-400">{{ uni.name }}</span>
+              </div>
+              @if (selectedUniversity()?.id === uni.id) {
+                <svg
+                  class="h-4 w-4 text-blue-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+              }
+            </button>
+          }
+        </div>
+
+        <!-- CTA SSO -->
+        <button
+          type="button"
+          (click)="proceedWithSSO()"
+          [disabled]="!selectedUniversity()"
+          class="mt-6 w-full rounded-lg py-3 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-40"
+          [class.bg-blue-600]="selectedUniversity()"
+          [class.text-white]="selectedUniversity()"
+          [class.hover:bg-blue-700]="selectedUniversity()"
+          [class.bg-gray-100]="!selectedUniversity()"
+          [class.text-gray-400]="!selectedUniversity()">
+          @if (selectedUniversity()) {
+            Accedi con {{ selectedUniversity()!.shortName }}
+            <span class="ml-1">→</span>
+          } @else {
+            Seleziona un ateneo per continuare
+          }
+        </button>
+
+        <!-- Info sicurezza -->
+        <div class="mt-4 flex items-start gap-2 rounded-lg bg-gray-50 p-3">
+          <svg
+            class="mt-0.5 h-4 w-4 shrink-0 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+          </svg>
+          <p class="text-xs text-gray-500 leading-relaxed">
+            OhMyUniversity non memorizza le tue credenziali universitarie. Il login avviene
+            direttamente sul portale del tuo ateneo tramite protocollo SSO sicuro.
+          </p>
+        </div>
+      </div>
+    }
+
+    <!-- STEP 2B - Login organizzazioni -->
+    @if (step() === 2 && !isAcademicFlow()) {
+      <div class="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+        <button
+          type="button"
+          (click)="goBack()"
+          class="mb-6 flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700">
+          <svg
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+          </svg>
+          Torna indietro
+        </button>
+
+        <h1 class="text-xl font-semibold text-gray-900">Accedi alla tua organizzazione</h1>
+        <p class="mt-1 text-sm text-gray-500">
+          Usa le credenziali del tuo account OhMyUniversity. Se non hai ancora un account,
+          <a href="#" class="text-blue-600 hover:underline">contattaci per un piano</a>.
+        </p>
+
+        <form class="mt-6 space-y-4" (ngSubmit)="$event.preventDefault()">
+          <div>
+            <label class="mb-1.5 block text-sm font-medium text-gray-700" for="org-email">
+              Email organizzazione
+            </label>
+            <input
+              id="org-email"
+              type="email"
+              placeholder="info@azienda.it"
+              class="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+          <div>
+            <div class="mb-1.5 flex items-center justify-between">
+              <label class="block text-sm font-medium text-gray-700" for="org-password">
+                Password
+              </label>
+              <a href="#" class="text-xs text-blue-600 hover:underline">Password dimenticata?</a>
+            </div>
+            <input
+              id="org-password"
+              type="password"
+              placeholder="••••••••"
+              class="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
+          </div>
+
+          <button
+            type="submit"
+            class="w-full rounded-lg bg-blue-600 py-3 text-sm font-medium text-white transition hover:bg-blue-700">
+            Accedi
+          </button>
+        </form>
+
+        <!-- Badge abbonamento -->
+        <div
+          class="mt-4 flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 p-3">
+          <svg
+            class="h-4 w-4 shrink-0 text-amber-500"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.562.562 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+          </svg>
+          <p class="text-xs text-amber-700 leading-relaxed">
+            L'accesso per aziende e collettivi studenteschi richiede un piano attivo.
+            <a href="#" class="font-medium underline">Scopri i piani disponibili</a>.
+          </p>
+        </div>
+      </div>
+    }
+
+    <!-- Footer links -->
+    <p class="mt-6 text-center text-xs text-gray-400">
+      Accedendo accetti i nostri
+      <a routerLink="/termini-condizioni" class="hover:text-gray-600 hover:underline"
+        >Termini & Condizioni</a
+      >
+      e la
+      <a routerLink="/privacy-policy" class="hover:text-gray-600 hover:underline">Privacy Policy</a>
+    </p>
+  </div>
+</div>

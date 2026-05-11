@@ -1,0 +1,30 @@
+<app-faq-hero
+  title="FAQ - Per le organizzazioni"
+  subtitle="Tutto quello che aziende e collettivi studenteschi devono sapere per iniziare a usare OhMyUniversity."
+  badge="Business" />
+
+<app-faq-list [categories]="categories" />
+
+<!-- CTA contatto commerciale -->
+<div class="border-t border-gray-100 bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-xl text-center">
+    <p class="text-sm font-medium text-gray-700">
+      Hai domande specifiche sulla tua organizzazione?
+    </p>
+    <p class="mt-1 text-sm text-gray-500">
+      Il nostro team commerciale è disponibile per una chiamata conoscitiva gratuita.
+    </p>
+    <div class="mt-5 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+      <a
+        href="mailto:business@ohmyuniversity.it"
+        class="w-full rounded-lg bg-blue-600 px-6 py-2.5 text-center text-sm font-medium text-white transition hover:bg-blue-700 sm:w-auto">
+        Contatta il team commerciale
+      </a>
+      <a
+        routerLink="/business/prezzi"
+        class="w-full rounded-lg border border-gray-300 px-6 py-2.5 text-center text-sm font-medium text-gray-700 transition hover:bg-gray-50 sm:w-auto">
+        Vedi i piani
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<section class="bg-gray-50 px-4 py-20 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-4xl">
+    <div class="text-center">
+      <h2 class="text-3xl font-bold text-gray-900">Come funziona</h2>
+      <p class="mt-4 text-gray-500">
+        Tre passi e sei operativo. Nessuna configurazione complicata.
+      </p>
+    </div>
+    <div class="mt-14 grid gap-8 sm:grid-cols-3">
+      @for (step of steps; track step.number) {
+        <div class="text-center">
+          <div
+            class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-lg font-bold text-white">
+            {{ step.number }}
+          </div>
+          <h3 class="mt-4 font-semibold text-gray-900">{{ step.title }}</h3>
+          <p class="mt-2 text-sm text-gray-500">{{ step.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

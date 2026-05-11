@@ -1,0 +1,98 @@
+<div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
+  <h2 class="text-2xl font-bold text-gray-900">Sbocchi lavorativi reali</h2>
+  <p class="mt-3 text-sm leading-relaxed text-gray-500">
+    Prima di scegliere un corso, vale la pena capire cosa succede dopo la laurea. I dati che seguono
+    sono indicativi e si basano sul rapporto AlmaLaurea - il database italiano più completo sugli
+    esiti occupazionali dei laureati.
+  </p>
+
+  <!-- Grafico -->
+  <div class="mt-8">
+    <h3 class="text-base font-semibold text-gray-800">
+      Occupazione a 1 anno dalla laurea triennale
+    </h3>
+    <div class="mt-4">
+      <app-sbocchi-chart />
+    </div>
+  </div>
+
+  <!-- Tabella stipendi -->
+  <div class="mt-8">
+    <h3 class="text-base font-semibold text-gray-800">Stipendi medi netti al primo impiego</h3>
+    <div class="mt-4 overflow-hidden rounded-xl border border-gray-200">
+      <table class="w-full text-sm">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">Area</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">Occupaz. 1 anno</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">Stipendio netto</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          @for (area of aree; track area.area) {
+            <tr>
+              <td class="px-4 py-3 text-gray-700">{{ area.area }}</td>
+              <td class="px-4 py-3">
+                <span
+                  class="rounded-full px-2.5 py-0.5 text-xs font-medium"
+                  [class.bg-green-100]="area.occupazione1anno >= 75"
+                  [class.text-green-700]="area.occupazione1anno >= 75"
+                  [class.bg-yellow-100]="area.occupazione1anno >= 55 && area.occupazione1anno < 75"
+                  [class.text-yellow-700]="
+                    area.occupazione1anno >= 55 && area.occupazione1anno < 75
+                  "
+                  [class.bg-red-100]="area.occupazione1anno < 55"
+                  [class.text-red-700]="area.occupazione1anno < 55">
+                  {{ area.occupazione1anno }}%
+                </span>
+              </td>
+              <td class="px-4 py-3 text-gray-700">{{ area.stipendioMedio }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Consigli -->
+  <div class="mt-8 space-y-4">
+    @for (c of consigli; track c.titolo) {
+      <div class="flex items-start gap-3">
+        <div
+          class="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-blue-100">
+          <svg
+            class="h-3 w-3 text-blue-600"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2.5"
+            stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm font-semibold text-gray-800">{{ c.titolo }}</p>
+          <p class="mt-0.5 text-sm leading-relaxed text-gray-500">{{ c.testo }}</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="mt-6 rounded-xl border border-gray-200 bg-gray-50 p-4">
+    <p class="text-sm font-medium text-gray-700">🔗 Approfondisci con AlmaLaurea</p>
+    <p class="mt-1 text-xs leading-relaxed text-gray-500">
+      Su <strong>almalaurea.it</strong> puoi cercare dati reali per corso, ateneo e anno di laurea.
+      È lo strumento più affidabile disponibile gratuitamente per valutare gli sbocchi di un corso
+      specifico.
+    </p>
+  </div>
+</div>
+
+<app-orientation-nav
+  [hasPrev]="hasPrev()"
+  [hasNext]="hasNext()"
+  (prev)="prev.emit()"
+  (next)="next.emit()"
+  (backToList)="backToList.emit()" />
