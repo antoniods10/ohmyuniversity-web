@@ -1,29 +1,13 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
-export type PricingAudience = 'organizations' | 'institutions';
-
-export interface PricingFeature {
-  label: string;
-  included: boolean | string;
-}
-
-export interface PricingPlan {
-  name: string;
-  badge?: string;
-  price: string;
-  priceDetail: string;
-  description: string;
-  cta: string;
-  ctaLink: string;
-  highlighted: boolean;
-  features: PricingFeature[];
-}
+import { PricingAudience, PricingPlan } from '../pricing.types';
+import { PricingPlans } from '../components/pricing-plans/pricing-plans';
+import { PricingGuarantees } from '../components/pricing-guarantees/pricing-guarantees';
 
 @Component({
   selector: 'app-pricing-page',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, PricingPlans, PricingGuarantees],
   templateUrl: './pricing.page.html',
 })
 export class PricingPage {
@@ -182,15 +166,4 @@ export class PricingPage {
   readonly activePlans = (): PricingPlan[] =>
     this.audience() === 'organizations' ? this.orgPlans : this.institutionPlans;
 
-  featureValue(value: boolean | string): string {
-    if (value === true) return '✓';
-    if (value === false) return '-';
-    return value;
-  }
-
-  featureClass(value: boolean | string): string {
-    if (value === false) return 'text-gray-300';
-    if (value === true) return 'text-blue-500 font-medium';
-    return 'text-gray-700 font-medium';
-  }
 }
