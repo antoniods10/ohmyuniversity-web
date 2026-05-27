@@ -1,5 +1,5 @@
-import { Component, signal, effect } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, signal, effect, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-not-found',
@@ -8,17 +8,29 @@ import { RouterLink } from '@angular/router';
   templateUrl: './not-found.component.html',
 })
 export class NotFoundComponent {
-  readonly countdown = signal(10);
+  private readonly router = inject(Router);
 
-  private readonly timer = effect(() => {
-    const interval = setInterval(() => {
-      this.countdown.update(n => {
-        if (n <= 1) {
-          clearInterval(interval);
-          window.location.href = '/';
-        }
-        return n - 1;
-      });
-    }, 1000);
-  });
+  readonly countdown = signal(10);
+  
+  readonly isDashboard = signal(this.router.url.startsWith('/dashboard'));
+
+  constructor() {
+    
+    effect((onCleanup) => {
+      if (this.isDashboard()) return;
+
+      const interval = setInterval(() => {
+        this.countdown.update(n => {
+          if (n <= 1) {
+            clearInterval(interval);
+            this.router.navigate(['/']); 
+          }
+          return n - 1;
+        });
+      }, 1000);
+
+      
+      onCleanup(() => clearInterval(interval));
+    });
+  }
 }
