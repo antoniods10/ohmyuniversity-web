@@ -1,8 +1,9 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { PricingAudience, PricingPlan } from '../pricing.types';
+
 import { PricingPlans } from '../components/pricing-plans/pricing-plans';
 import { PricingGuarantees } from '../components/pricing-guarantees/pricing-guarantees';
+import { PricingAudience, PricingPlan } from '@types';
 
 @Component({
   selector: 'app-pricing-page',
@@ -165,5 +166,4 @@ export class PricingPage {
 
   readonly activePlans = (): PricingPlan[] =>
     this.audience() === 'organizations' ? this.orgPlans : this.institutionPlans;
-
 }

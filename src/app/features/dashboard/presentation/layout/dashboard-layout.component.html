@@ -1,0 +1,17 @@
+<!-- Shell -->
+<div class="flex h-[calc(100vh-32px)] overflow-hidden">
+  <!-- Sidebar -->
+  <app-dashboard-sidebar [open]="sidebarOpen()" (toggleSidebar)="sidebarOpen.update(v => !v)" />
+
+  <!-- Topbar -->
+  <div class="flex flex-col flex-1 min-w-0 overflow-hidden">
+    <app-dashboard-topbar />
+
+    <main class="flex-1 overflow-y-auto overflow-x-hidden bg-gray-100 p-6" role="main">
+      <router-outlet />
+    </main>
+  </div>
+</div>
+
+<!-- Footer  -->
+<app-dashboard-footer />

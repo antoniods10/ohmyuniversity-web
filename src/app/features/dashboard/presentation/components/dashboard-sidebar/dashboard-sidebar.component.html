@@ -1,0 +1,89 @@
+<aside
+  [class]="
+    'flex flex-col h-full bg-gray-950 border-r border-white/[0.07] transition-all duration-200 ease-in-out overflow-hidden z-10 ' +
+    (open() ? 'w-60 min-w-60' : 'w-15 min-w-15')
+  ">
+  <!-- Brand -->
+  <div
+    class="flex items-center gap-2.5 px-4 py-4.5 border-b border-white/[0.07] overflow-hidden shrink-0">
+    <span class="flex items-center justify-center shrink-0 text-emerald-300">
+      <svg lucideGraduationCap [size]="22" aria-hidden="true"></svg>
+    </span>
+    @if (open()) {
+      <span class="text-white font-bold text-[0.9rem] tracking-tight whitespace-nowrap">
+        OhMyUniversity!
+      </span>
+    }
+  </div>
+
+  <!-- Toggle -->
+  <button
+    type="button"
+    (click)="toggleSidebar.emit()"
+    [attr.aria-label]="open() ? 'Chiudi menu' : 'Apri menu'"
+    class="flex items-center justify-center w-full py-2.5 border-b border-white/[0.07] text-white/65 cursor-pointer transition-colors duration-150 hover:text-white hover:bg-white/5 shrink-0 bg-transparent border-x-0 border-t-0">
+    @if (open()) {
+      <svg lucidePanelLeftClose [size]="18" aria-hidden="true"></svg>
+    } @else {
+      <svg lucidePanelLeftOpen [size]="18" aria-hidden="true"></svg>
+    }
+  </button>
+
+  <!-- Main nav -->
+  <nav
+    class="flex-1 overflow-y-auto overflow-x-hidden py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    aria-label="Menu principale">
+    <ul class="list-none m-0 p-0">
+      @for (item of sidebarItems; track item.id) {
+        <li
+          [class]="
+            item.dividerAfter
+              ? 'after:block after:h-px after:bg-white/[0.07] after:mx-3 after:my-1.5'
+              : ''
+          ">
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="!text-white !bg-white/[0.09] [&_svg]:!text-emerald-300"
+            [routerLinkActiveOptions]="{ exact: item.id === 'dashboard' }"
+            [attr.title]="!open() ? item.label : null"
+            [class]="
+              'flex items-center gap-2.5 py-2.25 mx-2 rounded-md text-white/65 no-underline text-[0.85rem] font-medium whitespace-nowrap overflow-hidden transition-colors duration-150 hover:bg-white/5 hover:text-white ' +
+              (open() ? 'px-3.5' : 'justify-center px-0')
+            ">
+            <span class="flex items-center justify-center shrink-0">
+              <ng-container *ngComponentOutlet="item.icon; inputs: { size: 18 }" />
+            </span>
+            @if (open()) {
+              <span class="flex-1 overflow-hidden text-ellipsis">{{ item.label }}</span>
+            }
+          </a>
+        </li>
+      }
+    </ul>
+  </nav>
+
+  <!-- Bottom items -->
+  <div class="border-t border-white/[0.07] py-2 shrink-0">
+    <ul class="list-none m-0 p-0">
+      @for (item of sidebarBottomItems; track item.id) {
+        <li>
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="!text-white !bg-white/[0.09] [&_svg]:!text-emerald-300"
+            [attr.title]="!open() ? item.label : null"
+            [class]="
+              'flex items-center gap-2.5 py-2.25 mx-2 rounded-md text-white/65 no-underline text-[0.85rem] font-medium whitespace-nowrap overflow-hidden transition-colors duration-150 hover:bg-white/5 hover:text-white ' +
+              (open() ? 'px-3.5' : 'justify-center px-0')
+            ">
+            <span class="flex items-center justify-center shrink-0">
+              <ng-container *ngComponentOutlet="item.icon; inputs: { size: 18 }" />
+            </span>
+            @if (open()) {
+              <span class="flex-1 overflow-hidden text-ellipsis">{{ item.label }}</span>
+            }
+          </a>
+        </li>
+      }
+    </ul>
+  </div>
+</aside>

@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { PricingPlan } from '../../pricing.types';
+import { PricingPlan } from '@types';
 
 @Component({
   selector: 'app-pricing-plans',
