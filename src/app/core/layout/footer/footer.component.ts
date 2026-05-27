@@ -7,6 +7,7 @@ interface FooterLink {
   label: string;
   path: string;
   external?: boolean;
+  fragment?: string;
 }
 
 interface University {
