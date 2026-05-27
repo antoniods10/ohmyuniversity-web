@@ -1,5 +1,5 @@
-import { Component, signal, computed } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, signal, computed, inject } from '@angular/core';
+import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 export type UserType = 'academic' | 'staff' | 'organization' | null;
@@ -28,6 +28,7 @@ export interface University {
 })
 export class LoginPage {
   readonly step = signal<LoginStep>(1);
+  private readonly router = inject(Router);
   readonly selectedType = signal<UserType>(null);
   readonly universitySearch = signal('');
   readonly selectedUniversity = signal<University | null>(null);
@@ -56,7 +57,6 @@ export class LoginPage {
     },
   ];
 
-  // Lista mock di atenei - verrà sostituita da chiamata API
   readonly universities: University[] = [
     { id: 'unimol', name: 'Università degli Studi del Molise', shortName: 'UniMol', ssoUrl: '#' },
     { id: 'unibo', name: 'Università di Bologna', shortName: 'UniBo', ssoUrl: '#' },
@@ -114,7 +114,8 @@ export class LoginPage {
   proceedWithSSO(): void {
     const uni = this.selectedUniversity();
     if (!uni) return;
-    // TODO: redirect a SSO reale - per ora placeholder
-    console.log(`SSO redirect → ${uni.ssoUrl}`);
+    
+    this.router.navigate(['/dashboard']);
+    
   }
 }
