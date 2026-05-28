@@ -158,7 +158,7 @@ export const routes: Routes = [
       {
         path: 'didattica',
         loadComponent: () => import('./features/dashboard/presentation/pages/didattica/didattica.page').then(m => m.DidatticaPage),
-      }
+      },
       // {
       //   path: 'calendario',
       //   component: CalendarioPage,

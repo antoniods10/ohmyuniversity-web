@@ -17,7 +17,6 @@ const MAX_GRADE = 30;
 const GRADUATION_BASE_MAX = 110;
 const AVERAGE_DECIMALS = 2;
 
-
 export type ExamStatus = 'PASSED' | 'TO_TAKE';
 export type CourseType = 'MANDATORY' | 'ELECTIVE';
 export type ExamFilter = 'ALL' | 'PASSED' | 'TO_TAKE' | 'ELECTIVE';
@@ -50,7 +49,6 @@ interface WeightedGrade { value: number; cfu: number; }
   ],
   templateUrl: './didattica.page.html',
 })
-
 export class DidatticaPage {
   readonly activeTab = signal<TabId>('panoramica');
   readonly activeFilter = signal<ExamFilter>('ALL');
@@ -203,6 +201,4 @@ export class DidatticaPage {
     const factor = Math.pow(10, AVERAGE_DECIMALS);
     return Math.round(value * factor) / factor;
   }
-
-  
 }
