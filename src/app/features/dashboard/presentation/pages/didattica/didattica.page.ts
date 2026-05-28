@@ -10,6 +10,8 @@ import {
   LucideScale,
   LucideSearchX,
   LucideTrendingUp,
+  LucideDownload,
+  LucideFileText,
 } from '@lucide/angular';
 
 const TOTAL_CFU = 180;
@@ -22,7 +24,7 @@ export type CourseType = 'MANDATORY' | 'ELECTIVE';
 export type ExamFilter = 'ALL' | 'PASSED' | 'TO_TAKE' | 'ELECTIVE';
 export type TrendDirection = 'up' | 'down' | 'flat';
 
-type TabId = 'panoramica' | 'esami' | 'piano-studi' | 'segreteria';
+type TabId = 'panoramica' | 'esami' | 'segreteria';
 
 export interface Exam {
   courseCode: string;
@@ -45,7 +47,7 @@ interface WeightedGrade { value: number; cfu: number; }
   imports: [
     LucideArrowDown, LucideArrowUp, LucideAward, LucideCalculator,
     LucideGraduationCap, LucideHistory, LucideInfo, LucideScale,
-    LucideSearchX, LucideTrendingUp,
+    LucideSearchX, LucideTrendingUp, LucideDownload, LucideFileText,
   ],
   templateUrl: './didattica.page.html',
 })
@@ -68,6 +70,33 @@ export class DidatticaPage {
       { courseCode: 'INF-07', courseName: 'Reti di Calcolatori',            cfu: 6,  grade: '',    type: 'MANDATORY', status: 'TO_TAKE', academicYear: 3 },
       { courseCode: 'INF-08', courseName: 'Machine Learning',               cfu: 6,  grade: '',    type: 'ELECTIVE',  status: 'TO_TAKE', academicYear: 3 },
     ]);
+
+    readonly borseDiStudio = [
+      { nome: 'Borsa di Studio INPS', tipo: 'Reddito', stato: 'Attiva' },
+      { nome: 'Borsa Erasmus+', tipo: 'Mobilità', stato: 'Attiva' },
+      { nome: 'Borsa di merito UNIMOL ', tipo: 'Merito', stato: 'Scaduta' },
+    ];
+
+    readonly modulistica = [
+      { nome: 'Modulo iscrizione esame', file: 'modulo_esame.pdf' },
+      { nome: 'Certificato di laurea', file: 'certificato_laurea.pdf' },
+      { nome: 'Piano di studi', file: 'piano_studi.pdf' }
+    ];
+
+    readonly tasse = [
+      { tipo: 'Tassa 1° rata', importo: '450€', anno: '2025/26', scadenza: '31/01/2026', stato: 'Pagato'},
+      { tipo: 'Tassa 2° rata', importo: '350€', anno: '2025/26', scadenza: '30/06/2026', stato: 'Da pagare'},
+      { tipo: 'Tassa 3° rata', importo: '350€', anno: '2025/26', scadenza: '31/10/2026', stato: 'Da pagare'}
+    ];
+
+    readonly studenteBadge = {
+      nome: 'Luca',
+      cognome: 'Rossi',
+      matricola: '160090',
+      corsoDiLaurea: 'Software Technologies',
+      annoAccademico: '2025/26',
+      ateneo: 'UNIMOL',
+    };
 
   readonly filterOptions: FilterOption[] = [
     { id: 'ALL', label: 'Tutti' },
