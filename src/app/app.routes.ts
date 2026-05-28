@@ -35,7 +35,7 @@ import { DashboardLayoutComponent } from './features/dashboard/presentation/layo
 
 // Dashboard Pages
 import { DashboardHomePage } from './features/dashboard/presentation/pages/home/home.page';
-// import { CarrieraPage } from './features/dashboard/presentation/pages/carriera/carriera.page';
+import { CareerPage } from './features/dashboard/presentation/pages/career/career.page';
 // import { CalendarioPage } from './features/dashboard/presentation/pages/calendario/calendario.page';
 // import { EsamiPage } from './features/dashboard/presentation/pages/esami/esami.page';
 // import { DocumentiPage } from './features/dashboard/presentation/pages/documenti/documenti.page';
@@ -151,10 +151,10 @@ export const routes: Routes = [
         path: '',
         component: DashboardHomePage,
       },
-      // {
-      //   path: 'carriera',
-      //   component: CarrieraPage,
-      // },
+      {
+         path: 'career',
+         component: CareerPage,
+      },
       // {
       //   path: 'calendario',
       //   component: CalendarioPage,
