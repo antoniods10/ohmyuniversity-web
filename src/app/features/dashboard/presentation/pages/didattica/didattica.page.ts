@@ -24,7 +24,7 @@ export type CourseType = 'MANDATORY' | 'ELECTIVE';
 export type ExamFilter = 'ALL' | 'PASSED' | 'TO_TAKE' | 'ELECTIVE';
 export type TrendDirection = 'up' | 'down' | 'flat';
 
-type TabId = 'panoramica' | 'esami' | 'segreteria';
+type TabId = 'panoramica' | 'piano di studi' | 'appelli' | 'segreteria';
 
 export interface Exam {
   courseCode: string;
@@ -91,8 +91,8 @@ export class DidatticaPage {
 
     readonly studenteBadge = {
       nome: 'Luca',
-      cognome: 'Rossi',
-      matricola: '160090',
+      cognome: 'Lanese',
+      matricola: '178158',
       corsoDiLaurea: 'Software Technologies',
       annoAccademico: '2025/26',
       ateneo: 'UNIMOL',
