@@ -41,10 +41,10 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     roles: ['student', 'admin', 'professor'],
   },
   {
-    id: 'orientamento',
-    label: 'Orientamento',
+    id: 'sviluppi futuri',
+    label: 'Sviluppi Futuri',
     icon: LucideCompass,
-    route: '/dashboard/orientamento',
+    route: '/dashboard/sviluppi-futuri',
     roles: ['student', 'admin', 'professor'],
   },
   {
