@@ -22,7 +22,7 @@ export type CourseType = 'MANDATORY' | 'ELECTIVE';
 export type ExamFilter = 'ALL' | 'PASSED' | 'TO_TAKE' | 'ELECTIVE';
 export type TrendDirection = 'up' | 'down' | 'flat';
 
-type TabId = 'panoramica' | 'esami' | 'piano-studi' | 'magistrali';
+type TabId = 'panoramica' | 'esami' | 'piano-studi' | 'segreteria';
 
 export interface Exam {
   courseCode: string;

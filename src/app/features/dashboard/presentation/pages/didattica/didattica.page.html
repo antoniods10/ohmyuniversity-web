@@ -5,11 +5,9 @@
         class="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1 text-xs font-medium text-blue-700">
         Studente: Luca - Software Technologies (UNIMOL)
       </span>
-      <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-        Didattica & Orientamento
-      </h1>
+      <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Didattica</h1>
       <p class="mt-2 max-w-xl text-sm text-gray-500">
-        Gestisci il tuo piano di studi e pianifica la tua carriera magistrale.
+        Gestisci la tua carriera accademica e il tuo piano di studi.
       </p>
     </header>
 
@@ -33,10 +31,10 @@
         Piano di Studi
       </button>
       <button
-        (click)="activeTab.set('magistrali')"
-        [class.border-blue-600]="activeTab() === 'magistrali'"
+        (click)="activeTab.set('segreteria')"
+        [class.border-blue-600]="activeTab() === 'segreteria'"
         class="border-b-2 py-2 px-1">
-        Guida Magistrali
+        Segreteria
       </button>
     </div>
 
@@ -217,10 +215,9 @@
     @if (activeTab() === 'piano-studi') {
       <div class="p-10 text-center text-gray-500">Sezione Piano di Studi in arrivo...</div>
     }
-    @if (activeTab() === 'magistrali') {
-      <div class="p-10 text-center text-gray-500">
-        Sezione Orientamento Magistrale (Modulo 4) in arrivo...
-      </div>
+
+    @if (activeTab() === 'segreteria') {
+      <div class="p-10 text-center text-gray-500">Sezione Segreteria in arrivo...</div>
     }
   </div>
 </div>

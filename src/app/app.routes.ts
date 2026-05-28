@@ -159,6 +159,10 @@ export const routes: Routes = [
         path: 'didattica',
         loadComponent: () => import('./features/dashboard/presentation/pages/didattica/didattica.page').then(m => m.DidatticaPage),
       },
+      {
+        path: 'sviluppi-futuri',
+        loadComponent: () => import('./features/dashboard/presentation/pages/sviluppi-futuri/sviluppi-futuri.page').then(m => m.SviluppiFuturiPage),
+      }
       // {
       //   path: 'calendario',
       //   component: CalendarioPage,
@@ -182,10 +186,6 @@ export const routes: Routes = [
       // {
       //   path: 'messaggi',
       //   component: MessaggiPage,
-      // },
-      // {
-      //   path: 'orientamento',
-      //   component: OrientamentoDashboardPage,
       // },
       // {
       //   path: 'impostazioni',
