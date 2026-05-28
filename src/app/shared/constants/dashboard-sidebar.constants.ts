@@ -2,10 +2,6 @@ import { Type } from '@angular/core';
 import {
   LucideLayoutDashboard,
   LucideGraduationCap,
-  LucideCalendarDays,
-  LucideFilePenLine,
-  LucideFolderOpen,
-  LucideBadgeEuro,
   LucideBriefcase,
   LucideMessageSquare,
   LucideCompass,
@@ -28,6 +24,7 @@ export interface SidebarItem {
 // =============================================
 // Main navigation items
 // =============================================
+
 export const SIDEBAR_ITEMS: SidebarItem[] = [
   {
     id: 'dashboard',
@@ -37,40 +34,18 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     roles: ['student', 'admin', 'professor'],
   },
   {
-    id: 'career',
-    label: 'Carriera',
+    id: 'didattica',
+    label: 'Didattica',
     icon: LucideGraduationCap,
-    route: '/dashboard/career',
+    route: '/dashboard/didattica',
     roles: ['student', 'admin', 'professor'],
   },
   {
-    id: 'calendario',
-    label: 'Calendario',
-    icon: LucideCalendarDays,
-    route: '/dashboard/calendario',
+    id: 'orientamento',
+    label: 'Orientamento',
+    icon: LucideCompass,
+    route: '/dashboard/orientamento',
     roles: ['student', 'admin', 'professor'],
-  },
-  {
-    id: 'esami',
-    label: 'Esami',
-    icon: LucideFilePenLine,
-    route: '/dashboard/esami',
-    roles: ['student', 'admin', 'professor'],
-  },
-  {
-    id: 'documenti',
-    label: 'Documenti',
-    icon: LucideFolderOpen,
-    route: '/dashboard/documenti',
-    roles: ['student', 'admin', 'professor'],
-  },
-  {
-    id: 'borse-studio',
-    label: 'Borse di Studio',
-    icon: LucideBadgeEuro,
-    route: '/dashboard/borse-studio',
-    roles: ['student', 'admin'],
-    dividerAfter: true,
   },
   {
     id: 'tirocini',
@@ -85,14 +60,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: LucideMessageSquare,
     route: '/dashboard/messaggi',
     roles: ['student', 'admin', 'professor'],
-  },
-  {
-    id: 'orientamento',
-    label: 'Orientamento',
-    icon: LucideCompass,
-    route: '/dashboard/orientamento',
-    roles: ['student', 'admin', 'professor'],
-    dividerAfter: true,
+    dividerAfter: true
   },
   {
     id: 'impostazioni',

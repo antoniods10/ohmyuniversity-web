@@ -1,0 +1,226 @@
+<div class="page-gradient">
+  <div class="mx-auto max-w-7xl space-y-5 px-4 py-8 sm:space-y-6 sm:px-6 lg:px-8">
+    <header>
+      <span
+        class="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1 text-xs font-medium text-blue-700">
+        Studente: Luca - Software Technologies (UNIMOL)
+      </span>
+      <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        Didattica & Orientamento
+      </h1>
+      <p class="mt-2 max-w-xl text-sm text-gray-500">
+        Gestisci il tuo piano di studi e pianifica la tua carriera magistrale.
+      </p>
+    </header>
+
+    <div class="flex gap-4 border-b border-gray-200 text-sm font-medium">
+      <button
+        (click)="activeTab.set('panoramica')"
+        [class.border-blue-600]="activeTab() === 'panoramica'"
+        class="border-b-2 py-2 px-1">
+        Panoramica
+      </button>
+      <button
+        (click)="activeTab.set('esami')"
+        [class.border-blue-600]="activeTab() === 'esami'"
+        class="border-b-2 py-2 px-1">
+        Esami
+      </button>
+      <button
+        (click)="activeTab.set('piano-studi')"
+        [class.border-blue-600]="activeTab() === 'piano-studi'"
+        class="border-b-2 py-2 px-1">
+        Piano di Studi
+      </button>
+      <button
+        (click)="activeTab.set('magistrali')"
+        [class.border-blue-600]="activeTab() === 'magistrali'"
+        class="border-b-2 py-2 px-1">
+        Guida Magistrali
+      </button>
+    </div>
+
+    @if (activeTab() === 'panoramica') {
+      <div class="space-y-6">
+        <section class="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          <article class="card-blue elevated rounded-xl p-4 sm:p-5">
+            <div class="flex items-center gap-2.5">
+              <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-200">
+                <svg lucideCalculator class="h-4 w-4 text-blue-700"></svg>
+              </div>
+              <p class="text-xs font-semibold uppercase text-blue-700">Media aritmetica</p>
+            </div>
+            <div class="mt-3 flex items-baseline gap-1">
+              <span class="text-2xl font-bold text-blue-900 lg:text-4xl">{{
+                arithmeticAverage()
+              }}</span>
+              <span class="text-xs text-blue-500">/ 30</span>
+            </div>
+          </article>
+
+          <article class="card-blue-deep elevated rounded-xl p-4 sm:p-5">
+            <div class="flex items-center gap-2.5">
+              <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-300/70">
+                <svg lucideScale class="h-4 w-4 text-blue-800"></svg>
+              </div>
+              <p class="text-xs font-semibold uppercase text-blue-800">Media ponderata</p>
+            </div>
+            <div class="mt-3 flex items-baseline gap-1">
+              <span class="text-2xl font-bold text-blue-900 lg:text-4xl">{{
+                weightedAverage()
+              }}</span>
+              <span class="text-xs text-blue-600">/ 30</span>
+            </div>
+          </article>
+
+          <article class="card-green elevated rounded-xl p-4 sm:p-5">
+            <div class="flex items-center gap-2.5">
+              <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-200">
+                <svg lucideGraduationCap class="h-4 w-4 text-emerald-700"></svg>
+              </div>
+              <p class="text-xs font-semibold uppercase text-emerald-700">Base di laurea</p>
+            </div>
+            <div class="mt-3 flex items-baseline gap-1">
+              <span class="text-2xl font-bold text-emerald-900 lg:text-4xl">{{
+                graduationBase()
+              }}</span>
+              <span class="text-xs text-emerald-600">/ 110</span>
+            </div>
+          </article>
+
+          <article class="card-yellow elevated rounded-xl p-4 sm:p-5">
+            <div class="flex items-center gap-2.5">
+              <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-200">
+                <svg lucideAward class="h-4 w-4 text-amber-700"></svg>
+              </div>
+              <p class="text-xs font-semibold uppercase text-amber-700">CFU acquisiti</p>
+            </div>
+            <div class="mt-3 flex items-baseline gap-1">
+              <span class="text-2xl font-bold text-amber-900 lg:text-4xl">{{ earnedCfu() }}</span>
+              <span class="text-xs text-amber-600">/ {{ totalCfu }}</span>
+            </div>
+            <div class="mt-3 h-1.5 w-full rounded-full bg-amber-200/80 overflow-hidden">
+              <div
+                class="h-full bg-amber-500 transition-all duration-500"
+                [style.width.%]="cfuProgress()"></div>
+            </div>
+          </article>
+        </section>
+
+        <section class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <article class="card-blue elevated rounded-xl p-4 sm:p-5">
+            <h3 class="text-sm font-semibold text-blue-900 mb-3">Storico voti</h3>
+            <svg viewBox="0 0 200 80" class="h-20 w-full">
+              @for (point of gradeHistory(); track $index) {
+                <rect
+                  [attr.x]="$index * (200 / gradeHistory().length) + 2"
+                  [attr.y]="78 - (point.value / 30) * 76"
+                  [attr.width]="200 / gradeHistory().length - 4"
+                  [attr.height]="(point.value / 30) * 76"
+                  rx="2"
+                  [class.fill-blue-600]="point.isLast"
+                  [class.fill-blue-200]="!point.isLast" />
+              }
+            </svg>
+          </article>
+
+          <article class="card-green elevated rounded-xl p-4 sm:p-5">
+            <h3 class="text-sm font-semibold text-emerald-900 mb-3">Storico media ponderata</h3>
+            <svg viewBox="0 0 200 80" class="h-20 w-full">
+              @for (point of averageHistory(); track $index) {
+                <rect
+                  [attr.x]="$index * (200 / averageHistory().length) + 2"
+                  [attr.y]="78 - (point.value / 30) * 76"
+                  [attr.width]="200 / averageHistory().length - 4"
+                  [attr.height]="(point.value / 30) * 76"
+                  rx="2"
+                  [class.fill-emerald-600]="point.isLast"
+                  [class.fill-emerald-200]="!point.isLast" />
+              }
+            </svg>
+          </article>
+        </section>
+
+        <div class="card-yellow rounded-xl border border-amber-200 px-4 py-3">
+          <div class="flex items-start gap-2">
+            <svg lucideInfo class="mt-0.5 h-4 w-4 shrink-0 text-amber-600"></svg>
+            <p class="text-xs text-amber-800">
+              La <b>media ponderata</b> considera i CFU di ogni esame; la <b>base di laurea</b> è
+              (media ponderata / 30) × 110.
+            </p>
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (activeTab() === 'esami') {
+      <article class="elevated overflow-hidden rounded-xl bg-sky-50">
+        <header class="border-b border-blue-100/80 p-4">
+          <div class="flex items-center justify-between">
+            <h2 class="text-lg font-semibold text-blue-900">Registro Esami</h2>
+            <div class="flex gap-2">
+              @for (option of filterOptions; track option.id) {
+                <button
+                  (click)="applyFilter(option.id)"
+                  [class.bg-blue-600]="activeFilter() === option.id"
+                  [class.text-white]="activeFilter() === option.id"
+                  class="rounded-lg border border-blue-200 bg-white px-3 py-1 text-xs font-medium text-blue-700 transition-all">
+                  {{ option.label }}
+                </button>
+              }
+            </div>
+          </div>
+        </header>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead class="bg-blue-100/50 text-xs font-semibold uppercase text-blue-700">
+              <tr>
+                <th class="px-5 py-3">Insegnamento</th>
+                <th class="px-5 py-3 text-center">CFU</th>
+                <th class="px-5 py-3 text-center">Voto</th>
+                <th class="px-5 py-3 text-center">Stato</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-blue-50 text-sm bg-white/60">
+              @for (group of examGroups(); track group.year) {
+                <tr class="bg-blue-100/60 font-semibold text-blue-800">
+                  <td colspan="4" class="px-5 py-2 uppercase text-xs tracking-wider">
+                    {{ group.yearLabel }}
+                  </td>
+                </tr>
+                @for (exam of group.exams; track exam.courseCode) {
+                  <tr class="hover:bg-blue-50/60 transition-colors">
+                    <td class="px-5 py-3.5">
+                      <p class="font-semibold text-gray-900">{{ exam.courseName }}</p>
+                      <p class="font-mono text-xs text-gray-400">{{ exam.courseCode }}</p>
+                    </td>
+                    <td class="px-5 py-3.5 text-center">{{ exam.cfu }}</td>
+                    <td class="px-5 py-3.5 text-center font-bold">{{ exam.grade || '—' }}</td>
+                    <td class="px-5 py-3.5 text-center">
+                      <span
+                        [class.bg-emerald-100]="exam.status === 'PASSED'"
+                        [class.text-emerald-800]="exam.status === 'PASSED'"
+                        class="rounded-lg px-2.5 py-0.5 text-xs font-medium">
+                        {{ exam.status === 'PASSED' ? 'Superato' : 'Da sostenere' }}
+                      </span>
+                    </td>
+                  </tr>
+                }
+              }
+            </tbody>
+          </table>
+        </div>
+      </article>
+    }
+
+    @if (activeTab() === 'piano-studi') {
+      <div class="p-10 text-center text-gray-500">Sezione Piano di Studi in arrivo...</div>
+    }
+    @if (activeTab() === 'magistrali') {
+      <div class="p-10 text-center text-gray-500">
+        Sezione Orientamento Magistrale (Modulo 4) in arrivo...
+      </div>
+    }
+  </div>
+</div>
