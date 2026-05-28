@@ -155,6 +155,15 @@ export const routes: Routes = [
          path: 'career',
          component: CareerPage,
       },
+      {
+        path: 'didattica',
+        loadComponent: () => import('./features/dashboard/presentation/pages/didattica/didattica.page').then(m => m.DidatticaPage),
+      }
+      // {
+      //   path: 'carriera',
+      //   component: CarrieraPage,
+      // },
+>>>>>>> Stashed changes
       // {
       //   path: 'calendario',
       //   component: CalendarioPage,
