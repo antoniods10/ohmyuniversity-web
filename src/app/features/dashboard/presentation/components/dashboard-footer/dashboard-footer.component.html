@@ -1,4 +1,3 @@
-<!-- Footer mini -->
 <footer
   class="fixed bottom-0 left-0 right-0 h-8 bg-gray-950 border-t border-white/6 flex items-center justify-center gap-1.5 cursor-pointer select-none z-40 text-[0.72rem] text-white/50 transition-colors duration-150 hover:bg-gray-900 hover:text-white/75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
   tabindex="0"
@@ -14,21 +13,19 @@
   <svg lucideChevronUp [size]="14" class="opacity-50" aria-hidden="true"></svg>
 </footer>
 
-<!-- Backdrop -->
 @if (drawerOpen()) {
   <div
     class="fixed inset-0 bg-black/45 z-45 animate-[fadeIn_200ms_ease_forwards]"
     aria-hidden="true"
     (click)="closeDrawer()"></div>
 
-  <!-- Drawer -->
   <div
     class="fixed bottom-0 left-0 right-0 bg-white rounded-t-xl shadow-[0_-8px_40px_rgba(0,0,0,0.18)] z-50 max-h-[33vh] lg:max-h-[45vh] flex flex-col overflow-hidden animate-[slideUp_300ms_cubic-bezier(0.4,0,0.2,1)_forwards]"
     role="dialog"
     aria-modal="true"
     aria-label="Footer completo">
-    <!-- Handle row -->
-    <div class="flex items-center justify-center px-4 pt-2.5 pb-1 relative">
+    <div
+      class="flex items-center justify-center px-4 pt-2.5 pb-1 relative shrink-0 bg-white border-b border-gray-100">
       <div class="w-10 h-1 rounded-full bg-gray-200" aria-hidden="true"></div>
       <button
         type="button"
@@ -39,7 +36,8 @@
       </button>
     </div>
 
-    <!-- Existing footer component -->
-    <app-footer />
+    <div class="flex-1 overflow-y-auto [scrollbar-width:thin]">
+      <app-footer [isDashboard]="true" />
+    </div>
   </div>
 }

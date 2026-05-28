@@ -1,13 +1,12 @@
 <footer class="border-t border-gray-100 bg-white">
-  <!-- ═══════════════════════════════════════════════
-       SEZIONE 1 - Colonne principali
-  ════════════════════════════════════════════════ -->
   <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-6">
-      <!-- COL 1 - Brand + logo -->
+    <div
+      [class]="
+        'grid grid-cols-1 gap-10 sm:grid-cols-2 ' +
+        (isDashboard() ? 'lg:grid-cols-5' : 'lg:grid-cols-6')
+      ">
       <div class="lg:col-span-1">
         <a routerLink="/" class="inline-flex items-center gap-2">
-          <!-- Logo SVG inline (grande, per footer) -->
           <app-logo size="lg" class="text-blue-600" />
           <span class="text-base font-bold text-gray-900">OhMyUniversity</span>
         </a>
@@ -44,42 +43,42 @@
           </a>
         </p>
       </div>
+      @if (!isDashboard()) {
+        <div class="lg:col-span-1">
+          <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+            Navigazione
+          </p>
+          <ul class="space-y-2.5">
+            @for (link of navLinks; track link.path) {
+              <li>
+                <a
+                  [routerLink]="link.path"
+                  class="text-sm text-gray-500 transition hover:text-blue-600">
+                  {{ link.label }}
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
 
-      <!-- COL 2 - Navigazione -->
-      <div class="lg:col-span-1">
-        <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Navigazione</p>
-        <ul class="space-y-2.5">
-          @for (link of navLinks; track link.path) {
-            <li>
-              <a
-                [routerLink]="link.path"
-                class="text-sm text-gray-500 transition hover:text-blue-600">
-                {{ link.label }}
-              </a>
-            </li>
-          }
-        </ul>
-      </div>
+        <div class="lg:col-span-1">
+          <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+            Per le organizzazioni
+          </p>
+          <ul class="space-y-2.5">
+            @for (link of businessLinks; track link.path) {
+              <li>
+                <a
+                  [routerLink]="link.path"
+                  class="text-sm text-gray-500 transition hover:text-blue-600">
+                  {{ link.label }}
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
+      }
 
-      <!-- COL 3 - Business -->
-      <div class="lg:col-span-1">
-        <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
-          Per le organizzazioni
-        </p>
-        <ul class="space-y-2.5">
-          @for (link of businessLinks; track link.path) {
-            <li>
-              <a
-                [routerLink]="link.path"
-                class="text-sm text-gray-500 transition hover:text-blue-600">
-                {{ link.label }}
-              </a>
-            </li>
-          }
-        </ul>
-      </div>
-
-      <!-- COL 4 - Legal -->
       <div class="lg:col-span-1">
         <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Legale</p>
         <ul class="space-y-2.5">
@@ -95,7 +94,26 @@
         </ul>
       </div>
 
-      <!-- COL 5 - Contatti + social -->
+      @if (isDashboard()) {
+        <div class="lg:col-span-1">
+          <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+            FAQ Studenti
+          </p>
+          <ul class="space-y-2.5">
+            @for (link of faqLinks; track link.label) {
+              <li>
+                <a
+                  [routerLink]="link.path"
+                  [fragment]="link.fragment"
+                  class="text-sm text-gray-500 transition hover:text-blue-600">
+                  {{ link.label }}
+                </a>
+              </li>
+            }
+          </ul>
+        </div>
+      }
+
       <div class="lg:col-span-1">
         <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Contatti</p>
         <a href="mailto:hello@ohmyuniversity.it" class="text-sm text-blue-600 hover:underline">
@@ -121,7 +139,6 @@
         </div>
       </div>
 
-      <!-- COL 6 - Supportaci CTA -->
       <div class="lg:col-span-1">
         <p class="mb-1 text-xs font-semibold uppercase tracking-wider text-gray-400">
           Supporta il progetto
@@ -146,15 +163,11 @@
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════
-       SEZIONE 2 - Loghi università
-  ════════════════════════════════════════════════ -->
   <div class="border-t border-gray-100 bg-gray-50 py-8">
     <p class="mb-5 text-center text-xs font-semibold uppercase tracking-wider text-gray-400">
       Atenei convenzionati
     </p>
 
-    <!-- Desktop: griglia -->
     <div class="mx-auto hidden max-w-7xl grid-cols-5 gap-6 px-8 sm:grid lg:grid-cols-8">
       @for (uni of universities; track uni.name) {
         <div class="flex items-center justify-center">
@@ -168,7 +181,6 @@
       }
     </div>
 
-    <!-- Mobile: marquee -->
     <div class="relative overflow-hidden sm:hidden">
       <div class="flex animate-[marquee_5s_linear_infinite] gap-8 whitespace-nowrap">
         @for (uni of universities; track uni.name) {
@@ -178,7 +190,7 @@
             class="h-8 w-auto object-contain opacity-50 grayscale"
             loading="lazy" />
         }
-        <!-- Duplicati per loop seamless -->
+
         @for (uni of universities; track uni.name + '_dup') {
           <img
             [src]="uni.logo"
@@ -191,9 +203,6 @@
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════
-       SEZIONE 3 - Copyright bar
-  ════════════════════════════════════════════════ -->
   <div class="border-t border-gray-200 bg-white py-5">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col items-center gap-1 text-center">

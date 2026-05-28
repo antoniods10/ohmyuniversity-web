@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { getCurrentYear } from '../../../shared/utils/date.utils';
 import { LogoComponent } from '../../../shared/ui/logo/logo.component';
@@ -24,6 +24,7 @@ interface University {
 export class FooterComponent {
   readonly currentYear = getCurrentYear();
   readonly vatNumber = 'IT00000000000';
+  readonly isDashboard = input<boolean>(false)
 
   readonly universities: University[] = [
     {
@@ -111,6 +112,13 @@ export class FooterComponent {
     { label: 'Cookie Policy', path: '/cookie-policy' },
     { label: 'Termini & Condizioni', path: '/termini-condizioni' },
   ];
+
+  readonly faqLinks = [
+  { label: 'Come funziona OhMyUniversity?', path: '/faq', fragment: 'funzionamento' },
+  { label: 'Come accedo con il mio ateneo?', path: '/faq', fragment: 'accesso' },
+  { label: 'I miei dati sono al sicuro?', path: '/faq', fragment: 'sicurezza' },
+  { label: 'Come segnalo un problema?', path: '/faq', fragment: 'supporto' },
+];
 
   readonly socials = [
     {

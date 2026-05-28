@@ -1,51 +1,67 @@
 <div
   class="flex min-h-[calc(100vh-128px)] flex-col items-center justify-center px-4 py-16 text-center">
-  <!-- Numero 404 -->
   <p class="text-8xl font-bold text-gray-100 sm:text-9xl">404</p>
 
-  <!-- Testo principale -->
   <div class="-mt-4">
     <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">Pagina non trovata</h1>
-    <p class="mx-auto mt-3 max-w-md text-sm leading-relaxed text-gray-500">
-      La pagina che stai cercando non esiste, è stata spostata o l'URL è errato. Verrai
-      reindirizzato alla home tra
-      <span class="font-semibold text-blue-600">{{ countdown() }}</span>
-      secondi.
-    </p>
+
+    @if (!isDashboard()) {
+      <p class="mx-auto mt-3 max-w-md text-sm leading-relaxed text-gray-500">
+        La pagina che stai cercando non esiste, è stata spostata o l'URL è errato. Verrai
+        reindirizzato alla home tra
+        <span class="font-semibold text-blue-600">{{ countdown() }}</span>
+        secondi.
+      </p>
+    } @else {
+      <p class="mx-auto mt-3 max-w-md text-sm leading-relaxed text-gray-500">
+        La pagina che stai cercando non esiste, è stata spostata o l'URL è errato. Usa il pulsante
+        qui sotto per tornare al tuo pannello.
+      </p>
+    }
   </div>
 
-  <!-- Divider -->
   <div class="my-8 h-px w-16 bg-gray-200"></div>
 
-  <!-- Azioni -->
   <div class="flex flex-col items-center gap-3 sm:flex-row">
-    <a
-      routerLink="/"
-      class="w-full rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 sm:w-auto">
-      Torna alla Home
-    </a>
-    <a
-      routerLink="/orientamento"
-      class="w-full rounded-lg border border-gray-300 bg-white px-6 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 sm:w-auto">
-      Vai all'Orientamento
-    </a>
+    @if (isDashboard()) {
+      <a
+        routerLink="/dashboard"
+        class="w-full rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 sm:w-auto">
+        Torna alla Dashboard
+      </a>
+    } @else {
+      <a
+        routerLink="/"
+        class="w-full rounded-lg bg-blue-600 px-6 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 sm:w-auto">
+        Torna alla Home
+      </a>
+    }
+
+    @if (!isDashboard()) {
+      <a
+        routerLink="/orientamento"
+        class="w-full rounded-lg border border-gray-300 bg-white px-6 py-2.5 text-sm font-medium text-gray-700 transition hover:bg-gray-50 sm:w-auto">
+        Vai all'Orientamento
+      </a>
+    }
   </div>
 
-  <!-- Link utili -->
-  <div class="mt-10">
-    <p class="mb-3 text-xs font-medium uppercase tracking-wide text-gray-400">Link utili</p>
-    <div class="flex flex-wrap justify-center gap-4">
-      <a routerLink="/chi-siamo" class="text-sm text-gray-500 hover:text-blue-600 hover:underline"
-        >Chi Siamo</a
-      >
-      <a routerLink="/login" class="text-sm text-gray-500 hover:text-blue-600 hover:underline"
-        >Accedi</a
-      >
-      <a
-        routerLink="/privacy-policy"
-        class="text-sm text-gray-500 hover:text-blue-600 hover:underline"
-        >Privacy Policy</a
-      >
+  @if (!isDashboard()) {
+    <div class="mt-10">
+      <p class="mb-3 text-xs font-medium uppercase tracking-wide text-gray-400">Link utili</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a routerLink="/chi-siamo" class="text-sm text-gray-500 hover:text-blue-600 hover:underline"
+          >Chi Siamo</a
+        >
+        <a routerLink="/login" class="text-sm text-gray-500 hover:text-blue-600 hover:underline"
+          >Accedi</a
+        >
+        <a
+          routerLink="/privacy-policy"
+          class="text-sm text-gray-500 hover:text-blue-600 hover:underline"
+          >Privacy Policy</a
+        >
+      </div>
     </div>
-  </div>
+  }
 </div>
