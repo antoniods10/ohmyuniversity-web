@@ -37,10 +37,10 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     roles: ['student', 'admin', 'professor'],
   },
   {
-    id: 'carriera',
+    id: 'career',
     label: 'Carriera',
     icon: LucideGraduationCap,
-    route: '/dashboard/carriera',
+    route: '/dashboard/career',
     roles: ['student', 'admin', 'professor'],
   },
   {

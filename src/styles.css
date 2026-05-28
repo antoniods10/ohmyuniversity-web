@@ -10,3 +10,53 @@
     transform: translateX(-50%);
   }
 }
+
+/* ─── Page background ──────────────────────────────────────────────────── */
+ 
+/*
+ * Gradient that runs top-to-bottom: white → sky → emerald.
+ * Lighter at the top, darker toward the bottom.
+ * Apply to the root element of any page that needs this background.
+ */
+@utility page-gradient {
+  @apply bg-gradient-to-b from-white via-sky-50 to-emerald-100;
+}
+ 
+/* ─── Colored card backgrounds ─────────────────────────────────────────── */
+ 
+/*
+ * Use on article / div card elements.
+ * Rule: do NOT combine with a visible border — use .elevated instead.
+ */
+@utility card-blue {
+  @apply bg-gradient-to-br from-blue-50 to-blue-100;
+}
+ 
+@utility card-blue-deep {
+  @apply bg-gradient-to-br from-blue-100 to-blue-200;
+}
+ 
+@utility card-green {
+  @apply bg-gradient-to-br from-emerald-50 to-emerald-100;
+}
+ 
+@utility card-yellow {
+  @apply bg-gradient-to-br from-amber-50 to-amber-100;
+}
+ 
+/* ─── Elevation system ─────────────────────────────────────────────────── */
+ 
+/*
+ * Rule: elevated elements must NOT have a border.
+ *       bordered elements must NOT have elevation.
+ *
+ * .elevated    — primary cards and main containers.
+ * .elevated-sm — small interactive elements (active pills, badges).
+ */
+@utility elevated {
+  @apply shadow-md;
+}
+ 
+@utility elevated-sm {
+  @apply shadow-sm;
+}
