@@ -48,10 +48,10 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     roles: ['student', 'admin', 'professor'],
   },
   {
-    id: 'tirocini',
-    label: 'Tirocini',
+    id: 'partner',
+    label: 'Partner',
     icon: LucideBriefcase,
-    route: '/dashboard/tirocini',
+    route: '/dashboard/partner',
     roles: ['student', 'admin', 'professor'],
   },
   {

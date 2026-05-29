@@ -162,6 +162,14 @@ export const routes: Routes = [
       {
         path: 'sviluppi-futuri',
         loadComponent: () => import('./features/dashboard/presentation/pages/sviluppi-futuri/sviluppi-futuri.page').then(m => m.SviluppiFuturiPage),
+      },
+      {
+        path: 'partner',
+        loadComponent: () => import('./features/dashboard/presentation/pages/partner/partner.page').then(m => m.PartnerPage),
+      },
+      {
+        path: 'messaggi',
+        loadComponent: () => import('./features/dashboard/presentation/pages/messaggi/messaggi.page').then(m => m.MessaggiPage),
       }
       // {
       //   path: 'calendario',
