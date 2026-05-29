@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { LEGAL_CONTACT_EMAIL, LEGAL_UPDATE } from '@constants';
 
 @Component({
   selector: 'app-cookie-policy-page',
@@ -8,6 +9,6 @@ import { RouterLink } from '@angular/router';
   templateUrl: './cookie-policy.page.html',
 })
 export class CookiePolicyPage {
-  readonly lastUpdated = '7 maggio 2025';
-  readonly contactEmail = 'privacy@ohmyuniversity.it';
+  readonly lastUpdated = LEGAL_UPDATE.cookiePolicy;
+  readonly contactEmail = LEGAL_CONTACT_EMAIL;
 }

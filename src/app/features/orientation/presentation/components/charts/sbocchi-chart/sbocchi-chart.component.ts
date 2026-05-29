@@ -1,35 +1,14 @@
 import { Component, input, AfterViewInit, ElementRef, ViewChild, OnChanges } from '@angular/core';
-
-export interface SboccoDataPoint {
-  area: string;
-  occupazione: number;
-  colore: string;
-}
+import { SBOCCHI_CHART_DEFAULT_DATA } from '@constants';
+import { SboccoDataPoint } from '@types';
 
 @Component({
   selector: 'app-sbocchi-chart',
   standalone: true,
-  template: `
-    <div class="rounded-xl border border-gray-100 bg-gray-50 p-4">
-      <p class="mb-3 text-xs font-medium text-gray-500">
-        Tasso di occupazione a 1 anno dalla laurea triennale - per area
-      </p>
-      <canvas #canvas class="w-full"></canvas>
-      <p class="mt-2 text-xs text-gray-400">
-        * Dati placeholder - fonte elaborazione AlmaLaurea. Aggiornati all'integrazione API.
-      </p>
-    </div>
-  `,
+  templateUrl: './sbocchi-chart.component.html',
 })
 export class SbocchiChartComponent implements AfterViewInit, OnChanges {
-  readonly data = input<SboccoDataPoint[]>([
-    { area: 'Ingegneria & Informatica', occupazione: 85, colore: '#3b82f6' },
-    { area: 'Economia & Management', occupazione: 72, colore: '#60a5fa' },
-    { area: 'Sanitaria & Medicina', occupazione: 78, colore: '#2563eb' },
-    { area: 'Scientifica', occupazione: 65, colore: '#93c5fd' },
-    { area: 'Giuridica', occupazione: 52, colore: '#bfdbfe' },
-    { area: 'Umanistica & Sociale', occupazione: 48, colore: '#dbeafe' },
-  ]);
+  readonly data = input<SboccoDataPoint[]>(SBOCCHI_CHART_DEFAULT_DATA);
 
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
@@ -58,7 +37,6 @@ export class SbocchiChartComponent implements AfterViewInit, OnChanges {
     canvas.style.height = `${H}px`;
     ctx.scale(dpr, dpr);
 
-    // Calcola labelW dinamicamente in base alla larghezza disponibile
     const labelW = Math.min(190, W * 0.45);
     const barMaxW = W - labelW - 60;
     const barH = 22;
@@ -71,23 +49,23 @@ export class SbocchiChartComponent implements AfterViewInit, OnChanges {
       ctx.fillStyle = '#374151';
       ctx.font = '11px system-ui';
       ctx.textAlign = 'right';
-      // Tronca label se troppo lungo
+
       const label = d.area.length > 24 ? d.area.slice(0, 22) + '…' : d.area;
       ctx.fillText(label, labelW - 8, y + barH / 2 + 4);
 
-      // Track (sfondo barra)
+      // Track
       ctx.fillStyle = '#f3f4f6';
       ctx.beginPath();
       ctx.roundRect(labelW, y, barMaxW, barH, 4);
       ctx.fill();
 
-      // Barra valore
+      // Value bar
       ctx.fillStyle = d.colore;
       ctx.beginPath();
       ctx.roundRect(labelW, y, barW, barH, 4);
       ctx.fill();
 
-      // Percentuale
+      // Percentage
       ctx.fillStyle = '#1f2937';
       ctx.font = 'bold 11px system-ui';
       ctx.textAlign = 'left';

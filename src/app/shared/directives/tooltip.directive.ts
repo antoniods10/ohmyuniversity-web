@@ -3,13 +3,12 @@ import { Directive, ElementRef, HostListener, input, OnDestroy, Renderer2 } from
 export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
 
 /**
- * Mostra un tooltip testuale al passaggio del mouse (o focus da tastiera)
- * sull'elemento host. Il tooltip viene appeso al body per evitare problemi
- * di overflow/clipping nei container con overflow:hidden.
+ * Displays a text tooltip on hover or keyboard focus.
+ * The tooltip is rendered on the document body to avoid clipping issues
+ * caused by parent containers with overflow constraints.
  *
  * @example
- * <button appTooltip="Elimina esame" tooltipPosition="top">🗑️</button>
- * <span appTooltip="Crediti Formativi Universitari">CFU</span>
+ * <button appTooltip="Delete item" tooltipPosition="top">🗑️</button>
  */
 @Directive({
   selector: '[appTooltip]',
@@ -48,7 +47,6 @@ export class TooltipDirective implements OnDestroy {
     this.tooltipEl = this.renderer.createElement('div');
     this.renderer.appendChild(this.tooltipEl, this.renderer.createText(this.appTooltip()));
 
-    // Stile base
     const styles: Record<string, string> = {
       position: 'fixed',
       zIndex: '9999',
@@ -70,7 +68,6 @@ export class TooltipDirective implements OnDestroy {
 
     this.renderer.appendChild(document.body, this.tooltipEl);
 
-    // Forza reflow per avviare la transizione
     requestAnimationFrame(() => {
       if (this.tooltipEl) {
         this.renderer.setStyle(this.tooltipEl, 'opacity', '1');
@@ -108,7 +105,6 @@ export class TooltipDirective implements OnDestroy {
         break;
     }
 
-    // Clamp ai bordi della viewport
     left = Math.max(8, Math.min(left, window.innerWidth - tipRect.width - 8));
     top = Math.max(8, Math.min(top, window.innerHeight - tipRect.height - 8));
 

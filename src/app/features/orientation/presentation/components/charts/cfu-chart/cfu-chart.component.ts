@@ -1,39 +1,14 @@
 import { Component, input, AfterViewInit, ElementRef, ViewChild, OnChanges } from '@angular/core';
-
-export interface CfuDataPoint {
-  anno: string;
-  cfu: number;
-  oreStudio: number;
-}
+import { CFU_CHART_DEFAULT_DATA } from '@constants';
+import { CfuDataPoint } from '@types';
 
 @Component({
   selector: 'app-cfu-chart',
   standalone: true,
-  template: `
-    <div class="rounded-xl border border-gray-100 bg-gray-50 p-4">
-      <p class="mb-3 text-xs font-medium text-gray-500">
-        CFU per anno (scala ÷3) vs Ore di studio stimate / settimana
-      </p>
-      <canvas #canvas class="w-full"></canvas>
-      <div class="mt-3 flex items-center gap-5">
-        <div class="flex items-center gap-2">
-          <div class="h-3 w-3 rounded-sm bg-blue-500"></div>
-          <span class="text-xs text-gray-500">CFU anno (÷3)</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="h-3 w-3 rounded-sm bg-blue-300"></div>
-          <span class="text-xs text-gray-500">Ore studio / sett.</span>
-        </div>
-      </div>
-    </div>
-  `,
+  templateUrl: './cfu-chart.component.html',
 })
 export class CfuChartComponent implements AfterViewInit, OnChanges {
-  readonly data = input<CfuDataPoint[]>([
-    { anno: '1° Anno', cfu: 60, oreStudio: 25 },
-    { anno: '2° Anno', cfu: 60, oreStudio: 28 },
-    { anno: '3° Anno', cfu: 60, oreStudio: 22 },
-  ]);
+  readonly data = input<CfuDataPoint[]>(CFU_CHART_DEFAULT_DATA);
 
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 
@@ -68,7 +43,7 @@ export class CfuChartComponent implements AfterViewInit, OnChanges {
     const barW = groupW * 0.28;
     const gap = barW * 0.4;
 
-    // Griglia e label asse Y
+    // Y axis Grid & Label
     ctx.font = '11px system-ui';
     [0, 10, 20, 30].forEach(v => {
       const y = pad.top + chartH - (v / maxVal) * chartH;
@@ -86,21 +61,21 @@ export class CfuChartComponent implements AfterViewInit, OnChanges {
     points.forEach((d, i) => {
       const cx = pad.left + i * groupW + groupW / 2;
 
-      // Barra CFU (÷3 per scala visiva)
+      // CFU Bar
       const cfuH = (d.cfu / 3 / maxVal) * chartH;
       ctx.fillStyle = '#3b82f6';
       ctx.beginPath();
       ctx.roundRect(cx - barW - gap / 2, pad.top + chartH - cfuH, barW, cfuH, [4, 4, 0, 0]);
       ctx.fill();
 
-      // Barra ore studio
+      // Study Hours Bar
       const oreH = (d.oreStudio / maxVal) * chartH;
       ctx.fillStyle = '#93c5fd';
       ctx.beginPath();
       ctx.roundRect(cx + gap / 2, pad.top + chartH - oreH, barW, oreH, [4, 4, 0, 0]);
       ctx.fill();
 
-      // Label asse X
+      // X axis label
       ctx.fillStyle = '#6b7280';
       ctx.textAlign = 'center';
       ctx.fillText(d.anno, cx, H - pad.bottom + 16);

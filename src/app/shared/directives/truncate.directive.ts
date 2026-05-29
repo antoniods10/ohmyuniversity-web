@@ -1,21 +1,19 @@
 import { Directive, ElementRef, HostListener, input, OnInit, Renderer2 } from '@angular/core';
 
 /**
- * Tronca il contenuto testuale dell'elemento host con ellipsis
- * quando supera il numero massimo di righe specificato.
- * Al passaggio del mouse mostra automaticamente un tooltip
- * con il testo completo (solo se il testo è effettivamente troncato).
+ * Truncates text content with ellipsis based on the maximum number of lines.
+ * Optionally shows a tooltip with the full text when the content is truncated.
  *
  * @example
- * <p appTruncate>Testo molto lungo che verrà troncato...</p>
- * <p [appTruncate]="2">Testo su massimo 2 righe</p>
+ * <p appTruncate>Long text...</p>
+ * <p [appTruncate]="2">Multi-line truncation</p>
  */
 @Directive({
   selector: '[appTruncate]',
   standalone: true,
 })
 export class TruncateDirective implements OnInit {
-  /** Numero massimo di righe visibili. Default: 1 */
+  /** Maximum number of visible lines (default: 1) */
   readonly appTruncate = input<number>(1);
 
   private tooltipEl: HTMLElement | null = null;
@@ -30,12 +28,10 @@ export class TruncateDirective implements OnInit {
     const lines = this.appTruncate();
 
     if (lines === 1) {
-      // Single line: overflow ellipsis classico
       this.renderer.setStyle(host, 'overflow', 'hidden');
       this.renderer.setStyle(host, 'text-overflow', 'ellipsis');
       this.renderer.setStyle(host, 'white-space', 'nowrap');
     } else {
-      // Multi-line: line-clamp CSS
       this.renderer.setStyle(host, 'display', '-webkit-box');
       this.renderer.setStyle(host, '-webkit-box-orient', 'vertical');
       this.renderer.setStyle(host, '-webkit-line-clamp', String(lines));
@@ -77,7 +73,6 @@ export class TruncateDirective implements OnInit {
 
     this.renderer.appendChild(document.body, this.tooltipEl);
 
-    // Posiziona sopra l'elemento
     requestAnimationFrame(() => {
       if (!this.tooltipEl) return;
       const hostRect = host.getBoundingClientRect();
@@ -87,7 +82,6 @@ export class TruncateDirective implements OnInit {
       let top = hostRect.top - tipRect.height - gap;
       let left = hostRect.left;
 
-      // Clamp ai bordi
       left = Math.max(8, Math.min(left, window.innerWidth - tipRect.width - 8));
       if (top < 8) top = hostRect.bottom + gap;
 

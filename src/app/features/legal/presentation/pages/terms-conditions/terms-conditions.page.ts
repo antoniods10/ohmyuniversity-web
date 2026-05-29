@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { LEGAL_UPDATE, LEGAL_CONTACT_EMAIL } from '@constants';
 
 @Component({
   selector: 'app-terms-page',
@@ -8,6 +9,6 @@ import { RouterLink } from '@angular/router';
   templateUrl: './terms-conditions.page.html',
 })
 export class TermsPage {
-  readonly lastUpdated = '7 maggio 2025';
-  readonly contactEmail = 'legal@ohmyuniversity.it';
+  readonly lastUpdated = LEGAL_UPDATE.termsConditions;
+  readonly contactEmail = LEGAL_CONTACT_EMAIL;
 }

@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
-
-interface Step {
-  number: number;
-  title: string;
-  description: string;
-}
+import { HOME_STEPS } from '@constants';
+import { Step } from '@types';
 
 @Component({
   selector: 'app-home-how-it-works',
@@ -12,21 +8,5 @@ interface Step {
   templateUrl: './home-how-it-works.component.html',
 })
 export class HomeHowItWorksComponent {
-  readonly steps: Step[] = [
-    {
-      number: 1,
-      title: 'Scegli il tuo ateneo',
-      description: 'Cerca la tua università tra i 50+ atenei supportati.',
-    },
-    {
-      number: 2,
-      title: 'Accedi con le tue credenziali',
-      description: 'Login sicuro SSO - usiamo le credenziali del tuo ateneo, senza nuove password.',
-    },
-    {
-      number: 3,
-      title: 'Hai tutto sotto controllo',
-      description: 'La tua dashboard è pronta con esami, piano di studi e statistiche aggiornate.',
-    },
-  ];
+  readonly steps: Step[] = HOME_STEPS;
 }

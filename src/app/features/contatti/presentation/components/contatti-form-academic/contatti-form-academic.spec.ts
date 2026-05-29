@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ContattiFormAcademic } from './contatti-form-academic';
+import { ContattiFormAcademic } from './contatti-form-academic.component';
 
 describe('ContattiFormAcademic', () => {
   let component: ContattiFormAcademic;

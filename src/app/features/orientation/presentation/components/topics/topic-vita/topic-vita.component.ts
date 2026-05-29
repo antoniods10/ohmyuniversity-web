@@ -1,5 +1,11 @@
 import { Component, input, output, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
+import {
+  VITA_CONSIGLI_ORARI,
+  VITA_CONSIGLI_STUDIO,
+  VITA_FUORISEDE,
+  VITA_TEMPO_SLICES,
+} from '@constants';
 
 @Component({
   selector: 'app-topic-vita',
@@ -16,47 +22,10 @@ export class TopicVitaComponent implements AfterViewInit {
 
   @ViewChild('tempoChart') tempoChartRef!: ElementRef<HTMLCanvasElement>;
 
-  readonly tempoSlices = [
-    { label: 'Lezioni', percent: 30, color: '#3b82f6' },
-    { label: 'Studio individuale', percent: 35, color: '#60a5fa' },
-    { label: 'Tempo libero / sport', percent: 20, color: '#bfdbfe' },
-    { label: 'Lavori domestici / commissioni', percent: 10, color: '#dbeafe' },
-    { label: 'Altro', percent: 5, color: '#e5e7eb' },
-  ];
-
-  readonly consigliOrari = [
-    {
-      titolo: 'Gli orari non sono come al liceo',
-      testo:
-        'Le lezioni non coprono tutta la mattina. Potresti avere 2 ore di lezione alle 9 e poi niente fino alle 15. Questi "buchi" vanno riempiti con lo studio - non sono tempo libero.',
-    },
-    {
-      titolo: 'Lezioni spezzate su più giorni',
-      testo:
-        'Un corso da 9 CFU può avere 3 ore di lezione distribuite su 3 giorni diversi. Impara a leggere il piano orario e costruisci una routine settimanale stabile.',
-    },
-  ];
-
-  readonly consigliStudio = [
-    {
-      titolo: 'Studia subito dopo la lezione',
-      testo:
-        'Le ricerche cognitive mostrano che ripassare entro 24h dalla lezione aumenta la ritenzione a lungo termine del 60%. Non aspettare la sessione.',
-    },
-    {
-      titolo: "Non studiare solo prima dell'esame",
-      testo:
-        'Il "binge studying" funziona per superare l\'esame, ma non per ricordarlo. Se vuoi costruire competenze reali (e reggere una laurea magistrale), studia in modo distribuito.',
-    },
-  ];
-
-  readonly vitaFuorisede = [
-    { voce: 'Affitto camera singola (media nazionale)', importo: '400–600 €/mese' },
-    { voce: 'Spesa alimentare', importo: '150–250 €/mese' },
-    { voce: 'Utenze (quota parte)', importo: '50–80 €/mese' },
-    { voce: 'Trasporti', importo: '30–60 €/mese' },
-    { voce: 'Totale stimato', importo: '630–990 €/mese' },
-  ];
+  readonly tempoSlices = VITA_TEMPO_SLICES;
+  readonly consigliOrari = VITA_CONSIGLI_ORARI;
+  readonly consigliStudio = VITA_CONSIGLI_STUDIO;
+  readonly vitaFuorisede = VITA_FUORISEDE;
 
   ngAfterViewInit(): void {
     this.drawPieChart();

@@ -1,14 +1,5 @@
 import { Component, input, signal } from '@angular/core';
-
-export interface FaqItem {
-  question: string;
-  answer: string;
-}
-
-export interface FaqCategory {
-  title: string;
-  items: FaqItem[];
-}
+import { FaqCategory } from '@types';
 
 @Component({
   selector: 'app-faq-list',
@@ -18,7 +9,6 @@ export interface FaqCategory {
 export class FaqListComponent {
   readonly categories = input.required<FaqCategory[]>();
 
-  // Tiene traccia dell'item aperto per ogni categoria: Map<catIndex, itemIndex | null>
   readonly openItems = signal<Map<number, number | null>>(new Map());
 
   toggle(catIndex: number, itemIndex: number): void {

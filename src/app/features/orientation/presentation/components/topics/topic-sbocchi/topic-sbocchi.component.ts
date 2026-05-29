@@ -1,6 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
 import { SbocchiChartComponent } from '../../charts/sbocchi-chart/sbocchi-chart.component';
+import { SBOCCHI_AREE, SBOCCHI_CONSIGLI } from '@constants';
 
 export interface SboccoArea {
   area: string;
@@ -21,30 +22,6 @@ export class TopicSbocchiComponent {
   readonly next = output<void>();
   readonly backToList = output<void>();
 
-  readonly aree: SboccoArea[] = [
-    { area: 'Ingegneria & Informatica', occupazione1anno: 85, stipendioMedio: '1.450–1.800 €' },
-    { area: 'Economia & Management', occupazione1anno: 72, stipendioMedio: '1.200–1.500 €' },
-    { area: 'Sanitaria & Medicina', occupazione1anno: 78, stipendioMedio: '1.400–2.100 €' },
-    { area: 'Scientifica', occupazione1anno: 65, stipendioMedio: '1.200–1.600 €' },
-    { area: 'Giuridica', occupazione1anno: 52, stipendioMedio: '1.000–1.400 €' },
-    { area: 'Umanistica & Sociale', occupazione1anno: 48, stipendioMedio: '950–1.250 €' },
-  ];
-
-  readonly consigli = [
-    {
-      titolo: 'I dati sono indicativi - il contesto conta',
-      testo:
-        'Un laureato in Lettere con esperienze, lingue e soft skills può guadagnare più di un laureato in Ingegneria senza iniziativa. I dati danno una media, non un destino.',
-    },
-    {
-      titolo: 'Controlla AlmaLaurea prima di scegliere',
-      testo:
-        'AlmaLaurea è il database ufficiale italiano sugli esiti occupazionali dei laureati. Prima di iscriverti, cerca il tuo corso specifico: vedrai stipendi reali e tassi di occupazione per ateneo.',
-    },
-    {
-      titolo: 'Magistrale vs Triennale nel mercato del lavoro',
-      testo:
-        'In molti settori tecnici la magistrale è quasi obbligatoria per accedere a posizioni senior. In altri (comunicazione, design, commerciale) la triennale con esperienze pratiche basta e avanza.',
-    },
-  ];
+  readonly aree = SBOCCHI_AREE;
+  readonly consigli = SBOCCHI_CONSIGLI;
 }

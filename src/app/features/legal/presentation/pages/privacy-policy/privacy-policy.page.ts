@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { LEGAL_CONTACT_EMAIL, LEGAL_UPDATE } from '@constants';
 
 @Component({
   selector: 'app-privacy-policy-page',
@@ -8,6 +9,6 @@ import { RouterLink } from '@angular/router';
   templateUrl: './privacy-policy.page.html',
 })
 export class PrivacyPolicyPage {
-  readonly lastUpdated = '7 maggio 2025';
-  readonly contactEmail = 'privacy@ohmyuniversity.it';
+  readonly lastUpdated = LEGAL_UPDATE.privacyPolicy;
+  readonly contactEmail = LEGAL_CONTACT_EMAIL;
 }

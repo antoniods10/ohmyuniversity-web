@@ -1,31 +1,25 @@
 import { AfterViewInit, Directive, ElementRef, input } from '@angular/core';
 
 /**
- * Porta il focus sull'elemento host subito dopo il rendering.
- * Accetta un input booleano opzionale per abilitare/disabilitare
- * il comportamento dinamicamente.
+ * Automatically focuses the host element after view initialization.
+ * Can be enabled/disabled via input binding.
  *
  * @example
  * <input appAutofocus />
- * <input [appAutofocus]="isModalOpen" />
+ * <input [appAutofocus]="isOpen" />
  */
 @Directive({
   selector: '[appAutofocus]',
   standalone: true,
 })
 export class AutofocusDirective implements AfterViewInit {
-  /** Se false, il focus non viene applicato. Default: true */
   readonly appAutofocus = input<boolean>(true);
 
   constructor(private readonly el: ElementRef<HTMLElement>) {}
 
   ngAfterViewInit(): void {
-    if (this.appAutofocus()) {
-      // setTimeout 0 garantisce che il focus avvenga dopo
-      // il ciclo di rendering corrente (es. dentro modal/dialog)
-      setTimeout(() => {
-        this.el.nativeElement.focus();
-      }, 0);
-    }
+    if (!this.appAutofocus()) return;
+
+    setTimeout(() => this.el.nativeElement.focus(), 0);
   }
 }

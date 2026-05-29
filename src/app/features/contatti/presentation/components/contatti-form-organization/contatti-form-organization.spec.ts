@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ContattiFormOrganization } from './contatti-form-organization';
+import { ContattiFormOrganization } from './contatti-form-organization.component';
 
 describe('ContattiFormOrganization', () => {
   let component: ContattiFormOrganization;

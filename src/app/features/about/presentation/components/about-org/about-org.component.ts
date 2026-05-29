@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ABOUT_ORG_STATS } from '@constants';
 
 @Component({
   selector: 'app-about-org',
@@ -6,10 +7,5 @@ import { Component } from '@angular/core';
   templateUrl: './about-org.component.html',
 })
 export class AboutOrgComponent {
-  readonly stats = [
-    { value: '6', label: 'Contributori attivi' },
-    { value: '100%', label: 'Open source' },
-    { value: '1', label: 'Progetto attivo' },
-    { value: '50+', label: 'Atenei supportati' },
-  ];
+  readonly stats = ABOUT_ORG_STATS;
 }

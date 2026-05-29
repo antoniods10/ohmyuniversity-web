@@ -1,11 +1,10 @@
 import { Directive, ElementRef, output, HostListener } from '@angular/core';
 
 /**
- * Emette l'evento `clickOutside` quando l'utente clicca
- * al di fuori dell'elemento su cui è applicata la directive.
+ * Emits an event when a click occurs outside the host element.
  *
  * @example
- * <div appClickOutside (clickOutside)="close()">...</div>
+ * <div appClickOutside (clickOutside)="close()"></div>
  */
 @Directive({
   selector: '[appClickOutside]',

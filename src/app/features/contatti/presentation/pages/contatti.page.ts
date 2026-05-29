@@ -1,8 +1,7 @@
 import { Component, signal } from '@angular/core';
-import { ContattiFormAcademic } from '../components/contatti-form-academic/contatti-form-academic';
-import { ContattiFormOrganization } from '../components/contatti-form-organization/contatti-form-organization';
-
-export type ContactTab = 'academic' | 'organization';
+import { ContattiFormAcademic } from '../components/contatti-form-academic/contatti-form-academic.component';
+import { ContattiFormOrganization } from '../components/contatti-form-organization/contatti-form-organization.component';
+import { ContactTab } from '@types';
 
 @Component({
   selector: 'app-contatti-page',
@@ -16,5 +15,4 @@ export class ContattiPage {
   setTab(tab: ContactTab): void {
     this.activeTab.set(tab);
   }
-
 }
