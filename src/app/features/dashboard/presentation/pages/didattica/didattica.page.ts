@@ -30,7 +30,7 @@ const AVERAGE_DECIMALS = 2;
 
 // ── Shared types ───────────────────────────────────────────────────────────
 
-type TabId = 'panoramica' | 'piano di studi' | 'appelli' | 'segreteria';
+type TabId = 'panoramica' | 'piano-studi' | 'appelli' | 'segreteria';
 
 // ── Study-plan types ───────────────────────────────────────────────────────
 
