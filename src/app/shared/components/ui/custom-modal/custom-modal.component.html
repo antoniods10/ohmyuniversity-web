@@ -1,0 +1,52 @@
+<!--
+@file custom-modal.component.html
+@description Template for CustomModalComponent including backdrop,
+container layout, header, body and footer projection areas.
+-->
+
+@if (isOpen) {
+  <!-- Backdrop -->
+  <div [class]="backdropClasses" (click)="onBackdropClick()" aria-hidden="true"></div>
+
+  <!-- Modal container -->
+  <div
+    [class]="containerClasses"
+    [style.--drawer-size]="drawerSizeStyle"
+    [style.--sheet-size]="sheetSizeStyle"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="title || 'Finestra di dialogo'">
+    <!-- Header -->
+    @if (hasHeader) {
+      <div class="modal-header">
+        <div class="modal-header__text">
+          @if (title) {
+            <h2 class="modal-header__title">{{ title }}</h2>
+          }
+          @if (subtitle) {
+            <p class="modal-header__subtitle">{{ subtitle }}</p>
+          }
+        </div>
+        @if (showCloseButton) {
+          <button
+            class="modal-header__close"
+            type="button"
+            aria-label="Chiudi"
+            (click)="onCloseButton()">
+            <svg [lucideIcon]="iconClose" [size]="18"></svg>
+          </button>
+        }
+      </div>
+    }
+
+    <!-- Body -->
+    <div class="modal-body">
+      <ng-content></ng-content>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal-footer">
+      <ng-content select="[footer]"></ng-content>
+    </div>
+  </div>
+}
