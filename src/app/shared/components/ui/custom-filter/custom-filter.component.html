@@ -1,0 +1,107 @@
+<!--
+@file custom-filter.component.html
+@description Template for CustomFilterComponent providing a configurable
+filtering UI including search input, select filters, chip filters, and action
+controls for filtering and reset.
+-->
+
+<div [ngClass]="hostClasses">
+  <!-- Main Row -->
+  <div class="filter__main-row">
+    <!-- Search -->
+    <div class="filter__search-wrap">
+      <span class="filter__search-icon" aria-hidden="true">
+        <svg [lucideIcon]="iconSearch" [size]="searchIconSize"></svg>
+      </span>
+
+      <input
+        class="filter__search-input"
+        type="text"
+        [placeholder]="searchPlaceholder"
+        [(ngModel)]="searchValue"
+        (keydown)="onSearchKeydown($event)"
+        [attr.aria-label]="searchPlaceholder" />
+
+      @if (searchValue) {
+        <button
+          class="filter__search-clear"
+          type="button"
+          aria-label="Cancella ricerca"
+          (click)="onClearSearch()">
+          <svg [lucideIcon]="iconClear" [size]="clearIconSize"></svg>
+        </button>
+      }
+    </div>
+
+    <!-- Search action -->
+    <button class="filter__btn filter__btn--search" type="button" (click)="onSearch()">
+      <svg [lucideIcon]="iconSearch" [size]="btnIconSize" aria-hidden="true"></svg>
+      <span>{{ searchLabel }}</span>
+    </button>
+
+    <!-- Reset action -->
+    @if (hasAnyFilter) {
+      <button
+        class="filter__btn filter__btn--reset"
+        type="button"
+        [attr.aria-label]="resetLabel"
+        (click)="onReset()">
+        <svg [lucideIcon]="iconReset" [size]="btnIconSize" aria-hidden="true"></svg>
+        <span class="filter__btn-reset-label">{{ resetLabel }}</span>
+      </button>
+    }
+
+    <!-- Active filters badge -->
+    @if (showActiveCount && activeFilterCount > 0) {
+      <span class="filter__active-badge" aria-label="{{ activeFilterCount }} filtri attivi">
+        <svg [lucideIcon]="iconFilter" [size]="10" aria-hidden="true"></svg>
+        {{ activeFilterCount }}
+      </span>
+    }
+  </div>
+
+  <!-- Select Filters -->
+  @if (selects.length > 0) {
+    <div class="filter__selects-row">
+      @for (sel of selects; track trackByKey($index, sel)) {
+        <label class="filter__select-wrap">
+          <span class="filter__select-label">{{ sel.label }}</span>
+          <select
+            class="filter__select"
+            [(ngModel)]="selectValues[sel.key]"
+            (ngModelChange)="onSelectChange()"
+            [attr.aria-label]="sel.label">
+            <option [value]="null">{{ sel.placeholder ?? 'Tutti' }}</option>
+            @for (opt of sel.options; track trackByValue($index, opt)) {
+              <option [value]="opt.value">{{ opt.label }}</option>
+            }
+          </select>
+        </label>
+      }
+    </div>
+  }
+
+  <!-- Chip Filters -->
+  @if (chips.length > 0) {
+    <div class="filter__chips-section">
+      @for (group of chips; track trackByKey($index, group)) {
+        <div class="filter__chip-group">
+          <span class="filter__chip-group-label">{{ group.label }}</span>
+          <div class="filter__chip-row">
+            @for (opt of group.options; track trackByValue($index, opt)) {
+              <button
+                class="filter__chip"
+                [class.filter__chip--active]="isChipActive(group.key, opt.value)"
+                type="button"
+                [attr.aria-pressed]="isChipActive(group.key, opt.value)"
+                [attr.aria-label]="opt.label"
+                (click)="toggleChip(group.key, opt.value, group.multiple ?? false)">
+                {{ opt.label }}
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

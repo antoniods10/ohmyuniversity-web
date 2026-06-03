@@ -1,0 +1,420 @@
+/**
+ * @file custom-filter.component.css
+ * @description Component-specific styles for the CustomFilterComponent.
+ * Relies on global design tokens defined in global-tokens.css.
+ */
+
+/* Layout */
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  font-family: inherit;
+}
+
+.filter__main-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* Search */
+.filter__search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1 1 220px;
+  min-width: 0;
+}
+
+.filter__search-icon {
+  position: absolute;
+  left: 0.7em;
+  display: flex;
+  align-items: center;
+  color: var(--color-neutral-400);
+  pointer-events: none;
+}
+
+.filter__search-input {
+  width: 100%;
+  padding: 0.55em 2.4em 0.55em 2.2em;
+  background: var(--color-neutral-100);
+  border: 1.5px solid var(--color-neutral-300);
+  border-radius: var(--radius-md, 10px);
+  color: var(--color-neutral-600);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+  outline: none;
+  transition:
+    border-color var(--transition-fast, 150ms),
+    box-shadow var(--transition-fast, 150ms);
+}
+
+.filter__search-input::placeholder {
+  color: var(--color-neutral-400);
+  font-weight: 400;
+}
+
+.filter__search-input:focus {
+  border-color: var(--color-primary-dark);
+  box-shadow: 0 0 0 3px var(--color-primary-focus);
+  background: white;
+}
+
+.filter__search-clear {
+  position: absolute;
+  right: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2em;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: var(--color-neutral-400);
+  cursor: pointer;
+  transition:
+    color var(--transition-fast, 150ms),
+    background var(--transition-fast, 150ms);
+}
+.filter__search-clear:hover {
+  color: var(--color-neutral-600);
+  background: var(--color-neutral-200);
+}
+
+/* Actions - Buttons + Badges */
+.filter__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.55em 1.1em;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-md, 10px);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  outline: none;
+  transition:
+    background var(--transition-fast, 150ms),
+    border-color var(--transition-fast, 150ms),
+    box-shadow var(--transition-fast, 150ms),
+    transform var(--transition-fast, 150ms);
+}
+.filter__btn:focus-visible {
+  outline: 3px solid var(--color-primary-focus);
+  outline-offset: 2px;
+}
+.filter__btn:active {
+  transform: scale(0.97);
+}
+
+/* Primary action */
+.filter__btn--search {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary-dark));
+  color: var(--color-primary-text);
+  border-color: var(--color-primary-dark);
+  box-shadow: 0 2px 8px var(--color-primary-shadow);
+}
+.filter__btn--search:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px var(--color-primary-shadow);
+}
+
+/* Secondary action */
+.filter__btn--reset {
+  background: transparent;
+  color: var(--color-neutral-500);
+  border-color: var(--color-neutral-300);
+}
+.filter__btn--reset:hover {
+  background: var(--color-neutral-100);
+  border-color: var(--color-neutral-400);
+  color: var(--color-neutral-600);
+}
+
+/* Active filters badge */
+.filter__active-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  padding: 0.2em 0.55em;
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary-dark));
+  color: var(--color-primary-text);
+  border: 1.5px solid var(--color-primary-dark);
+  border-radius: var(--radius-full, 9999px);
+  font-size: 0.7em;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Selects */
+.filter__selects-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.filter__select-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1 1 160px;
+  min-width: 0;
+}
+
+.filter__select-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-neutral-500);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.filter__select {
+  appearance: none;
+  width: 100%;
+  padding: 0.5em 2em 0.5em 0.75em;
+  background: var(--color-neutral-100);
+  border: 1.5px solid var(--color-neutral-300);
+  border-radius: var(--radius-md, 10px);
+  color: var(--color-neutral-600);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color var(--transition-fast, 150ms),
+    box-shadow var(--transition-fast, 150ms);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239aa0ad' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.6em center;
+}
+.filter__select:focus {
+  border-color: var(--color-primary-dark);
+  box-shadow: 0 0 0 3px var(--color-primary-focus);
+  background-color: white;
+}
+
+/* Chips */
+.filter__chips-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.filter__chip-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.filter__chip-group-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-neutral-500);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.filter__chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.filter__chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.85em;
+  background: transparent;
+  border: 1.5px solid var(--color-neutral-300);
+  border-radius: var(--radius-full, 9999px);
+  color: var(--color-neutral-500);
+  font-family: inherit;
+  font-size: 0.82em;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background var(--transition-fast, 150ms),
+    border-color var(--transition-fast, 150ms),
+    color var(--transition-fast, 150ms),
+    box-shadow var(--transition-fast, 150ms),
+    transform var(--transition-fast, 150ms);
+}
+
+.filter__chip:hover {
+  background: var(--color-neutral-200);
+  border-color: var(--color-neutral-400);
+  color: var(--color-neutral-600);
+  transform: translateY(-1px);
+}
+
+.filter__chip:active {
+  transform: scale(0.96);
+}
+
+.filter__chip:focus-visible {
+  outline: 3px solid var(--color-primary-focus);
+  outline-offset: 2px;
+}
+
+.filter__chip--active {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary-dark));
+  border-color: var(--color-primary-dark);
+  color: var(--color-primary-text);
+  box-shadow: 0 2px 6px var(--color-primary-shadow);
+}
+.filter__chip--active:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
+/* Variants */
+.filter--secondary .filter__btn--search,
+.filter--secondary .filter__chip--active,
+.filter--secondary .filter__active-badge {
+  background: linear-gradient(135deg, var(--color-secondary-light), var(--color-secondary-dark));
+  border-color: var(--color-secondary-dark);
+  color: var(--color-secondary-text);
+  box-shadow: 0 2px 8px var(--color-secondary-shadow);
+}
+.filter--secondary .filter__search-input:focus {
+  border-color: var(--color-secondary-dark);
+  box-shadow: 0 0 0 3px var(--color-secondary-focus);
+}
+
+.filter--tertiary .filter__btn--search,
+.filter--tertiary .filter__chip--active,
+.filter--tertiary .filter__active-badge {
+  background: linear-gradient(135deg, var(--color-tertiary-light), var(--color-tertiary-dark));
+  border-color: var(--color-tertiary-dark);
+  color: var(--color-tertiary-text);
+  box-shadow: 0 2px 8px var(--color-tertiary-shadow);
+}
+.filter--tertiary .filter__search-input:focus {
+  border-color: var(--color-tertiary-dark);
+  box-shadow: 0 0 0 3px var(--color-tertiary-focus);
+}
+
+.filter--success .filter__btn--search,
+.filter--success .filter__chip--active,
+.filter--success .filter__active-badge {
+  background: linear-gradient(135deg, var(--color-success-light), var(--color-success-dark));
+  border-color: var(--color-success-dark);
+  color: var(--color-success-text);
+  box-shadow: 0 2px 8px var(--color-success-shadow);
+}
+.filter--success .filter__search-input:focus {
+  border-color: var(--color-success-dark);
+  box-shadow: 0 0 0 3px var(--color-success-focus);
+}
+
+.filter--info .filter__btn--search,
+.filter--info .filter__chip--active,
+.filter--info .filter__active-badge {
+  background: linear-gradient(135deg, var(--color-info-light), var(--color-info-dark));
+  border-color: var(--color-info-dark);
+  color: var(--color-info-text);
+  box-shadow: 0 2px 8px var(--color-info-shadow);
+}
+.filter--info .filter__search-input:focus {
+  border-color: var(--color-info-dark);
+  box-shadow: 0 0 0 3px var(--color-info-focus);
+}
+
+/* Sizes */
+.filter--sm {
+  font-size: 0.8rem;
+}
+.filter--md {
+  font-size: 0.875rem;
+}
+.filter--lg {
+  font-size: 1rem;
+}
+
+.filter--sm .filter__btn {
+  padding: 0.4em 0.85em;
+}
+.filter--lg .filter__btn {
+  padding: 0.65em 1.3em;
+}
+
+.filter--sm .filter__search-input {
+  padding: 0.4em 2em 0.4em 1.9em;
+}
+.filter--lg .filter__search-input {
+  padding: 0.65em 2.6em 0.65em 2.4em;
+}
+
+/* Dark theme overrides */
+.filter--dark .filter__search-input,
+.filter--dark .filter__select {
+  background: var(--color-neutral-600);
+  border-color: var(--color-neutral-500);
+  color: var(--color-neutral-200);
+}
+.filter--dark .filter__search-input::placeholder {
+  color: var(--color-neutral-400);
+}
+.filter--dark .filter__search-input:focus,
+.filter--dark .filter__select:focus {
+  background: var(--color-neutral-600);
+}
+.filter--dark .filter__chip {
+  border-color: var(--color-neutral-500);
+  color: var(--color-neutral-400);
+}
+.filter--dark .filter__chip:hover {
+  background: var(--color-neutral-600);
+  border-color: var(--color-neutral-400);
+  color: var(--color-neutral-200);
+}
+.filter--dark .filter__btn--reset {
+  border-color: var(--color-neutral-500);
+  color: var(--color-neutral-400);
+}
+.filter--dark .filter__btn--reset:hover {
+  background: var(--color-neutral-600);
+  color: var(--color-neutral-200);
+}
+.filter--dark .filter__select-label,
+.filter--dark .filter__chip-group-label {
+  color: var(--color-neutral-400);
+}
+.filter--dark .filter__search-clear {
+  color: var(--color-neutral-400);
+}
+.filter--dark .filter__search-clear:hover {
+  background: var(--color-neutral-600);
+  color: var(--color-neutral-200);
+}
+
+/* Responsive - Media Queries */
+@media (max-width: 600px) {
+  .filter__main-row {
+    gap: 0.4rem;
+  }
+  .filter__search-wrap {
+    flex: 1 1 100%;
+  }
+  .filter__btn--search {
+    flex: 1;
+    justify-content: center;
+  }
+  .filter__btn-reset-label {
+    display: none;
+  }
+  .filter__select-wrap {
+    flex: 1 1 100%;
+  }
+}
