@@ -1,0 +1,201 @@
+<!--
+@file avatar-profile-panel.component.html
+@description Account switcher panel built around avatar selection. Supports
+multi-account display, profile header, and action section (add account,
+settings, logout) with animated dropdown behavior.
+-->
+
+<div class="relative inline-block">
+  <!-- Trigger avatar (current account) -->
+  @if (currentAccount) {
+    <app-custom-avatar
+      [src]="currentAccount.avatarSrc ?? ''"
+      [name]="currentAccount.name"
+      [variant]="variantFor(currentAccount.status)"
+      [showRing]="true"
+      ringSize="lg"
+      [ringGap]="true"
+      [ringColor]="ringColorFor(currentAccount.status)"
+      size="md"
+      shape="circle"
+      [clickable]="true"
+      [darkTheme]="darkTheme"
+      [ariaLabel]="'Profilo di ' + currentAccount.name"
+      (avatarClick)="toggle()" />
+  }
+
+  <!-- Panel container (positioned dropdown) -->
+  <div
+    class="absolute z-50 rounded-2xl shadow-2xl border overflow-hidden transition-all duration-200 ease-out"
+    [class]="positionClasses + ' ' + transformOriginClass + ' ' + panelOpenClasses + ' ' + darkBg"
+    [style.width.px]="panelWidth"
+    role="dialog"
+    aria-modal="true">
+    <!-- Current account header -->
+    @if (currentAccount) {
+      <div class="flex items-start p-4 pb-3 gap-3">
+        <!-- Main avatar aligned with trigger position -->
+        <div class="shrink-0" [class]="position === 'left' ? 'order-last' : ''">
+          <app-custom-avatar
+            [src]="currentAccount.avatarSrc ?? ''"
+            [name]="currentAccount.name"
+            [variant]="variantFor(currentAccount.status)"
+            [showRing]="true"
+            ringSize="lg"
+            [ringGap]="true"
+            [ringColor]="ringColorFor(currentAccount.status)"
+            size="lg"
+            shape="circle"
+            [darkTheme]="darkTheme" />
+        </div>
+
+        <!-- User information block -->
+        <div
+          class="flex-1 min-w-0 flex flex-col gap-0.5"
+          [class]="position === 'left' ? 'items-end text-right' : ''">
+          <!-- Name -->
+          <span class="font-bold text-sm truncate" [class]="darkText">
+            {{ currentAccount.name }}
+          </span>
+
+          <!-- Mail -->
+          <span class="text-[0.7rem] truncate" [class]="darkSubtext">
+            {{ currentAccount.email }}
+          </span>
+
+          <!-- Course -->
+          <span class="text-[0.7rem] truncate" [class]="darkSubtext">
+            {{ currentAccount.courseLabel }}
+          </span>
+
+          <!-- University badge -->
+          <span
+            class="mt-1 text-[0.65rem] font-semibold px-2 py-0.5 rounded-md text-center w-full block truncate"
+            [class]="darkTheme ? 'bg-gray-700 text-gray-300' : 'bg-gray-100 text-gray-500'">
+            {{ currentAccount.universityLabel }}
+          </span>
+        </div>
+
+        <!-- Course acronym badge -->
+        <div
+          class="shrink-0 w-12 flex justify-end"
+          [class]="position === 'left' ? 'order-first' : ''">
+          <span
+            class="text-[0.6rem] font-bold px-1.5 py-0.5 rounded-full"
+            [class]="acronymClass(currentAccount.courseAcronym)">
+            {{ currentAccount.courseAcronym }}
+          </span>
+        </div>
+      </div>
+    }
+
+    <!-- Divider -->
+    <div class="h-px" [class]="'border-t ' + darkDivider"></div>
+
+    <!-- Account switch item -->
+    @if (secondaryAccounts.length > 0) {
+      <p
+        class="text-[0.65rem] font-bold uppercase tracking-widest px-4 pt-2.5 pb-1"
+        [class]="darkSubtext">
+        Altri account
+      </p>
+
+      <ul class="list-none m-0 p-0">
+        @for (account of secondaryAccounts; track account.id) {
+          <li>
+            <button
+              class="flex items-center gap-3 w-full px-4 py-2 transition-colors duration-150 cursor-pointer border-none bg-transparent text-left"
+              [class]="darkHover"
+              type="button"
+              [attr.aria-label]="'Passa a ' + account.name"
+              (click)="onAccountSwitch(account)">
+              <!-- Avatar -->
+              <div class="shrink-0">
+                <app-custom-avatar
+                  [src]="account.avatarSrc ?? ''"
+                  [name]="account.name"
+                  [variant]="variantFor(account.status)"
+                  [showRing]="true"
+                  ringSize="sm"
+                  [ringGap]="true"
+                  [ringColor]="ringColorFor(account.status)"
+                  size="sm"
+                  shape="circle"
+                  [darkTheme]="darkTheme" />
+              </div>
+
+              <!-- Account details -->
+              <div class="flex-1 min-w-0 flex flex-col gap-0">
+                <span class="text-xs font-semibold truncate" [class]="darkText">{{
+                  account.name
+                }}</span>
+                <span class="text-[0.67rem] truncate" [class]="darkSubtext">{{
+                  account.email
+                }}</span>
+                <span class="text-[0.65rem] truncate" [class]="darkSubtext">{{
+                  account.courseLabel
+                }}</span>
+                <span
+                  class="text-[0.6rem] truncate"
+                  [class]="darkTheme ? 'text-gray-500' : 'text-gray-400'"
+                  >{{ account.universityLabel }}</span
+                >
+              </div>
+
+              <!-- Course acronym badge -->
+              <div class="shrink-0 w-12 flex justify-end">
+                <span
+                  class="text-[0.58rem] font-bold px-1.5 py-0.5 rounded-full"
+                  [class]="acronymClass(account.courseAcronym)">
+                  {{ account.courseAcronym }}
+                </span>
+              </div>
+            </button>
+          </li>
+        }
+      </ul>
+    }
+
+    <!-- Divider -->
+    <div class="h-px" [class]="'border-t ' + darkDivider"></div>
+
+    <!-- Actions section -->
+    <div class="flex flex-col py-1">
+      <!-- Add account -->
+      @if (showAddAccount) {
+        <button
+          class="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm font-medium transition-colors duration-150 border-none bg-transparent cursor-pointer text-left"
+          [class]="darkSubtext + ' ' + darkHover"
+          type="button"
+          (click)="onAdd()">
+          <svg [lucideIcon]="iconPlus" [size]="14" aria-hidden="true"></svg>
+          <span>Aggiungi account</span>
+        </button>
+      }
+
+      <!-- Settings -->
+      @if (showSettings) {
+        <button
+          class="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm font-medium transition-colors duration-150 border-none bg-transparent cursor-pointer text-left"
+          [class]="darkSubtext + ' ' + darkHover"
+          type="button"
+          (click)="onSettings()">
+          <svg [lucideIcon]="iconSettings" [size]="14" aria-hidden="true"></svg>
+          <span>Impostazioni profilo</span>
+        </button>
+      }
+
+      <!-- Logout -->
+      @if (showLogout) {
+        <button
+          class="flex items-center gap-2.5 w-full px-4 py-2.5 text-sm font-medium transition-colors duration-150 border-none bg-transparent cursor-pointer text-left text-red-500 hover:bg-red-50"
+          [class]="darkTheme ? 'hover:bg-red-950/30!' : ''"
+          type="button"
+          (click)="onLogout()">
+          <svg [lucideIcon]="iconLogout" [size]="14" aria-hidden="true"></svg>
+          <span>Esci</span>
+        </button>
+      }
+    </div>
+  </div>
+</div>
