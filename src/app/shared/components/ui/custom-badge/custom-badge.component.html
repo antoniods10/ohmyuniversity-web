@@ -1,0 +1,54 @@
+<!--
+@file custom-badge.component.html
+@description Template for CustomBadgeComponent supporting label, count,
+icons, dot mode, and removable action.
+-->
+
+<span
+  [ngClass]="badgeClasses"
+  [attr.aria-label]="ariaLabel || label || null"
+  [attr.role]="removable ? 'status' : null">
+  <!-- Status dot (standalone) -->
+  @if (isDotOnly) {
+    <span class="badge__dot" aria-hidden="true"></span>
+  }
+
+  <!-- Status dot (inline mode) -->
+  @if (dot && !isDotOnly) {
+    <span class="badge__dot" aria-hidden="true"></span>
+  }
+
+  <!-- Left icon -->
+  @if (icon && iconPosition === 'left' && !isCountMode) {
+    <span class="badge__icon badge__icon--left" aria-hidden="true">
+      <svg [lucideIcon]="icon" [size]="iconSize"></svg>
+    </span>
+  }
+
+  <!-- Content -->
+  @if (!isDotOnly) {
+    @if (isCountMode) {
+      <span class="badge__count">{{ displayCount }}</span>
+    } @else {
+      <span class="badge__label">{{ label }}</span>
+    }
+  }
+
+  <!-- Right icon -->
+  @if (icon && iconPosition === 'right' && !isCountMode) {
+    <span class="badge__icon badge__icon--right" aria-hidden="true">
+      <svg [lucideIcon]="icon" [size]="iconSize"></svg>
+    </span>
+  }
+
+  <!-- Remove action -->
+  @if (removable) {
+    <button
+      class="badge__remove"
+      type="button"
+      [attr.aria-label]="'Rimuovi ' + (label || 'badge')"
+      (click)="onRemove($event)">
+      <svg [lucideIcon]="closeIcon" [size]="closeSize"></svg>
+    </button>
+  }
+</span>
