@@ -1,0 +1,255 @@
+/*
+ * @file custom-avatar.component.css
+ * @description Component-specific styles for the CustomAvatarComponent.
+ * Relies on global design tokens defined in global-tokens.css.
+ */
+
+/* Layout */
+.avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: visible;
+  user-select: none;
+  transition:
+    box-shadow var(--transition-fast, 150ms),
+    transform var(--transition-fast, 150ms);
+}
+
+/* Shapes */
+.avatar--circle {
+  border-radius: 50%;
+}
+.avatar--rounded {
+  border-radius: var(--radius-md, 10px);
+}
+.avatar--square {
+  border-radius: var(--radius-sm, 4px);
+}
+
+/* Sizes */
+.avatar--xs {
+  width: 24px;
+  height: 24px;
+  font-size: 0.55rem;
+}
+.avatar--sm {
+  width: 32px;
+  height: 32px;
+  font-size: 0.65rem;
+}
+.avatar--md {
+  width: 40px;
+  height: 40px;
+  font-size: 0.8rem;
+}
+.avatar--lg {
+  width: 52px;
+  height: 52px;
+  font-size: 1rem;
+}
+.avatar--xl {
+  width: 68px;
+  height: 68px;
+  font-size: 1.3rem;
+}
+.avatar--2xl {
+  width: 88px;
+  height: 88px;
+  font-size: 1.7rem;
+}
+
+/* Content (Image / Fallback) */
+.avatar__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  display: block;
+}
+
+.avatar__initials {
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  color: inherit;
+}
+
+.avatar__icon {
+  display: flex;
+  align-items: center;
+  color: inherit;
+  opacity: 0.7;
+}
+
+/* Interactive State */
+.avatar--clickable {
+  cursor: pointer;
+}
+.avatar--clickable:hover {
+  transform: scale(1.06);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+.avatar--clickable:active {
+  transform: scale(0.97);
+}
+.avatar--clickable:focus-visible {
+  outline: 3px solid var(--color-primary-focus);
+  outline-offset: 3px;
+}
+
+/* Variants (Fallback Background + Text Color) */
+.avatar--primary {
+  background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary-dark));
+  color: var(--color-primary-text);
+}
+.avatar--secondary {
+  background: linear-gradient(135deg, var(--color-secondary-light), var(--color-secondary-dark));
+  color: var(--color-secondary-text);
+}
+.avatar--tertiary {
+  background: linear-gradient(135deg, var(--color-tertiary-light), var(--color-tertiary-dark));
+  color: var(--color-tertiary-text);
+}
+.avatar--success {
+  background: linear-gradient(135deg, var(--color-success-light), var(--color-success-dark));
+  color: var(--color-success-text);
+}
+.avatar--warning {
+  background: linear-gradient(135deg, var(--color-warning-light), var(--color-warning-dark));
+  color: var(--color-warning-text);
+}
+.avatar--error {
+  background: linear-gradient(135deg, var(--color-error-light), var(--color-error-dark));
+  color: var(--color-error-text);
+}
+.avatar--info {
+  background: linear-gradient(135deg, var(--color-info-light), var(--color-info-dark));
+  color: var(--color-info-text);
+}
+.avatar--neutral {
+  background: linear-gradient(135deg, var(--color-neutral-200), var(--color-neutral-300));
+  color: var(--color-neutral-500);
+}
+
+/* Ring (Outer Border) */
+.avatar-ring-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: transparent;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.avatar-ring-wrap--sm {
+  padding: 2px;
+  border-width: 2px;
+}
+.avatar-ring-wrap--md {
+  padding: 3px;
+  border-width: 3px;
+}
+.avatar-ring-wrap--lg {
+  padding: 3px;
+  border-width: 4px;
+}
+
+.avatar--ring.avatar--primary {
+  outline-color: var(--color-primary-dark);
+}
+.avatar--ring.avatar--secondary {
+  outline-color: var(--color-secondary-dark);
+}
+.avatar--ring.avatar--tertiary {
+  outline-color: var(--color-tertiary-dark);
+}
+.avatar--ring.avatar--success {
+  outline-color: var(--color-success-dark);
+}
+.avatar--ring.avatar--warning {
+  outline-color: var(--color-warning-dark);
+}
+.avatar--ring.avatar--error {
+  outline-color: var(--color-error-dark);
+}
+.avatar--ring.avatar--info {
+  outline-color: var(--color-info-dark);
+}
+.avatar--ring.avatar--neutral {
+  outline-color: var(--color-neutral-400);
+}
+
+/* Status Dot */
+.avatar__dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  border-radius: 50%;
+  border: 2px solid white;
+  z-index: 2;
+}
+
+/* Status Dot Colors */
+.avatar__dot--online {
+  background: var(--color-success-dark);
+}
+.avatar__dot--offline {
+  background: var(--color-neutral-400);
+}
+.avatar__dot--busy {
+  background: var(--color-error-dark);
+}
+.avatar__dot--away {
+  background: var(--color-warning-dark);
+}
+
+/* Status Dot Sizes */
+.avatar__dot--size-xs {
+  width: 6px;
+  height: 6px;
+  border-width: 1.5px;
+  bottom: -1px;
+  right: -1px;
+}
+.avatar__dot--size-sm {
+  width: 8px;
+  height: 8px;
+  border-width: 2px;
+}
+.avatar__dot--size-md {
+  width: 10px;
+  height: 10px;
+  border-width: 2px;
+}
+.avatar__dot--size-lg {
+  width: 13px;
+  height: 13px;
+  border-width: 2px;
+}
+.avatar__dot--size-xl {
+  width: 16px;
+  height: 16px;
+  border-width: 2.5px;
+}
+.avatar__dot--size-2xl {
+  width: 20px;
+  height: 20px;
+  border-width: 3px;
+}
+
+/* Dark theme overrides */
+.avatar--dark .avatar__dot {
+  border-color: var(--color-neutral-900);
+}
+.avatar--dark.avatar--ring.avatar--ring-gap::before {
+  border-color: var(--color-neutral-900);
+}
+.avatar--dark.avatar--neutral {
+  background: linear-gradient(135deg, var(--color-neutral-600), var(--color-neutral-500));
+  color: var(--color-neutral-200);
+}

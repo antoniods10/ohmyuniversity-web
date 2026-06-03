@@ -1,0 +1,77 @@
+<!--
+@file custom-avatar.component.html
+@description Template for CustomAvatarComponent including image, initials or
+icon fallback, optional ring wrapper and status dot indicator.
+-->
+
+<!-- Ring wrapper -->
+@if (showRing) {
+  <div
+    class="avatar-ring-wrap"
+    [class]="'avatar-ring-wrap--' + ringSize + (darkTheme ? ' avatar-ring-wrap--dark' : '')"
+    [style.border-color]="ringColor || null"
+    [style.background]="darkTheme ? '#1a2030' : 'white'">
+    <div
+      [ngClass]="avatarClasses"
+      [attr.role]="clickable ? 'button' : null"
+      [attr.tabindex]="clickable ? 0 : null"
+      [attr.aria-label]="effectiveAriaLabel"
+      (click)="onClick($event)"
+      (keydown.enter)="onClick($event)"
+      (keydown.space)="onClick($event)">
+      @if (showImage) {
+        <img
+          class="avatar__img"
+          [src]="src"
+          [alt]="alt || name || 'avatar'"
+          (error)="onImgError()"
+          draggable="false" />
+      }
+      @if (showInitials) {
+        <span class="avatar__initials" aria-hidden="true">{{ initials }}</span>
+      }
+      @if (showIcon) {
+        <span class="avatar__icon" aria-hidden="true">
+          <svg [lucideIcon]="iconUser" [size]="iconSize"></svg>
+        </span>
+      }
+      <!-- Status dot -->
+      @if (dotStatus !== 'none') {
+        <span [ngClass]="dotClasses" [attr.aria-label]="dotStatus"></span>
+      }
+    </div>
+  </div>
+}
+
+<!-- Avatar without ring wrapper -->
+@if (!showRing) {
+  <div
+    [ngClass]="avatarClasses"
+    [attr.role]="clickable ? 'button' : null"
+    [attr.tabindex]="clickable ? 0 : null"
+    [attr.aria-label]="effectiveAriaLabel"
+    (click)="onClick($event)"
+    (keydown.enter)="onClick($event)"
+    (keydown.space)="onClick($event)">
+    @if (showImage) {
+      <img
+        class="avatar__img"
+        [src]="src"
+        [alt]="alt || name || 'avatar'"
+        (error)="onImgError()"
+        draggable="false" />
+    }
+    @if (showInitials) {
+      <span class="avatar__initials" aria-hidden="true">{{ initials }}</span>
+    }
+    @if (showIcon) {
+      <span class="avatar__icon" aria-hidden="true">
+        <svg [lucideIcon]="iconUser" [size]="iconSize"></svg>
+      </span>
+    }
+    <!-- Status dot -->
+    @if (dotStatus !== 'none') {
+      <span [ngClass]="dotClasses" [attr.aria-label]="dotStatus"></span>
+    }
+  </div>
+}
