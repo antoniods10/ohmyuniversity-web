@@ -1,0 +1,132 @@
+<!--
+@file custom-pagination.component.html
+@description Template for CustomPaginationComponent handling page navigation
+UI, including page size selector, page controls, range info, and optional
+jump-to-page input.
+-->
+
+<nav
+  [ngClass]="hostClasses"
+  [attr.aria-label]="'Navigazione pagine'"
+  [attr.aria-disabled]="disabled ? 'true' : null">
+  <!-- Info range -->
+  @if (showInfo && totalItems > 0) {
+    <span class="pagination__info">
+      <span class="pagination__info-range">{{ rangeStart }}–{{ rangeEnd }}</span>
+      di
+      <span class="pagination__info-total">{{ totalItems }}</span>
+    </span>
+  }
+
+  @if (showInfo && totalItems === 0) {
+    <span class="pagination__info pagination__info--empty"> Nessun risultato </span>
+  }
+
+  <!-- Page size selector -->
+  @if (showPageSizeSelector) {
+    <label class="pagination__size-label">
+      <span class="pagination__size-text">Righe</span>
+      <select
+        class="pagination__size-select"
+        [disabled]="disabled"
+        [value]="pageSize"
+        (change)="onPageSizeChange($event)">
+        @for (opt of pageSizeOptions; track opt) {
+          <option [value]="opt" [selected]="opt === pageSize">{{ opt }}</option>
+        }
+      </select>
+    </label>
+  }
+
+  <!-- Navigation controls -->
+  <div class="pagination__controls" role="group" aria-label="Controlli pagina">
+    <!-- First page -->
+    @if (showFirstLast) {
+      <button
+        class="pagination__btn pagination__btn--icon"
+        type="button"
+        [disabled]="isFirst || disabled"
+        [attr.aria-label]="'Prima pagina'"
+        (click)="goFirst()">
+        <svg [lucideIcon]="iconFirst" [size]="iconSize"></svg>
+      </button>
+    }
+
+    <!-- Previous page -->
+    <button
+      class="pagination__btn pagination__btn--icon"
+      type="button"
+      [disabled]="isFirst || disabled"
+      [attr.aria-label]="'Pagina precedente'"
+      (click)="goPrev()">
+      <svg [lucideIcon]="iconPrev" [size]="iconSize"></svg>
+    </button>
+
+    <!-- Page list -->
+    <div class="pagination__pages" role="list">
+      @for (item of pageItems; track trackByItem($index, item)) {
+        @if (isPageItem(item)) {
+          <button
+            class="pagination__btn pagination__btn--page"
+            [class.pagination__btn--active]="item.value === currentPage"
+            type="button"
+            role="listitem"
+            [disabled]="disabled"
+            [attr.aria-label]="'Pagina ' + item.value"
+            [attr.aria-current]="item.value === currentPage ? 'page' : null"
+            (click)="goTo(item.value)">
+            {{ item.value }}
+          </button>
+        }
+
+        @if (isEllipsis(item)) {
+          <span class="pagination__ellipsis" role="listitem" aria-hidden="true"> &hellip; </span>
+        }
+      }
+    </div>
+
+    <!-- Mobile page indicator -->
+    <span class="pagination__mobile-info" aria-live="polite">
+      {{ currentPage }} / {{ totalPages }}
+    </span>
+
+    <!-- Next page -->
+    <button
+      class="pagination__btn pagination__btn--icon"
+      type="button"
+      [disabled]="isLast || disabled"
+      [attr.aria-label]="'Pagina successiva'"
+      (click)="goNext()">
+      <svg [lucideIcon]="iconNext" [size]="iconSize"></svg>
+    </button>
+
+    <!-- Last page -->
+    @if (showFirstLast) {
+      <button
+        class="pagination__btn pagination__btn--icon"
+        type="button"
+        [disabled]="isLast || disabled"
+        [attr.aria-label]="'Ultima pagina'"
+        (click)="goLast()">
+        <svg [lucideIcon]="iconLast" [size]="iconSize"></svg>
+      </button>
+    }
+  </div>
+
+  <!-- Jump to page -->
+  @if (showJumpToPage) {
+    <label class="pagination__jump">
+      <span class="pagination__jump-text">Vai a</span>
+      <input
+        class="pagination__jump-input"
+        type="number"
+        [min]="1"
+        [max]="totalPages"
+        [disabled]="disabled"
+        [(ngModel)]="jumpValue"
+        (keydown)="onJumpKeydown($event)"
+        (blur)="onJump()"
+        [attr.aria-label]="'Vai alla pagina'" />
+    </label>
+  }
+</nav>
