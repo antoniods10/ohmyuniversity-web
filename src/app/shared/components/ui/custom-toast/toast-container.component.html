@@ -1,0 +1,21 @@
+<!--
+@file toast-container.component.html
+@description  Global rendering layer for toast notifications. This template is
+intended to be mounted once at the application root and is responsible for
+rendering all active toasts grouped by their screen position. It acts as a
+layout orchestrator rather than a visual component, delegating the actual
+rendering and interaction logic to ToastItemComponent instances.
+-->
+
+@for (position of positions; track position) {
+  @if (toastsFor(position).length > 0) {
+    <div
+      class="toast-stack"
+      [class]="'toast-stack--' + position"
+      [attr.aria-label]="'Notifiche ' + position">
+      @for (toast of toastsFor(position); track trackById($index, toast)) {
+        <app-toast-item [toast]="toast" />
+      }
+    </div>
+  }
+}

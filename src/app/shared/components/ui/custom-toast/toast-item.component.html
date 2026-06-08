@@ -1,0 +1,58 @@
+<!--
+@file toast-item.component.html
+@description  Handles rendering of toast content and user interactions
+including hover pause/resume, drag-to-dismiss gestures, and optional actions.
+Accessibility is provided via ARIA alert semantics.
+-->
+
+<div
+  [class]="toastClasses"
+  [attr.style]="dragStyle"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+  (mousedown)="onDragStart($event)"
+  (mousemove)="onDragMove($event)"
+  (mouseup)="onDragEnd()"
+  (mouseleave)="onDragEnd(); onMouseLeave()"
+  (touchstart)="onDragStart($event)"
+  (touchmove)="onDragMove($event)"
+  (touchend)="onDragEnd()"
+  role="alert"
+  aria-live="polite">
+  <!-- Icon -->
+  <span class="toast-item__icon" aria-hidden="true">
+    <svg [lucideIcon]="variantIcon" [size]="18"></svg>
+  </span>
+
+  <!-- Main toast content -->
+  <div class="toast-item__content">
+    @if (toast.title) {
+      <span class="toast-item__title">{{ toast.title }}</span>
+    }
+    <span class="toast-item__message">{{ toast.message }}</span>
+
+    @if (toast.action) {
+      <button class="toast-item__action" type="button" (click)="onAction()">
+        {{ toast.action.label }}
+      </button>
+    }
+  </div>
+
+  <!-- Close button -->
+  @if (toast.dismissible) {
+    <button
+      class="toast-item__close"
+      type="button"
+      aria-label="Chiudi notifica"
+      (click)="onDismiss()">
+      <svg [lucideIcon]="iconClose" [size]="14"></svg>
+    </button>
+  }
+
+  <!-- Progress bar-->
+  @if (toast.duration > 0) {
+    <div class="toast-item__progress-track">
+      <div class="toast-item__progress-bar" [style.width.%]="progress()"></div>
+    </div>
+  }
+</div>

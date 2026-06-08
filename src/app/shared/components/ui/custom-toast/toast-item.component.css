@@ -1,0 +1,191 @@
+/**
+ * @file toast-item.component.css
+ * @description
+ * Styles for ToastItemComponent including layout structure, animations,
+ * interaction states, visual variants, and UI subcomponents such as icon,
+ * content, actions, close button, and progress indicator.
+ */
+
+/* Base */
+.toast-item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.85rem 1rem 1.2rem;
+  border-radius: var(--radius-md, 10px);
+  border: 1.5px solid transparent;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.12),
+    0 1px 6px rgba(0, 0, 0, 0.06);
+  min-width: 280px;
+  max-width: 380px;
+  width: 100%;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  font-family: inherit;
+
+  opacity: 0;
+  transform: translateX(24px) scale(0.97);
+  transition:
+    opacity 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 200ms;
+}
+
+.toast-item--visible {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+.toast-item:active {
+  cursor: grabbing;
+}
+
+/* Icon */
+.toast-item__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+
+/* Contenut */
+.toast-item__content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.toast-item__title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.toast-item__message {
+  font-size: 0.82rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+/* Action Button */
+.toast-item__action {
+  margin-top: 0.35rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: inherit;
+  opacity: 0.85;
+  transition: opacity 150ms;
+  text-align: left;
+}
+.toast-item__action:hover {
+  opacity: 1;
+}
+
+/* Close Button */
+.toast-item__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2em;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.5;
+  flex-shrink: 0;
+  transition:
+    opacity 150ms,
+    background 150ms;
+}
+.toast-item__close:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* Progress bar */
+.toast-item__progress-track {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border-radius: 0 0 var(--radius-md, 10px) var(--radius-md, 10px);
+}
+
+.toast-item__progress-bar {
+  height: 100%;
+  border-radius: inherit;
+  transition: width 30ms linear;
+}
+
+/* Variants */
+.toast-item--success {
+  background: linear-gradient(135deg, var(--color-success-light), #e8fdf2);
+  border-color: var(--color-success-dark);
+  color: var(--color-success-text);
+}
+.toast-item--success .toast-item__progress-bar {
+  background: var(--color-success-dark);
+}
+
+.toast-item--error {
+  background: linear-gradient(135deg, var(--color-error-light), #fdf2f2);
+  border-color: var(--color-error-dark);
+  color: var(--color-error-text);
+}
+.toast-item--error .toast-item__progress-bar {
+  background: var(--color-error-dark);
+}
+
+.toast-item--warning {
+  background: linear-gradient(135deg, var(--color-warning-light), #fdfaf0);
+  border-color: var(--color-warning-dark);
+  color: var(--color-warning-text);
+}
+.toast-item--warning .toast-item__progress-bar {
+  background: var(--color-warning-dark);
+}
+
+.toast-item--info {
+  background: linear-gradient(135deg, var(--color-info-light), #f0f4fd);
+  border-color: var(--color-info-dark);
+  color: var(--color-info-text);
+}
+.toast-item--info .toast-item__progress-bar {
+  background: var(--color-info-dark);
+}
+
+.toast-item--neutral {
+  background: linear-gradient(135deg, var(--color-neutral-100), white);
+  border-color: var(--color-neutral-300);
+  color: var(--color-neutral-600);
+}
+.toast-item--neutral .toast-item__progress-bar {
+  background: var(--color-neutral-400);
+}
+
+/* Interaction States */
+.toast-item:hover {
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.16),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+  transition:
+    box-shadow 150ms,
+    transform 150ms;
+}
