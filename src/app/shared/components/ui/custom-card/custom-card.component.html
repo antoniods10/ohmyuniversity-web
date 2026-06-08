@@ -1,0 +1,47 @@
+<!--
+@file custom-modal.component.html
+@description  Card component that adapts its root element based on mode while
+keeping consistent styling, accessibility, and content projection.
+-->
+
+<!-- Default / Clickable Card -->
+@if (mode === 'default') {
+  <div
+    [ngClass]="cardClasses"
+    [attr.role]="clickable ? 'button' : null"
+    [attr.tabindex]="clickable ? 0 : null"
+    [attr.aria-label]="ariaLabel || null"
+    (click)="onClick($event)"
+    (keydown.enter)="onClick($event)">
+    <ng-container *ngTemplateOutlet="cardContent" />
+  </div>
+}
+
+<!-- Internal Navigation Card -->
+@if (mode === 'link-internal') {
+  <a
+    [routerLink]="href"
+    [ngClass]="cardClasses"
+    [attr.aria-label]="ariaLabel || null"
+    style="text-decoration: none; color: inherit">
+    <ng-container *ngTemplateOutlet="cardContent" />
+  </a>
+}
+
+<!-- External Navigation Card -->
+@if (mode === 'link-external') {
+  <a
+    [href]="href"
+    [target]="target"
+    [rel]="externalRel"
+    [ngClass]="cardClasses"
+    [attr.aria-label]="ariaLabel || null"
+    style="text-decoration: none; color: inherit">
+    <ng-container *ngTemplateOutlet="cardContent" />
+  </a>
+}
+
+<!-- Content Slot -->
+<ng-template #cardContent>
+  <ng-content />
+</ng-template>
