@@ -1,22 +1,28 @@
 <div class="rounded-2xl border border-gray-200 bg-white p-7 shadow-sm">
-  <h2 class="text-lg font-semibold text-gray-900">Entra in contatto con il team commerciale</h2>
-  <p class="mt-1 text-sm text-gray-500">
-    Sei un'azienda, una startup o un collettivo studentesco? Raccontaci chi sei - ti ricontatteremo
-    entro 2 giorni lavorativi per una chiamata conoscitiva gratuita.
-  </p>
+  <!-- Header -->
+  <h2 appText variant="h3">Entra in contatto con il team commerciale</h2>
+  <div class="mt-1">
+    <p appText variant="body-sm" color="muted">
+      Sei un'azienda, una startup o un collettivo studentesco? Raccontaci chi sei - ti
+      ricontatteremo entro 2 giorni lavorativi per una chiamata conoscitiva gratuita.
+    </p>
+  </div>
 
+  <!-- Banner Promo -->
   <div class="mt-5 flex items-start gap-3 rounded-xl border border-amber-100 bg-amber-50 p-4">
-    <span class="text-lg">🎁</span>
-    <p class="text-xs leading-relaxed text-amber-700">
-      Tutte le nuove organizzazioni iniziano con <strong>14 giorni di prova gratuita</strong>
+    <p appText variant="body-sm" color="muted">
+      Tutte le nuove organizzazioni iniziano con
+      <strong>14 giorni di prova gratuita</strong>
       sul piano Professional. Nessuna carta di credito richiesta.
     </p>
   </div>
 
+  <!-- Form -->
   <form class="mt-6 space-y-5" (ngSubmit)="submitOrg()">
+    <!-- Nome org + Tipo -->
     <div class="grid gap-5 sm:grid-cols-2">
       <div>
-        <label class="mb-1.5 block text-sm font-medium text-gray-700" for="org-name">
+        <label appText variant="label" for="org-name" class="mb-1.5 block">
           Nome organizzazione
         </label>
         <input
@@ -29,7 +35,7 @@
           class="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
       </div>
       <div>
-        <label class="mb-1.5 block text-sm font-medium text-gray-700" for="org-type">
+        <label appText variant="label" for="org-type" class="mb-1.5 block">
           Tipo di organizzazione
         </label>
         <select
@@ -46,9 +52,10 @@
       </div>
     </div>
 
+    <!-- Reference name + Email -->
     <div class="grid gap-5 sm:grid-cols-2">
       <div>
-        <label class="mb-1.5 block text-sm font-medium text-gray-700" for="org-contact">
+        <label appText variant="label" for="org-contact" class="mb-1.5 block">
           Nome del referente
         </label>
         <input
@@ -61,7 +68,7 @@
           class="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
       </div>
       <div>
-        <label class="mb-1.5 block text-sm font-medium text-gray-700" for="org-email">
+        <label appText variant="label" for="org-email" class="mb-1.5 block">
           Email aziendale
         </label>
         <input
@@ -75,9 +82,11 @@
       </div>
     </div>
 
+    <!-- Telephone  -->
     <div>
-      <label class="mb-1.5 block text-sm font-medium text-gray-700" for="org-phone">
-        Telefono <span class="font-normal text-gray-400">(opzionale)</span>
+      <label for="org-phone" class="mb-1.5 flex items-center gap-1.5">
+        <span appText variant="label">Telefono</span>
+        <span appText variant="caption" color="subtle">(opzionale)</span>
       </label>
       <input
         id="org-phone"
@@ -88,8 +97,9 @@
         class="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
     </div>
 
+    <!-- Message -->
     <div>
-      <label class="mb-1.5 block text-sm font-medium text-gray-700" for="org-message">
+      <label appText variant="label" for="org-message" class="mb-1.5 block">
         Raccontaci brevemente cosa fate e cosa cercate
       </label>
       <textarea
@@ -102,17 +112,26 @@
         class="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
     </div>
 
-    <button
+    <!-- Submit -->
+    <app-custom-button
+      label="Invia richiesta - ti richiamiamo noi"
+      variant="primary"
       type="submit"
-      class="w-full rounded-lg bg-blue-600 py-3 text-sm font-medium text-white transition hover:bg-blue-700">
-      Invia richiesta - ti richiamiamo noi
-    </button>
+      size="md"
+      [fullWidth]="true"
+      [loading]="isLoading"
+      [succeeded]="succeeded"
+      succeededLabel="Richiesta inviata!"
+      succeededStyle="filled" />
   </form>
 
-  <p class="mt-5 text-center text-xs text-gray-400">
-    Preferisci l'email diretta?
-    <a href="mailto:business@ohmyuniversity.it" class="text-blue-600 hover:underline">
-      business@ohmyuniversity.it
-    </a>
-  </p>
+  <!-- Footer -->
+  <div class="mt-5 text-center">
+    <span appText variant="caption" color="subtle">
+      Preferisci l'email diretta?
+      <a href="mailto:business@ohmyuniversity.it" class="text-blue-600 hover:underline">
+        business@ohmyuniversity.it
+      </a>
+    </span>
+  </div>
 </div>

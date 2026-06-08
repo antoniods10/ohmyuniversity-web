@@ -1,14 +1,23 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ACADEMIC_ROLES, ACADEMIC_SUBJECTS } from '@constants';
+import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
+import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 
 @Component({
   selector: 'app-contatti-form-academic',
-  imports: [FormsModule],
+  standalone: true,
+  imports: [FormsModule, CustomButtonComponent, CustomTextComponent],
   templateUrl: './contatti-form-academic.component.html',
 })
 export class ContattiFormAcademic {
-  readonly academicForm = {
+  readonly academicRoles = ACADEMIC_ROLES;
+  readonly academicSubjects = ACADEMIC_SUBJECTS;
+
+  isLoading = false;
+  succeeded = false;
+
+  academicForm = {
     name: '',
     email: '',
     ateneo: '',
@@ -17,10 +26,13 @@ export class ContattiFormAcademic {
     message: '',
   };
 
-  readonly academicRoles = ACADEMIC_ROLES;
-  readonly academicSubjects = ACADEMIC_SUBJECTS;
-
   submitAcademic(): void {
-    console.log('Academic form submitted', this.academicForm);
+    this.isLoading = true;
+    // @TODO
+    setTimeout(() => {
+      this.isLoading = false;
+      this.succeeded = true;
+      console.log('Academic form submitted', this.academicForm);
+    }, 1500);
   }
 }

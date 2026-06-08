@@ -1,13 +1,23 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ORG_TYPES } from '@constants';
+import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
+import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
+import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
+
 @Component({
   selector: 'app-contatti-form-organization',
-  imports: [FormsModule],
+  standalone: true,
+  imports: [FormsModule, CustomButtonComponent, CustomTextComponent, CustomBadgeComponent],
   templateUrl: './contatti-form-organization.component.html',
 })
 export class ContattiFormOrganization {
-  readonly orgForm = {
+  readonly orgTypes = ORG_TYPES;
+
+  isLoading = false;
+  succeeded = false;
+
+  orgForm = {
     orgName: '',
     orgType: '',
     contactName: '',
@@ -16,9 +26,12 @@ export class ContattiFormOrganization {
     message: '',
   };
 
-  readonly orgTypes = ORG_TYPES;
-
   submitOrg(): void {
-    console.log('Org form submitted', this.orgForm);
+    this.isLoading = true;
+    setTimeout(() => {
+      this.isLoading = false;
+      this.succeeded = true;
+      console.log('Org form submitted', this.orgForm);
+    }, 1500);
   }
 }

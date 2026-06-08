@@ -1,16 +1,19 @@
 <div class="rounded-2xl border border-gray-200 bg-white p-7 shadow-sm">
-  <h2 class="text-lg font-semibold text-gray-900">Scrivi al team OhMyUniversity</h2>
-  <p class="mt-1 text-sm text-gray-500">
-    Sei studente, docente o staff di ateneo? Usa questo form per segnalare problemi, chiedere
-    l'integrazione del tuo ateneo o semplicemente inviarci un feedback.
-  </p>
+  <!-- Header -->
+  <h2 appText variant="h3">Scrivi al team OhMyUniversity</h2>
+  <div class="mt-1">
+    <p appText variant="body-sm" color="muted">
+      Sei studente, docente o staff di ateneo? Usa questo form per segnalare problemi, chiedere
+      l'integrazione del tuo ateneo o semplicemente inviarci un feedback.
+    </p>
+  </div>
 
+  <!-- Form Academic -->
   <form class="mt-6 space-y-5" (ngSubmit)="submitAcademic()">
+    <!-- Name + Email -->
     <div class="grid gap-5 sm:grid-cols-2">
       <div>
-        <label class="mb-1.5 block text-sm font-medium text-gray-700" for="ac-name">
-          Nome e cognome
-        </label>
+        <label appText variant="label" for="ac-name" class="mb-1.5 block"> Nome e cognome </label>
         <input
           id="ac-name"
           type="text"
@@ -21,7 +24,7 @@
           class="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500" />
       </div>
       <div>
-        <label class="mb-1.5 block text-sm font-medium text-gray-700" for="ac-email">
+        <label appText variant="label" for="ac-email" class="mb-1.5 block">
           Email istituzionale
         </label>
         <input
@@ -35,11 +38,10 @@
       </div>
     </div>
 
+    <!-- Role + Academy -->
     <div class="grid gap-5 sm:grid-cols-2">
       <div>
-        <label class="mb-1.5 block text-sm font-medium text-gray-700" for="ac-role">
-          Il tuo ruolo
-        </label>
+        <label appText variant="label" for="ac-role" class="mb-1.5 block"> Il tuo ruolo </label>
         <select
           id="ac-role"
           [(ngModel)]="academicForm.role"
@@ -53,7 +55,7 @@
         </select>
       </div>
       <div>
-        <label class="mb-1.5 block text-sm font-medium text-gray-700" for="ac-ateneo">
+        <label appText variant="label" for="ac-ateneo" class="mb-1.5 block">
           Ateneo di appartenenza
         </label>
         <input
@@ -66,10 +68,9 @@
       </div>
     </div>
 
+    <!-- Object -->
     <div>
-      <label class="mb-1.5 block text-sm font-medium text-gray-700" for="ac-subject">
-        Oggetto
-      </label>
+      <label appText variant="label" for="ac-subject" class="mb-1.5 block"> Oggetto </label>
       <select
         id="ac-subject"
         [(ngModel)]="academicForm.subject"
@@ -83,10 +84,9 @@
       </select>
     </div>
 
+    <!-- Message -->
     <div>
-      <label class="mb-1.5 block text-sm font-medium text-gray-700" for="ac-message">
-        Messaggio
-      </label>
+      <label appText variant="label" for="ac-message" class="mb-1.5 block"> Messaggio </label>
       <textarea
         id="ac-message"
         [(ngModel)]="academicForm.message"
@@ -97,17 +97,26 @@
         class="block w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"></textarea>
     </div>
 
-    <button
+    <!-- Submit -->
+    <app-custom-button
+      label="Invia messaggio"
+      variant="primary"
       type="submit"
-      class="w-full rounded-lg bg-blue-600 py-3 text-sm font-medium text-white transition hover:bg-blue-700">
-      Invia messaggio
-    </button>
+      size="md"
+      [fullWidth]="true"
+      [loading]="isLoading"
+      [succeeded]="succeeded"
+      succeededLabel="Messaggio inviato!"
+      succeededStyle="filled" />
   </form>
 
-  <p class="mt-5 text-center text-xs text-gray-400">
-    Preferisci l'email diretta?
-    <a href="mailto:hello@ohmyuniversity.it" class="text-blue-600 hover:underline">
-      hello@ohmyuniversity.it
-    </a>
-  </p>
+  <!-- Footer -->
+  <div class="mt-5 text-center">
+    <span appText variant="caption" color="subtle">
+      Preferisci l'email diretta?
+      <a href="mailto:hello@ohmyuniversity.it" class="text-blue-600 hover:underline">
+        hello@ohmyuniversity.it
+      </a>
+    </span>
+  </div>
 </div>
