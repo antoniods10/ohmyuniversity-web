@@ -36,6 +36,9 @@ import { DashboardLayoutComponent } from './features/dashboard/presentation/layo
 // Dashboard Pages
 import { DashboardHomePage } from './features/dashboard/presentation/pages/home/home.page';
 import { CareerPage } from './features/dashboard/presentation/pages/career/career.page';
+import { DidatticaPage } from './features/dashboard/presentation/pages/didattica/didattica.page';
+import { SviluppiFuturiPage } from './features/dashboard/presentation/pages/sviluppi-futuri/sviluppi-futuri.page';
+import { MessaggiPage } from './features/dashboard/presentation/pages/messaggi/messaggi.page';
 // import { CalendarioPage } from './features/dashboard/presentation/pages/calendario/calendario.page';
 // import { EsamiPage } from './features/dashboard/presentation/pages/esami/esami.page';
 // import { DocumentiPage } from './features/dashboard/presentation/pages/documenti/documenti.page';
@@ -47,7 +50,7 @@ import { CareerPage } from './features/dashboard/presentation/pages/career/caree
 // import { ProfiloPage } from './features/dashboard/presentation/pages/profilo/profilo.page';
 
 // Shared
-import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { NotFoundPage } from './shared/components/pages/not-found/not-found.page';
 
 export const routes: Routes = [
   // =============================================
@@ -152,25 +155,25 @@ export const routes: Routes = [
         component: DashboardHomePage,
       },
       {
-         path: 'career',
-         component: CareerPage,
+        path: 'career',
+        component: CareerPage,
       },
       {
         path: 'didattica',
-        loadComponent: () => import('./features/dashboard/presentation/pages/didattica/didattica.page').then(m => m.DidatticaPage),
+        component: DidatticaPage,
       },
       {
         path: 'sviluppi-futuri',
-        loadComponent: () => import('./features/dashboard/presentation/pages/sviluppi-futuri/sviluppi-futuri.page').then(m => m.SviluppiFuturiPage),
+        component: SviluppiFuturiPage,
       },
       {
         path: 'partner',
-        loadComponent: () => import('./features/dashboard/presentation/pages/partner/partner.page').then(m => m.PartnerPage),
+        component: PartnerPage,
       },
       {
         path: 'messaggi',
-        loadComponent: () => import('./features/dashboard/presentation/pages/messaggi/messaggi.page').then(m => m.MessaggiPage),
-      }
+        component: MessaggiPage,
+      },
       // {
       //   path: 'calendario',
       //   component: CalendarioPage,
@@ -211,6 +214,6 @@ export const routes: Routes = [
   // =============================================
   {
     path: '**',
-    component: NotFoundComponent,
+    component: NotFoundPage,
   },
 ];

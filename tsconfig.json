@@ -3,9 +3,11 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "paths": {
       "@types": ["./src/app/shared/types/index.ts"],
-      "@constants": ["./src/app/shared/constants/index.ts"]
+      "@constants": ["./src/app/shared/constants/index.ts"],
+      "@ui/*": ["./src/app/shared/components/ui/*"]
     },
     "strict": true,
     "noImplicitOverride": true,
