@@ -1,3 +1,14 @@
+/**
+ * @file custom-input.component.ts
+ * @description
+ * Highly configurable Angular form control supporting multiple input types
+ * (text, textarea, select, password, etc.), validation states, icons,
+ * prefix/suffix decorations, and full ControlValueAccessor integration.
+ *
+ * Designed for design system usage with consistent UI/UX behavior,
+ * accessibility support, and dark mode compatibility.
+ */
+
 import {
   Component,
   Input,

@@ -1,0 +1,90 @@
+<!--
+@file custom-button.component.html
+@description Template for CustomButtonComponent providing multiple rendering
+modes, interactive states, icon support, and accessibility features.
+-->
+
+<!-- Native Button -->
+@if (mode === 'button') {
+  <button
+    [type]="type"
+    [ngClass]="btnClasses"
+    [disabled]="isInert"
+    [attr.aria-label]="ariaLabel || displayLabel || null"
+    [attr.aria-busy]="loading ? 'true' : null"
+    [attr.aria-disabled]="isInert ? 'true' : null"
+    [attr.aria-pressed]="succeeded ? 'true' : null"
+    (click)="onButtonClick($event); onRipple($event)">
+    <ng-container *ngTemplateOutlet="btnContent" />
+  </button>
+}
+
+<!-- Internal Router Link -->
+@if (mode === 'link-internal') {
+  <a
+    role="button"
+    [routerLink]="isInert ? null : href"
+    [ngClass]="btnClasses"
+    [attr.aria-label]="ariaLabel || displayLabel || null"
+    [attr.aria-busy]="loading ? 'true' : null"
+    [attr.aria-disabled]="isInert ? 'true' : null"
+    [attr.aria-pressed]="succeeded ? 'true' : null"
+    [attr.tabindex]="isInert ? -1 : 0"
+    (click)="onButtonClick($event); onRipple($event)">
+    <ng-container *ngTemplateOutlet="btnContent" />
+  </a>
+}
+
+<!-- External Link -->
+@if (mode === 'link-external') {
+  <a
+    role="button"
+    [href]="isInert ? null : href"
+    [target]="target"
+    [rel]="externalRel"
+    [ngClass]="btnClasses"
+    [attr.aria-label]="ariaLabel || displayLabel || null"
+    [attr.aria-busy]="loading ? 'true' : null"
+    [attr.aria-disabled]="isInert ? 'true' : null"
+    [attr.aria-pressed]="succeeded ? 'true' : null"
+    [attr.tabindex]="isInert ? -1 : 0"
+    (click)="onButtonClick($event); onRipple($event)">
+    <ng-container *ngTemplateOutlet="btnContent" />
+  </a>
+}
+
+<!-- Shared Button Content -->
+<ng-template #btnContent>
+  <!-- Loading State -->
+  @if (loading) {
+    <span class="btn__spinner" aria-hidden="true">
+      <svg [lucideIcon]="loaderIcon" [size]="iconSize"></svg>
+    </span>
+  }
+
+  <!-- Success State -->
+  @if (succeeded && !loading) {
+    <span class="btn__icon btn__icon--left" aria-hidden="true">
+      <svg [lucideIcon]="succeededIcon" [size]="iconSize"></svg>
+    </span>
+  }
+
+  <!-- Leading Icon -->
+  @if (icon && !loading && !succeeded && iconPosition === 'left') {
+    <span class="btn__icon btn__icon--left" aria-hidden="true">
+      <svg [lucideIcon]="icon" [size]="iconSize"></svg>
+    </span>
+  }
+
+  <!-- Button Label -->
+  @if (!iconOnly) {
+    <span class="btn__label">{{ displayLabel }}</span>
+  }
+
+  <!-- Trailing Icon -->
+  @if (icon && !loading && !succeeded && iconPosition === 'right') {
+    <span class="btn__icon btn__icon--right" aria-hidden="true">
+      <svg [lucideIcon]="icon" [size]="iconSize"></svg>
+    </span>
+  }
+</ng-template>
