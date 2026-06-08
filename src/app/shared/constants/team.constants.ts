@@ -1,3 +1,4 @@
+import { TEAM_MEMBERS_INFO } from '@constants';
 import {
   LucideCodeXml,
   LucideUsers,
@@ -17,30 +18,30 @@ export const ABOUT_ORG_STATS = [
 
 export const ABOUT_TEAM_MEMBERS: TeamMember[] = [
   {
-    name: 'Luca',
+    name: TEAM_MEMBERS_INFO.luca.name,
     initials: 'L',
-    avatarSrc: 'https://www.github.com/Luxauram.png',
+    avatarSrc: TEAM_MEMBERS_INFO.luca.github_profile_picture,
     role: 'Product Owner & Founder',
     bio: "Ha avuto l'idea di OhMyUniversity dopo anni di frustrazione con i portali universitari. Coordina la visione del prodotto e il rapporto con la community open source.",
   },
   {
-    name: 'Vittorio',
+    name: TEAM_MEMBERS_INFO.vittorio.name,
     initials: 'V',
-    avatarSrc: 'https://www.github.com/VittorioDiPalma.png',
+    avatarSrc: TEAM_MEMBERS_INFO.vittorio.github_profile_picture,
     role: 'Backend Developer',
     bio: "Esperto di API Gateway e sistemi distribuiti. Progetta l'infrastruttura che permette a OhMyUniversity di scalare su decine di atenei.",
   },
   {
-    name: 'Alessio',
+    name: TEAM_MEMBERS_INFO.alessio.name,
     initials: 'Al',
-    avatarSrc: 'https://www.github.com/alessiodlm.png',
+    avatarSrc: TEAM_MEMBERS_INFO.alessio.github_profile_picture,
     role: 'UI/UX Designer',
     bio: 'Trasforma i requisiti in interfacce intuitive. Ha ridisegnato il modo in cui gli studenti interagiscono con i dati universitari.',
   },
   {
-    name: 'Antonio',
+    name: TEAM_MEMBERS_INFO.antonio.name,
     initials: 'A',
-    avatarSrc: 'https://www.github.com/antoniods10.png',
+    avatarSrc: TEAM_MEMBERS_INFO.antonio.github_profile_picture,
     role: 'DevOps & Infrastructure',
     bio: 'Gestisce pipeline CI/CD, deployment e monitoring. Garantisce il 98% di uptime che promettiamo agli studenti.',
   },
