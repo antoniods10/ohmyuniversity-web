@@ -1,7 +1,8 @@
-/* ============================================================================
+/*
  * @file custom-badge.component.css
- * @description Styling for CustomBadgeComponent. Based on design tokens.
- * ========================================================================== */
+ * @description Component-specific styles for the CustomBadgeComponent.
+ * Relies on global design tokens defined in global-tokens.css.
+ */
 
 /* Base */
 .badge {

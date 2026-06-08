@@ -1,0 +1,163 @@
+<!--
+@file custom-input.component.html
+@description Template for CustomInputComponent including label,
+input/textarea/select rendering, icon system, validation states,
+and accessibility support (ARIA + hint system).
+-->
+
+<!-- Wrapper -->
+<div [class]="wrapperClasses">
+  <!-- Label -->
+  @if (label) {
+    <label [for]="inputId" class="ci-label" [class.ci-label--required]="required">
+      {{ label }}
+    </label>
+  }
+
+  <!-- Field Container -->
+  <div [class]="fieldClasses">
+    <!-- Prefix -->
+    @if (prefix) {
+      <span class="ci-prefix">{{ prefix }}</span>
+    }
+
+    <!-- Left icon -->
+    @if (iconLeft) {
+      <span class="ci-icon ci-icon--left" aria-hidden="true">
+        <svg [lucideIcon]="iconLeft" [size]="iconSize"></svg>
+      </span>
+    }
+
+    <!-- Input Variants -->
+
+    <!-- Text / Email / Password / Number -->
+    @if (type !== 'textarea' && type !== 'select') {
+      <input
+        class="ci-input"
+        [id]="inputId"
+        [type]="effectiveType"
+        [placeholder]="placeholder"
+        [disabled]="disabled"
+        [readOnly]="readonly"
+        [required]="required"
+        [autocomplete]="autocomplete"
+        [attr.min]="min || null"
+        [attr.max]="max || null"
+        [attr.minlength]="minLength || null"
+        [attr.maxlength]="maxLength || null"
+        [attr.pattern]="pattern || null"
+        [attr.aria-label]="label || placeholder || null"
+        [attr.aria-invalid]="status === 'error' ? 'true' : null"
+        [attr.aria-describedby]="hint || errorMessage || successMessage ? inputId + '-hint' : null"
+        [value]="value"
+        (input)="onInput($event)"
+        (focus)="onFocus($event)"
+        (blur)="onBlur($event)"
+        (keydown)="onKeydown($event)" />
+    }
+
+    <!-- Textarea -->
+    @if (type === 'textarea') {
+      <textarea
+        class="ci-input ci-input--textarea"
+        [id]="inputId"
+        [placeholder]="placeholder"
+        [disabled]="disabled"
+        [readOnly]="readonly"
+        [required]="required"
+        [rows]="rows"
+        [attr.minlength]="minLength || null"
+        [attr.maxlength]="maxLength || null"
+        [attr.aria-label]="label || placeholder || null"
+        [attr.aria-invalid]="status === 'error' ? 'true' : null"
+        [attr.aria-describedby]="hint || errorMessage || successMessage ? inputId + '-hint' : null"
+        (input)="onInput($event)"
+        (focus)="onFocus($event)"
+        (blur)="onBlur($event)"
+        >{{ value }}</textarea
+      >
+    }
+
+    <!-- Select -->
+    @if (type === 'select') {
+      <select
+        class="ci-input ci-input--select"
+        [id]="inputId"
+        [disabled]="disabled"
+        [required]="required"
+        [attr.aria-label]="label || null"
+        [value]="value"
+        (change)="onInput($event)"
+        (focus)="onFocus($event)"
+        (blur)="onBlur($event)">
+        <option value="" disabled [selected]="!value">{{ selectPlaceholder }}</option>
+        @for (opt of options; track opt.value) {
+          <option
+            [value]="opt.value"
+            [disabled]="opt.disabled ?? false"
+            [selected]="opt.value === value">
+            {{ opt.label }}
+          </option>
+        }
+      </select>
+    }
+
+    <!-- Right Side Icon System -->
+
+    <!-- Password toggle -->
+    @if (showPasswordToggle) {
+      <button
+        class="ci-icon ci-icon--right ci-icon--btn"
+        type="button"
+        [attr.aria-label]="showPassword() ? 'Nascondi password' : 'Mostra password'"
+        (click)="togglePassword()">
+        <svg [lucideIcon]="showPassword() ? iconEyeOff : iconEye" [size]="iconSize"></svg>
+      </button>
+    }
+
+    <!-- Clear button -->
+    @if (showClearBtn && !showPasswordToggle) {
+      <button
+        class="ci-icon ci-icon--right ci-icon--btn"
+        type="button"
+        aria-label="Svuota campo"
+        (click)="onClear()">
+        <svg [lucideIcon]="iconClear" [size]="iconSize"></svg>
+      </button>
+    }
+
+    <!-- Right icon -->
+    @if (iconRight && !showPasswordToggle && !showClearBtn) {
+      <span class="ci-icon ci-icon--right" aria-hidden="true">
+        <svg [lucideIcon]="iconRight" [size]="iconSize"></svg>
+      </span>
+    }
+
+    <!-- Success / error status -->
+    @if (status !== 'default' && !iconRight && !showPasswordToggle && !showClearBtn) {
+      <span class="ci-icon ci-icon--right ci-icon--status" aria-hidden="true">
+        <svg [lucideIcon]="status === 'error' ? iconError : iconSuccess" [size]="iconSize"></svg>
+      </span>
+    }
+
+    <!-- Suffix -->
+    @if (suffix) {
+      <span class="ci-suffix">{{ suffix }}</span>
+    }
+  </div>
+
+  <!-- Feedback ( Hint / Error / Success ) -->
+  @if (errorMessage) {
+    <span [id]="inputId + '-hint'" class="ci-hint ci-hint--error" role="alert">
+      {{ errorMessage }}
+    </span>
+  } @else if (successMessage) {
+    <span [id]="inputId + '-hint'" class="ci-hint ci-hint--success">
+      {{ successMessage }}
+    </span>
+  } @else if (hint) {
+    <span [id]="inputId + '-hint'" class="ci-hint">
+      {{ hint }}
+    </span>
+  }
+</div>
