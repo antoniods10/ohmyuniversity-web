@@ -1,0 +1,41 @@
+<!--
+@file custom-tabs.component.html
+@description Template for CustomTabsComponent providing accessible tab navigation
+with support for icons, badges, multiple visual styles, and active state indicators.
+-->
+
+<!-- Tabs container -->
+<div [class]="wrapperClasses" role="tablist" [attr.aria-label]="'Navigazione tab'">
+  @for (tab of tabs; track trackById($index, tab)) {
+    <!-- Tab button -->
+    <button
+      [class]="tabClasses(tab)"
+      type="button"
+      role="tab"
+      [attr.aria-selected]="isActive(tab)"
+      [attr.aria-disabled]="tab.disabled ? 'true' : null"
+      [attr.tabindex]="tab.disabled ? -1 : 0"
+      [attr.aria-label]="tab.label"
+      (click)="selectTab(tab)">
+      <!-- Icon -->
+      @if (tab.icon) {
+        <span class="tabs__icon" aria-hidden="true">
+          <svg [lucideIcon]="tab.icon" [size]="iconSize"></svg>
+        </span>
+      }
+
+      <!-- Label -->
+      <span class="tabs__label">{{ tab.label }}</span>
+
+      <!-- Badge -->
+      @if (tab.badge !== undefined && tab.badge !== null) {
+        <span [class]="badgeClasses(tab)">{{ tab.badge }}</span>
+      }
+
+      <!-- Active indicator -->
+      @if (tabStyle === 'line' || tabStyle === 'underline') {
+        <span class="tabs__indicator" aria-hidden="true"></span>
+      }
+    </button>
+  }
+</div>
