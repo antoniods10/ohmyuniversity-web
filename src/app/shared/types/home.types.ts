@@ -1,14 +1,21 @@
+import { StatTrend } from '@ui/custom-card/card-variants.component';
+import { CardVariant } from '@ui/custom-card/custom-card.component';
+
 export interface Stat {
   value: string;
   label: string;
+  prefix?: string;
+  suffix?: string;
+  trend?: StatTrend;
 }
 
 export interface Review {
   name: string;
   university: string;
-  initials: string;
   text: string;
-  rating: number;
+  rating?: number;
+  avatarSrc?: string;
+  verified?: boolean;
 }
 
 export interface StepHome {
@@ -18,7 +25,8 @@ export interface StepHome {
 }
 
 export interface Feature {
-  icon: string;
   title: string;
   description: string;
+  icon: any;
+  variant?: CardVariant;
 }
