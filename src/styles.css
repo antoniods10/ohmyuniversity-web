@@ -1,6 +1,265 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+/* Custom Fonts */
+@font-face {
+  font-family: 'Outfit';
+  src: url('/fonts/Outfit-VariableFont_wght.woff2') format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('/fonts/Quicksand-VariableFont_wght.woff2') format('woff2-variations');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'Quicksand', sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+/* Root Variables - Global Colors */
+:root {
+  /* Primary */
+  --color-primary-light: #a8d8f0;
+  --color-primary-dark: #5ba8d4;
+  --color-primary-text: #1a3a4a;
+  --color-primary-shadow: rgba(91, 168, 212, 0.35);
+  --color-primary-focus: rgba(91, 168, 212, 0.5);
+
+  /* Secondary */
+  --color-secondary-light: #d4c5f0;
+  --color-secondary-dark: #9b82d4;
+  --color-secondary-text: #2a1a4a;
+  --color-secondary-shadow: rgba(155, 130, 212, 0.35);
+  --color-secondary-focus: rgba(155, 130, 212, 0.5);
+
+  /* Tertiary */
+  --color-tertiary-light: #f0c5d4;
+  --color-tertiary-dark: #d47a9b;
+  --color-tertiary-text: #4a1a2a;
+  --color-tertiary-shadow: rgba(212, 122, 155, 0.35);
+  --color-tertiary-focus: rgba(212, 122, 155, 0.5);
+
+  /* Success */
+  --color-success-light: #b8f0d4;
+  --color-success-dark: #5dc490;
+  --color-success-text: #1a4a30;
+  --color-success-shadow: rgba(93, 196, 144, 0.35);
+  --color-success-focus: rgba(93, 196, 144, 0.5);
+
+  /* Warning */
+  --color-warning-light: #f0dca8;
+  --color-warning-dark: #d4a84a;
+  --color-warning-text: #4a2e00;
+  --color-warning-shadow: rgba(212, 168, 74, 0.35);
+  --color-warning-focus: rgba(212, 168, 74, 0.5);
+
+  /* Error */
+  --color-error-light: #f0b8b8;
+  --color-error-dark: #d45c5c;
+  --color-error-text: #4a1010;
+  --color-error-shadow: rgba(212, 92, 92, 0.35);
+  --color-error-focus: rgba(212, 92, 92, 0.5);
+
+  /* Info */
+  --color-info-light: #b8c8f0;
+  --color-info-dark: #5c7cd4;
+  --color-info-text: #1a2a4a;
+  --color-info-shadow: rgba(92, 124, 212, 0.35);
+  --color-info-focus: rgba(92, 124, 212, 0.5);
+
+  /* Neutral */
+  --color-neutral-100: #f4f6f9;
+  --color-neutral-200: #e2e5ea;
+  --color-neutral-300: #c8cdd8;
+  --color-neutral-400: #9aa0ad;
+  --color-neutral-500: #555e6e;
+  --color-neutral-600: #3a404e;
+  --color-neutral-900: #1a2030;
+
+  /* Typography & Spacing */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Root Variables - Buttons */
+:root {
+  /* Filled variants */
+  --btn-primary-g1: var(--color-primary-light);
+  --btn-primary-g2: var(--color-primary-dark);
+  --btn-primary-text: var(--color-primary-text);
+  --btn-primary-shadow: var(--color-primary-shadow);
+  --btn-primary-focus: var(--color-primary-focus);
+
+  --btn-secondary-g1: var(--color-secondary-light);
+  --btn-secondary-g2: var(--color-secondary-dark);
+  --btn-secondary-text: var(--color-secondary-text);
+  --btn-secondary-shadow: var(--color-secondary-shadow);
+  --btn-secondary-focus: var(--color-secondary-focus);
+
+  --btn-tertiary-g1: var(--color-tertiary-light);
+  --btn-tertiary-g2: var(--color-tertiary-dark);
+  --btn-tertiary-text: var(--color-tertiary-text);
+  --btn-tertiary-shadow: var(--color-tertiary-shadow);
+  --btn-tertiary-focus: var(--color-tertiary-focus);
+
+  --btn-success-g1: var(--color-success-light);
+  --btn-success-g2: var(--color-success-dark);
+  --btn-success-text: var(--color-success-text);
+  --btn-success-shadow: var(--color-success-shadow);
+  --btn-success-focus: var(--color-success-focus);
+
+  --btn-warning-g1: var(--color-warning-light);
+  --btn-warning-g2: var(--color-warning-dark);
+  --btn-warning-text: var(--color-warning-text);
+  --btn-warning-shadow: var(--color-warning-shadow);
+  --btn-warning-focus: var(--color-warning-focus);
+
+  --btn-error-g1: var(--color-error-light);
+  --btn-error-g2: var(--color-error-dark);
+  --btn-error-text: var(--color-error-text);
+  --btn-error-shadow: var(--color-error-shadow);
+  --btn-error-focus: var(--color-error-focus);
+
+  --btn-info-g1: var(--color-info-light);
+  --btn-info-g2: var(--color-info-dark);
+  --btn-info-text: var(--color-info-text);
+  --btn-info-shadow: var(--color-info-shadow);
+  --btn-info-focus: var(--color-info-focus);
+
+  /* Ghost */
+  --btn-ghost-text: var(--color-neutral-500);
+  --btn-ghost-border: var(--color-neutral-300);
+  --btn-ghost-hover-bg: rgba(100, 110, 130, 0.08);
+  --btn-ghost-shadow: rgba(100, 110, 130, 0.12);
+  --btn-ghost-focus: rgba(100, 110, 130, 0.3);
+
+  /* Outline */
+  --btn-outline-text: var(--color-primary-dark);
+  --btn-outline-border: var(--color-primary-dark);
+  --btn-outline-hover-bg: rgba(91, 168, 212, 0.08);
+  --btn-outline-shadow: rgba(91, 168, 212, 0.2);
+  --btn-outline-focus: rgba(91, 168, 212, 0.4);
+
+  /* Flat */
+  --btn-flat-text: var(--color-primary-dark);
+  --btn-flat-hover-bg: rgba(91, 168, 212, 0.08);
+  --btn-flat-focus: rgba(91, 168, 212, 0.3);
+
+  /* Disabled */
+  --btn-disabled-g1: var(--color-neutral-200);
+  --btn-disabled-g2: var(--color-neutral-300);
+  --btn-disabled-text: var(--color-neutral-400);
+
+  /* Succeeded filled */
+  --btn-succeeded-g1: var(--color-success-light);
+  --btn-succeeded-g2: var(--color-success-dark);
+  --btn-succeeded-text: var(--color-success-text);
+  --btn-succeeded-shadow: var(--color-success-shadow);
+
+  /* Succeeded ghost */
+  --btn-succeeded-ghost-text: var(--color-success-dark);
+  --btn-succeeded-ghost-border: var(--color-success-dark);
+  --btn-succeeded-ghost-bg: rgba(93, 196, 144, 0.08);
+
+  /* Sizing */
+  --btn-radius: var(--radius-md);
+  --btn-transition: var(--transition-base);
+}
+
+/* Root Variables - Dark Theme */
+.dark-theme {
+  /* Dark Colors */
+  --color-primary-light: #3a7fa8;
+  --color-primary-dark: #1a4f6e;
+  --color-primary-text: #d8f0ff;
+  --color-primary-shadow: rgba(58, 127, 168, 0.4);
+  --color-primary-focus: rgba(58, 127, 168, 0.55);
+
+  --color-secondary-light: #6a52a8;
+  --color-secondary-dark: #3a2a6e;
+  --color-secondary-text: #ead8ff;
+  --color-secondary-shadow: rgba(106, 82, 168, 0.4);
+  --color-secondary-focus: rgba(106, 82, 168, 0.55);
+
+  --color-tertiary-light: #a85278;
+  --color-tertiary-dark: #6e2a48;
+  --color-tertiary-text: #ffd8ea;
+  --color-tertiary-shadow: rgba(168, 82, 120, 0.4);
+  --color-tertiary-focus: rgba(168, 82, 120, 0.55);
+
+  --color-success-light: #3a9468;
+  --color-success-dark: #1a5a3a;
+  --color-success-text: #d8ffe8;
+  --color-success-shadow: rgba(58, 148, 104, 0.4);
+  --color-success-focus: rgba(58, 148, 104, 0.55);
+
+  --color-warning-light: #a87e2a;
+  --color-warning-dark: #6e4e00;
+  --color-warning-text: #fff0c8;
+  --color-warning-shadow: rgba(168, 126, 42, 0.4);
+  --color-warning-focus: rgba(168, 126, 42, 0.55);
+
+  --color-error-light: #a83a3a;
+  --color-error-dark: #6e1a1a;
+  --color-error-text: #ffd8d8;
+  --color-error-shadow: rgba(168, 58, 58, 0.4);
+  --color-error-focus: rgba(168, 58, 58, 0.55);
+
+  --color-info-light: #3a5ca8;
+  --color-info-dark: #1a3070;
+  --color-info-text: #d8e8ff;
+  --color-info-shadow: rgba(58, 92, 168, 0.4);
+  --color-info-focus: rgba(58, 92, 168, 0.55);
+
+  --color-neutral-100: #1e2230;
+  --color-neutral-200: #2a2e38;
+  --color-neutral-300: #3a404e;
+  --color-neutral-400: #4a5060;
+  --color-neutral-500: #a8b0c0;
+  --color-neutral-600: #c8d0e0;
+  --color-neutral-900: #f0f4ff;
+
+  /* Ghost dark */
+  --btn-ghost-hover-bg: rgba(180, 190, 210, 0.1);
+  --btn-ghost-shadow: rgba(0, 0, 0, 0.3);
+  --btn-ghost-focus: rgba(180, 190, 210, 0.3);
+
+  --btn-outline-hover-bg: rgba(122, 200, 240, 0.1);
+  --btn-outline-shadow: rgba(122, 200, 240, 0.2);
+  --btn-outline-focus: rgba(122, 200, 240, 0.4);
+
+  --btn-flat-hover-bg: rgba(122, 200, 240, 0.1);
+  --btn-flat-focus: rgba(122, 200, 240, 0.3);
+}
+
+/* Animations */
 
 @keyframes marquee {
   from {
@@ -11,52 +270,37 @@
   }
 }
 
-/* ─── Page background ──────────────────────────────────────────────────── */
- 
-/*
- * Gradient that runs top-to-bottom: white → sky → emerald.
- * Lighter at the top, darker toward the bottom.
- * Apply to the root element of any page that needs this background.
- */
+/* ========= @ToDelete Start ========= */
+
+/* Page background */
 @utility page-gradient {
   @apply bg-gradient-to-b from-white via-sky-50 to-emerald-100;
 }
- 
-/* ─── Colored card backgrounds ─────────────────────────────────────────── */
- 
-/*
- * Use on article / div card elements.
- * Rule: do NOT combine with a visible border — use .elevated instead.
- */
+
+/* Colored card backgrounds */
 @utility card-blue {
   @apply bg-gradient-to-br from-blue-50 to-blue-100;
 }
- 
+
 @utility card-blue-deep {
   @apply bg-gradient-to-br from-blue-100 to-blue-200;
 }
- 
+
 @utility card-green {
   @apply bg-gradient-to-br from-emerald-50 to-emerald-100;
 }
- 
+
 @utility card-yellow {
   @apply bg-gradient-to-br from-amber-50 to-amber-100;
 }
- 
-/* ─── Elevation system ─────────────────────────────────────────────────── */
- 
-/*
- * Rule: elevated elements must NOT have a border.
- *       bordered elements must NOT have elevation.
- *
- * .elevated    — primary cards and main containers.
- * .elevated-sm — small interactive elements (active pills, badges).
- */
+
+/* Elevation system */
 @utility elevated {
   @apply shadow-md;
 }
- 
+
 @utility elevated-sm {
   @apply shadow-sm;
 }
+
+/* ========= @ToDelete End ========= */
