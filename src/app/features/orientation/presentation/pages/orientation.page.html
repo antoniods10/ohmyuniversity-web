@@ -1,56 +1,53 @@
-<!-- VISTA ACCORDION -->
+<!-- List View -->
 @if (!activeTopic()) {
   <div class="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
     <div class="mb-10 text-center">
-      <span
-        class="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1 text-xs font-medium text-blue-700">
-        Per chi non è ancora iscritto
-      </span>
-      <h1 class="mt-4 text-3xl font-bold text-gray-900 sm:text-4xl">Orientamento</h1>
-      <p class="mx-auto mt-4 max-w-lg text-gray-500">
-        Vuoi iscriverti all'università per la prima volta? Ti aiutiamo noi! Scegli un argomento per
-        iniziare la guida.
-      </p>
+      <app-custom-badge
+        label="Per chi non è ancora iscritto"
+        variant="primary"
+        shape="pill"
+        size="sm" />
+      <div class="mt-4">
+        <h1 appText variant="h1" align="center">Orientamento</h1>
+      </div>
+      <div class="mt-4">
+        <p appText variant="body-lg" color="muted" align="center" class="mx-auto max-w-lg">
+          Vuoi iscriverti all'università per la prima volta? Ti aiutiamo noi! Scegli un argomento
+          per iniziare la guida.
+        </p>
+      </div>
     </div>
 
+    <!-- Args List -->
     <div class="space-y-2">
       @for (topic of topics; track topic.id) {
-        <button
-          type="button"
-          (click)="open(topic.id)"
-          class="group flex w-full items-center justify-between rounded-xl border border-gray-200 bg-white px-5 py-4 text-left transition hover:border-blue-200 hover:bg-blue-50">
-          <div>
-            <p class="text-sm font-medium text-gray-900 group-hover:text-blue-700">
-              {{ topic.title }}
-            </p>
-            <p class="mt-0.5 text-xs text-gray-400">{{ topic.subtitle }}</p>
-          </div>
-          <svg
-            class="h-4 w-4 shrink-0 text-gray-400 group-hover:text-blue-500"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="2"
-            stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-          </svg>
-        </button>
+        <app-card-nav
+          [title]="topic.title"
+          [subtitle]="topic.subtitle"
+          mode="default"
+          [clickable]="true"
+          (cardClick)="open(topic.id)" />
       }
     </div>
 
-    <p class="mt-8 text-center text-sm text-gray-400">
-      Sei già iscritto all'università?
-      <a routerLink="/login" class="font-medium text-blue-600 hover:underline">Accedi qui</a>
-    </p>
+    <div class="mt-8 text-center">
+      <span appText variant="body-sm" color="muted">
+        Sei già iscritto all'università?
+        <a routerLink="/login" class="font-medium text-blue-600 hover:underline">Accedi qui</a>
+      </span>
+    </div>
   </div>
 }
 
-<!-- PROGRESS BAR (visibile solo quando un topic è aperto) -->
+<!-- Progress Bar -->
 @if (activeTopic()) {
   <div class="sticky top-0 z-10 border-b border-gray-100 bg-white px-4 py-3 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-2xl">
-      <div class="mb-1.5 flex items-center justify-between text-xs text-gray-400">
-        <span>{{ activeIndex() + 1 }} di {{ topics.length }}</span>
-        <span class="font-medium text-gray-600">{{ topics[activeIndex()].title }}</span>
+      <div class="mb-1.5 flex items-center justify-between">
+        <span appText variant="caption" color="subtle"
+          >{{ activeIndex() + 1 }} di {{ topics.length }}</span
+        >
+        <span appText variant="caption" weight="semibold">{{ topics[activeIndex()].title }}</span>
       </div>
       <div class="h-1 w-full overflow-hidden rounded-full bg-gray-100">
         <div
@@ -61,7 +58,7 @@
   </div>
 }
 
-<!-- DETTAGLIO ARGOMENTI -->
+<!-- Args Details -->
 <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:px-8">
   @if (activeTopic() === 'corso') {
     <app-topic-corso
@@ -71,7 +68,6 @@
       (next)="next()"
       (backToList)="close()" />
   }
-
   @if (activeTopic() === 'quiz') {
     <app-topic-quiz
       [hasPrev]="hasPrev()"
@@ -80,7 +76,6 @@
       (next)="next()"
       (backToList)="close()" />
   }
-
   @if (activeTopic() === 'come-funziona') {
     <app-topic-come-funziona
       [hasPrev]="hasPrev()"
@@ -89,7 +84,6 @@
       (next)="next()"
       (backToList)="close()" />
   }
-
   @if (activeTopic() === 'vita') {
     <app-topic-vita
       [hasPrev]="hasPrev()"
@@ -98,7 +92,6 @@
       (next)="next()"
       (backToList)="close()" />
   }
-
   @if (activeTopic() === 'sbocchi') {
     <app-topic-sbocchi
       [hasPrev]="hasPrev()"
@@ -107,7 +100,6 @@
       (next)="next()"
       (backToList)="close()" />
   }
-
   @if (activeTopic() === 'errori') {
     <app-topic-errori
       [hasPrev]="hasPrev()"

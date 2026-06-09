@@ -1,31 +1,42 @@
 <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
-  <h2 class="text-2xl font-bold text-gray-900">Come funziona l'università</h2>
-  <p class="mt-3 text-sm leading-relaxed text-gray-500">
-    L'università è un salto netto rispetto alla scuola superiore. Non è solo un luogo dove si studia
-    di più - è un sistema completamente diverso, basato sull'autonomia. Capire queste differenze in
-    anticipo ti evita brutte sorprese al primo anno.
-  </p>
+  <h2 appText variant="h2">Come funziona l'università</h2>
+  <div class="mt-3">
+    <p appText variant="body-sm" color="muted">
+      L'università è un salto netto rispetto alla scuola superiore. Non è solo un luogo dove si
+      studia di più - è un sistema completamente diverso, basato sull'autonomia.
+    </p>
+  </div>
 
-  <!-- Scuola vs università -->
+  <!-- Differences Table -->
   <div class="mt-8">
-    <h3 class="text-base font-semibold text-gray-800">
-      Scuola vs Università - le differenze chiave
-    </h3>
+    <h3 appText variant="h4">Scuola vs Università - le differenze chiave</h3>
     <div class="mt-4 overflow-hidden rounded-xl border border-gray-200">
       <table class="w-full text-sm">
         <thead class="bg-gray-50">
           <tr>
-            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">Aspetto</th>
-            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">🏫 Scuola</th>
-            <th class="px-4 py-3 text-left text-xs font-semibold text-blue-600">🎓 Università</th>
+            <th class="px-4 py-3 text-left">
+              <span appText variant="caption" weight="semibold">Aspetto</span>
+            </th>
+            <th class="px-4 py-3 text-left">
+              <span appText variant="caption" weight="semibold">🏫 Scuola</span>
+            </th>
+            <th class="px-4 py-3 text-left">
+              <span appText variant="caption" weight="semibold" color="primary">🎓 Università</span>
+            </th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100">
           @for (row of differenze; track row.aspetto) {
             <tr>
-              <td class="px-4 py-3 font-medium text-gray-700">{{ row.aspetto }}</td>
-              <td class="px-4 py-3 text-gray-500">{{ row.scuola }}</td>
-              <td class="px-4 py-3 text-gray-700">{{ row.universita }}</td>
+              <td class="px-4 py-3">
+                <span appText variant="body-sm" weight="medium">{{ row.aspetto }}</span>
+              </td>
+              <td class="px-4 py-3">
+                <span appText variant="body-sm" color="muted">{{ row.scuola }}</span>
+              </td>
+              <td class="px-4 py-3">
+                <span appText variant="body-sm">{{ row.universita }}</span>
+              </td>
             </tr>
           }
         </tbody>
@@ -35,70 +46,68 @@
 
   <!-- CFU -->
   <div class="mt-8">
-    <h3 class="text-base font-semibold text-gray-800">Cosa sono i CFU?</h3>
-    <p class="mt-2 text-sm leading-relaxed text-gray-500">
-      I <strong class="text-gray-700">Crediti Formativi Universitari (CFU)</strong> misurano il
-      carico di lavoro di ogni esame. 1 CFU equivale a circa 25 ore di lavoro totale tra lezioni,
-      studio individuale e preparazione. Una triennale standard richiede 180 CFU in 3 anni - ovvero
-      60 CFU l'anno, circa 25–30 ore settimanali di impegno complessivo.
-    </p>
+    <h3 appText variant="h4">Cosa sono i CFU?</h3>
+    <div class="mt-2">
+      <p appText variant="body-sm" color="muted">
+        I <strong>Crediti Formativi Universitari (CFU)</strong> misurano il carico di lavoro di ogni
+        esame. 1 CFU equivale a circa 25 ore di lavoro totale. Una triennale richiede 180 CFU in 3
+        anni.
+      </p>
+    </div>
     <div class="mt-5">
       <app-cfu-chart />
     </div>
   </div>
 
-  <!-- Tipi di esame -->
+  <!-- Exam Types -->
   <div class="mt-8">
-    <h3 class="text-base font-semibold text-gray-800">Tipi di esame</h3>
+    <h3 appText variant="h4">Tipi di esame</h3>
     <div class="mt-4 grid gap-3 sm:grid-cols-2">
       @for (tipo of tipiEsame; track tipo.tipo) {
         <div class="rounded-xl border border-gray-100 bg-gray-50 p-4">
           <div class="flex items-center gap-2">
             <span class="text-xl">{{ tipo.icon }}</span>
-            <span class="text-sm font-semibold text-gray-800">{{ tipo.tipo }}</span>
+            <span appText variant="body-sm" weight="semibold">{{ tipo.tipo }}</span>
           </div>
-          <p class="mt-2 text-xs leading-relaxed text-gray-500">{{ tipo.descrizione }}</p>
+          <div class="mt-2">
+            <p appText variant="caption" color="muted">{{ tipo.descrizione }}</p>
+          </div>
         </div>
       }
     </div>
   </div>
 
-  <!-- Sessioni -->
+  <!-- Sessions -->
   <div class="mt-8">
-    <h3 class="text-base font-semibold text-gray-800">Le sessioni d'esame</h3>
-    <p class="mt-1 text-sm text-gray-500">
-      Gli esami non si svolgono tutto l'anno - sono concentrati in periodi precisi chiamati
-      "sessioni". Ogni sessione ha più "appelli" (date), e puoi scegliere a quale iscriverti.
-    </p>
+    <h3 appText variant="h4">Le sessioni d'esame</h3>
+    <div class="mt-1">
+      <p appText variant="body-sm" color="muted">
+        Gli esami sono concentrati in periodi precisi chiamati "sessioni". Ogni sessione ha più
+        "appelli".
+      </p>
+    </div>
     <div class="mt-4 space-y-3">
       @for (s of sessioniInfo; track s.label) {
         <div class="flex items-center gap-4 rounded-xl border border-gray-100 p-4">
           <div class="h-2 w-2 shrink-0 rounded-full bg-blue-500"></div>
           <div class="flex-1">
-            <p class="text-sm font-medium text-gray-800">{{ s.label }}</p>
-            <p class="text-xs text-gray-400">{{ s.note }}</p>
+            <p appText variant="body-sm" weight="medium">{{ s.label }}</p>
+            <span appText variant="caption" color="subtle">{{ s.note }}</span>
           </div>
-          <span class="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">
-            {{ s.periodo }}
-          </span>
+          <app-custom-badge [label]="s.periodo" variant="neutral" shape="pill" size="xs" />
         </div>
       }
     </div>
   </div>
 
-  <!-- Callout autonomia -->
-  <div class="mt-8 rounded-xl border border-amber-200 bg-amber-50 p-5">
-    <div class="flex items-start gap-3">
-      <span class="text-xl">⚡</span>
-      <div>
-        <p class="text-sm font-semibold text-amber-800">Autonomia totale - nessuno ti segue</p>
-        <p class="mt-1 text-sm leading-relaxed text-amber-700">
-          All'università non esistono i colloqui con i genitori, le note sul diario o i prof che ti
-          richiamano se non studi. Sei completamente responsabile del tuo percorso. Questo è allo
-          stesso tempo il più grande vantaggio e il più grande rischio del primo anno.
-        </p>
-      </div>
-    </div>
+  <!-- Callout -->
+  <div class="mt-8">
+    <app-card-status
+      statusVariant="warning"
+      [icon]="iconWarn"
+      title="Autonomia totale - nessuno ti segue"
+      description="All'università non esistono i colloqui con i genitori, le note sul diario o i prof che ti richiamano se non studi. Sei completamente responsabile del tuo percorso."
+      shadow="sm" />
   </div>
 </div>
 

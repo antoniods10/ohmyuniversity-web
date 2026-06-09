@@ -1,5 +1,9 @@
 import { Component, input, output, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
+import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
+import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
+import { LucideCircleCheck } from '@lucide/angular';
 import {
   VITA_CONSIGLI_ORARI,
   VITA_CONSIGLI_STUDIO,
@@ -10,7 +14,7 @@ import {
 @Component({
   selector: 'app-topic-vita',
   standalone: true,
-  imports: [OrientationNavComponent],
+  imports: [CommonModule, OrientationNavComponent, CustomTextComponent, CardStatusComponent],
   templateUrl: './topic-vita.component.html',
 })
 export class TopicVitaComponent implements AfterViewInit {
@@ -22,6 +26,7 @@ export class TopicVitaComponent implements AfterViewInit {
 
   @ViewChild('tempoChart') tempoChartRef!: ElementRef<HTMLCanvasElement>;
 
+  readonly iconCheck = LucideCircleCheck;
   readonly tempoSlices = VITA_TEMPO_SLICES;
   readonly consigliOrari = VITA_CONSIGLI_ORARI;
   readonly consigliStudio = VITA_CONSIGLI_STUDIO;
@@ -36,7 +41,6 @@ export class TopicVitaComponent implements AfterViewInit {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-
     const size = Math.min(canvas.offsetWidth, 200);
     const dpr = window.devicePixelRatio || 1;
     canvas.width = size * dpr;
@@ -44,12 +48,10 @@ export class TopicVitaComponent implements AfterViewInit {
     canvas.style.width = `${size}px`;
     canvas.style.height = `${size}px`;
     ctx.scale(dpr, dpr);
-
-    const cx = size / 2;
-    const cy = size / 2;
-    const r = size / 2 - 10;
+    const cx = size / 2,
+      cy = size / 2,
+      r = size / 2 - 10;
     let startAngle = -Math.PI / 2;
-
     this.tempoSlices.forEach(slice => {
       const angle = (slice.percent / 100) * 2 * Math.PI;
       ctx.beginPath();
