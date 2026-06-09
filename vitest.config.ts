@@ -1,17 +1,13 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vitest/config';
-import { resolve } from 'path';
+import angular from '@analogjs/vite-plugin-angular';
+import viteTsConfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
-  resolve: {
-    alias: {
-      '@types': resolve(__dirname, 'src/app/shared/types/index.ts'),
-      '@constants': resolve(__dirname, 'src/app/shared/constants/index.ts'),
-      '@ui': resolve(__dirname, 'src/app/shared/components/ui'),
-    },
-  },
+  plugins: [angular(), viteTsConfigPaths()],
   test: {
-    environment: 'jsdom',
     globals: true,
+    environment: 'jsdom',
     setupFiles: ['src/test-setup.ts'],
     include: ['src/**/*.spec.ts'],
     coverage: {
