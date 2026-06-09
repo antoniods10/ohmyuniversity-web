@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PricingGuarantees } from './pricing-guarantees';
+import { PricingGuarantees } from './pricing-guarantees.component';
 
 describe('PricingGuarantees', () => {
   let component: PricingGuarantees;

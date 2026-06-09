@@ -5,7 +5,7 @@ import { PricingPlan } from '@types';
 @Component({
   selector: 'app-pricing-plans',
   imports: [RouterLink],
-  templateUrl: './pricing-plans.html',
+  templateUrl: './pricing-plans.component.html',
 })
 export class PricingPlans {
   readonly plans = input.required<PricingPlan[]>();

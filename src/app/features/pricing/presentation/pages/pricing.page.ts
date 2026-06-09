@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { PricingPlans } from '../components/pricing-plans/pricing-plans';
-import { PricingGuarantees } from '../components/pricing-guarantees/pricing-guarantees';
+import { PricingPlans } from '../components/pricing-plans/pricing-plans.component';
+import { PricingGuarantees } from '../components/pricing-guarantees/pricing-guarantees.component';
 import { PricingAudience, PricingPlan } from '@types';
 import { ORG_PLANS, INSTITUTION_PLANS } from '@constants';
 
