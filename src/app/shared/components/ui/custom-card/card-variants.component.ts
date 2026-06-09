@@ -1217,6 +1217,9 @@ export class CardNavComponent {
   /** Enables dark theme styling */
   @Input() darkTheme: boolean = false;
 
+  /** If true, the card is clickable in default mode */
+  @Input() clickable: boolean = false;
+
   /** Emits when the card is clicked in default mode */
   @Output() cardClick = new EventEmitter<MouseEvent>();
 }
