@@ -1,12 +1,18 @@
 <section class="border-y border-gray-100 bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-5xl">
-    <dl class="grid grid-cols-2 gap-8 lg:grid-cols-4">
+    <div class="grid grid-cols-2 gap-6 lg:grid-cols-4">
       @for (stat of stats; track stat.label) {
-        <div class="text-center">
-          <dt class="text-3xl font-bold text-gray-900">{{ stat.value }}</dt>
-          <dd class="mt-1 text-sm text-gray-500">{{ stat.label }}</dd>
-        </div>
+        <app-card-stat
+          [value]="stat.value"
+          [label]="stat.label"
+          [prefix]="stat.prefix ?? ''"
+          [suffix]="stat.suffix ?? ''"
+          [trend]="stat.trend ?? undefined"
+          shadow="none"
+          [bordered]="false"
+          padding="sm"
+          [stretchHeight]="true" />
       }
-    </dl>
+    </div>
   </div>
 </section>

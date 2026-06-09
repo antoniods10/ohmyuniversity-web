@@ -1,31 +1,47 @@
 <section class="bg-white px-4 pt-20 pb-24 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-4xl text-center">
-    <span
-      class="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1 text-xs font-medium text-blue-700">
-      Supporta 50+ atenei italiani
-    </span>
+    <!-- Badge ateneo -->
+    <app-custom-badge
+      label="Supporta 50+ atenei italiani"
+      variant="outline"
+      shape="pill"
+      size="lg" />
+
+    <!-- Titolo -->
     <h1 class="mt-6 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
       La tua carriera universitaria,<br class="hidden sm:block" />
       <span class="text-blue-600">tutta in un posto</span>
     </h1>
+
+    <!-- Sottotitolo -->
     <p class="mx-auto mt-6 max-w-2xl text-lg text-gray-500">
       OhMyUniversity unifica i portali del tuo ateneo in un'unica dashboard. Esami, piano di studi,
       scadenze e statistiche - senza dover accedere a dieci sistemi diversi.
     </p>
+
+    <!-- CTA buttons -->
     <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-      <a
-        routerLink="/login"
-        class="w-full rounded-lg bg-blue-600 px-8 py-3 text-center text-base font-medium text-white transition hover:bg-blue-700 sm:w-auto">
-        Accedi con il tuo ateneo
-      </a>
-      <a
-        routerLink="/orientamento"
-        class="w-full rounded-lg border border-gray-300 bg-white px-8 py-3 text-center text-base font-medium text-gray-700 transition hover:bg-gray-50 sm:w-auto">
-        Non sei ancora iscritto?
-      </a>
+      <div class="w-full sm:w-auto">
+        <app-custom-button
+          label="Accedi con il tuo ateneo"
+          variant="primary"
+          mode="link-internal"
+          href="/login"
+          size="lg"
+          [fullWidth]="true" />
+      </div>
+      <div class="w-full sm:w-auto">
+        <app-custom-button
+          label="Non sei ancora iscritto?"
+          variant="ghost"
+          mode="link-internal"
+          href="/orientamento"
+          size="lg"
+          [fullWidth]="true" />
+      </div>
     </div>
 
-    <!-- App store badges -->
+    <!-- App store badges — rimangono Tailwind puro -->
     <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
       <p class="text-sm text-gray-400">Disponibile anche su</p>
       <div class="flex gap-3">

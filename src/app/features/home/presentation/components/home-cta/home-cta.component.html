@@ -5,17 +5,29 @@
       Accedi gratuitamente con le credenziali del tuo ateneo. Nessuna registrazione, nessuna carta
       di credito.
     </p>
+
     <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-      <a
-        routerLink="/login"
-        class="w-full rounded-lg bg-white px-8 py-3 text-center text-base font-medium text-blue-600 transition hover:bg-blue-50 sm:w-auto">
-        Accedi ora - è gratis
-      </a>
-      <a
-        routerLink="/chi-siamo"
-        class="w-full rounded-lg border border-blue-400 px-8 py-3 text-center text-base font-medium text-white transition hover:bg-blue-500 sm:w-auto">
-        Scopri chi siamo
-      </a>
+      <!-- CTA primaria — link interno, stile pieno bianco -->
+      <div class="w-full sm:w-auto">
+        <app-custom-button
+          label="Accedi ora - è gratis"
+          variant="secondary"
+          mode="link-internal"
+          href="/login"
+          size="lg"
+          [fullWidth]="true" />
+      </div>
+
+      <!-- CTA secondaria — link interno, stile outline -->
+      <div class="w-full sm:w-auto">
+        <app-custom-button
+          label="Scopri chi siamo"
+          variant="primary"
+          mode="link-internal"
+          href="/chi-siamo"
+          size="lg"
+          [fullWidth]="true" />
+      </div>
     </div>
   </div>
 </section>

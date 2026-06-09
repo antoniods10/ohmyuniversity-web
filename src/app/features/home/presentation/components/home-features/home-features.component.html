@@ -6,22 +6,17 @@
         Progettato da studenti, per studenti. Ogni funzionalità nasce da un problema reale.
       </p>
     </div>
-    <div class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       @for (feature of features; track feature.title) {
-        <div class="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
-          <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50">
-            <svg
-              class="h-5 w-5 text-blue-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="feature.icon" />
-            </svg>
-          </div>
-          <h3 class="mt-4 font-semibold text-gray-900">{{ feature.title }}</h3>
-          <p class="mt-2 text-sm leading-relaxed text-gray-500">{{ feature.description }}</p>
-        </div>
+        <app-card-simple
+          [icon]="feature.icon"
+          [variant]="feature.variant ?? 'primary'"
+          [title]="feature.title"
+          [body]="feature.description"
+          shadow="sm"
+          [hoverable]="true"
+          [stretchHeight]="true" />
       }
     </div>
   </div>
