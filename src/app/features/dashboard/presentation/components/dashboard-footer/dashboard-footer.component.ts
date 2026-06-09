@@ -1,6 +1,6 @@
 import { Component, HostListener, signal } from '@angular/core';
 import { LucideChevronUp, LucideX } from '@lucide/angular';
-import { FooterComponent } from '../../../../../core/layout/footer/footer.component';
+import { FooterComponent } from 'src/app/core/layout/footer/footer.component';
 
 @Component({
   selector: 'app-dashboard-footer',

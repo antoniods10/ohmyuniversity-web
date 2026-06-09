@@ -5,31 +5,29 @@ import { Router, RouterLink } from '@angular/router';
   selector: 'app-not-found',
   standalone: true,
   imports: [RouterLink],
-  templateUrl: './not-found.component.html',
+  templateUrl: './not-found.page.html',
 })
-export class NotFoundComponent {
+export class NotFoundPage {
   private readonly router = inject(Router);
 
   readonly countdown = signal(10);
-  
+
   readonly isDashboard = signal(this.router.url.startsWith('/dashboard'));
 
   constructor() {
-    
-    effect((onCleanup) => {
+    effect(onCleanup => {
       if (this.isDashboard()) return;
 
       const interval = setInterval(() => {
         this.countdown.update(n => {
           if (n <= 1) {
             clearInterval(interval);
-            this.router.navigate(['/']); 
+            this.router.navigate(['/']);
           }
           return n - 1;
         });
       }, 1000);
 
-      
       onCleanup(() => clearInterval(interval));
     });
   }
