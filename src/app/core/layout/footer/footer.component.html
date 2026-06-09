@@ -7,8 +7,8 @@
       ">
       <div class="lg:col-span-1">
         <a routerLink="/" class="inline-flex items-center gap-2">
-          <app-logo size="lg" class="text-blue-600" />
-          <span class="text-base font-bold text-gray-900">OhMyUniversity</span>
+          <img [src]="APP_LOGO" [alt]="APP_NAME" class="h-8 w-8" />
+          <span class="text-base font-bold text-gray-900">{{ APP_NAME }}</span>
         </a>
 
         <div class="mt-4 space-y-1 text-xs text-gray-400">
@@ -39,7 +39,7 @@
             target="_blank"
             rel="noopener"
             class="font-medium text-blue-500 hover:underline">
-            OhMyOpenSource!
+            {{ ORGANIZATION_NAME }}
           </a>
         </p>
       </div>
@@ -214,7 +214,7 @@
             target="_blank"
             rel="noopener"
             class="font-medium text-gray-500 hover:text-blue-600 hover:underline">
-            OhMyOpenSource!
+            {{ ORGANIZATION_NAME }}
           </a>
         </p>
       </div>
