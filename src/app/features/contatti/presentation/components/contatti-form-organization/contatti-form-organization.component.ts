@@ -3,12 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { ORG_TYPES } from '@constants';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
-import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 
 @Component({
   selector: 'app-contatti-form-organization',
   standalone: true,
-  imports: [FormsModule, CustomButtonComponent, CustomTextComponent, CustomBadgeComponent],
+  imports: [FormsModule, CustomButtonComponent, CustomTextComponent],
   templateUrl: './contatti-form-organization.component.html',
 })
 export class ContattiFormOrganization {

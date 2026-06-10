@@ -6,7 +6,7 @@
       @for (value of values; track value.title) {
         <app-card-simple
           [icon]="value.icon"
-          [variant]="value.variant ?? 'primary'"
+          [variant]="value.variant"
           [title]="value.title"
           [body]="value.description"
           shadow="none"
