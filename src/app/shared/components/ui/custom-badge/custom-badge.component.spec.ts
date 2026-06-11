@@ -31,8 +31,6 @@ describe('CustomBadgeComponent', () => {
     fixture.detectChanges();
   });
 
-  // ── Rendering ─────────────────────────────────────────────────────────────
-
   it('should create the component', () => {
     expect(component).toBeTruthy();
   });
@@ -41,8 +39,6 @@ describe('CustomBadgeComponent', () => {
     const badge = fixture.debugElement.query(By.css('[class*="badge"]'));
     expect(badge).not.toBeNull();
   });
-
-  // ── Label ─────────────────────────────────────────────────────────────────
 
   it('should display the label text', () => {
     setInput('label', 'Attivo');
@@ -56,8 +52,6 @@ describe('CustomBadgeComponent', () => {
     const label = fixture.debugElement.query(By.css('.badge__label'));
     expect(label.nativeElement.textContent.trim()).toBe('');
   });
-
-  // ── Counter Mode ──────────────────────────────────────────────────────────
 
   it('should render count element when count > 0', () => {
     setInput('count', 5);
@@ -95,8 +89,6 @@ describe('CustomBadgeComponent', () => {
     expect(component.isCountMode).toBeFalsy();
   });
 
-  // ── Dot Mode ──────────────────────────────────────────────────────────────
-
   it('should render dot element when dot is true', () => {
     setInput('dot', true);
     const dot = fixture.debugElement.query(By.css('.badge__dot'));
@@ -123,8 +115,6 @@ describe('CustomBadgeComponent', () => {
     const span = fixture.nativeElement.querySelector('span');
     expect(span.classList).toContain('badge--dot-only');
   });
-
-  // ── CSS Classes ───────────────────────────────────────────────────────────
 
   it('should apply badge--primary class by default', () => {
     const span = fixture.nativeElement.querySelector('span');
@@ -168,8 +158,6 @@ describe('CustomBadgeComponent', () => {
     expect(span.classList).toContain('badge--count');
   });
 
-  // ── Removable ─────────────────────────────────────────────────────────────
-
   it('should render remove button when removable is true', () => {
     setInput('removable', true);
     const removeBtn = fixture.debugElement.query(By.css('.badge__remove'));
@@ -207,8 +195,6 @@ describe('CustomBadgeComponent', () => {
     expect(stopPropagationSpy).toHaveBeenCalled();
   });
 
-  // ── Icon Size ─────────────────────────────────────────────────────────────
-
   it('should return iconSize 10 for size xs', () => {
     component.size = 'xs';
     expect(component.iconSize).toBe(10);
@@ -229,8 +215,6 @@ describe('CustomBadgeComponent', () => {
     expect(component.iconSize).toBe(14);
   });
 
-  // ── Close Icon Size ───────────────────────────────────────────────────────
-
   it('should return closeSize 9 for size xs', () => {
     component.size = 'xs';
     expect(component.closeSize).toBe(9);
@@ -250,8 +234,6 @@ describe('CustomBadgeComponent', () => {
     component.size = 'lg';
     expect(component.closeSize).toBe(12);
   });
-
-  // ── Accessibility ─────────────────────────────────────────────────────────
 
   it('should set aria-label when ariaLabel is provided', () => {
     setInput('ariaLabel', 'Stato attivo');
