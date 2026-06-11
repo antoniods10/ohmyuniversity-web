@@ -7,7 +7,6 @@ import { TopicSbocchiComponent } from '../components/topics/topic-sbocchi/topic-
 import { TopicVitaComponent } from '../components/topics/topic-vita/topic-vita.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
-import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { ORIENTATION_TOPICS } from '@constants';
 import { TopicId } from '@types';
 import { CardNavComponent } from '@ui/custom-card/card-variants.component';
@@ -24,7 +23,6 @@ import { CardNavComponent } from '@ui/custom-card/card-variants.component';
     TopicQuizComponent,
     CustomBadgeComponent,
     CustomTextComponent,
-    CustomButtonComponent,
     CardNavComponent,
   ],
   templateUrl: './orientation.page.html',

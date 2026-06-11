@@ -33,7 +33,6 @@ import {
   CardMode,
 } from './custom-card.component';
 import { CustomAvatarComponent } from '../custom-avatar/custom-avatar.component';
-import { CustomBadgeComponent } from '../custom-badge/custom-badge.component';
 
 /**
  * Represents the possible status variants for a card.
@@ -740,7 +739,7 @@ export class CardStatusComponent {
 @Component({
   selector: 'app-card-review',
   standalone: true,
-  imports: [CommonModule, CustomCardComponent, CustomAvatarComponent, LucideDynamicIcon],
+  imports: [CommonModule, CustomCardComponent, CustomAvatarComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-custom-card
@@ -938,7 +937,7 @@ export class CardReviewComponent {
 @Component({
   selector: 'app-card-team',
   standalone: true,
-  imports: [CommonModule, CustomCardComponent, CustomAvatarComponent, CustomBadgeComponent],
+  imports: [CommonModule, CustomCardComponent, CustomAvatarComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-custom-card
