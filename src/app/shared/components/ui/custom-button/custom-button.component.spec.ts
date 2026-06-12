@@ -33,8 +33,6 @@ describe('CustomButtonComponent', () => {
     fixture.detectChanges();
   });
 
-  // ── Rendering ─────────────────────────────────────────────────────────────
-
   it('should create the component', () => {
     expect(component).toBeTruthy();
   });
@@ -78,8 +76,6 @@ describe('CustomButtonComponent', () => {
     const label = fixture.debugElement.query(By.css('.btn__label'));
     expect(label.nativeElement.textContent.trim()).toBe('Salva');
   });
-
-  // ── CSS Classes ───────────────────────────────────────────────────────────
 
   it('should apply btn--primary class by default', () => {
     const btn = fixture.debugElement.query(By.css('button'));
@@ -149,8 +145,6 @@ describe('CustomButtonComponent', () => {
     expect(btn.nativeElement.classList).toContain('btn--succeeded-ghost');
   });
 
-  // ── Disabled / Inert State ────────────────────────────────────────────────
-
   it('should set disabled attribute when disabled is true', () => {
     setInput('disabled', true);
     const btn = fixture.debugElement.query(By.css('button'));
@@ -191,8 +185,6 @@ describe('CustomButtonComponent', () => {
     expect(component.isInert).toBeFalsy();
   });
 
-  // ── Click / Event Emission ────────────────────────────────────────────────
-
   it('should emit clicked event when button is clicked', () => {
     const spy = vi.fn();
     component.clicked.subscribe(spy);
@@ -224,8 +216,6 @@ describe('CustomButtonComponent', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
-  // ── Loading State ─────────────────────────────────────────────────────────
-
   it('should show spinner when loading is true', () => {
     setInput('loading', true);
     const spinner = fixture.debugElement.query(By.css('.btn__spinner'));
@@ -250,8 +240,6 @@ describe('CustomButtonComponent', () => {
     expect(btn.nativeElement.getAttribute('aria-busy')).toBeNull();
   });
 
-  // ── Succeeded State ───────────────────────────────────────────────────────
-
   it('should show success icon when succeeded is true and not loading', () => {
     setInput('succeeded', true);
     setInput('loading', false);
@@ -264,8 +252,6 @@ describe('CustomButtonComponent', () => {
     const btn = fixture.debugElement.query(By.css('button'));
     expect(btn.nativeElement.getAttribute('aria-pressed')).toBe('true');
   });
-
-  // ── Accessibility ─────────────────────────────────────────────────────────
 
   it('should set aria-label when ariaLabel is provided', () => {
     setInput('ariaLabel', 'Azione principale');
@@ -287,8 +273,6 @@ describe('CustomButtonComponent', () => {
     expect(btn.nativeElement.getAttribute('aria-disabled')).toBeNull();
   });
 
-  // ── External Link ─────────────────────────────────────────────────────────
-
   it('should add rel="noopener noreferrer" when external link targets _blank', () => {
     setInput('mode', 'link-external');
     setInput('href', 'https://example.com');
@@ -304,8 +288,6 @@ describe('CustomButtonComponent', () => {
     const anchor = fixture.debugElement.query(By.css('a'));
     expect(anchor.nativeElement.getAttribute('rel')).toBe('');
   });
-
-  // ── Icon Size ─────────────────────────────────────────────────────────────
 
   it('should return iconSize 14 for size xs', () => {
     component.size = 'xs';
@@ -326,8 +308,6 @@ describe('CustomButtonComponent', () => {
     component.size = 'lg';
     expect(component.iconSize).toBe(20);
   });
-
-  // ── Button Type ───────────────────────────────────────────────────────────
 
   it('should set type="button" by default', () => {
     const btn = fixture.debugElement.query(By.css('button'));
