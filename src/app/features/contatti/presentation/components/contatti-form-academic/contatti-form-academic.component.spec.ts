@@ -44,8 +44,6 @@ describe('ContattiFormAcademic', () => {
     expect(form).not.toBeNull();
   });
 
-  // --- Campi input ---
-
   it('should render the name input field', () => {
     const input = fixture.nativeElement.querySelector('#ac-name');
     expect(input).not.toBeNull();
@@ -86,8 +84,6 @@ describe('ContattiFormAcademic', () => {
     expect(textarea.rows).toBe(5);
   });
 
-  // --- Label dei campi ---
-
   it('should render label for name field', () => {
     const label = fixture.nativeElement.querySelector('label[for="ac-name"]');
     expect(label).not.toBeNull();
@@ -124,8 +120,6 @@ describe('ContattiFormAcademic', () => {
     expect(label.textContent).toContain('Messaggio');
   });
 
-  // --- Select options da costanti ---
-
   it('should populate the role select with options from ACADEMIC_ROLES', () => {
     const select = fixture.nativeElement.querySelector('#ac-role');
     const options = Array.from(select.querySelectorAll('option[value]:not([value=""])'));
@@ -149,8 +143,6 @@ describe('ContattiFormAcademic', () => {
     expect(defaultOption).not.toBeNull();
   });
 
-  // --- Stato iniziale ---
-
   it('should initialize the form with empty values', () => {
     expect(component.academicForm.name).toBe('');
     expect(component.academicForm.email).toBe('');
@@ -167,8 +159,6 @@ describe('ContattiFormAcademic', () => {
   it('should initialize succeeded as false', () => {
     expect(component.succeeded).toBe(false);
   });
-
-  // --- Submit button ---
 
   it('should render the app-custom-button submit component', () => {
     const button = fixture.debugElement.query(By.directive(CustomButtonComponent));
@@ -210,8 +200,6 @@ describe('ContattiFormAcademic', () => {
     expect(button.componentInstance.succeededLabel).toBe('Messaggio inviato!');
   });
 
-  // --- Logica submit ---
-
   it('should set isLoading to true immediately when submitAcademic is called', () => {
     component.submitAcademic();
     expect(component.isLoading).toBe(true);
@@ -247,8 +235,6 @@ describe('ContattiFormAcademic', () => {
     fixture.detectChanges();
     expect(component.academicForm.message).toBe('Il mio messaggio');
   });
-
-  // --- Footer ---
 
   it('should render the footer with direct email link', () => {
     const link = fixture.nativeElement.querySelector('a[href="mailto:hello@ohmyuniversity.it"]');

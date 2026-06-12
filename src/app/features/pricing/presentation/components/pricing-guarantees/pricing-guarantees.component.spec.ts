@@ -17,13 +17,9 @@ describe('PricingGuarantees', () => {
     await fixture.whenStable();
   });
 
-  // ─── Creazione ───────────────────────────────────────────────────────────────
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  // ─── Struttura generale ──────────────────────────────────────────────────────
 
   it('should render exactly 3 guarantee cards', () => {
     const cards = nativeEl.querySelectorAll('div.text-center');
@@ -34,8 +30,6 @@ describe('PricingGuarantees', () => {
     const grid = nativeEl.querySelector('div.grid');
     expect(grid).not.toBeNull();
   });
-
-  // ─── Card 1: Pagamenti sicuri ────────────────────────────────────────────────
 
   it('should render the "Pagamenti sicuri" emoji', () => {
     const emojis = nativeEl.querySelectorAll('p.text-2xl');
@@ -57,8 +51,6 @@ describe('PricingGuarantees', () => {
     expect(descs[0].textContent?.trim()).toContain('crittografia end-to-end');
   });
 
-  // ─── Card 2: Disdetta facile ─────────────────────────────────────────────────
-
   it('should render the "Disdetta facile" emoji', () => {
     const emojis = nativeEl.querySelectorAll('p.text-2xl');
     expect(emojis[1].textContent?.trim()).toBe('🔄');
@@ -79,8 +71,6 @@ describe('PricingGuarantees', () => {
     expect(descs[1].textContent?.trim()).toContain('online');
   });
 
-  // ─── Card 3: Supporto reale ──────────────────────────────────────────────────
-
   it('should render the "Supporto reale" emoji', () => {
     const emojis = nativeEl.querySelectorAll('p.text-2xl');
     expect(emojis[2].textContent?.trim()).toBe('💬');
@@ -100,8 +90,6 @@ describe('PricingGuarantees', () => {
     const descs = nativeEl.querySelectorAll('p.text-xs');
     expect(descs[2].textContent?.trim()).toContain('persone vere');
   });
-
-  // ─── Stili e classi CSS ──────────────────────────────────────────────────────
 
   it('should apply text-center class to all cards', () => {
     const cards = nativeEl.querySelectorAll('div.text-center');
@@ -134,8 +122,6 @@ describe('PricingGuarantees', () => {
     const descs = nativeEl.querySelectorAll('p.text-xs');
     descs.forEach(d => expect(d.classList).toContain('text-gray-500'));
   });
-
-  // ─── Contenuto testuale ──────────────────────────────────────────────────────
 
   it('should not render empty title paragraphs', () => {
     const titles = nativeEl.querySelectorAll('p.font-semibold');

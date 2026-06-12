@@ -20,13 +20,9 @@ describe('ContattiPage', () => {
     await fixture.whenStable();
   });
 
-  // ─── Creazione ─────────────────────────────────────────────────────────────
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  // ─── Stato iniziale ────────────────────────────────────────────────────────
 
   it('should initialize activeTab signal to "academic"', () => {
     expect(component.activeTab()).toBe('academic');
@@ -49,10 +45,8 @@ describe('ContattiPage', () => {
   });
 
   it('should have correct label for organization tab', () => {
-    expect(component.tabs[1].label).toContain("organizzazione");
+    expect(component.tabs[1].label).toContain('organizzazione');
   });
-
-  // ─── setTab() ──────────────────────────────────────────────────────────────
 
   it('should update activeTab signal when setTab() is called with "organization"', () => {
     component.setTab('organization');
@@ -64,8 +58,6 @@ describe('ContattiPage', () => {
     component.setTab('academic');
     expect(component.activeTab()).toBe('academic');
   });
-
-  // ─── Hero section ──────────────────────────────────────────────────────────
 
   it('should render the hero section', () => {
     const sections = nativeEl.querySelectorAll('section');
@@ -113,8 +105,6 @@ describe('ContattiPage', () => {
     expect(nativeEl.textContent).toContain('Seleziona chi sei');
   });
 
-  // ─── Tab selector ──────────────────────────────────────────────────────────
-
   it('should render app-custom-tabs', () => {
     expect(nativeEl.querySelector('app-custom-tabs')).not.toBeNull();
   });
@@ -128,8 +118,6 @@ describe('ContattiPage', () => {
     const tabs = nativeEl.querySelector('app-custom-tabs');
     expect(tabs?.getAttribute('variant')).toBe('primary');
   });
-
-  // ─── Rendering condizionale dei form ──────────────────────────────────────
 
   it('should render app-contatti-form-academic when activeTab is "academic"', () => {
     component.activeTab.set('academic');
@@ -170,8 +158,6 @@ describe('ContattiPage', () => {
     expect(nativeEl.querySelector('app-contatti-form-academic')).not.toBeNull();
     expect(nativeEl.querySelector('app-contatti-form-organization')).toBeNull();
   });
-
-  // ─── Struttura sezioni ─────────────────────────────────────────────────────
 
   it('should render exactly 2 sections', () => {
     expect(nativeEl.querySelectorAll('section').length).toBe(2);

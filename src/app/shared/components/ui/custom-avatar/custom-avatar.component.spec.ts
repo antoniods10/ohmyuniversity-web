@@ -87,7 +87,7 @@ describe('CustomAvatarComponent', () => {
   });
 
   it('should return true for showImage when src is set and no error', () => {
-    component.src = 'https://example.com/avatar.jpg';
+    component.src = 'https:example.com/avatar.jpg';
     component.imgError = false;
     expect(component.showImage).toBe(true);
   });

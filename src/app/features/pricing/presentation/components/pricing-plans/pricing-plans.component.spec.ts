@@ -3,8 +3,6 @@ import { provideRouter } from '@angular/router';
 import { PricingPlans } from './pricing-plans.component';
 import { PricingPlan } from '@types';
 
-// ─── Mock data ────────────────────────────────────────────────────────────────
-
 const mockPlanBase: PricingPlan = {
   name: 'Base',
   price: '€0',
@@ -56,14 +54,10 @@ const emptyPlans: PricingPlan[] = [];
 const singleHighlightedPlan: PricingPlan[] = [mockPlanPro];
 const singleNormalPlan: PricingPlan[] = [mockPlanBase];
 
-// ─── Helper ───────────────────────────────────────────────────────────────────
-
 function setPlans(f: ComponentFixture<PricingPlans>, plans: PricingPlan[]) {
   f.componentRef.setInput('plans', plans);
   f.detectChanges();
 }
-
-// ─── Suite ────────────────────────────────────────────────────────────────────
 
 describe('PricingPlans', () => {
   let component: PricingPlans;
@@ -83,13 +77,9 @@ describe('PricingPlans', () => {
     await fixture.whenStable();
   });
 
-  // ─── Creazione ─────────────────────────────────────────────────────────────
-
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  // ─── Rendering piani ───────────────────────────────────────────────────────
 
   it('should render one card per plan', () => {
     const cards = nativeEl.querySelectorAll('div.rounded-2xl');
@@ -108,16 +98,12 @@ describe('PricingPlans', () => {
     expect(cards.length).toBe(1);
   });
 
-  // ─── Nome del piano ────────────────────────────────────────────────────────
-
   it('should render the name of each plan', () => {
     const names = nativeEl.querySelectorAll('p.uppercase');
     expect(names[0].textContent?.trim()).toBe('Base');
     expect(names[1].textContent?.trim()).toBe('Pro');
     expect(names[2].textContent?.trim()).toBe('Enterprise');
   });
-
-  // ─── Prezzo ────────────────────────────────────────────────────────────────
 
   it('should render the price for each plan', () => {
     const prices = nativeEl.querySelectorAll('span.text-4xl');
@@ -132,15 +118,11 @@ describe('PricingPlans', () => {
     expect(details[1].textContent?.trim()).toContain('al mese');
   });
 
-  // ─── Descrizione ───────────────────────────────────────────────────────────
-
   it('should render the description for each plan', () => {
     const descs = nativeEl.querySelectorAll('p.text-gray-500');
     expect(descs[0].textContent?.trim()).toContain('gratuito');
     expect(descs[1].textContent?.trim()).toContain('seri');
   });
-
-  // ─── CTA link ──────────────────────────────────────────────────────────────
 
   it('should render a CTA anchor for each plan', () => {
     const links = nativeEl.querySelectorAll('a');
@@ -161,8 +143,6 @@ describe('PricingPlans', () => {
     expect(links[2].getAttribute('href')).toBe('/contatti');
   });
 
-  // ─── Badge ─────────────────────────────────────────────────────────────────
-
   it('should render a badge for the highlighted plan', () => {
     const badges = nativeEl.querySelectorAll('span.rounded-full');
     expect(badges.length).toBe(1);
@@ -179,8 +159,6 @@ describe('PricingPlans', () => {
     const badge = nativeEl.querySelector('span.rounded-full');
     expect(badge?.classList).toContain('bg-blue-600');
   });
-
-  // ─── Highlighted plan: stili ───────────────────────────────────────────────
 
   it('should apply border-blue-500 to the highlighted plan card', () => {
     const cards = nativeEl.querySelectorAll('div.rounded-2xl');
@@ -226,8 +204,6 @@ describe('PricingPlans', () => {
     expect(links[2].classList).toContain('text-gray-800');
   });
 
-  // ─── Features ──────────────────────────────────────────────────────────────
-
   it('should render a list item for each feature of each plan', () => {
     const lists = nativeEl.querySelectorAll('ul');
     expect(lists.length).toBe(mockPlans.length);
@@ -244,8 +220,6 @@ describe('PricingPlans', () => {
     expect(firstPlanItems[2].textContent).toContain('Report avanzati');
   });
 
-  // ─── featureValue() ────────────────────────────────────────────────────────
-
   it('featureValue() should return ✓ for true', () => {
     expect(component.featureValue(true)).toBe('✓');
   });
@@ -258,8 +232,6 @@ describe('PricingPlans', () => {
     expect(component.featureValue('Illimitati')).toBe('Illimitati');
     expect(component.featureValue('3 al mese')).toBe('3 al mese');
   });
-
-  // ─── featureClass() ────────────────────────────────────────────────────────
 
   it('featureClass() should return text-gray-300 for false', () => {
     expect(component.featureClass(false)).toBe('text-gray-300');
@@ -274,10 +246,7 @@ describe('PricingPlans', () => {
     expect(component.featureClass('3 al mese')).toBe('text-gray-700 font-medium');
   });
 
-  // ─── Stili feature nello span ──────────────────────────────────────────────
-
   it('should apply text-gray-300 to the feature icon span when feature is not included', () => {
-    // Base plan, second feature (included: false)
     const firstPlanItems = nativeEl.querySelectorAll('ul')[0].querySelectorAll('li');
     const iconSpan = firstPlanItems[1].querySelector('span:first-child');
     expect(iconSpan?.classList).toContain('text-gray-300');
@@ -294,8 +263,6 @@ describe('PricingPlans', () => {
     const labelSpan = firstPlanItems[0].querySelector('span:last-child');
     expect(labelSpan?.classList).toContain('text-gray-700');
   });
-
-  // ─── Griglia ───────────────────────────────────────────────────────────────
 
   it('should render the outer grid container', () => {
     const grid = nativeEl.querySelector('div.grid');

@@ -16,7 +16,6 @@ describe('BusinessHeroComponent', () => {
     component = fixture.componentInstance;
     componentRef = fixture.componentRef;
 
-    // required inputs
     componentRef.setInput('title', 'Titolo di test');
     componentRef.setInput('subtitle', 'Sottotitolo di test');
     fixture.detectChanges();

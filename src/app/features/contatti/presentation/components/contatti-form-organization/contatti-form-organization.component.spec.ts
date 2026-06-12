@@ -18,8 +18,6 @@ describe('ContattiFormOrganization', () => {
     fixture.detectChanges();
   });
 
-  // --- Creazione e struttura ---
-
   it('should create the component', () => {
     expect(component).toBeTruthy();
   });
@@ -55,8 +53,6 @@ describe('ContattiFormOrganization', () => {
     const form = fixture.nativeElement.querySelector('form');
     expect(form).not.toBeNull();
   });
-
-  // --- Campi input ---
 
   it('should render the org name input field', () => {
     const input = fixture.nativeElement.querySelector('#org-name');
@@ -95,8 +91,6 @@ describe('ContattiFormOrganization', () => {
     expect(textarea.rows).toBe(5);
   });
 
-  // --- Label dei campi ---
-
   it('should render label for org name field', () => {
     const label = fixture.nativeElement.querySelector('label[for="org-name"]');
     expect(label).not.toBeNull();
@@ -134,8 +128,6 @@ describe('ContattiFormOrganization', () => {
     expect(label.textContent).toContain('Raccontaci brevemente');
   });
 
-  // --- Select options da costanti ---
-
   it('should populate the org type select with options from ORG_TYPES', () => {
     const select = fixture.nativeElement.querySelector('#org-type');
     const options = Array.from(select.querySelectorAll('option[value]:not([value=""])'));
@@ -147,8 +139,6 @@ describe('ContattiFormOrganization', () => {
     expect(defaultOption).not.toBeNull();
     expect(defaultOption.textContent.trim()).toBe('Seleziona');
   });
-
-  // --- Stato iniziale ---
 
   it('should initialize the form with empty values', () => {
     expect(component.orgForm.orgName).toBe('');
@@ -166,8 +156,6 @@ describe('ContattiFormOrganization', () => {
   it('should initialize succeeded as false', () => {
     expect(component.succeeded).toBe(false);
   });
-
-  // --- Submit button ---
 
   it('should render the app-custom-button submit component', () => {
     const button = fixture.debugElement.query(By.directive(CustomButtonComponent));
@@ -260,8 +248,6 @@ describe('ContattiFormOrganization', () => {
     fixture.detectChanges();
     expect(component.orgForm.message).toBe('Siamo una startup fintech');
   });
-
-  // --- Footer ---
 
   it('should render the footer with direct email link', () => {
     const link = fixture.nativeElement.querySelector('a[href="mailto:business@ohmyuniversity.it"]');
