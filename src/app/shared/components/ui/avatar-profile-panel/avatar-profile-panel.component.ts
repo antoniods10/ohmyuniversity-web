@@ -134,6 +134,9 @@ export class AvatarProfilePanelComponent {
   /** Panel width in pixels. */
   @Input() position: PanelPosition = 'right';
 
+  /** Panel open direction. */
+  @Input() openDirection: 'down' | 'up' = 'down';
+
   /** Animation preset. */
   @Input() animation: PanelAnimation = 'ios';
 
@@ -174,7 +177,8 @@ export class AvatarProfilePanelComponent {
    * @returns Array of secondary accounts.
    */
   get secondaryAccounts(): AccountEntry[] {
-    return this.accounts.filter(a => !a.isCurrent);
+    const others = this.accounts.filter(a => !a.isCurrent);
+    return this.openDirection === 'up' ? [...others].reverse() : others;
   }
 
   /**
@@ -214,11 +218,11 @@ export class AvatarProfilePanelComponent {
    * @returns Tailwind utility classes for panel positioning.
    */
   get positionClasses(): string {
-    const map: Record<PanelPosition, string> = {
-      right: 'top-0 left-0',
-      left: 'top-0 right-0',
+    const map: Record<PanelPosition, Record<'down' | 'up', string>> = {
+      right: { down: 'top-0 left-0', up: 'bottom-0 left-0' },
+      left: { down: 'top-0 right-0', up: 'bottom-0 right-0' },
     };
-    return map[this.position];
+    return map[this.position][this.openDirection];
   }
 
   /**
@@ -245,11 +249,11 @@ export class AvatarProfilePanelComponent {
    */
   get transformOriginClass(): string {
     if (this.animation === 'fade') return '';
-    const map: Record<PanelPosition, string> = {
-      right: 'origin-top-left',
-      left: 'origin-top-right',
+    const map: Record<PanelPosition, Record<'down' | 'up', string>> = {
+      right: { down: 'origin-top-left', up: 'origin-bottom-left' },
+      left: { down: 'origin-top-right', up: 'origin-bottom-right' },
     };
-    return map[this.position];
+    return map[this.position][this.openDirection];
   }
 
   /**
