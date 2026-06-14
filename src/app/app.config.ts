@@ -39,6 +39,13 @@ import {
   LucideClock,
   LucideWifi,
   LucideFunnel,
+  LucideSend,
+  LucidePaperclip,
+  LucideFile,
+  LucideLink,
+  LucideUsers,
+  LucideArrowLeft,
+  LucideChevronRight,
 } from '@lucide/angular';
 
 export const appConfig: ApplicationConfig = {
@@ -82,6 +89,13 @@ export const appConfig: ApplicationConfig = {
       LucideClock,
       LucideWifi,
       LucideFunnel,
+      LucideSend,
+      LucidePaperclip,
+      LucideFile,
+      LucideLink,
+      LucideUsers,
+      LucideArrowLeft,
+      LucideChevronRight,
     ),
   ],
 };
