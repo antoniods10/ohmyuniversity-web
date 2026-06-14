@@ -95,10 +95,10 @@
         <!-- Left: avatar panel + info -->
         <div
           class="flex items-center gap-2.5 flex-1 min-w-0 px-3 py-2.5 transition-colors duration-150 cursor-pointer profile-zone"
-          (click)="profilePanelRef.toggle()"
+          (click)="goToProfile()"
           role="button"
           tabindex="0"
-          (keydown.enter)="profilePanelRef.toggle()"
+          (keydown.enter)="goToProfile()"
           [attr.aria-label]="'Apri profilo di ' + currentAccount.name">
           <!-- Avatar -->
           <app-custom-avatar

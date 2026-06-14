@@ -1,6 +1,6 @@
-import { Component, input, output, ViewChild } from '@angular/core';
+import { Component, input, output, ViewChild, inject } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import {
   LucideDynamicIcon,
   LucidePanelLeftClose,
@@ -77,6 +77,8 @@ export class DashboardSidebarComponent {
   readonly APP_NAME = APP_NAME;
   readonly APP_LOGO = APP_LOGO;
 
+  private router = inject(Router);
+
   readonly open = input.required<boolean>();
   readonly toggleSidebar = output<void>();
 
@@ -141,5 +143,9 @@ export class DashboardSidebarComponent {
   onLogout(): void {
     // @TODO
     console.log('Logout');
+  }
+
+  goToProfile(): void {
+    this.router.navigate(['/dashboard/profilo']);
   }
 }

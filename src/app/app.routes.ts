@@ -44,10 +44,9 @@ import { MessaggiPage } from './features/dashboard/presentation/pages/messaggi/m
 // import { DocumentiPage } from './features/dashboard/presentation/pages/documenti/documenti.page';
 // import { BorseStudioPage } from './features/dashboard/presentation/pages/borse-studio/borse-studio.page';
 // import { TirociniPage } from './features/dashboard/presentation/pages/tirocini/tirocini.page';
-// import { MessaggiPage } from './features/dashboard/presentation/pages/messaggi/messaggi.page';
 // import { OrientamentoDashboardPage } from './features/dashboard/presentation/pages/orientamento/orientamento.page';
 // import { ImpostazioniPage } from './features/dashboard/presentation/pages/impostazioni/impostazioni.page';
-// import { ProfiloPage } from './features/dashboard/presentation/pages/profilo/profilo.page';
+import { ProfiloPage } from './features/dashboard/presentation/pages/profilo/profilo.page';
 
 // Shared
 import { NotFoundPage } from './shared/components/pages/not-found/not-found.page';
@@ -167,10 +166,6 @@ export const routes: Routes = [
         component: SviluppiFuturiPage,
       },
       {
-        path: 'partner',
-        component: PartnerPage,
-      },
-      {
         path: 'messaggi',
         component: MessaggiPage,
       },
@@ -194,18 +189,20 @@ export const routes: Routes = [
       //   path: 'tirocini',
       //   component: TirociniPage,
       // },
-      // {
-      //   path: 'messaggi',
-      //   component: MessaggiPage,
-      // },
+
+      // Pinned Bottom
+      {
+        path: 'partner',
+        component: PartnerPage,
+      },
       // {
       //   path: 'impostazioni',
       //   component: ImpostazioniPage,
       // },
-      // {
-      //   path: 'profilo',
-      //   component: ProfiloPage,
-      // },
+      {
+        path: 'profilo',
+        component: ProfiloPage,
+      },
     ],
   },
 
