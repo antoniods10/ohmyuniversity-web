@@ -36,16 +36,28 @@ import { DashboardLayoutComponent } from './features/dashboard/presentation/layo
 // Dashboard Pages
 import { DashboardHomePage } from './features/dashboard/presentation/pages/home/home.page';
 import { CareerPage } from './features/dashboard/presentation/pages/career/career.page';
-import { DidatticaPage } from './features/dashboard/presentation/pages/didattica/didattica.page';
+import { ExamsPage } from './features/dashboard/presentation/pages/exams/exams.page';
+import { AgendaPage } from './features/dashboard/presentation/pages/agenda/agenda.page';
+import { SchedulePage } from './features/dashboard/presentation/pages/schedule/schedule.page';
+
+// =============================================
 import { SviluppiFuturiPage } from './features/dashboard/presentation/pages/sviluppi-futuri/sviluppi-futuri.page';
-import { MessaggiPage } from './features/dashboard/presentation/pages/messaggi/messaggi.page';
-// import { CalendarioPage } from './features/dashboard/presentation/pages/calendario/calendario.page';
-// import { EsamiPage } from './features/dashboard/presentation/pages/esami/esami.page';
-// import { DocumentiPage } from './features/dashboard/presentation/pages/documenti/documenti.page';
-// import { BorseStudioPage } from './features/dashboard/presentation/pages/borse-studio/borse-studio.page';
-// import { TirociniPage } from './features/dashboard/presentation/pages/tirocini/tirocini.page';
-// import { OrientamentoDashboardPage } from './features/dashboard/presentation/pages/orientamento/orientamento.page';
-// import { ImpostazioniPage } from './features/dashboard/presentation/pages/impostazioni/impostazioni.page';
+
+// =============================================
+import { ChatPage } from './features/dashboard/presentation/pages/chat/chat.page';
+
+// =============================================
+import { TransportPage } from './features/dashboard/presentation/pages/transport/transport.page';
+import { ClassroomsPage } from './features/dashboard/presentation/pages/classrooms/classrooms.page';
+
+// =============================================
+import { PortalsPage } from './features/dashboard/presentation/pages/portals/portals.page';
+
+// =============================================
+import { UniversityPartnerPage } from './features/dashboard/presentation/pages/university-partner/university-partner.page';
+import { UniversityContactsPage } from './features/dashboard/presentation/pages/university-contacts/university-contacts.page';
+import { SecretariatPage } from './features/dashboard/presentation/pages/secretariat/secretariat.page';
+import { SettingsPage } from './features/dashboard/presentation/pages/settings/settings.page';
 import { ProfiloPage } from './features/dashboard/presentation/pages/profilo/profilo.page';
 
 // Shared
@@ -154,51 +166,67 @@ export const routes: Routes = [
         component: DashboardHomePage,
       },
       {
-        path: 'career',
+        path: 'carriera',
         component: CareerPage,
       },
       {
-        path: 'didattica',
-        component: DidatticaPage,
+        path: 'appelli',
+        component: ExamsPage,
       },
+      {
+        path: 'agenda',
+        component: AgendaPage,
+      },
+      {
+        path: 'orario-lezioni',
+        component: SchedulePage,
+      },
+
+      // ============================
       {
         path: 'sviluppi-futuri',
         component: SviluppiFuturiPage,
       },
+
+      // ============================
       {
         path: 'messaggi',
-        component: MessaggiPage,
+        component: ChatPage,
       },
-      // {
-      //   path: 'calendario',
-      //   component: CalendarioPage,
-      // },
-      // {
-      //   path: 'esami',
-      //   component: EsamiPage,
-      // },
-      // {
-      //   path: 'documenti',
-      //   component: DocumentiPage,
-      // },
-      // {
-      //   path: 'borse-studio',
-      //   component: BorseStudioPage,
-      // },
-      // {
-      //   path: 'tirocini',
-      //   component: TirociniPage,
-      // },
 
-      // Pinned Bottom
+      // ============================
       {
-        path: 'partner',
-        component: PartnerPage,
+        path: 'trasporti',
+        component: TransportPage,
       },
-      // {
-      //   path: 'impostazioni',
-      //   component: ImpostazioniPage,
-      // },
+      {
+        path: 'aule',
+        component: ClassroomsPage,
+      },
+
+      // ============================
+      {
+        path: 'portali',
+        component: PortalsPage,
+      },
+
+      // Sidebar Footer
+      {
+        path: 'partner-universitari',
+        component: UniversityPartnerPage,
+      },
+      {
+        path: 'contatti-universitari',
+        component: UniversityContactsPage,
+      },
+      {
+        path: 'segreteria',
+        component: SecretariatPage,
+      },
+      {
+        path: 'impostazioni',
+        component: SettingsPage,
+      },
       {
         path: 'profilo',
         component: ProfiloPage,

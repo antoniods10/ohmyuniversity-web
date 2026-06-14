@@ -40,10 +40,10 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     roles: ['student', 'admin', 'professor'],
   },
   {
-    id: 'carriera',
+    id: 'career',
     label: 'Carriera',
     icon: LucideChartLine,
-    route: '/dashboard/didattica',
+    route: '/dashboard/carriera',
     roles: ['student', 'admin', 'professor'],
   },
   // @TODO: Sub-path didattica
@@ -69,7 +69,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
   //   roles: ['student', 'admin', 'professor'],
   // },
   {
-    id: 'appelli',
+    id: 'exams',
     label: 'Appelli',
     icon: LucideBookOpenCheck,
     route: '/dashboard/appelli',
@@ -83,14 +83,14 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     roles: ['student', 'admin', 'professor'],
   },
   {
-    id: 'orario-lezioni',
+    id: 'schedules',
     label: 'Orario Lezioni',
     icon: LucideCalendarClock,
     route: '/dashboard/orario-lezioni',
     roles: ['student', 'admin', 'professor'],
   },
   {
-    id: 'sviluppi futuri',
+    id: 'sviluppi-futuri',
     label: 'Sviluppi Futuri',
     icon: LucideSignpostBig,
     route: '/dashboard/sviluppi-futuri',
@@ -98,7 +98,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     dividerAfter: true,
   },
   {
-    id: 'messaggi',
+    id: 'chat',
     label: 'Messaggi',
     icon: LucideMessageSquare,
     route: '/dashboard/messaggi',
@@ -106,7 +106,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     dividerAfter: true,
   },
   {
-    id: 'trasporti',
+    id: 'transport',
     label: 'Trasporti',
     icon: LucideBus,
     route: '/dashboard/trasporti',
@@ -114,14 +114,14 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     dividerAfter: true,
   },
   {
-    id: 'aule',
+    id: 'classrooms',
     label: 'Aule',
     icon: LucideDoorOpen,
     route: '/dashboard/aule',
     roles: ['student', 'admin', 'professor'],
   },
   {
-    id: 'portali',
+    id: 'portals',
     label: 'Portali',
     icon: LucideExternalLink,
     route: '/dashboard/portali',
@@ -138,14 +138,14 @@ export const SIDEBAR_BOTTOM_ITEMS: SidebarItem[] = [
     id: 'partner',
     label: 'Partner',
     icon: LucideHandshake,
-    route: '/dashboard/partner',
+    route: '/dashboard/partner-universitari',
     roles: ['student', 'admin', 'professor'],
   },
   {
-    id: 'contatti',
+    id: 'university-contacts',
     label: 'Contatti',
     icon: LucideContactRound,
-    route: '/dashboard/contatti',
+    route: '/dashboard/contatti-universitari',
     roles: ['student', 'admin', 'professor'],
   },
   {
@@ -156,7 +156,7 @@ export const SIDEBAR_BOTTOM_ITEMS: SidebarItem[] = [
     roles: ['student', 'admin', 'professor'],
   },
   {
-    id: 'impostazioni',
+    id: 'settings',
     label: 'Impostazioni',
     icon: LucideSettings,
     route: '/dashboard/impostazioni',
