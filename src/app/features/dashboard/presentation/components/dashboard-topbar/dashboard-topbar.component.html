@@ -1,25 +1,27 @@
 <header
-  class="flex items-center justify-between h-13 px-5 bg-white border-b border-gray-200 shrink-0 z-5">
-  <!-- Left — @TODO -->
+  class="flex items-center justify-between h-13 px-5 shrink-0 z-5"
+  style="background: white; border-bottom: 1px solid var(--color-neutral-200)">
+  <!-- Left — @TODO: breadcrumb / page title -->
   <div class="flex items-center gap-2 flex-1">
     <!-- @TODO -->
   </div>
 
   <!-- Right — actions -->
-  <div class="flex items-center gap-2">
-    <!-- Notifications -->
-    <button
-      type="button"
-      aria-label="Notifiche"
-      class="relative flex items-center justify-center w-9 h-9 rounded-md bg-transparent border-none text-gray-600 cursor-pointer transition-colors duration-150 hover:bg-gray-100 hover:text-gray-900">
-      <svg lucideBell [size]="20" aria-hidden="true"></svg>
+  <div class="flex items-center gap-1">
+    <!-- Notifiche -->
+    <div class="relative">
+      <app-custom-button
+        variant="ghost"
+        size="sm"
+        [iconOnly]="true"
+        [icon]="iconBell"
+        [attr.aria-label]="notificationCount + ' notifiche non lette'" />
 
-      <!-- Notification Badge -->
-      <span
-        class="absolute top-1 right-1 w-4 h-4 rounded-full bg-red-500 text-white text-[0.6rem] font-bold flex items-center justify-center leading-none border-2 border-white"
-        aria-label="3 notifiche non lette">
-        3
-      </span>
-    </button>
+      @if (notificationCount > 0) {
+        <span class="absolute top-0.5 right-0.5 pointer-events-none">
+          <app-custom-badge [count]="notificationCount" variant="error" size="xs" shape="pill" />
+        </span>
+      }
+    </div>
   </div>
 </header>

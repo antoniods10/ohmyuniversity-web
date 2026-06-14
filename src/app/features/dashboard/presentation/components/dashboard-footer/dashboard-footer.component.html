@@ -1,43 +1,36 @@
 <footer
-  class="fixed bottom-0 left-0 right-0 h-8 bg-gray-950 border-t border-white/6 flex items-center justify-center gap-1.5 cursor-pointer select-none z-40 text-[0.72rem] text-white/50 transition-colors duration-150 hover:bg-gray-900 hover:text-white/75 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-300"
+  class="fixed bottom-0 left-0 right-0 h-8 flex items-center justify-center gap-1.5 cursor-pointer select-none z-40 transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2"
+  style="
+    background: var(--color-neutral-100);
+    border-top: 1px solid var(--color-neutral-200);
+    color: var(--color-neutral-400);
+    font-size: 0.72rem;
+    font-family: var(--font-body);
+  "
   tabindex="0"
   role="contentinfo"
   aria-label="Apri footer completo"
   (click)="openDrawer()"
   (keydown.enter)="openDrawer()"
-  (keydown.space)="openDrawer()">
+  (keydown.space)="openDrawer()"
+  (mouseenter)="hovered = true"
+  (mouseleave)="hovered = false"
+  [style.color]="hovered ? 'var(--color-neutral-600)' : 'var(--color-neutral-400)'"
+  [style.background]="hovered ? 'var(--color-neutral-200)' : 'var(--color-neutral-100)'">
   <span>
     OhMyUniversity! &mdash; another open source project from
-    <strong class="text-emerald-300">OhMyOpenSource!</strong>
+    <strong style="color: var(--color-primary-dark)">OhMyOpenSource!</strong>
   </span>
-  <svg lucideChevronUp [size]="14" class="opacity-50" aria-hidden="true"></svg>
+  <svg [lucideIcon]="iconChevronUp" [size]="14" aria-hidden="true"></svg>
 </footer>
 
-@if (drawerOpen()) {
-  <div
-    class="fixed inset-0 bg-black/45 z-45 animate-[fadeIn_200ms_ease_forwards]"
-    aria-hidden="true"
-    (click)="closeDrawer()"></div>
-
-  <div
-    class="fixed bottom-0 left-0 right-0 bg-white rounded-t-xl shadow-[0_-8px_40px_rgba(0,0,0,0.18)] z-50 max-h-[33vh] lg:max-h-[45vh] flex flex-col overflow-hidden animate-[slideUp_300ms_cubic-bezier(0.4,0,0.2,1)_forwards]"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Footer completo">
-    <div
-      class="flex items-center justify-center px-4 pt-2.5 pb-1 relative shrink-0 bg-white border-b border-gray-100">
-      <div class="w-10 h-1 rounded-full bg-gray-200" aria-hidden="true"></div>
-      <button
-        type="button"
-        aria-label="Chiudi footer"
-        class="absolute right-4 top-2 flex items-center justify-center w-7 h-7 rounded-md bg-transparent border-none text-gray-500 cursor-pointer transition-colors duration-150 hover:bg-gray-100 hover:text-gray-900"
-        (click)="closeDrawer()">
-        <svg lucideX [size]="16" aria-hidden="true"></svg>
-      </button>
-    </div>
-
-    <div class="flex-1 overflow-y-auto [scrollbar-width:thin]">
-      <app-footer [isDashboard]="true" />
-    </div>
-  </div>
-}
+<!-- Drawer -->
+<app-custom-modal
+  #footerModal
+  type="drawer-bottom"
+  [showCloseButton]="true"
+  [closeOnBackdrop]="true"
+  [closeOnEsc]="true"
+  [lockScroll]="false">
+  <app-footer [isDashboard]="true" />
+</app-custom-modal>

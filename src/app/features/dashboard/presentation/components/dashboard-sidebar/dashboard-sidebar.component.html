@@ -1,33 +1,38 @@
 <aside
   [class]="
-    'flex flex-col h-full bg-gray-950 border-r border-white/[0.07] transition-all duration-200 ease-in-out overflow-hidden z-10 ' +
+    'flex flex-col h-full transition-all duration-200 ease-in-out overflow-hidden z-10 ' +
     (open() ? 'w-60 min-w-60' : 'w-15 min-w-15')
-  ">
+  "
+  style="background: var(--color-neutral-100); border-right: 1px solid var(--color-neutral-200)">
   <!-- Brand -->
   <div
-    class="flex items-center gap-2.5 px-4 py-4.5 border-b border-white/[0.07] overflow-hidden shrink-0">
-    <span class="flex items-center justify-center shrink-0 text-emerald-300">
-      <svg lucideGraduationCap [size]="22" aria-hidden="true"></svg>
+    class="flex items-center gap-2.5 px-4 py-4.5 overflow-hidden shrink-0"
+    style="border-bottom: 1px solid var(--color-neutral-200)">
+    <span
+      class="flex items-center justify-center shrink-0"
+      style="color: var(--color-primary-dark)">
+      <img [src]="APP_LOGO" [alt]="APP_NAME" class="h-8 w-8" />
     </span>
     @if (open()) {
-      <span class="text-white font-bold text-[0.9rem] tracking-tight whitespace-nowrap">
-        OhMyUniversity!
+      <span
+        class="whitespace-nowrap font-bold text-[0.9rem] tracking-tight"
+        style="font-family: var(--font-heading); color: var(--color-neutral-900)">
+        {{ APP_NAME }}
       </span>
     }
   </div>
 
   <!-- Toggle -->
-  <button
-    type="button"
-    (click)="toggleSidebar.emit()"
-    [attr.aria-label]="open() ? 'Chiudi menu' : 'Apri menu'"
-    class="flex items-center justify-center w-full py-2.5 border-b border-white/[0.07] text-white/65 cursor-pointer transition-colors duration-150 hover:text-white hover:bg-white/5 shrink-0 bg-transparent border-x-0 border-t-0">
-    @if (open()) {
-      <svg lucidePanelLeftClose [size]="18" aria-hidden="true"></svg>
-    } @else {
-      <svg lucidePanelLeftOpen [size]="18" aria-hidden="true"></svg>
-    }
-  </button>
+  <div class="flex shrink-0" style="border-bottom: 1px solid var(--color-neutral-200)">
+    <app-custom-button
+      variant="ghost"
+      size="sm"
+      [iconOnly]="true"
+      [icon]="open() ? iconPanelClose : iconPanelOpen"
+      [attr.aria-label]="open() ? 'Chiudi menu' : 'Apri menu'"
+      (click)="toggleSidebar.emit()"
+      class="w-full rounded-none" />
+  </div>
 
   <!-- Main nav -->
   <nav
@@ -35,21 +40,17 @@
     aria-label="Menu principale">
     <ul class="list-none m-0 p-0">
       @for (item of sidebarItems; track item.id) {
-        <li
-          [class]="
-            item.dividerAfter
-              ? 'after:block after:h-px after:bg-white/[0.07] after:mx-3 after:my-1.5'
-              : ''
-          ">
+        <li>
+          @if (item.dividerAfter) {
+            <div class="h-px mx-3 my-1.5" style="background: var(--color-neutral-200)"></div>
+          }
           <a
             [routerLink]="item.route"
-            routerLinkActive="!text-white !bg-white/[0.09] [&_svg]:!text-emerald-300"
+            routerLinkActive="sidebar-link-active"
             [routerLinkActiveOptions]="{ exact: item.id === 'dashboard' }"
             [attr.title]="!open() ? item.label : null"
-            [class]="
-              'flex items-center gap-2.5 py-2.25 mx-2 rounded-md text-white/65 no-underline text-[0.85rem] font-medium whitespace-nowrap overflow-hidden transition-colors duration-150 hover:bg-white/5 hover:text-white ' +
-              (open() ? 'px-3.5' : 'justify-center px-0')
-            ">
+            class="sidebar-link flex items-center gap-2.5 py-2.25 mx-2 rounded-md no-underline text-[0.85rem] font-medium whitespace-nowrap overflow-hidden transition-colors duration-150"
+            [class]="open() ? 'px-3.5' : 'justify-center px-0'">
             <span class="flex items-center justify-center shrink-0">
               <ng-container *ngComponentOutlet="item.icon; inputs: { size: 18 }" />
             </span>
@@ -62,28 +63,94 @@
     </ul>
   </nav>
 
-  <!-- Bottom items -->
-  <div class="border-t border-white/[0.07] py-2 shrink-0">
-    <ul class="list-none m-0 p-0">
-      @for (item of sidebarBottomItems; track item.id) {
-        <li>
-          <a
-            [routerLink]="item.route"
-            routerLinkActive="!text-white !bg-white/[0.09] [&_svg]:!text-emerald-300"
-            [attr.title]="!open() ? item.label : null"
-            [class]="
-              'flex items-center gap-2.5 py-2.25 mx-2 rounded-md text-white/65 no-underline text-[0.85rem] font-medium whitespace-nowrap overflow-hidden transition-colors duration-150 hover:bg-white/5 hover:text-white ' +
-              (open() ? 'px-3.5' : 'justify-center px-0')
-            ">
-            <span class="flex items-center justify-center shrink-0">
-              <ng-container *ngComponentOutlet="item.icon; inputs: { size: 18 }" />
+  <!-- Profilo utente -->
+  <div class="shrink-0" style="border-top: 1px solid var(--color-neutral-200)">
+    @if (open()) {
+      <!-- Sidebar Open -->
+      <div class="flex items-stretch">
+        <!-- Left: avatar panel + info -->
+        <div
+          class="flex items-center gap-2.5 flex-1 min-w-0 px-3 py-2.5 transition-colors duration-150 cursor-pointer profile-zone"
+          (click)="profilePanelRef.toggle()"
+          role="button"
+          tabindex="0"
+          (keydown.enter)="profilePanelRef.toggle()"
+          [attr.aria-label]="'Apri profilo di ' + currentAccount.name">
+          <!-- Avatar -->
+          <app-custom-avatar
+            [src]="currentAccount.avatarSrc ?? ''"
+            [name]="currentAccount.name"
+            [variant]="variantFor(currentAccount.status)"
+            [showRing]="true"
+            ringSize="sm"
+            [ringGap]="true"
+            [ringColor]="ringColorFor(currentAccount.status)"
+            size="sm"
+            shape="circle"
+            [clickable]="false" />
+
+          <!-- Info Text -->
+          <div class="flex-1 min-w-0 flex flex-col gap-0">
+            <span
+              class="text-[0.82rem] font-semibold truncate"
+              style="color: var(--color-neutral-900)">
+              {{ currentAccount.name }}
             </span>
-            @if (open()) {
-              <span class="flex-1 overflow-hidden text-ellipsis">{{ item.label }}</span>
-            }
-          </a>
-        </li>
-      }
-    </ul>
+            <span class="text-[0.7rem] truncate" style="color: var(--color-neutral-400)">
+              {{ currentAccount.courseAcronym }} · {{ currentAccount.universityLabel }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="w-px self-stretch my-2" style="background: var(--color-neutral-200)"></div>
+
+        <!-- Logout -->
+        <button
+          type="button"
+          (click)="onLogout()"
+          aria-label="Esci dall'account"
+          title="Esci"
+          class="shrink-0 flex items-center justify-center w-12 border-none bg-transparent cursor-pointer transition-colors duration-150 logout-zone">
+          <svg [lucideIcon]="iconLogout" [size]="16" aria-hidden="true"></svg>
+        </button>
+      </div>
+
+      <!-- Panel -->
+      <div class="relative">
+        <div class="absolute bottom-0 left-0 z-50">
+          <app-avatar-profile-panel
+            #profilePanelRef
+            [accounts]="accounts"
+            [darkTheme]="false"
+            [position]="'right'"
+            [showAddAccount]="false"
+            [showSettings]="true"
+            [showLogout]="false"
+            (accountSwitch)="onAccountSwitch($event)" />
+        </div>
+      </div>
+    } @else {
+      <!-- Sidebar Closed-->
+      <div class="flex flex-col items-center py-2 gap-1">
+        <app-avatar-profile-panel
+          [accounts]="accounts"
+          [darkTheme]="false"
+          [position]="'right'"
+          [showAddAccount]="false"
+          [showSettings]="true"
+          [showLogout]="false"
+          (accountSwitch)="onAccountSwitch($event)" />
+
+        <button
+          type="button"
+          (click)="onLogout()"
+          aria-label="Esci dall'account"
+          title="Esci"
+          class="flex items-center justify-center w-8 h-8 rounded-md border-none bg-transparent cursor-pointer transition-colors duration-150 logout-zone">
+          <svg [lucideIcon]="iconLogout" [size]="16" aria-hidden="true"></svg>
+        </button>
+      </div>
+    }
   </div>
 </aside>

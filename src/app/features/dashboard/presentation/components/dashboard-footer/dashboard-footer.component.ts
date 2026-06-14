@@ -1,28 +1,30 @@
-import { Component, HostListener, signal } from '@angular/core';
-import { LucideChevronUp, LucideX } from '@lucide/angular';
+import { Component, HostListener, ViewChild } from '@angular/core';
+import { CustomModalComponent } from '@ui/custom-modal/custom-modal.component';
 import { FooterComponent } from 'src/app/core/layout/footer/footer.component';
+import { LucideDynamicIcon, LucideChevronUp } from '@lucide/angular';
 
 @Component({
   selector: 'app-dashboard-footer',
   standalone: true,
-  imports: [LucideChevronUp, LucideX, FooterComponent],
+  imports: [CustomModalComponent, FooterComponent, LucideDynamicIcon],
   templateUrl: './dashboard-footer.component.html',
 })
 export class DashboardFooterComponent {
-  readonly drawerOpen = signal(false);
+  readonly iconChevronUp = LucideChevronUp;
+  hovered = false;
+
+  @ViewChild('footerModal') footerModal!: CustomModalComponent;
 
   openDrawer(): void {
-    this.drawerOpen.set(true);
+    this.footerModal.open();
   }
 
   closeDrawer(): void {
-    this.drawerOpen.set(false);
+    this.footerModal.close();
   }
 
   @HostListener('document:keydown.escape')
   onEscape(): void {
-    if (this.drawerOpen()) {
-      this.closeDrawer();
-    }
+    this.footerModal.close();
   }
 }
