@@ -2,12 +2,12 @@ import { Type } from '@angular/core';
 import {
   LucideLayoutDashboard,
   LucideGraduationCap,
-  LucideBriefcase,
+  LucideHandshake,
   LucideMessageSquare,
-  LucideCompass,
+  LucideSignpostBig,
   LucideSettings,
-  LucideCircleUser,
-  LucideLogOut,
+  LucideFileText,
+  LucideCalendarDays,
 } from '@lucide/angular';
 
 export type UserRole = 'student' | 'admin' | 'professor';
@@ -41,17 +41,24 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     roles: ['student', 'admin', 'professor'],
   },
   {
-    id: 'sviluppi futuri',
-    label: 'Sviluppi Futuri',
-    icon: LucideCompass,
-    route: '/dashboard/sviluppi-futuri',
+    id: 'calendario',
+    label: 'Calendario',
+    icon: LucideCalendarDays,
+    route: '/dashboard/calendario',
     roles: ['student', 'admin', 'professor'],
   },
   {
-    id: 'partner',
-    label: 'Partner',
-    icon: LucideBriefcase,
-    route: '/dashboard/partner',
+    id: 'documenti',
+    label: 'Documenti',
+    icon: LucideFileText,
+    route: '/dashboard/documenti',
+    roles: ['student', 'admin', 'professor'],
+  },
+  {
+    id: 'sviluppi futuri',
+    label: 'Sviluppi Futuri',
+    icon: LucideSignpostBig,
+    route: '/dashboard/sviluppi-futuri',
     roles: ['student', 'admin', 'professor'],
   },
   {
@@ -60,14 +67,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: LucideMessageSquare,
     route: '/dashboard/messaggi',
     roles: ['student', 'admin', 'professor'],
-    dividerAfter: true
-  },
-  {
-    id: 'impostazioni',
-    label: 'Impostazioni',
-    icon: LucideSettings,
-    route: '/dashboard/impostazioni',
-    roles: ['student', 'admin', 'professor'],
+    dividerAfter: true,
   },
 ];
 
@@ -76,17 +76,17 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
 // =============================================
 export const SIDEBAR_BOTTOM_ITEMS: SidebarItem[] = [
   {
-    id: 'profilo',
-    label: 'Profilo',
-    icon: LucideCircleUser,
-    route: '/dashboard/profilo',
+    id: 'partner',
+    label: 'Partner',
+    icon: LucideHandshake,
+    route: '/dashboard/partner',
     roles: ['student', 'admin', 'professor'],
   },
   {
-    id: 'logout',
-    label: 'Logout',
-    icon: LucideLogOut,
-    route: '/login',
+    id: 'impostazioni',
+    label: 'Impostazioni',
+    icon: LucideSettings,
+    route: '/dashboard/impostazioni',
     roles: ['student', 'admin', 'professor'],
   },
 ];

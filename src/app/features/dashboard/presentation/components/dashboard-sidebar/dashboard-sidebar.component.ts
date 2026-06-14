@@ -8,7 +8,7 @@ import {
   LucideGraduationCap,
   LucideLogOut,
 } from '@lucide/angular';
-import { APP_LOGO, APP_NAME, SIDEBAR_ITEMS } from '@constants';
+import { APP_LOGO, APP_NAME, SIDEBAR_ITEMS, SIDEBAR_BOTTOM_ITEMS } from '@constants';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomAvatarComponent } from '@ui/custom-avatar/custom-avatar.component';
 import {
@@ -85,6 +85,7 @@ export class DashboardSidebarComponent {
   readonly iconLogout = LucideLogOut;
 
   readonly sidebarItems = SIDEBAR_ITEMS;
+  readonly sidebarBottomItems = SIDEBAR_BOTTOM_ITEMS;
 
   @ViewChild('profilePanelRef') profilePanelRef!: AvatarProfilePanelComponent;
 
@@ -93,12 +94,30 @@ export class DashboardSidebarComponent {
     {
       id: 'acc-1',
       name: 'Mario Rossi',
-      email: 'mario.rossi@studenti.uniXY.it',
+      email: 'mario.rossi@studenti.unibo.it',
       courseLabel: 'Ingegneria Informatica',
       courseAcronym: 'LM',
       universityLabel: 'Università di Bologna',
       status: 'active',
       isCurrent: true,
+    },
+    {
+      id: 'acc-2',
+      name: 'Mario Rossi',
+      email: 'mario.rossi@studenti.unipi.it',
+      courseLabel: 'Fisica Teorica',
+      courseAcronym: 'LMcu',
+      universityLabel: 'Università di Pisa',
+      status: 'warning',
+    },
+    {
+      id: 'acc-3',
+      name: 'Mario Rossi',
+      email: 'mario.rossi@phd.unito.it',
+      courseLabel: 'Dottorato in Matematica',
+      courseAcronym: 'DOC',
+      universityLabel: 'Università di Torino',
+      status: 'graduated',
     },
   ];
 
