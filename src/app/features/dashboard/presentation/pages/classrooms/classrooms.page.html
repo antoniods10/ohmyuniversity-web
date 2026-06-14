@@ -1,0 +1,254 @@
+<div class="flex flex-col gap-6 max-w-5xl mx-auto pb-8">
+  <!-- Page Header -->
+  <app-page-header
+    title="Aule"
+    description="Esplora le aule disponibili in ogni sede e edificio dell'ateneo." />
+
+  <!-- Placeholder 3D Map -->
+  <app-custom-card
+    variant="primary"
+    padding="md"
+    shadow="sm"
+    [bordered]="true"
+    radius="lg"
+    [accentBar]="true">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="flex items-start gap-3">
+        <div
+          class="flex items-center justify-center w-10 h-10 rounded-xl shrink-0"
+          style="background: var(--color-primary-light)">
+          <svg
+            [lucideIcon]="iconMap"
+            [size]="20"
+            style="color: var(--color-primary-dark)"
+            aria-hidden="true"></svg>
+        </div>
+        <div>
+          <h2 appText variant="h6" class="m-0">Mappa interattiva degli edifici</h2>
+          <p appText variant="body-sm" color="muted" class="m-0 mt-0.5">
+            La visualizzazione 3D degli edifici e delle aule è in fase di sviluppo. Sarà disponibile
+            nelle prossime versioni della piattaforma.
+          </p>
+        </div>
+      </div>
+      <app-custom-badge label="In arrivo" variant="primary" size="sm" shape="pill" [dot]="true" />
+    </div>
+  </app-custom-card>
+
+  <!-- University Selection -->
+  <div class="flex flex-col gap-4">
+    <app-custom-tabs
+      [tabs]="campusTabs"
+      [activeTab]="activeCampusId()"
+      tabStyle="pill"
+      size="md"
+      (tabChange)="onCampusChange($event)" />
+
+    <!-- Filters -->
+    <div class="flex flex-col sm:flex-row gap-3">
+      <div class="flex-1">
+        <app-custom-input
+          placeholder="Cerca aula per nome, piano..."
+          [iconLeft]="iconSearch"
+          size="sm"
+          [fullWidth]="true"
+          [clearable]="true"
+          (inputChange)="onSearchChange($event)" />
+      </div>
+      <div class="sm:w-64">
+        <app-custom-input
+          type="select"
+          [options]="buildingOptions"
+          size="sm"
+          [fullWidth]="true"
+          (inputChange)="onBuildingChange($event)" />
+      </div>
+    </div>
+
+    <!-- Stats University -->
+    <div class="flex items-center gap-4 flex-wrap">
+      <div class="flex items-center gap-1.5">
+        <svg
+          [lucideIcon]="iconBuilding"
+          [size]="13"
+          style="color: var(--color-neutral-400)"
+          aria-hidden="true"></svg>
+        <span class="text-[0.75rem]" style="color: var(--color-neutral-500)">
+          {{ activeCampus.buildings.length }} edifici
+        </span>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <svg
+          [lucideIcon]="iconLayers"
+          [size]="13"
+          style="color: var(--color-neutral-400)"
+          aria-hidden="true"></svg>
+        <span class="text-[0.75rem]" style="color: var(--color-neutral-500)">
+          {{ totalClassrooms }} aule
+        </span>
+      </div>
+      <app-custom-badge
+        [label]="availableCount + ' disponibili'"
+        variant="success"
+        size="xs"
+        shape="pill"
+        [dot]="true" />
+      <app-custom-badge
+        [label]="totalClassrooms - availableCount + ' occupate'"
+        variant="neutral"
+        size="xs"
+        shape="pill"
+        [dot]="true" />
+    </div>
+  </div>
+
+  <!-- Buildings + Classrooms -->
+  @for (building of filteredBuildings; track building.id) {
+    <div class="flex flex-col gap-3">
+      <!-- Header edificio -->
+      <div class="flex items-start gap-3">
+        <div
+          class="flex items-center justify-center w-8 h-8 rounded-lg shrink-0 mt-0.5"
+          style="background: var(--color-neutral-200)">
+          <svg
+            [lucideIcon]="iconBuilding"
+            [size]="14"
+            style="color: var(--color-neutral-500)"
+            aria-hidden="true"></svg>
+        </div>
+        <div>
+          <h3 appText variant="h6" class="m-0">{{ building.name }}</h3>
+          <div class="flex items-center gap-1.5 mt-0.5">
+            <svg
+              [lucideIcon]="iconMapPin"
+              [size]="11"
+              style="color: var(--color-neutral-400)"
+              aria-hidden="true"></svg>
+            <span class="text-[0.72rem]" style="color: var(--color-neutral-400)">{{
+              building.address
+            }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid Classrooms -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        @for (classroom of building.classrooms; track classroom.id) {
+          <app-custom-card variant="default" padding="md" shadow="sm" [bordered]="true" radius="lg">
+            <div class="flex flex-col gap-3 h-full">
+              <!-- Header aula -->
+              <div class="flex items-start justify-between gap-2">
+                <div class="flex-1 min-w-0">
+                  <h4 appText variant="h6" class="m-0 truncate">{{ classroom.name }}</h4>
+                  <div class="flex items-center gap-1.5 mt-0.5">
+                    <svg
+                      [lucideIcon]="iconLayers"
+                      [size]="11"
+                      style="color: var(--color-neutral-400)"
+                      aria-hidden="true"></svg>
+                    <span class="text-[0.7rem]" style="color: var(--color-neutral-400)">
+                      {{ classroom.floor }}
+                    </span>
+                  </div>
+                </div>
+                <!-- Availability -->
+                <div class="shrink-0">
+                  @if (classroom.available) {
+                    <app-custom-badge
+                      label="Libera"
+                      variant="success"
+                      size="xs"
+                      shape="pill"
+                      [dot]="true" />
+                  } @else {
+                    <app-custom-badge
+                      label="Occupata"
+                      variant="neutral"
+                      size="xs"
+                      shape="pill"
+                      [dot]="true" />
+                  }
+                </div>
+              </div>
+
+              <!-- Info -->
+              <div class="flex items-center gap-3 flex-wrap">
+                <div class="flex items-center gap-1.5">
+                  <svg
+                    [lucideIcon]="iconUsers"
+                    [size]="12"
+                    style="color: var(--color-neutral-400)"
+                    aria-hidden="true"></svg>
+                  <span
+                    class="text-[0.75rem] font-semibold"
+                    style="color: var(--color-neutral-700)">
+                    {{ classroom.capacity }} posti
+                  </span>
+                </div>
+                <app-custom-badge
+                  [label]="typeLabel(classroom.type)"
+                  [variant]="typeVariant(classroom.type)"
+                  size="xs"
+                  shape="rounded" />
+              </div>
+
+              <!-- Features -->
+              <div class="flex flex-wrap gap-1.5 flex-1">
+                @for (feature of classroom.features; track feature) {
+                  <span
+                    class="text-[0.65rem] font-semibold px-2 py-0.5 rounded-md"
+                    style="
+                      background: var(--color-neutral-100);
+                      color: var(--color-neutral-500);
+                      border: 1px solid var(--color-neutral-200);
+                    ">
+                    {{ featureLabel(feature) }}
+                  </span>
+                }
+              </div>
+
+              <!-- Actions -->
+              <div class="pt-2" style="border-top: 1px solid var(--color-neutral-200)">
+                <app-custom-button
+                  variant="ghost"
+                  size="sm"
+                  label="Prenota"
+                  [icon]="iconCalendarPlus"
+                  [fullWidth]="true"
+                  (clicked)="onBooking()" />
+              </div>
+            </div>
+          </app-custom-card>
+        }
+      </div>
+    </div>
+  }
+
+  @if (filteredBuildings.length === 0) {
+    <div
+      class="flex flex-col items-center justify-center gap-3 py-16"
+      style="border: 1px dashed var(--color-neutral-300); border-radius: 16px">
+      <svg
+        [lucideIcon]="iconSearch"
+        [size]="32"
+        style="color: var(--color-neutral-300)"
+        aria-hidden="true"></svg>
+      <p appText variant="body-sm" color="subtle" class="m-0">
+        Nessuna aula trovata con i filtri selezionati.
+      </p>
+    </div>
+  }
+
+  <!-- Disclaimer -->
+  <div class="flex items-start gap-2 px-1">
+    <svg
+      [lucideIcon]="iconInfo"
+      [size]="13"
+      style="color: var(--color-neutral-400); margin-top: 1px"
+      aria-hidden="true"></svg>
+    <p appText variant="caption" color="subtle" class="m-0">
+      La disponibilità delle aule è aggiornata in tempo reale. La prenotazione è riservata a docenti
+      e personale tecnico dell'ateneo.
+    </p>
+  </div>
+</div>
