@@ -1,4 +1,4 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, inject } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { PageHeaderComponent } from '@ui/page-header/page-header.component';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
@@ -6,9 +6,7 @@ import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomInputComponent } from '@ui/custom-input/custom-input.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
-
 import { ToastService } from '@ui/custom-toast/toast.service';
-import { inject } from '@angular/core';
 import {
   LucideDynamicIcon,
   LucideSearch,
@@ -26,35 +24,8 @@ import {
 } from '@lucide/angular';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 
-export type ExamStatus = 'open' | 'closing' | 'closed' | 'booked';
-export type QuestionnaireStatus = 'pending' | 'completed';
-
-export interface Exam {
-  id: string;
-  courseName: string;
-  courseAcronym: string;
-  professor: string;
-  date: string;
-  time: string;
-  location: string;
-  building: string;
-  enrollDeadline: string;
-  spotsTotal: number;
-  spotsLeft: number;
-  status: ExamStatus;
-  cfu: number;
-  year: number;
-}
-
-export interface Questionnaire {
-  id: string;
-  courseName: string;
-  professor: string;
-  type: string;
-  deadline: string;
-  status: QuestionnaireStatus;
-  completedAt?: string;
-}
+import { Exam, Questionnaire, ExamStatus } from '@shared/types/exams.types';
+import { MOCK_EXAMS, MOCK_QUESTIONNAIRES } from '@shared/data/mock/exams.mock';
 
 @Component({
   selector: 'app-exams',
@@ -73,7 +44,7 @@ export interface Questionnaire {
   templateUrl: './exams.page.html',
 })
 export class ExamsPage {
-  private toast = inject(ToastService);
+  private readonly toast = inject(ToastService);
 
   readonly iconSearch = LucideSearch;
   readonly iconCalendarCheck = LucideCalendarCheck;
@@ -97,150 +68,8 @@ export class ExamsPage {
     { id: 'questionnaires', label: 'Questionari', icon: LucideClipboardList },
   ];
 
-  // @TODO — dati reali da service
-  readonly exams: Exam[] = [
-    {
-      id: 'e1',
-      courseName: 'Algoritmi e Strutture Dati',
-      courseAcronym: 'LM',
-      professor: 'Prof. Mario Bianchi',
-      date: '28 giugno 2025',
-      time: '09:00',
-      location: 'Aula A1',
-      building: 'Edificio A — Rettoria',
-      enrollDeadline: '21 giugno 2025',
-      spotsTotal: 80,
-      spotsLeft: 34,
-      status: 'open',
-      cfu: 9,
-      year: 1,
-    },
-    {
-      id: 'e2',
-      courseName: 'Sistemi Operativi',
-      courseAcronym: 'LM',
-      professor: 'Prof. Laura Conti',
-      date: '2 luglio 2025',
-      time: '10:00',
-      location: 'Aula B1',
-      building: 'Edificio B — Scienze',
-      enrollDeadline: '25 giugno 2025',
-      spotsTotal: 60,
-      spotsLeft: 5,
-      status: 'closing',
-      cfu: 9,
-      year: 1,
-    },
-    {
-      id: 'e3',
-      courseName: 'Basi di Dati',
-      courseAcronym: 'LM',
-      professor: 'Prof. Giovanni Serra',
-      date: '5 luglio 2025',
-      time: '14:00',
-      location: 'Aula Magna',
-      building: 'Edificio A — Rettoria',
-      enrollDeadline: '28 giugno 2025',
-      spotsTotal: 300,
-      spotsLeft: 142,
-      status: 'booked',
-      cfu: 6,
-      year: 1,
-    },
-    {
-      id: 'e4',
-      courseName: 'Analisi Matematica II',
-      courseAcronym: 'L',
-      professor: 'Prof. Carla Russo',
-      date: '10 luglio 2025',
-      time: '09:00',
-      location: 'Aula T1',
-      building: 'Polo Didattico Termoli',
-      enrollDeadline: '3 luglio 2025',
-      spotsTotal: 60,
-      spotsLeft: 60,
-      status: 'open',
-      cfu: 12,
-      year: 2,
-    },
-    {
-      id: 'e5',
-      courseName: 'Reti di Calcolatori',
-      courseAcronym: 'LM',
-      professor: 'Prof. Antonio Greco',
-      date: '15 luglio 2025',
-      time: '11:00',
-      location: 'Laboratorio Informatica 1',
-      building: 'Edificio B — Scienze',
-      enrollDeadline: '8 luglio 2025',
-      spotsTotal: 40,
-      spotsLeft: 0,
-      status: 'closed',
-      cfu: 9,
-      year: 1,
-    },
-    {
-      id: 'e6',
-      courseName: 'Ingegneria del Software',
-      courseAcronym: 'LM',
-      professor: 'Prof. Federica Longo',
-      date: '18 luglio 2025',
-      time: '15:00',
-      location: 'Aula A2',
-      building: 'Edificio A — Rettoria',
-      enrollDeadline: '11 luglio 2025',
-      spotsTotal: 60,
-      spotsLeft: 28,
-      status: 'open',
-      cfu: 9,
-      year: 2,
-    },
-  ];
-
-  readonly questionnaires: Questionnaire[] = [
-    {
-      id: 'q1',
-      courseName: 'Algoritmi e Strutture Dati',
-      professor: 'Prof. Mario Bianchi',
-      type: 'Valutazione della didattica',
-      deadline: '25 giugno 2025',
-      status: 'pending',
-    },
-    {
-      id: 'q2',
-      courseName: 'Sistemi Operativi',
-      professor: 'Prof. Laura Conti',
-      type: 'Valutazione della didattica',
-      deadline: '28 giugno 2025',
-      status: 'pending',
-    },
-    {
-      id: 'q3',
-      courseName: 'Analisi Matematica II',
-      professor: 'Prof. Carla Russo',
-      type: 'Valutazione della didattica',
-      deadline: '—',
-      status: 'completed',
-      completedAt: '15 maggio 2025',
-    },
-    {
-      id: 'q4',
-      courseName: 'Programmazione I',
-      professor: 'Prof. Marco Esposito',
-      type: 'Valutazione della didattica',
-      deadline: '—',
-      status: 'completed',
-      completedAt: '2 febbraio 2025',
-    },
-    {
-      id: 'q5',
-      courseName: 'Basi di Dati',
-      professor: 'Prof. Giovanni Serra',
-      type: 'Valutazione della didattica',
-      deadline: '1 luglio 2025',
-      status: 'pending',
-    },
-  ];
+  readonly exams: Exam[] = MOCK_EXAMS;
+  readonly questionnaires: Questionnaire[] = MOCK_QUESTIONNAIRES;
 
   readonly filteredExams = computed(() => {
     const q = this.searchValue().toLowerCase().trim();
