@@ -14,6 +14,30 @@ import {
   LucideScale,
   LucideUsers,
 } from '@lucide/angular';
+import {
+  MOCK_BORSE_DI_STUDIO,
+  MOCK_EXAM_SLOTS,
+  MOCK_EXAMS,
+  MOCK_MODULISTICA,
+  MOCK_STUDENTE_BADGE,
+  MOCK_TASSE,
+} from '@shared/data/mock/career.mock';
+import type {
+  AcademicSession,
+  BookingStatus,
+  ChartPoint,
+  Exam,
+  ExamFilter,
+  ExamGroup,
+  ExamSlot,
+  FilterOption,
+  SessionFilter,
+  SessionFilterOption,
+  SessionType,
+  TrendDirection,
+  TypeFilter,
+  TypeFilterOption,
+} from '@shared/types/career.types';
 
 // ── Study-plan constants ───────────────────────────────────────────────────
 
@@ -25,91 +49,6 @@ const AVERAGE_DECIMALS = 2;
 // ── Shared types ───────────────────────────────────────────────────────────
 
 type TabId = 'panoramica' | 'piano-studi' | 'appelli' | 'segreteria';
-
-// ── Study-plan types ───────────────────────────────────────────────────────
-
-export type ExamStatus = 'PASSED' | 'TO_TAKE';
-export type CourseType = 'MANDATORY' | 'ELECTIVE';
-export type ExamFilter = 'ALL' | 'PASSED' | 'TO_TAKE' | 'ELECTIVE';
-export type TrendDirection = 'up' | 'down' | 'flat';
-
-// ── Exam-booking types ─────────────────────────────────────────────────────
-
-/** Exam modality: written test or oral interview. */
-export type SessionType = 'WRITTEN' | 'ORAL';
-
-/** Booking state of a single exam slot. */
-export type BookingStatus = 'AVAILABLE' | 'BOOKED' | 'CLOSED';
-
-/** Academic calendar session. */
-export type AcademicSession = 'SUMMER' | 'WINTER' | 'EXTRAORDINARY';
-
-/** Filter applied to the academic session column. */
-export type SessionFilter = 'ALL' | AcademicSession;
-
-/** Filter applied to the exam modality column. */
-export type TypeFilter = 'ALL' | SessionType;
-
-// ── Study-plan interfaces ──────────────────────────────────────────────────
-
-export interface Exam {
-  courseCode: string;
-  courseName: string;
-  cfu: number;
-  grade: string;
-  status: ExamStatus;
-  type: CourseType;
-  academicYear: number;
-}
-
-export interface FilterOption {
-  id: ExamFilter;
-  label: string;
-}
-export interface ExamGroup {
-  year: number;
-  yearLabel: string;
-  exams: Exam[];
-  passedCount: number;
-}
-export interface ChartPoint {
-  value: number;
-  isLast: boolean;
-}
-interface WeightedGrade {
-  value: number;
-  cfu: number;
-}
-
-// ── Exam-booking interfaces ────────────────────────────────────────────────
-
-/** A single bookable exam slot in the student's study plan. */
-export interface ExamSlot {
-  id: string;
-  courseCode: string;
-  courseName: string;
-  professor: string;
-  date: string;
-  time: string;
-  type: SessionType;
-  status: BookingStatus;
-  session: AcademicSession;
-  location: string;
-  maxEnrollments: number;
-  currentEnrollments: number;
-}
-
-/** Descriptor for session filter tabs. */
-export interface SessionFilterOption {
-  id: SessionFilter;
-  label: string;
-}
-
-/** Descriptor for exam-type filter tabs. */
-export interface TypeFilterOption {
-  id: TypeFilter;
-  label: string;
-}
 
 // ── Component ──────────────────────────────────────────────────────────────
 
@@ -148,170 +87,12 @@ export class CareerPage {
 
   readonly activeFilter = signal<ExamFilter>('ALL');
 
-  readonly exams = signal<Exam[]>([
-    {
-      courseCode: 'INF-01',
-      courseName: 'Programmazione I',
-      cfu: 12,
-      grade: '30L',
-      type: 'MANDATORY',
-      status: 'PASSED',
-      academicYear: 1,
-    },
-    {
-      courseCode: 'MAT-01',
-      courseName: 'Analisi Matematica I',
-      cfu: 9,
-      grade: '24',
-      type: 'MANDATORY',
-      status: 'PASSED',
-      academicYear: 1,
-    },
-    {
-      courseCode: 'INF-02',
-      courseName: 'Architettura degli Elaboratori',
-      cfu: 6,
-      grade: '28',
-      type: 'MANDATORY',
-      status: 'PASSED',
-      academicYear: 1,
-    },
-    {
-      courseCode: 'MAT-02',
-      courseName: 'Geometria e Algebra Lineare',
-      cfu: 6,
-      grade: '30',
-      type: 'MANDATORY',
-      status: 'PASSED',
-      academicYear: 1,
-    },
-    {
-      courseCode: 'ENG-01',
-      courseName: 'Lingua Inglese B2',
-      cfu: 3,
-      grade: '27',
-      type: 'ELECTIVE',
-      status: 'PASSED',
-      academicYear: 1,
-    },
-    {
-      courseCode: 'INF-03',
-      courseName: 'Algoritmi e Strutture Dati',
-      cfu: 9,
-      grade: '27',
-      type: 'MANDATORY',
-      status: 'PASSED',
-      academicYear: 2,
-    },
-    {
-      courseCode: 'MAT-03',
-      courseName: 'Calcolo delle Probabilità',
-      cfu: 6,
-      grade: '26',
-      type: 'MANDATORY',
-      status: 'PASSED',
-      academicYear: 2,
-    },
-    {
-      courseCode: 'INF-04',
-      courseName: 'Basi di Dati',
-      cfu: 9,
-      grade: '30L',
-      type: 'MANDATORY',
-      status: 'PASSED',
-      academicYear: 2,
-    },
-    {
-      courseCode: 'INF-05',
-      courseName: 'Ingegneria del Software',
-      cfu: 9,
-      grade: '',
-      type: 'MANDATORY',
-      status: 'TO_TAKE',
-      academicYear: 2,
-    },
-    {
-      courseCode: 'FIS-01',
-      courseName: 'Fisica Generale',
-      cfu: 6,
-      grade: '',
-      type: 'MANDATORY',
-      status: 'TO_TAKE',
-      academicYear: 2,
-    },
-    {
-      courseCode: 'INF-06',
-      courseName: 'Sistemi Operativi',
-      cfu: 9,
-      grade: '',
-      type: 'MANDATORY',
-      status: 'TO_TAKE',
-      academicYear: 3,
-    },
-    {
-      courseCode: 'INF-07',
-      courseName: 'Reti di Calcolatori',
-      cfu: 6,
-      grade: '',
-      type: 'MANDATORY',
-      status: 'TO_TAKE',
-      academicYear: 3,
-    },
-    {
-      courseCode: 'INF-08',
-      courseName: 'Machine Learning',
-      cfu: 6,
-      grade: '',
-      type: 'ELECTIVE',
-      status: 'TO_TAKE',
-      academicYear: 3,
-    },
-  ]);
+  readonly exams = signal<Exam[]>(MOCK_EXAMS);
 
-  readonly borseDiStudio = [
-    { nome: 'Borsa di Studio INPS', tipo: 'Reddito', stato: 'Attiva' },
-    { nome: 'Borsa Erasmus+', tipo: 'Mobilità', stato: 'Attiva' },
-    { nome: 'Borsa di merito UNIMOL', tipo: 'Merito', stato: 'Scaduta' },
-  ];
-
-  readonly modulistica = [
-    { nome: 'Modulo iscrizione esame', file: 'modulo_esame.pdf' },
-    { nome: 'Certificato di laurea', file: 'certificato_laurea.pdf' },
-    { nome: 'Piano di studi', file: 'piano_studi.pdf' },
-  ];
-
-  readonly tasse = [
-    {
-      tipo: 'Tassa 1° rata',
-      importo: '450€',
-      anno: '2025/26',
-      scadenza: '31/01/2026',
-      stato: 'Pagato',
-    },
-    {
-      tipo: 'Tassa 2° rata',
-      importo: '350€',
-      anno: '2025/26',
-      scadenza: '30/06/2026',
-      stato: 'Da pagare',
-    },
-    {
-      tipo: 'Tassa 3° rata',
-      importo: '350€',
-      anno: '2025/26',
-      scadenza: '31/10/2026',
-      stato: 'Da pagare',
-    },
-  ];
-
-  readonly studenteBadge = {
-    nome: 'Luca',
-    cognome: 'Lanese',
-    matricola: '178158',
-    corsoDiLaurea: 'Software Technologies',
-    annoAccademico: '2025/26',
-    ateneo: 'UNIMOL',
-  };
+  readonly borseDiStudio = MOCK_BORSE_DI_STUDIO;
+  readonly modulistica = MOCK_MODULISTICA;
+  readonly tasse = MOCK_TASSE;
+  readonly studenteBadge = MOCK_STUDENTE_BADGE;
 
   // ── Exam-booking state ───────────────────────────────────────────────────
 
@@ -321,194 +102,8 @@ export class CareerPage {
   /** Currently selected exam-type filter. */
   readonly activeTypeFilter = signal<TypeFilter>('ALL');
 
-  /** Complete list of exam slots available for the student's study plan (mock data). */
-  readonly examSlots = signal<ExamSlot[]>([
-    // ── Sessione Estiva ────────────────────────────────────────────────────
-    {
-      id: 'S1',
-      courseCode: 'INF-05',
-      courseName: 'Ingegneria del Software',
-      professor: 'Prof. M. Rossi',
-      date: '10/06/2026',
-      time: '09:00',
-      type: 'WRITTEN',
-      status: 'BOOKED',
-      session: 'SUMMER',
-      location: 'Aula A1',
-      maxEnrollments: 30,
-      currentEnrollments: 18,
-    },
-    {
-      id: 'S2',
-      courseCode: 'INF-05',
-      courseName: 'Ingegneria del Software',
-      professor: 'Prof. M. Rossi',
-      date: '01/07/2026',
-      time: '14:00',
-      type: 'ORAL',
-      status: 'AVAILABLE',
-      session: 'SUMMER',
-      location: 'Aula B2',
-      maxEnrollments: 15,
-      currentEnrollments: 7,
-    },
-    {
-      id: 'S3',
-      courseCode: 'FIS-01',
-      courseName: 'Fisica Generale',
-      professor: 'Prof. A. Ferrari',
-      date: '15/06/2026',
-      time: '10:00',
-      type: 'WRITTEN',
-      status: 'AVAILABLE',
-      session: 'SUMMER',
-      location: 'Aula Magna',
-      maxEnrollments: 40,
-      currentEnrollments: 22,
-    },
-    {
-      id: 'S4',
-      courseCode: 'FIS-01',
-      courseName: 'Fisica Generale',
-      professor: 'Prof. A. Ferrari',
-      date: '03/07/2026',
-      time: '09:00',
-      type: 'WRITTEN',
-      status: 'AVAILABLE',
-      session: 'SUMMER',
-      location: 'Aula Magna',
-      maxEnrollments: 40,
-      currentEnrollments: 11,
-    },
-    {
-      id: 'S5',
-      courseCode: 'INF-06',
-      courseName: 'Sistemi Operativi',
-      professor: 'Prof. G. Bianchi',
-      date: '20/06/2026',
-      time: '11:00',
-      type: 'ORAL',
-      status: 'BOOKED',
-      session: 'SUMMER',
-      location: 'Aula C3',
-      maxEnrollments: 20,
-      currentEnrollments: 14,
-    },
-    {
-      id: 'S6',
-      courseCode: 'INF-07',
-      courseName: 'Reti di Calcolatori',
-      professor: 'Prof. L. Verdi',
-      date: '25/06/2026',
-      time: '14:00',
-      type: 'WRITTEN',
-      status: 'AVAILABLE',
-      session: 'SUMMER',
-      location: 'Laboratorio 1',
-      maxEnrollments: 25,
-      currentEnrollments: 14,
-    },
-    {
-      id: 'S7',
-      courseCode: 'INF-08',
-      courseName: 'Machine Learning',
-      professor: 'Prof. C. Esposito',
-      date: '30/06/2026',
-      time: '10:00',
-      type: 'ORAL',
-      status: 'AVAILABLE',
-      session: 'SUMMER',
-      location: 'Aula D4',
-      maxEnrollments: 18,
-      currentEnrollments: 5,
-    },
-    // ── Sessione Invernale ─────────────────────────────────────────────────
-    {
-      id: 'W1',
-      courseCode: 'INF-05',
-      courseName: 'Ingegneria del Software',
-      professor: 'Prof. M. Rossi',
-      date: '14/01/2027',
-      time: '09:00',
-      type: 'WRITTEN',
-      status: 'AVAILABLE',
-      session: 'WINTER',
-      location: 'Aula A1',
-      maxEnrollments: 30,
-      currentEnrollments: 0,
-    },
-    {
-      id: 'W2',
-      courseCode: 'FIS-01',
-      courseName: 'Fisica Generale',
-      professor: 'Prof. A. Ferrari',
-      date: '20/01/2027',
-      time: '10:00',
-      type: 'WRITTEN',
-      status: 'AVAILABLE',
-      session: 'WINTER',
-      location: 'Aula Magna',
-      maxEnrollments: 40,
-      currentEnrollments: 0,
-    },
-    {
-      id: 'W3',
-      courseCode: 'INF-06',
-      courseName: 'Sistemi Operativi',
-      professor: 'Prof. G. Bianchi',
-      date: '27/01/2027',
-      time: '11:00',
-      type: 'ORAL',
-      status: 'AVAILABLE',
-      session: 'WINTER',
-      location: 'Aula C3',
-      maxEnrollments: 20,
-      currentEnrollments: 0,
-    },
-    {
-      id: 'W4',
-      courseCode: 'INF-07',
-      courseName: 'Reti di Calcolatori',
-      professor: 'Prof. L. Verdi',
-      date: '29/01/2027',
-      time: '14:00',
-      type: 'WRITTEN',
-      status: 'AVAILABLE',
-      session: 'WINTER',
-      location: 'Laboratorio 1',
-      maxEnrollments: 25,
-      currentEnrollments: 0,
-    },
-    // ── Sessione Straordinaria ─────────────────────────────────────────────
-    {
-      id: 'E1',
-      courseCode: 'INF-06',
-      courseName: 'Sistemi Operativi',
-      professor: 'Prof. G. Bianchi',
-      date: '12/10/2026',
-      time: '09:00',
-      type: 'ORAL',
-      status: 'AVAILABLE',
-      session: 'EXTRAORDINARY',
-      location: 'Aula C3',
-      maxEnrollments: 10,
-      currentEnrollments: 3,
-    },
-    {
-      id: 'E2',
-      courseCode: 'INF-08',
-      courseName: 'Machine Learning',
-      professor: 'Prof. C. Esposito',
-      date: '20/10/2026',
-      time: '15:00',
-      type: 'ORAL',
-      status: 'AVAILABLE',
-      session: 'EXTRAORDINARY',
-      location: 'Aula D4',
-      maxEnrollments: 8,
-      currentEnrollments: 2,
-    },
-  ]);
+  /** Complete list of exam slots available for the student's study plan. */
+  readonly examSlots = signal<ExamSlot[]>(MOCK_EXAM_SLOTS);
 
   // ── Study-plan filter options ────────────────────────────────────────────
 
@@ -756,7 +351,7 @@ export class CareerPage {
 
   // ── Private helpers ──────────────────────────────────────────────────────
 
-  private passedWeightedGrades(): WeightedGrade[] {
+  private passedWeightedGrades(): { value: number; cfu: number }[] {
     return this.exams()
       .filter(e => e.status === 'PASSED')
       .map(e => ({ value: this.parseGrade(e.grade) ?? 0, cfu: e.cfu }))
@@ -766,8 +361,8 @@ export class CareerPage {
   private parseGrade(grade: string): number | null {
     if (!grade) return null;
     if (grade.toLowerCase().includes('l')) return MAX_GRADE;
-    const parsed = parseInt(grade, 10);
-    return isNaN(parsed) ? null : parsed;
+    const parsed = Number.parseInt(grade, 10);
+    return Number.isNaN(parsed) ? null : parsed;
   }
 
   private formatYearLabel(year: number): string {
