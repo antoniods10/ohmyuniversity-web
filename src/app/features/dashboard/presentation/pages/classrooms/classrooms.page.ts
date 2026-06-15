@@ -1,13 +1,11 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { PageHeaderComponent } from '@ui/page-header/page-header.component';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
-
-import { CustomInputComponent } from '@ui/custom-input/custom-input.component';
+import { CustomInputComponent, SelectOption } from '@ui/custom-input/custom-input.component';
 import { ToastService } from '@ui/custom-toast/toast.service';
-import { inject } from '@angular/core';
 import {
   LucideDynamicIcon,
   LucideMapPin,
@@ -22,33 +20,10 @@ import {
   LucideLayers,
   LucideSearch,
 } from '@lucide/angular';
-import { SelectOption } from '@ui/custom-input/custom-input.component';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 
-export interface Classroom {
-  id: string;
-  name: string;
-  building: string;
-  floor: string;
-  capacity: number;
-  features: ('projector' | 'lim' | 'wifi' | 'power' | 'ac')[];
-  available: boolean;
-  type: 'lecture' | 'lab' | 'seminar' | 'exam';
-}
-
-export interface Building {
-  id: string;
-  name: string;
-  address: string;
-  classrooms: Classroom[];
-}
-
-export interface Campus {
-  id: string;
-  city: string;
-  label: string;
-  buildings: Building[];
-}
+import { Classroom, Building, Campus } from '@shared/types/classrooms.types';
+import { MOCK_CAMPUSES } from '@shared/data/mock/classrooms.mock';
 
 @Component({
   selector: 'app-classrooms',
@@ -66,7 +41,7 @@ export interface Campus {
   templateUrl: './classrooms.page.html',
 })
 export class ClassroomsPage {
-  private toast = inject(ToastService);
+  private readonly toast = inject(ToastService);
 
   readonly iconMapPin = LucideMapPin;
   readonly iconUsers = LucideUsers;
@@ -90,178 +65,7 @@ export class ClassroomsPage {
     { id: 'pesche', label: 'Pesche' },
   ];
 
-  // @TODO — dati reali da service
-  readonly campuses: Campus[] = [
-    {
-      id: 'campobasso',
-      city: 'Campobasso',
-      label: 'Sede principale',
-      buildings: [
-        {
-          id: 'b-cb-1',
-          name: 'Edificio A — Rettoria',
-          address: 'Via Francesco De Sanctis 1, Campobasso',
-          classrooms: [
-            {
-              id: 'cb-a-1',
-              name: 'Aula Magna',
-              building: 'Edificio A — Rettoria',
-              floor: 'Piano terra',
-              capacity: 300,
-              features: ['projector', 'lim', 'wifi', 'power', 'ac'],
-              available: true,
-              type: 'lecture',
-            },
-            {
-              id: 'cb-a-2',
-              name: 'Aula A1',
-              building: 'Edificio A — Rettoria',
-              floor: '1° piano',
-              capacity: 80,
-              features: ['projector', 'wifi', 'power', 'ac'],
-              available: true,
-              type: 'lecture',
-            },
-            {
-              id: 'cb-a-3',
-              name: 'Aula A2',
-              building: 'Edificio A — Rettoria',
-              floor: '1° piano',
-              capacity: 60,
-              features: ['projector', 'wifi', 'ac'],
-              available: false,
-              type: 'lecture',
-            },
-            {
-              id: 'cb-a-4',
-              name: 'Sala Seminari',
-              building: 'Edificio A — Rettoria',
-              floor: '2° piano',
-              capacity: 30,
-              features: ['lim', 'wifi', 'power'],
-              available: true,
-              type: 'seminar',
-            },
-          ],
-        },
-        {
-          id: 'b-cb-2',
-          name: 'Edificio B — Scienze',
-          address: 'Via Francesco De Sanctis 5, Campobasso',
-          classrooms: [
-            {
-              id: 'cb-b-1',
-              name: 'Laboratorio Informatica 1',
-              building: 'Edificio B — Scienze',
-              floor: 'Piano terra',
-              capacity: 40,
-              features: ['projector', 'lim', 'wifi', 'power', 'ac'],
-              available: true,
-              type: 'lab',
-            },
-            {
-              id: 'cb-b-2',
-              name: 'Laboratorio Informatica 2',
-              building: 'Edificio B — Scienze',
-              floor: 'Piano terra',
-              capacity: 40,
-              features: ['projector', 'wifi', 'power'],
-              available: false,
-              type: 'lab',
-            },
-            {
-              id: 'cb-b-3',
-              name: 'Aula B1',
-              building: 'Edificio B — Scienze',
-              floor: '1° piano',
-              capacity: 100,
-              features: ['projector', 'wifi', 'power', 'ac'],
-              available: true,
-              type: 'lecture',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'termoli',
-      city: 'Termoli',
-      label: 'Sede di Termoli',
-      buildings: [
-        {
-          id: 'b-te-1',
-          name: 'Polo Didattico Termoli',
-          address: 'Via Lungotevere 12, Termoli',
-          classrooms: [
-            {
-              id: 'te-1',
-              name: 'Aula T1',
-              building: 'Polo Didattico Termoli',
-              floor: 'Piano terra',
-              capacity: 60,
-              features: ['projector', 'wifi', 'ac'],
-              available: true,
-              type: 'lecture',
-            },
-            {
-              id: 'te-2',
-              name: 'Aula T2',
-              building: 'Polo Didattico Termoli',
-              floor: 'Piano terra',
-              capacity: 40,
-              features: ['lim', 'wifi', 'power'],
-              available: true,
-              type: 'lecture',
-            },
-            {
-              id: 'te-3',
-              name: 'Laboratorio Scienze',
-              building: 'Polo Didattico Termoli',
-              floor: '1° piano',
-              capacity: 24,
-              features: ['projector', 'wifi', 'power', 'ac'],
-              available: false,
-              type: 'lab',
-            },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'pesche',
-      city: 'Pesche',
-      label: 'Sede di Pesche',
-      buildings: [
-        {
-          id: 'b-pe-1',
-          name: 'Centro Congressi Pesche',
-          address: 'Contrada Fonte Lappone, Pesche',
-          classrooms: [
-            {
-              id: 'pe-1',
-              name: 'Sala Convegni',
-              building: 'Centro Congressi Pesche',
-              floor: 'Piano terra',
-              capacity: 150,
-              features: ['projector', 'lim', 'wifi', 'power', 'ac'],
-              available: true,
-              type: 'lecture',
-            },
-            {
-              id: 'pe-2',
-              name: 'Aula P1',
-              building: 'Centro Congressi Pesche',
-              floor: '1° piano',
-              capacity: 50,
-              features: ['projector', 'wifi', 'ac'],
-              available: true,
-              type: 'seminar',
-            },
-          ],
-        },
-      ],
-    },
-  ];
+  readonly campuses: Campus[] = MOCK_CAMPUSES;
 
   get activeCampus(): Campus {
     return this.campuses.find(c => c.id === this.activeCampusId()) ?? this.campuses[0];
