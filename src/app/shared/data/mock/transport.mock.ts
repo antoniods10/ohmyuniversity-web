@@ -1,4 +1,4 @@
-import { TransportRoute, TransportCompany } from '@shared/types/transport.types';
+import { TransportRoute, TransportCompany } from '@shared/types/dashboard/transport.types';
 
 export const MOCK_TRANSPORT_ROUTES: TransportRoute[] = [
   {

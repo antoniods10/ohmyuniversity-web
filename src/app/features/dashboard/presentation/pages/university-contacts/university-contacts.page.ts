@@ -29,7 +29,7 @@ import {
   SecretariatContact,
   ProfessorContact,
   InstitutionalContact,
-} from '@shared/types/university-contacts.types';
+} from '@shared/types/dashboard/university-contacts.types';
 import {
   MOCK_SECRETARIAT_CONTACTS,
   MOCK_PROFESSOR_CONTACTS,

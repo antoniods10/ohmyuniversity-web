@@ -2,7 +2,7 @@ import {
   SecretariatContact,
   ProfessorContact,
   InstitutionalContact,
-} from '@shared/types/university-contacts.types';
+} from '@shared/types/dashboard/university-contacts.types';
 
 export const MOCK_SECRETARIAT_CONTACTS: SecretariatContact[] = [
   {

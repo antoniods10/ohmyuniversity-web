@@ -37,7 +37,7 @@ import type {
   TrendDirection,
   TypeFilter,
   TypeFilterOption,
-} from '@shared/types/career.types';
+} from '@shared/types/dashboard/career.types';
 
 // ── Study-plan constants ───────────────────────────────────────────────────
 

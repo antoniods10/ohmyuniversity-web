@@ -24,7 +24,7 @@ import {
 } from '@lucide/angular';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 
-import { Exam, Questionnaire, ExamStatus } from '@shared/types/exams.types';
+import { Exam, Questionnaire, ExamStatus } from '@shared/types/dashboard/exams.types';
 import { MOCK_EXAMS, MOCK_QUESTIONNAIRES } from '@shared/data/mock/exams.mock';
 
 @Component({

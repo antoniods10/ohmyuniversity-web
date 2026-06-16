@@ -1,4 +1,4 @@
-import { Exam, Questionnaire } from '@shared/types/exams.types';
+import { Exam, Questionnaire } from '@shared/types/dashboard/exams.types';
 
 export const MOCK_EXAMS: Exam[] = [
   {

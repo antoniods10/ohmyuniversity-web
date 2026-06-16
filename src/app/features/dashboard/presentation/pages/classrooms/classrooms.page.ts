@@ -22,7 +22,7 @@ import {
 } from '@lucide/angular';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 
-import { Classroom, Building, Campus } from '@shared/types/classrooms.types';
+import { Classroom, Building, Campus } from '@shared/types/dashboard/classrooms.types';
 import { MOCK_CAMPUSES } from '@shared/data/mock/classrooms.mock';
 
 @Component({

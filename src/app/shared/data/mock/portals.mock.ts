@@ -1,4 +1,4 @@
-import { Portal } from '@shared/types/portals.types';
+import { Portal } from '@shared/types/features/portals.types';
 
 export const MOCK_PORTALS: Portal[] = [
   // SEGRETERIA

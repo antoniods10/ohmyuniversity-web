@@ -34,7 +34,7 @@ import {
   FormModule,
   Bando,
   Fee,
-} from '@shared/types/secretariat.types';
+} from '@shared/types/dashboard/secretariat.types';
 import {
   MOCK_SCHOLARSHIPS,
   MOCK_FORM_MODULES,

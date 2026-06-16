@@ -34,7 +34,7 @@ import {
 } from '@ui/avatar-profile-panel/avatar-profile-panel.component';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 
-import { CourseEntry } from '@shared/types/profilo.types';
+import { CourseEntry } from '@shared/types/dashboard/profilo.types';
 import { MOCK_ACCOUNT, MOCK_COURSES, MOCK_PROFILE_EDIT } from '@shared/data/mock/profilo.mock';
 
 @Component({

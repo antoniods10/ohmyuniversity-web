@@ -20,7 +20,7 @@ import {
   LucideShield,
   LucideStar,
 } from '@lucide/angular';
-import { PortalCategory, Portal, PortalCategoryDef } from '@shared/types/portals.types';
+import { PortalCategory, Portal, PortalCategoryDef } from '@shared/types/features/portals.types';
 import { MOCK_PORTALS } from '@shared/data/mock/portals.mock';
 
 @Component({

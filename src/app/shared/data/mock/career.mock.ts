@@ -1,4 +1,4 @@
-import type { Exam, ExamSlot } from '../../types/career.types';
+import type { Exam, ExamSlot } from '../../types/dashboard/career.types';
 
 export const MOCK_EXAMS: Exam[] = [
   {

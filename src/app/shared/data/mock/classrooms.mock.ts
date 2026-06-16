@@ -1,4 +1,4 @@
-import { Campus } from '@shared/types/classrooms.types';
+import { Campus } from '@shared/types/dashboard/classrooms.types';
 
 export const MOCK_CAMPUSES: Campus[] = [
   {

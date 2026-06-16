@@ -22,7 +22,7 @@ import {
 } from '@lucide/angular';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 
-import { TransportCompany, TransportRoute } from '@shared/types/transport.types';
+import { TransportCompany, TransportRoute } from '@shared/types/dashboard/transport.types';
 import { MOCK_TRANSPORT_ROUTES, MOCK_TRANSPORT_COMPANIES } from '@shared/data/mock/transport.mock';
 
 @Component({

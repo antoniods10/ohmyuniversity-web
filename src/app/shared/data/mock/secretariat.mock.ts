@@ -1,4 +1,4 @@
-import { Scholarship, FormModule, Bando, Fee } from '@shared/types/secretariat.types';
+import { Scholarship, FormModule, Bando, Fee } from '@shared/types/dashboard/secretariat.types';
 
 export const MOCK_SCHOLARSHIPS: Scholarship[] = [
   {

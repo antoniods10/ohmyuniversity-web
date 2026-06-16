@@ -1,5 +1,5 @@
 import { AccountEntry } from '@ui/avatar-profile-panel/avatar-profile-panel.component';
-import { CourseEntry } from '@shared/types/profilo.types';
+import { CourseEntry } from '@shared/types/dashboard/profilo.types';
 
 export const MOCK_ACCOUNT: AccountEntry = {
   id: 'acc-1',

@@ -19,7 +19,7 @@ import {
   LucideInfo,
 } from '@lucide/angular';
 
-import { CourseSchedule, ScheduleSearchResult } from '@shared/types/schedule.types';
+import { CourseSchedule, ScheduleSearchResult } from '@shared/types/dashboard/schedule.types';
 import { MOCK_MY_SCHEDULES } from '@shared/data/mock/schedule.mock';
 
 @Component({
