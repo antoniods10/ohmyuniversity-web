@@ -4,11 +4,9 @@ import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomInputComponent } from '@ui/custom-input/custom-input.component';
-
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
-import { CustomAvatarComponent } from '@ui/custom-avatar/custom-avatar.component';
+import { CustomAvatarComponent, AvatarVariant } from '@ui/custom-avatar/custom-avatar.component';
 import { CustomModalComponent } from '@ui/custom-modal/custom-modal.component';
-
 import {
   LucideDynamicIcon,
   LucideUser,
@@ -31,27 +29,14 @@ import {
 import {
   AccountEntry,
   AccountStatus,
-} from '@ui/avatar-profile-panel/avatar-profile-panel.component';
-import {
   RING_COLORS,
   STATUS_VARIANT,
 } from '@ui/avatar-profile-panel/avatar-profile-panel.component';
-import { AvatarVariant } from '@ui/custom-avatar/custom-avatar.component';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 
-export interface CourseEntry {
-  id: string;
-  name: string;
-  acronym: string;
-  university: string;
-  year: number;
-  totalYears: number;
-  status: AccountStatus;
-  enrolledAt: string;
-  matricola: string;
-  cfu: number;
-  cfuTotal: number;
-}
+import { CourseEntry } from '@shared/types/dashboard/profilo.types';
+import { MOCK_ACCOUNT, MOCK_COURSES, MOCK_PROFILE_EDIT } from '@shared/data/mock/profilo.mock';
+import { acronymVariant, cfuPercent } from '@shared/utils/ui.utils';
 
 @Component({
   selector: 'app-profilo',
@@ -88,6 +73,9 @@ export class ProfiloPage {
   readonly iconCamera = LucideCamera;
   readonly iconExternalLink = LucideExternalLink;
 
+  readonly acronymVariant = acronymVariant;
+  readonly cfuPercent = cfuPercent;
+
   activeTab = signal<string>('informazioni');
   editingInfo = signal<boolean>(false);
   savingInfo = signal<boolean>(false);
@@ -99,66 +87,14 @@ export class ProfiloPage {
     { id: 'sicurezza', label: 'Sicurezza', icon: LucideShield },
   ];
 
-  // @TODO
-  readonly account: AccountEntry = {
-    id: 'acc-1',
-    name: 'Mario Rossi',
-    email: 'mario.rossi@studenti.unibo.it',
-    courseLabel: 'Ingegneria Informatica',
-    courseAcronym: 'LM',
-    universityLabel: 'Università di Bologna',
-    status: 'active',
-    isCurrent: true,
-  };
+  readonly account: AccountEntry = MOCK_ACCOUNT;
+  readonly courses: CourseEntry[] = MOCK_COURSES;
 
-  editNameModel: string = this.account.name;
-  editPhoneModel: string = '+39 333 123 4567';
-  editCityModel: string = 'Bologna';
-  editBioModel: string =
-    'Studente di Ingegneria Informatica magistrale. Appassionato di algoritmi, sistemi distribuiti e open source.';
-  emailModel: string = this.account.email;
-
-  readonly courses: CourseEntry[] = [
-    {
-      id: 'c1',
-      name: 'Ingegneria Informatica',
-      acronym: 'LM',
-      university: 'Università di Bologna',
-      year: 1,
-      totalYears: 2,
-      status: 'active',
-      enrolledAt: 'Settembre 2023',
-      matricola: '0001234567',
-      cfu: 42,
-      cfuTotal: 120,
-    },
-    {
-      id: 'c2',
-      name: 'Fisica Teorica',
-      acronym: 'LMcu',
-      university: 'Università di Pisa',
-      year: 3,
-      totalYears: 5,
-      status: 'warning',
-      enrolledAt: 'Settembre 2021',
-      matricola: '0009876543',
-      cfu: 98,
-      cfuTotal: 300,
-    },
-    {
-      id: 'c3',
-      name: 'Matematica',
-      acronym: 'L',
-      university: 'Università di Torino',
-      year: 3,
-      totalYears: 3,
-      status: 'graduated',
-      enrolledAt: 'Settembre 2018',
-      matricola: '0005554433',
-      cfu: 180,
-      cfuTotal: 180,
-    },
-  ];
+  editNameModel: string = MOCK_ACCOUNT.name;
+  editPhoneModel: string = MOCK_PROFILE_EDIT.phone;
+  editCityModel: string = MOCK_PROFILE_EDIT.city;
+  editBioModel: string = MOCK_PROFILE_EDIT.bio;
+  emailModel: string = MOCK_ACCOUNT.email;
 
   onTabChange(id: string): void {
     this.activeTab.set(id);
@@ -213,19 +149,5 @@ export class ProfiloPage {
       graduated: 'primary',
     };
     return map[status];
-  }
-
-  acronymVariant(acronym: string): 'primary' | 'secondary' | 'tertiary' | 'success' {
-    const map: Record<string, 'primary' | 'secondary' | 'tertiary' | 'success'> = {
-      L: 'primary',
-      LM: 'secondary',
-      LMcu: 'tertiary',
-      DOC: 'success',
-    };
-    return map[acronym] ?? 'primary';
-  }
-
-  cfuPercent(cfu: number, total: number): number {
-    return Math.round((cfu / total) * 100);
   }
 }

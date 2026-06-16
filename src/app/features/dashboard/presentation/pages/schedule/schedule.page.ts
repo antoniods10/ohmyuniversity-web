@@ -4,7 +4,7 @@ import { PageHeaderComponent } from '@ui/page-header/page-header.component';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
-import { CustomInputComponent } from '@ui/custom-input/custom-input.component';
+import { CustomInputComponent, SelectOption } from '@ui/custom-input/custom-input.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CustomModalComponent } from '@ui/custom-modal/custom-modal.component';
 import {
@@ -18,30 +18,10 @@ import {
   LucideGraduationCap,
   LucideInfo,
 } from '@lucide/angular';
-import { SelectOption } from '@ui/custom-input/custom-input.component';
 
-export interface CourseSchedule {
-  id: string;
-  courseName: string;
-  acronym: string;
-  university: string;
-  department: string;
-  semester: string;
-  academicYear: string;
-  status: 'available' | 'unavailable';
-  downloadUrl?: string;
-  externalUrl?: string;
-  updatedAt: string;
-}
-
-export interface ScheduleSearchResult {
-  courseName: string;
-  department: string;
-  semester: string;
-  university: string;
-  downloadUrl?: string;
-  externalUrl?: string;
-}
+import { CourseSchedule, ScheduleSearchResult } from '@shared/types/dashboard/schedule.types';
+import { MOCK_MY_SCHEDULES } from '@shared/data/mock/schedule.mock';
+import { acronymVariant } from '@shared/utils/ui.utils';
 
 @Component({
   selector: 'app-schedule',
@@ -69,40 +49,15 @@ export class SchedulePage {
   readonly iconGraduation = LucideGraduationCap;
   readonly iconInfo = LucideInfo;
 
+  readonly acronymVariant = acronymVariant;
+
   searchDepartment = signal<string>('');
   searchCourse = signal<string>('');
   searchSemester = signal<string>('');
   searchResult = signal<ScheduleSearchResult | null>(null);
   searching = signal<boolean>(false);
 
-  // @TODO
-  readonly mySchedules: CourseSchedule[] = [
-    {
-      id: 's1',
-      courseName: 'Ingegneria Informatica',
-      acronym: 'LM',
-      university: 'Università di Bologna',
-      department: 'DISI',
-      semester: '2° Semestre',
-      academicYear: '2024/2025',
-      status: 'available',
-      downloadUrl: '#',
-      externalUrl: 'https://corsi.unibo.it',
-      updatedAt: '10 giugno 2025',
-    },
-    {
-      id: 's2',
-      courseName: 'Fisica Teorica',
-      acronym: 'LMcu',
-      university: 'Università di Pisa',
-      department: 'Dipartimento di Fisica',
-      semester: '2° Semestre',
-      academicYear: '2024/2025',
-      status: 'available',
-      externalUrl: 'https://unipi.it',
-      updatedAt: '8 giugno 2025',
-    },
-  ];
+  readonly mySchedules: CourseSchedule[] = MOCK_MY_SCHEDULES;
 
   readonly departmentOptions: SelectOption[] = [
     { value: 'disi', label: 'DISI — Informatica e Ingegneria' },
@@ -125,16 +80,6 @@ export class SchedulePage {
     { value: '2', label: '2° Semestre' },
     { value: 'annuale', label: 'Corso annuale' },
   ];
-
-  acronymVariant(acronym: string): 'primary' | 'secondary' | 'tertiary' | 'success' {
-    const map: Record<string, 'primary' | 'secondary' | 'tertiary' | 'success'> = {
-      L: 'primary',
-      LM: 'secondary',
-      LMcu: 'tertiary',
-      DOC: 'success',
-    };
-    return map[acronym] ?? 'primary';
-  }
 
   onDepartmentChange(val: string | number): void {
     this.searchDepartment.set(String(val));

@@ -1,6 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PageHeaderComponent } from '@ui/page-header/page-header.component';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
@@ -8,13 +7,12 @@ import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomInputComponent } from '@ui/custom-input/custom-input.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
-
 import {
   LucideDynamicIcon,
   LucideSearch,
   LucideMapPin,
   LucideBus,
-  LucideTrain,
+  LucideTrainFront,
   LucideDownload,
   LucideExternalLink,
   LucideNavigation,
@@ -24,27 +22,8 @@ import {
 } from '@lucide/angular';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 
-export interface TransportCompany {
-  id: string;
-  name: string;
-  type: 'bus' | 'train' | 'mixed';
-  coverage: string;
-  description: string;
-  website: string;
-  scheduleUrl?: string;
-  appUrl?: string;
-  color: string;
-}
-
-export interface TransportRoute {
-  id: string;
-  from: string;
-  to: string;
-  duration: string;
-  changes: number;
-  type: 'bus' | 'train' | 'mixed';
-  departures: string[];
-}
+import { TransportCompany, TransportRoute } from '@shared/types/dashboard/transport.types';
+import { MOCK_TRANSPORT_ROUTES, MOCK_TRANSPORT_COMPANIES } from '@shared/data/mock/transport.mock';
 
 @Component({
   selector: 'app-transport',
@@ -63,12 +42,12 @@ export interface TransportRoute {
   templateUrl: './transport.page.html',
 })
 export class TransportPage {
-  private sanitizer = inject(DomSanitizer);
+  private readonly sanitizer = inject(DomSanitizer);
 
   readonly iconSearch = LucideSearch;
   readonly iconMapPin = LucideMapPin;
   readonly iconBus = LucideBus;
-  readonly iconTrain = LucideTrain;
+  readonly iconTrain = LucideTrainFront;
   readonly iconDownload = LucideDownload;
   readonly iconExternalLink = LucideExternalLink;
   readonly iconNavigation = LucideNavigation;
@@ -87,110 +66,11 @@ export class TransportPage {
 
   readonly tabs: TabItem[] = [
     { id: 'public', label: 'Trasporto pubblico', icon: LucideBus },
-    { id: 'companies', label: 'Aziende locali', icon: LucideTrain },
+    { id: 'companies', label: 'Aziende locali', icon: LucideTrainFront },
   ];
 
-  // @TODO
-  readonly routes: TransportRoute[] = [
-    {
-      id: 'r1',
-      from: 'Stazione Centrale Bologna',
-      to: 'Via Zamboni 33',
-      duration: '18 min',
-      changes: 0,
-      type: 'bus',
-      departures: ['07:15', '07:30', '07:45', '08:00', '08:15'],
-    },
-    {
-      id: 'r2',
-      from: 'Stazione Centrale Bologna',
-      to: 'Via Zamboni 33',
-      duration: '12 min',
-      changes: 0,
-      type: 'bus',
-      departures: ['07:10', '07:25', '07:40', '07:55', '08:10'],
-    },
-    {
-      id: 'r3',
-      from: 'Aeroporto G. Marconi',
-      to: 'Via Zamboni 33',
-      duration: '35 min',
-      changes: 1,
-      type: 'mixed',
-      departures: ['06:45', '07:15', '07:45', '08:15', '08:45'],
-    },
-  ];
-
-  readonly companies: TransportCompany[] = [
-    {
-      id: 'c1',
-      name: 'Tper',
-      type: 'bus',
-      coverage: 'Bologna e provincia',
-      description:
-        'Principale azienda di trasporto pubblico locale di Bologna. Gestisce bus urbani ed extraurbani.',
-      website: 'https://www.tper.it',
-      scheduleUrl: 'https://www.tper.it/orari',
-      appUrl: 'https://www.tper.it/app',
-      color: 'var(--color-primary-dark)',
-    },
-    {
-      id: 'c2',
-      name: 'Trenitalia',
-      type: 'train',
-      coverage: 'Nazionale',
-      description:
-        'Trasporto ferroviario nazionale. Collegamento da tutte le principali città italiane verso Bologna.',
-      website: 'https://www.trenitalia.com',
-      scheduleUrl: 'https://www.trenitalia.com/orari',
-      appUrl: 'https://www.trenitalia.com/app',
-      color: 'var(--color-error-dark)',
-    },
-    {
-      id: 'c3',
-      name: 'Italo',
-      type: 'train',
-      coverage: 'Nazionale — Alta velocità',
-      description:
-        'Alta velocità italiana. Collegamento rapido tra le principali città con fermata a Bologna AV.',
-      website: 'https://www.italotreno.it',
-      scheduleUrl: 'https://www.italotreno.it/orari',
-      color: 'var(--color-tertiary-dark)',
-    },
-    {
-      id: 'c4',
-      name: 'FlixBus',
-      type: 'bus',
-      coverage: 'Nazionale e internazionale',
-      description:
-        'Autobus a lunga percorrenza. Collegamento economico da e verso Bologna da tutta Italia ed Europa.',
-      website: 'https://www.flixbus.it',
-      scheduleUrl: 'https://www.flixbus.it/orari',
-      color: 'var(--color-success-dark)',
-    },
-    {
-      id: 'c5',
-      name: 'BusItalia',
-      type: 'bus',
-      coverage: 'Emilia-Romagna',
-      description:
-        'Trasporto extraurbano in Emilia-Romagna. Collegamento tra comuni della regione e Bologna.',
-      website: 'https://www.busitalia.it',
-      scheduleUrl: 'https://www.busitalia.it/orari',
-      color: 'var(--color-warning-dark)',
-    },
-    {
-      id: 'c6',
-      name: 'Marconi Express',
-      type: 'train',
-      coverage: 'Bologna — Aeroporto',
-      description:
-        "Collegamento diretto tra l'aeroporto G. Marconi e la stazione centrale di Bologna.",
-      website: 'https://www.marconiexpress.it',
-      scheduleUrl: 'https://www.marconiexpress.it/orari',
-      color: 'var(--color-secondary-dark)',
-    },
-  ];
+  readonly routes: TransportRoute[] = MOCK_TRANSPORT_ROUTES;
+  readonly companies: TransportCompany[] = MOCK_TRANSPORT_COMPANIES;
 
   onTabChange(id: string): void {
     this.activeTab.set(id);
@@ -243,6 +123,6 @@ export class TransportPage {
   }
 
   companyTypeIcon(type: string): any {
-    return type === 'train' ? LucideTrain : LucideBus;
+    return type === 'train' ? LucideTrainFront : LucideBus;
   }
 }
