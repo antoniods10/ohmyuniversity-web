@@ -51,7 +51,6 @@ const mockPlanEnterprise: PricingPlan = {
 
 const mockPlans: PricingPlan[] = [mockPlanBase, mockPlanPro, mockPlanEnterprise];
 const emptyPlans: PricingPlan[] = [];
-const singleHighlightedPlan: PricingPlan[] = [mockPlanPro];
 const singleNormalPlan: PricingPlan[] = [mockPlanBase];
 
 function setPlans(f: ComponentFixture<PricingPlans>, plans: PricingPlan[]) {
