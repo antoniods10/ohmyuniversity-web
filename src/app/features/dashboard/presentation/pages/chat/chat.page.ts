@@ -35,6 +35,7 @@ import {
   MOCK_SHARED_FILES,
   MOCK_SHARED_LINKS,
 } from '@shared/data/mock/chat.mock';
+import { acronymVariant } from '@shared/utils/ui.utils';
 
 @Component({
   selector: 'app-chat',
@@ -63,6 +64,8 @@ export class ChatPage {
   readonly iconDownload = LucideDownload;
   readonly iconArrowLeft = LucideArrowLeft;
   readonly iconChevronRight = LucideChevronRight;
+
+  readonly acronymVariant = acronymVariant;
 
   mobileView = signal<'list' | 'chat'>('list');
   selectedRoomId = signal<string>('room-1');
@@ -111,15 +114,5 @@ export class ChatPage {
   sendMessage(): void {
     // @TODO
     this.messageValue.set('');
-  }
-
-  acronymVariant(acronym: string): 'primary' | 'secondary' | 'tertiary' | 'success' {
-    const map: Record<string, 'primary' | 'secondary' | 'tertiary' | 'success'> = {
-      L: 'primary',
-      LM: 'secondary',
-      LMcu: 'tertiary',
-      DOC: 'success',
-    };
-    return map[acronym] ?? 'primary';
   }
 }

@@ -26,6 +26,7 @@ import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.componen
 
 import { Exam, Questionnaire, ExamStatus } from '@shared/types/dashboard/exams.types';
 import { MOCK_EXAMS, MOCK_QUESTIONNAIRES } from '@shared/data/mock/exams.mock';
+import { acronymVariant } from '@shared/utils/ui.utils';
 
 @Component({
   selector: 'app-exams',
@@ -58,6 +59,8 @@ export class ExamsPage {
   readonly iconUsers = LucideUsers;
   readonly iconInfo = LucideInfo;
   readonly iconFilter = LucideFunnel;
+
+  readonly acronymVariant = acronymVariant;
 
   activeTab = signal<string>('exams');
   searchValue = signal<string>('');
@@ -157,16 +160,6 @@ export class ExamsPage {
     const ratio = left / total;
     if (ratio <= 0.15) return 'warning';
     return 'success';
-  }
-
-  acronymVariant(acronym: string): 'primary' | 'secondary' | 'tertiary' | 'success' {
-    const map: Record<string, 'primary' | 'secondary' | 'tertiary' | 'success'> = {
-      L: 'primary',
-      LM: 'secondary',
-      LMcu: 'tertiary',
-      DOC: 'success',
-    };
-    return map[acronym] ?? 'primary';
   }
 
   canBook(status: ExamStatus): boolean {

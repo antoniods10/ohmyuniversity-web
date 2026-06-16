@@ -21,6 +21,7 @@ import {
 
 import { CourseSchedule, ScheduleSearchResult } from '@shared/types/dashboard/schedule.types';
 import { MOCK_MY_SCHEDULES } from '@shared/data/mock/schedule.mock';
+import { acronymVariant } from '@shared/utils/ui.utils';
 
 @Component({
   selector: 'app-schedule',
@@ -47,6 +48,8 @@ export class SchedulePage {
   readonly iconBuilding = LucideBuilding2;
   readonly iconGraduation = LucideGraduationCap;
   readonly iconInfo = LucideInfo;
+
+  readonly acronymVariant = acronymVariant;
 
   searchDepartment = signal<string>('');
   searchCourse = signal<string>('');
@@ -77,16 +80,6 @@ export class SchedulePage {
     { value: '2', label: '2° Semestre' },
     { value: 'annuale', label: 'Corso annuale' },
   ];
-
-  acronymVariant(acronym: string): 'primary' | 'secondary' | 'tertiary' | 'success' {
-    const map: Record<string, 'primary' | 'secondary' | 'tertiary' | 'success'> = {
-      L: 'primary',
-      LM: 'secondary',
-      LMcu: 'tertiary',
-      DOC: 'success',
-    };
-    return map[acronym] ?? 'primary';
-  }
 
   onDepartmentChange(val: string | number): void {
     this.searchDepartment.set(String(val));

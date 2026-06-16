@@ -36,6 +36,7 @@ import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.componen
 
 import { CourseEntry } from '@shared/types/dashboard/profilo.types';
 import { MOCK_ACCOUNT, MOCK_COURSES, MOCK_PROFILE_EDIT } from '@shared/data/mock/profilo.mock';
+import { acronymVariant, cfuPercent } from '@shared/utils/ui.utils';
 
 @Component({
   selector: 'app-profilo',
@@ -71,6 +72,9 @@ export class ProfiloPage {
   readonly iconCheck = LucideCheck;
   readonly iconCamera = LucideCamera;
   readonly iconExternalLink = LucideExternalLink;
+
+  readonly acronymVariant = acronymVariant;
+  readonly cfuPercent = cfuPercent;
 
   activeTab = signal<string>('informazioni');
   editingInfo = signal<boolean>(false);
@@ -145,19 +149,5 @@ export class ProfiloPage {
       graduated: 'primary',
     };
     return map[status];
-  }
-
-  acronymVariant(acronym: string): 'primary' | 'secondary' | 'tertiary' | 'success' {
-    const map: Record<string, 'primary' | 'secondary' | 'tertiary' | 'success'> = {
-      L: 'primary',
-      LM: 'secondary',
-      LMcu: 'tertiary',
-      DOC: 'success',
-    };
-    return map[acronym] ?? 'primary';
-  }
-
-  cfuPercent(cfu: number, total: number): number {
-    return Math.round((cfu / total) * 100);
   }
 }
