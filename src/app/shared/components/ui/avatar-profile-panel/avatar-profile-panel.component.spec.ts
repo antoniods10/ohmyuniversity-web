@@ -47,18 +47,6 @@ const mockAccountGraduated: AccountEntry = {
   isCurrent: false,
 };
 
-const mockAccountSuspended: AccountEntry = {
-  id: '4',
-  name: 'Carlo Neri',
-  courseLabel: 'Giurisprudenza',
-  email: 'carlo.neri@uni.it',
-  universityLabel: 'Università di Torino',
-  courseAcronym: 'DOC',
-  avatarSrc: '',
-  status: 'suspended',
-  isCurrent: false,
-};
-
 describe('AvatarProfilePanelComponent', () => {
   let component: AvatarProfilePanelComponent;
   let fixture: ComponentFixture<AvatarProfilePanelComponent>;
