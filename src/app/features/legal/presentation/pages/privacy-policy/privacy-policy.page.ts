@@ -22,7 +22,8 @@ import {
   PRIVACY_SECURITY_TEXT,
   PRIVACY_CHANGES_TEXT,
   PRIVACY_RELATED_DOCS,
-} from '@constants';
+  APP_NAME,
+} from '@shared/constants';
 
 @Component({
   selector: 'app-privacy-policy-page',
@@ -31,6 +32,8 @@ import {
   templateUrl: './privacy-policy.page.html',
 })
 export class PrivacyPolicyPage {
+  readonly APP_NAME = APP_NAME;
+
   readonly iconScale = LucideScale;
 
   readonly lastUpdated = LEGAL_UPDATE.privacyPolicy;

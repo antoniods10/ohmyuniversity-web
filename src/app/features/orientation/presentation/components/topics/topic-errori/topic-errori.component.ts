@@ -5,7 +5,7 @@ import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 import { LucideCircleCheck } from '@lucide/angular';
-import { ERRORI_ORIENTAMENTO } from '@constants';
+import { APP_NAME, ERRORI_ORIENTAMENTO } from '@shared/constants';
 
 @Component({
   selector: 'app-topic-errori',
@@ -20,6 +20,8 @@ import { ERRORI_ORIENTAMENTO } from '@constants';
   templateUrl: './topic-errori.component.html',
 })
 export class TopicErroriComponent {
+  readonly APP_NAME = APP_NAME;
+
   readonly hasPrev = input.required<boolean>();
   readonly hasNext = input.required<boolean>();
   readonly prev = output<void>();

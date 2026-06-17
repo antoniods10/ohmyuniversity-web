@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ABOUT_ORG_STATS } from '@constants';
+import { ABOUT_ORG_STATS, APP_NAME } from '@shared/constants';
 import { CardStatComponent } from '@ui/custom-card/card-variants.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
@@ -13,4 +13,5 @@ import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 })
 export class AboutOrgComponent {
   readonly stats = ABOUT_ORG_STATS;
+  readonly APP_NAME = APP_NAME;
 }

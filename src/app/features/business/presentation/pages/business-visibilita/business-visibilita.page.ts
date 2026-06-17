@@ -9,7 +9,8 @@ import {
   BUSINESS_VISIBILITA_STEPS,
   BUSINESS_ANALYTICS_METRICS,
   PLAN_LABELS,
-} from '@constants';
+  APP_NAME,
+} from '@shared/constants';
 import { BadgeVariant } from '@ui/custom-badge/custom-badge.component';
 
 @Component({
@@ -25,6 +26,8 @@ import { BadgeVariant } from '@ui/custom-badge/custom-badge.component';
   templateUrl: './business-visibilita.page.html',
 })
 export class BusinessVisibilitaPage {
+  readonly APP_NAME = APP_NAME;
+
   readonly iconStep = LucideListChecks;
   readonly steps = BUSINESS_VISIBILITA_STEPS;
   readonly targetingOptions = BUSINESS_TARGETING_OPTIONS;

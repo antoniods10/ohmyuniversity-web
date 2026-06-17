@@ -3,7 +3,7 @@ import { LucideCheck } from '@lucide/angular';
 import { BusinessCtaComponent } from '../../components/business-cta/business-cta.component';
 import { BusinessHeroComponent } from '../../components/business-hero/business-hero.component';
 import { CardSimpleComponent, CardMinimalComponent } from '@ui/custom-card/card-variants.component';
-import { USE_CASES, VANTAGGI } from '@constants';
+import { APP_NAME, USE_CASES, VANTAGGI } from '@shared/constants';
 import { UseCase } from '@types';
 
 @Component({
@@ -16,4 +16,5 @@ export class BusinessCollettiviPage {
   readonly iconCheck = LucideCheck;
   readonly useCases: UseCase[] = USE_CASES;
   readonly vantaggi = VANTAGGI;
+  readonly APP_NAME = APP_NAME;
 }

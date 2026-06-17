@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { APP_NAME } from '@shared/constants';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 
@@ -8,4 +9,6 @@ import { CustomButtonComponent } from '@ui/custom-button/custom-button.component
   imports: [CustomBadgeComponent, CustomButtonComponent],
   templateUrl: './home-hero.component.html',
 })
-export class HomeHeroComponent {}
+export class HomeHeroComponent {
+  readonly APP_NAME = APP_NAME;
+}

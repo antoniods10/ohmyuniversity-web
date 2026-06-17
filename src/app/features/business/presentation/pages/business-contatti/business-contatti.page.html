@@ -1,6 +1,10 @@
 <app-business-hero
   title="Come creare un profilo"
-  subtitle="Il modo di accedere a OhMyUniversity dipende da chi sei. Per la maggior parte degli utenti non serve nessuna registrazione - per le organizzazioni il processo è semplice e assistito." />
+  [subtitle]="
+    'Il modo di accedere a ' +
+    APP_NAME +
+    ' dipende da chi sei. Per la maggior parte degli utenti non serve nessuna registrazione - per le organizzazioni il processo è semplice e assistito.'
+  " />
 
 <!-- Type of users -->
 <section class="bg-white px-4 pb-20 sm:px-6 lg:px-8">

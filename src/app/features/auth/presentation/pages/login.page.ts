@@ -1,7 +1,7 @@
 import { Component, signal, computed, inject } from '@angular/core';
 import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { USER_TYPE_OPTIONS, UNIVERSITIES } from '@constants';
+import { USER_TYPE_OPTIONS, UNIVERSITIES, APP_NAME } from '@shared/constants';
 import { LoginStep, UserType, University } from '@types';
 
 @Component({
@@ -19,6 +19,7 @@ export class LoginPage {
 
   readonly userTypeOptions = USER_TYPE_OPTIONS;
   readonly universities = UNIVERSITIES;
+  readonly APP_NAME = APP_NAME;
 
   readonly filteredUniversities = computed(() => {
     const q = this.universitySearch().toLowerCase().trim();

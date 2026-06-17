@@ -1,7 +1,10 @@
 <app-business-hero
   badge="Per i collettivi studenteschi"
   title="Cosa offriamo ai collettivi"
-  subtitle="OhMyUniversity non è solo per le aziende. Associazioni, gruppi sportivi, liste studentesche e community universitarie possono raggiungere i propri studenti in modo semplice e accessibile." />
+  [subtitle]="
+    APP_NAME +
+    ' non è solo per le aziende. Associazioni, gruppi sportivi, liste studentesche e community universitarie possono raggiungere i propri studenti in modo semplice e accessibile.'
+  " />
 
 <!-- Use cases -->
 <section class="bg-white px-4 py-20 sm:px-6 lg:px-8">
@@ -48,7 +51,7 @@
         Sei un collettivo studentesco universitario?
       </p>
       <p appText class="mt-1 text-sm leading-relaxed text-amber-700">
-        I collettivi studenteschi con sede in un ateneo convenzionato con OhMyUniversity ricevono
+        I collettivi studenteschi con sede in un ateneo convenzionato con {{ APP_NAME }} ricevono
         automaticamente lo sconto del 40% su tutti i piani. Basta fornire un documento che attesti
         l'affiliazione universitaria durante l'onboarding.
       </p>
@@ -58,7 +61,7 @@
 
 <app-business-cta
   badge="Per i collettivi studenteschi"
-  title="Porta il tuo collettivo su OhMyUniversity"
+  [title]="'Porta il tuo collettivo su ' + APP_NAME"
   subtitle="Inizia con 14 giorni di prova gratuita. Piano Starter da 9,90€/mese - con sconto del 40% per collettivi universitari."
   primaryLabel="Inizia la prova gratuita"
   primaryLink="/business/registrazione"
