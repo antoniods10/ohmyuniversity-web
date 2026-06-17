@@ -319,6 +319,34 @@ export class CustomButtonComponent {
   }
 
   /**
+   * Returns the path portion of `href`, stripped of any query string,
+   * for use with routerLink when mode is 'link-internal'.
+   *
+   * @returns Path without query parameters.
+   */
+  get routerPath(): string {
+    return this.href.split('?')[0];
+  }
+
+  /**
+   * Parses the query string portion of `href` (if present) into an
+   * object suitable for routerLink's [queryParams] binding.
+   *
+   * @returns Object of query parameters, or null if href has no query string.
+   */
+  get routerQueryParams(): Record<string, string> | null {
+    const queryIndex = this.href.indexOf('?');
+    if (queryIndex === -1) return null;
+
+    const queryString = this.href.slice(queryIndex + 1);
+    const params: Record<string, string> = {};
+    new URLSearchParams(queryString).forEach((value, key) => {
+      params[key] = value;
+    });
+    return params;
+  }
+
+  /**
    * Handles button click events.
    *
    * Prevents interaction when the component is
