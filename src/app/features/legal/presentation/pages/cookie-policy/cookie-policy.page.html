@@ -124,11 +124,7 @@
       <p appText class="mt-3">{{ management.browserIntro }}</p>
       <div class="mt-3 flex flex-col gap-2">
         @for (browser of browserLinks; track browser.label) {
-          <app-custom-link
-            mode="external"
-            [href]="browser.href"
-            [label]="browser.label"
-            size="sm" />
+          <app-custom-link mode="external" [href]="browser.url" [label]="browser.label" size="sm" />
         }
       </div>
       <p appText class="mt-3 text-xs text-gray-400">{{ management.sessionWarning }}</p>
@@ -150,7 +146,7 @@
       </p>
       <div class="flex flex-wrap gap-5">
         @for (doc of relatedDocs; track doc.label) {
-          <app-custom-link mode="internal" [href]="doc.href" [label]="doc.label" size="sm" />
+          <app-custom-link mode="internal" [href]="doc.url" [label]="doc.label" size="sm" />
         }
       </div>
     </app-custom-card>

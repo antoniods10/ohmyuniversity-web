@@ -110,7 +110,7 @@
           <div class="flex items-start gap-2">
             <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span>
             <p appText>
-              <strong class="text-gray-700">{{ item.label }}:</strong> {{ item.text }}
+              <strong class="text-gray-700">{{ item.label }}:</strong> {{ item.label }}
             </p>
           </div>
         }
@@ -126,7 +126,7 @@
           <div class="flex items-start gap-2">
             <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400"></span>
             <p appText>
-              <strong class="text-gray-700">{{ item.label }}</strong> - {{ item.text }}
+              <strong class="text-gray-700">{{ item.label }}</strong> - {{ item.label }}
             </p>
           </div>
         }
@@ -158,7 +158,7 @@
       </p>
       <div class="flex flex-wrap gap-5">
         @for (doc of relatedDocs; track doc.label) {
-          <app-custom-link mode="internal" [href]="doc.href" [label]="doc.label" size="sm" />
+          <app-custom-link mode="internal" [href]="doc.url" [label]="doc.label" size="sm" />
         }
       </div>
     </app-custom-card>

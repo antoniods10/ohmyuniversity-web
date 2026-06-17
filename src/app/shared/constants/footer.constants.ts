@@ -13,34 +13,34 @@ export const FOOTER_GITHUB_ORG_URL = 'https://github.com/ohmyopensource';
 export const FOOTER_VAT_NUMBER = 'IT00000000000';
 
 export const FOOTER_NAV_LINKS: FooterLink[] = [
-  { label: 'Home', path: '/' },
-  { label: 'Chi Siamo', path: '/chi-siamo' },
-  { label: 'Orientamento', path: '/orientamento' },
-  { label: 'Accedi', path: '/login' },
-  { label: 'FAQ', path: '/faq' },
+  { label: 'Home', url: '/' },
+  { label: 'Chi Siamo', url: '/chi-siamo' },
+  { label: 'Orientamento', url: '/orientamento' },
+  { label: 'Accedi', url: '/login' },
+  { label: 'FAQ', url: '/faq' },
 ];
 
 export const FOOTER_BUSINESS_LINKS: FooterLink[] = [
-  { label: 'Cosa offriamo alle aziende', path: '/business/offerta' },
-  { label: 'Cosa offriamo ai collettivi', path: '/business/collettivi' },
-  { label: 'Come funziona la visibilità', path: '/business/visibilita' },
-  { label: 'Come creare un profilo', path: '/business/registrazione' },
-  { label: 'Piani e prezzi', path: '/business/prezzi' },
-  { label: 'Contatta il team commerciale', path: '/business/contatti' },
-  { label: 'FAQ Business', path: '/business/faq' },
+  { label: 'Cosa offriamo alle aziende', url: '/business/offerta' },
+  { label: 'Cosa offriamo ai collettivi', url: '/business/collettivi' },
+  { label: 'Come funziona la visibilità', url: '/business/visibilita' },
+  { label: 'Come creare un profilo', url: '/business/registrazione' },
+  { label: 'Piani e prezzi', url: '/business/prezzi' },
+  { label: 'Contatta il team commerciale', url: '/business/contatti' },
+  { label: 'FAQ Business', url: '/business/faq' },
 ];
 
 export const FOOTER_LEGAL_LINKS: FooterLink[] = [
-  { label: 'Privacy Policy', path: '/privacy-policy' },
-  { label: 'Cookie Policy', path: '/cookie-policy' },
-  { label: 'Termini & Condizioni', path: '/termini-condizioni' },
+  { label: 'Privacy Policy', url: '/privacy-policy' },
+  { label: 'Cookie Policy', url: '/cookie-policy' },
+  { label: 'Termini & Condizioni', url: '/termini-condizioni' },
 ];
 
 export const FOOTER_FAQ_LINKS = [
-  { label: 'Come funziona OhMyUniversity?', path: '/faq', fragment: 'funzionamento' },
-  { label: 'Come accedo con il mio ateneo?', path: '/faq', fragment: 'accesso' },
-  { label: 'I miei dati sono al sicuro?', path: '/faq', fragment: 'sicurezza' },
-  { label: 'Come segnalo un problema?', path: '/faq', fragment: 'supporto' },
+  { label: 'Come funziona OhMyUniversity?', url: '/faq', fragment: 'funzionamento' },
+  { label: 'Come accedo con il mio ateneo?', url: '/faq', fragment: 'accesso' },
+  { label: 'I miei dati sono al sicuro?', url: '/faq', fragment: 'sicurezza' },
+  { label: 'Come segnalo un problema?', url: '/faq', fragment: 'supporto' },
 ];
 
 export const FOOTER_SOCIALS: SocialLink[] = [

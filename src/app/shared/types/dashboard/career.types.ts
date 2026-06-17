@@ -1,6 +1,15 @@
+import { OptionBase } from '@shared/types';
+
+/** Represents whether a student has passed an exam or still needs to take it. */
 export type ExamStatus = 'PASSED' | 'TO_TAKE';
+
+/** Distinguishes between mandatory curriculum exams and freely chosen electives. */
 export type CourseType = 'MANDATORY' | 'ELECTIVE';
+
+/** Filter values available in the exam list view. */
 export type ExamFilter = 'ALL' | 'PASSED' | 'TO_TAKE' | 'ELECTIVE';
+
+/** Direction of a statistical trend over time. */
 export type TrendDirection = 'up' | 'down' | 'flat';
 
 /** Exam modality: written test or oral interview. */
@@ -18,6 +27,7 @@ export type SessionFilter = 'ALL' | AcademicSession;
 /** Filter applied to the exam modality column. */
 export type TypeFilter = 'ALL' | SessionType;
 
+/** A single exam entry in the student's academic record. */
 export interface Exam {
   courseCode: string;
   courseName: string;
@@ -28,11 +38,10 @@ export interface Exam {
   academicYear: number;
 }
 
-export interface FilterOption {
-  id: ExamFilter;
-  label: string;
-}
+/** Descriptor for a selectable exam list filter option. */
+export type FilterOption = OptionBase<ExamFilter>;
 
+/** A group of exams belonging to the same academic year, with aggregated stats. */
 export interface ExamGroup {
   year: number;
   yearLabel: string;
@@ -40,6 +49,7 @@ export interface ExamGroup {
   passedCount: number;
 }
 
+/** A single data point rendered in a trend or progress chart. */
 export interface ChartPoint {
   value: number;
   isLast: boolean;
@@ -62,13 +72,7 @@ export interface ExamSlot {
 }
 
 /** Descriptor for session filter tabs. */
-export interface SessionFilterOption {
-  id: SessionFilter;
-  label: string;
-}
+export type SessionFilterOption = OptionBase<SessionFilter>;
 
 /** Descriptor for exam-type filter tabs. */
-export interface TypeFilterOption {
-  id: TypeFilter;
-  label: string;
-}
+export type TypeFilterOption = OptionBase<TypeFilter>;

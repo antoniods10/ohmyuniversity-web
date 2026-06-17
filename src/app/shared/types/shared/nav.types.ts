@@ -1,37 +1,19 @@
-/**
- * Represents a single navigation/footer link entry.
- */
-export interface FooterLink {
-  label: string;
-  path: string;
+import { IconLink, LinkBase } from '@shared/types';
+
+/** Single navigation/footer link entry */
+export interface FooterLink extends LinkBase {
   external?: boolean;
   fragment?: string;
 }
 
-/**
- * Represents a partner university displayed in the footer logo grid.
- */
+/** Partner university displayed in the footer logo grid */
 export interface UniversityFooter {
   name: string;
   logo: string;
 }
 
-/**
- * Represents a social media link with its brand icon path data.
- */
-export interface SocialLink {
-  label: string;
-  url: string;
-  iconComponent: any;
-  colorForce: string;
-}
+/** Social media link with brand icon */
+export type SocialLink = IconLink;
 
-/**
- * Represents a donation/support platform link with a brand color class.
- */
-export interface SupportLink {
-  label: string;
-  url: string;
-  iconComponent: any;
-  colorForce: string;
-}
+/** Donation/support platform link */
+export type SupportLink = IconLink;

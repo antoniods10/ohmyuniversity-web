@@ -1,11 +1,20 @@
+/** Possible states of an exam booking lifecycle */
 export type ExamStatus = 'open' | 'closing' | 'closed' | 'booked';
+
+/** Possible states of a course questionnaire */
 export type QuestionnaireStatus = 'pending' | 'completed';
 
-export interface Exam {
+/** Shared base for academic entities tied to a course (exams, questionnaires, etc.) */
+export interface CourseEvent<TStatus = string> {
   id: string;
   courseName: string;
-  courseAcronym: string;
   professor: string;
+  status: TStatus;
+}
+
+/** Bookable exam for a course, with date, location and seat availability */
+export interface Exam extends CourseEvent<ExamStatus> {
+  courseAcronym: string;
   date: string;
   time: string;
   location: string;
@@ -13,17 +22,13 @@ export interface Exam {
   enrollDeadline: string;
   spotsTotal: number;
   spotsLeft: number;
-  status: ExamStatus;
   cfu: number;
   year: number;
 }
 
-export interface Questionnaire {
-  id: string;
-  courseName: string;
-  professor: string;
+/** Course evaluation questionnaire to be filled out by a deadline */
+export interface Questionnaire extends CourseEvent<QuestionnaireStatus> {
   type: string;
   deadline: string;
-  status: QuestionnaireStatus;
   completedAt?: string;
 }

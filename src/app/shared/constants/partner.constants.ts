@@ -8,7 +8,7 @@ import {
   LucideEye,
   LucideEuro,
   LucideUserPlus,
-  LucideCircleHelp,
+  LucideCircleQuestionMark,
 } from '@lucide/angular';
 import { PartnerBenefit, PartnerLink, Testimonial } from '@types';
 
@@ -43,38 +43,38 @@ export const PARTNER_LINKS: PartnerLink[] = [
   {
     label: 'Cosa offriamo alle aziende',
     description: 'Scopri tutte le funzionalità disponibili per le aziende partner',
-    path: '/business/offerta',
+    url: '/business/offerta',
     icon: LucideBuilding2,
   },
   {
     label: 'Per i collettivi studenteschi',
     description: 'Associazioni, gruppi sportivi, liste studentesche - con sconto del 40%',
-    path: '/business/collettivi',
+    url: '/business/collettivi',
     icon: LucideUsers,
   },
   {
     label: 'Come funziona la visibilità',
     description: 'Targeting, analytics e come le opportunità vengono mostrate agli studenti',
-    path: '/business/visibilita',
+    url: '/business/visibilita',
     icon: LucideEye,
   },
   {
     label: 'Piani e prezzi',
     description: 'Da 9,90€/mese. 14 giorni di prova gratuita senza carta di credito',
-    path: '/business/prezzi',
+    url: '/business/prezzi',
     icon: LucideEuro,
   },
   {
     label: 'Come creare un profilo',
     description: 'Il processo di onboarding guidato, passo dopo passo',
-    path: '/business/contatti',
+    url: '/business/contatti',
     icon: LucideUserPlus,
   },
   {
     label: 'FAQ Business',
     description: 'Domande frequenti su piani, fatturazione e funzionamento',
-    path: '/business/faq',
-    icon: LucideCircleHelp,
+    url: '/business/faq',
+    icon: LucideCircleQuestionMark,
   },
 ];
 

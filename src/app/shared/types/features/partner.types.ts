@@ -1,16 +1,15 @@
-export interface PartnerBenefit {
-  icon: any;
-  title: string;
+import { IconContentBase, LinkBase, Icon } from '@shared/types';
+
+/** Partner benefit card */
+export type PartnerBenefit = IconContentBase;
+
+/** Partner navigation link with icon and description */
+export interface PartnerLink extends LinkBase {
   description: string;
+  icon: Icon;
 }
 
-export interface PartnerLink {
-  label: string;
-  description: string;
-  path: string;
-  icon: any;
-}
-
+/** Testimonial card */
 export interface Testimonial {
   quote: string;
   name: string;

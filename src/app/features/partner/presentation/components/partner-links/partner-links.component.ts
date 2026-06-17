@@ -1,13 +1,7 @@
 import { Component, input } from '@angular/core';
 import { APP_NAME } from '@shared/constants';
+import { PartnerLink } from '@shared/types';
 import { CardNavComponent } from '@ui/custom-card/card-variants.component';
-
-export interface PartnerLink {
-  path: string;
-  label: string;
-  description: string;
-  icon: any;
-}
 
 @Component({
   selector: 'app-partner-links',

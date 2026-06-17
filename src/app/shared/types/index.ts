@@ -10,3 +10,4 @@ export * from './features/university.types';
 export * from './features/business.types';
 export * from './shared/nav.types';
 export * from './features/legal.types';
+export * from './shared/common.types';
