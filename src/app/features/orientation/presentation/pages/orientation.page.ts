@@ -8,7 +8,7 @@ import { TopicVitaComponent } from '../components/topics/topic-vita/topic-vita.c
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { ORIENTATION_TOPICS } from '@constants';
-import { TopicId } from 'src/app/features/orientation/domain/models/topic.model';
+import { TopicId } from '@types';
 import { CardNavComponent } from '@ui/custom-card/card-variants.component';
 
 @Component({

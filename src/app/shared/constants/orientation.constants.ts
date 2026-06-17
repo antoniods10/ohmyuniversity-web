@@ -12,9 +12,9 @@ import {
   TempoSlice,
   TestIngresso,
   TipoEsame,
+  TopicModel,
   VitaFuorisedeItem,
 } from '@types';
-import { TopicModel } from 'src/app/features/orientation/domain/models/topic.model';
 
 // ============================================================================
 // ORIENTATION_TOPICS — 8 macro-categorie con domande inline
@@ -485,7 +485,7 @@ export const COME_FUNZIONA_SESSIONI: SessioneInfo[] = [
 ];
 
 // ============================================================================
-// topic-borse-studio.component.ts  (NUOVO)
+// topic-borse-studio.component.ts (NUOVO)
 // ============================================================================
 
 export interface BorsaTipo {
@@ -552,7 +552,7 @@ export const BORSE_FAQ: BorsaFaq[] = [
 ];
 
 // ============================================================================
-// topic-costi-geografici.component.ts  (NUOVO)
+// topic-costi-geografici.component.ts (NUOVO)
 // ============================================================================
 
 export interface CostoAreaGeografica {
