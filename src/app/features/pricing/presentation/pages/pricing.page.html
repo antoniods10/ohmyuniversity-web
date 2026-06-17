@@ -1,42 +1,27 @@
 <section class="bg-white px-4 pt-16 pb-10 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-3xl text-center">
-    <span
-      class="inline-block rounded-full border border-blue-200 bg-blue-50 px-4 py-1 text-xs font-medium text-blue-700">
-      Piani e prezzi
-    </span>
-    <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+    <app-custom-badge label="Piani e prezzi" variant="info" shape="pill" size="sm" />
+
+    <h1 appText class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
       Semplice, trasparente, senza sorprese
     </h1>
-    <p class="mx-auto mt-4 max-w-xl text-gray-500">
+    <p appText class="mx-auto mt-4 max-w-xl text-gray-500">
       OhMyUniversity è gratuito per studenti, docenti e staff. I piani a pagamento sono riservati ad
       aziende, collettivi e istituzioni universitarie.
     </p>
 
-    <div class="mt-8 inline-flex rounded-xl border border-gray-200 bg-gray-50 p-1">
-      <button
-        type="button"
-        (click)="setAudience('organizations')"
-        class="rounded-lg px-5 py-2 text-sm font-medium transition"
-        [class.bg-white]="audience() === 'organizations'"
-        [class.shadow-sm]="audience() === 'organizations'"
-        [class.text-gray-900]="audience() === 'organizations'"
-        [class.text-gray-500]="audience() !== 'organizations'">
-        Aziende & Collettivi
-      </button>
-      <button
-        type="button"
-        (click)="setAudience('institutions')"
-        class="rounded-lg px-5 py-2 text-sm font-medium transition"
-        [class.bg-white]="audience() === 'institutions'"
-        [class.shadow-sm]="audience() === 'institutions'"
-        [class.text-gray-900]="audience() === 'institutions'"
-        [class.text-gray-500]="audience() !== 'institutions'">
-        Atenei & Istituzioni
-      </button>
+    <div class="mt-8 inline-block">
+      <app-custom-tabs
+        [tabs]="audienceTabs"
+        [activeTab]="audience()"
+        tabStyle="pill"
+        variant="primary"
+        size="md"
+        (tabChange)="setAudience($event)" />
     </div>
 
     @if (audience() === 'institutions') {
-      <p class="mt-3 text-xs text-gray-400">
+      <p appText class="mt-3 text-xs text-gray-400">
         I prezzi per gli atenei sono indicativi e variano in base al numero di studenti attivi.
         Contattaci per un preventivo personalizzato.
       </p>
@@ -49,7 +34,7 @@
     <app-pricing-plans [plans]="activePlans()" />
 
     @if (audience() === 'organizations') {
-      <p class="mt-8 text-center text-xs text-gray-400">
+      <p appText class="mt-8 text-center text-xs text-gray-400">
         Tutti i piani includono 14 giorni di prova gratuita. Nessuna carta di credito richiesta.
         Puoi disdire in qualsiasi momento.
       </p>
@@ -59,27 +44,25 @@
 
 <section class="border-t border-gray-100 bg-gray-50 px-4 py-14 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-4xl text-center">
-    <h2 class="text-xl font-bold text-gray-900">Domande sui piani?</h2>
-    <p class="mt-3 text-sm text-gray-500">
+    <h2 appText class="text-xl font-bold text-gray-900">Domande sui piani?</h2>
+    <p appText class="mt-3 text-sm text-gray-500">
       Consulta le
-      <a
-        [routerLink]="audience() === 'organizations' ? '/business/faq' : '/business/faq'"
-        class="text-blue-600 hover:underline">
-        FAQ Business
-      </a>
+      <a routerLink="/business/faq" class="text-blue-600 hover:underline">FAQ Business</a>
       oppure contatta il nostro team commerciale.
     </p>
     <div class="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
-      <a
+      <app-custom-button
+        label="Contatta il team commerciale"
+        mode="link-external"
         href="mailto:business@ohmyuniversity.it"
-        class="w-full rounded-lg bg-blue-600 px-6 py-2.5 text-center text-sm font-medium text-white transition hover:bg-blue-700 sm:w-auto">
-        Contatta il team commerciale
-      </a>
-      <a
-        routerLink="/business/faq"
-        class="w-full rounded-lg border border-gray-300 bg-white px-6 py-2.5 text-center text-sm font-medium text-gray-700 transition hover:bg-gray-50 sm:w-auto">
-        Leggi le FAQ Business
-      </a>
+        variant="primary"
+        size="md" />
+      <app-custom-button
+        label="Leggi le FAQ Business"
+        mode="link-internal"
+        href="/business/faq"
+        variant="ghost"
+        size="md" />
     </div>
   </div>
   <app-pricing-guarantees />

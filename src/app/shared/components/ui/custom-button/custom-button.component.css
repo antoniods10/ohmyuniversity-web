@@ -70,6 +70,22 @@
   width: 100%;
 }
 
+.btn--rounded-none {
+  --btn-radius: 0;
+}
+.btn--rounded-sm {
+  --btn-radius: 6px;
+}
+.btn--rounded-md {
+  --btn-radius: 10px;
+}
+.btn--rounded-lg {
+  --btn-radius: 16px;
+}
+.btn--rounded-full {
+  --btn-radius: 999px;
+}
+
 /* Color Variants */
 .btn--primary {
   background: linear-gradient(135deg, var(--btn-primary-g1), var(--btn-primary-g2));
