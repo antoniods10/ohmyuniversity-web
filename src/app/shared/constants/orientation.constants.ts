@@ -16,10 +16,6 @@ import {
   VitaFuorisedeItem,
 } from '@types';
 
-// ============================================================================
-// ORIENTATION_TOPICS — 8 macro-categorie con domande inline
-// ============================================================================
-
 export const ORIENTATION_TOPICS: TopicModel[] = [
   {
     id: 'corso',
@@ -33,27 +29,59 @@ export const ORIENTATION_TOPICS: TopicModel[] = [
         type: 'single-select',
         required: true,
         options: [
-          { value: 'umanistica', label: '📚 Umanistica' },
-          { value: 'scientifica', label: '🔬 Scientifica' },
-          { value: 'ingegneria', label: '💻 Ingegneria & Informatica' },
-          { value: 'economica', label: '⚖️ Economica & Giuridica' },
-          { value: 'sanitaria', label: '🏥 Sanitaria' },
-          { value: 'artistica', label: '🎨 Artistica & del Design' },
+          { value: 'umanistica', label: ' Umanistica' },
+          { value: 'scientifica', label: ' Scientifica' },
+          { value: 'ingegneria', label: ' Ingegneria & Informatica' },
+          { value: 'economica', label: ' Economica & Giuridica' },
+          { value: 'sanitaria', label: ' Sanitaria' },
+          { value: 'artistica', label: ' Artistica & del Design' },
         ],
       },
     ],
   },
   {
     id: 'quiz',
-    title: 'Quiz e Autovalutazione',
-    subtitle: "TOLC, test d'ingresso e autovalutazione",
+    title: "Accesso all'università",
+    subtitle: "TOLC, test d'ingresso e modalità di accesso",
     questions: [
       {
-        id: 'quiz-corso-in-mente',
+        id: 'quiz-access-type',
         topicId: 'quiz',
-        text: 'Hai già un corso universitario in mente?',
-        type: 'yes-no',
+        text: 'Hai già in mente se affrontare un corso a numero chiuso o preferiresti uno ad accesso libero?',
+        type: 'single-select',
+        required: true,
+        options: [
+          { value: 'restricted', label: 'Voglio provare un corso a numero chiuso' },
+          { value: 'free', label: 'Preferisco un corso ad accesso libero' },
+          { value: 'undecided', label: 'Non ho ancora deciso' },
+        ],
+      },
+      {
+        id: 'quiz-tolc-done',
+        topicId: 'quiz',
+        text: 'Hai già sostenuto un TOLC?',
+        type: 'single-select',
         required: false,
+        options: [
+          { value: 'yes', label: "Sì, l'ho già sostenuto" },
+          { value: 'no-planning', label: 'No, ma ho intenzione di farlo' },
+          { value: 'no-unsure', label: 'Non ancora, devo capire quale fare' },
+        ],
+      },
+      {
+        id: 'quiz-tolc-type',
+        topicId: 'quiz',
+        text: 'Quale TOLC hai sostenuto o stai pianificando?',
+        type: 'single-select',
+        required: false,
+        options: [
+          { value: 'tolc-med', label: 'TOLC-MED — Medicina e professioni sanitarie' },
+          { value: 'tolc-i', label: 'TOLC-I — Ingegneria' },
+          { value: 'tolc-e', label: 'TOLC-E — Economia' },
+          { value: 'tolc-s', label: 'TOLC-S — Scienze' },
+          { value: 'tolc-su', label: 'TOLC-SU — Scienze Umane' },
+          { value: 'tolc-f', label: 'TOLC-F — Farmacia' },
+        ],
       },
     ],
   },
@@ -173,10 +201,6 @@ export const ORIENTATION_TOPICS: TopicModel[] = [
   },
 ];
 
-// ============================================================================
-// topic-vita.component.ts
-// ============================================================================
-
 export const VITA_TEMPO_SLICES: TempoSlice[] = [
   { label: 'Lezioni', percent: 30, color: '#3b82f6' },
   { label: 'Studio individuale', percent: 35, color: '#60a5fa' },
@@ -219,10 +243,6 @@ export const VITA_FUORISEDE: VitaFuorisedeItem[] = [
   { voce: 'Totale stimato', importo: '630–990 €/mese' },
 ];
 
-// ============================================================================
-// topic-sbocchi.component.ts
-// ============================================================================
-
 export const SBOCCHI_AREE: SboccoArea[] = [
   { area: 'Ingegneria & Informatica', occupazione1anno: 85, stipendioMedio: '1.450–1.800 €' },
   { area: 'Economia & Management', occupazione1anno: 72, stipendioMedio: '1.200–1.500 €' },
@@ -249,10 +269,6 @@ export const SBOCCHI_CONSIGLI: Consiglio[] = [
       'In molti settori tecnici la magistrale è quasi obbligatoria per accedere a posizioni senior. In altri (comunicazione, design, commerciale) la triennale con esperienze pratiche basta e avanza.',
   },
 ];
-
-// ============================================================================
-// topic-quiz.component.ts
-// ============================================================================
 
 export const QUIZ_TESTS_ESMPIO: TestIngresso[] = [
   {
@@ -329,10 +345,6 @@ export const QUIZ_AUTOVALUTAZIONE: AutovalutazioneItem[] = [
   },
 ];
 
-// ============================================================================
-// topic-errori.component.ts
-// ============================================================================
-
 export const ERRORI_ORIENTAMENTO: Errore[] = [
   {
     emoji: '👗',
@@ -384,10 +396,6 @@ export const ERRORI_ORIENTAMENTO: Errore[] = [
   },
 ];
 
-// ============================================================================
-// topic-corso.component.ts
-// ============================================================================
-
 export const CORSO_AREE: AreaCorso[] = [
   { label: 'Umanistica', emoji: '📚', esempi: 'Lettere, Filosofia, Storia, Lingue' },
   { label: 'Scientifica', emoji: '🔬', esempi: 'Biologia, Chimica, Fisica, Matematica' },
@@ -423,10 +431,6 @@ export const CORSO_CONSIGLI: ConsiglioCorso[] = [
       'Prima di iscriverti, vai a un open day. Parla con gli studenti del corso che ti interessa, non solo con i professori. Loro ti diranno la verità su carichi, esami e organizzazione.',
   },
 ];
-
-// ============================================================================
-// topic-come-funziona.component.ts
-// ============================================================================
 
 export const COME_FUNZIONA_DIFFERENZE: Differenza[] = [
   {
@@ -483,10 +487,6 @@ export const COME_FUNZIONA_SESSIONI: SessioneInfo[] = [
   { label: 'Sessione estiva', periodo: 'Giugno – Luglio', note: 'Esami del secondo semestre' },
   { label: 'Sessione autunnale', periodo: 'Settembre', note: 'Recupero e straordinari' },
 ];
-
-// ============================================================================
-// topic-borse-studio.component.ts (NUOVO)
-// ============================================================================
 
 export interface BorsaTipo {
   titolo: string;
@@ -551,10 +551,6 @@ export const BORSE_FAQ: BorsaFaq[] = [
   },
 ];
 
-// ============================================================================
-// topic-costi-geografici.component.ts (NUOVO)
-// ============================================================================
-
 export interface CostoAreaGeografica {
   area: string;
   affittoCamera: string;
@@ -618,10 +614,6 @@ export const CONSIGLI_GEOGRAFICI: ConsiglioGeografico[] = [
   },
 ];
 
-// ============================================================================
-// sbocchi-chart.component.ts
-// ============================================================================
-
 export const SBOCCHI_CHART_DEFAULT_DATA: SboccoDataPoint[] = [
   { area: 'Ingegneria & Informatica', occupazione: 85, colore: '#3b82f6' },
   { area: 'Economia & Management', occupazione: 72, colore: '#60a5fa' },
@@ -631,12 +623,199 @@ export const SBOCCHI_CHART_DEFAULT_DATA: SboccoDataPoint[] = [
   { area: 'Umanistica & Sociale', occupazione: 48, colore: '#dbeafe' },
 ];
 
-// ============================================================================
-// cfu-chart.component.ts
-// ============================================================================
-
 export const CFU_CHART_DEFAULT_DATA: CfuDataPoint[] = [
   { anno: '1° Anno', cfu: 60, oreStudio: 25 },
   { anno: '2° Anno', cfu: 60, oreStudio: 28 },
   { anno: '3° Anno', cfu: 60, oreStudio: 22 },
+];
+
+export interface AccessoTipo {
+  id: string;
+  titolo: string;
+  descrizione: string;
+  esempi: string[];
+  nota: string;
+}
+
+export const ACCESSO_TIPI: AccessoTipo[] = [
+  {
+    id: 'libero',
+    titolo: 'Accesso libero',
+    descrizione:
+      'Puoi iscriverti senza superare alcun test selettivo. In alcuni casi è previsto un TOLC orientativo — non sbarramento, ma il risultato può influenzare il tuo piano di studi o darti crediti aggiuntivi.',
+    esempi: [
+      'Lettere e Filosofia',
+      'Scienze Politiche',
+      'Sociologia',
+      'Economia (molti atenei)',
+      'Giurisprudenza',
+      'Comunicazione',
+    ],
+    nota: 'Attenzione: accesso libero non significa corso facile. Il carico didattico può essere elevato quanto un corso a numero chiuso.',
+  },
+  {
+    id: 'programmato-nazionale',
+    titolo: 'Programmato nazionale',
+    descrizione:
+      'I posti sono stabiliti a livello nazionale dal MIUR. Il test di ammissione è unico per tutti gli atenei italiani e si sostiene in una data fissa. La graduatoria è nazionale.',
+    esempi: ['Medicina e Chirurgia', 'Odontoiatria', 'Medicina Veterinaria', 'Architettura (AUIC)'],
+    nota: 'Per Medicina il test si chiama TOLC-MED dal 2023, sostituisce il vecchio test ministeriale. Si può tentare più volte ma la graduatoria considera il punteggio migliore.',
+  },
+  {
+    id: 'programmato-locale',
+    titolo: 'Programmato locale',
+    descrizione:
+      'Ogni ateneo fissa autonomamente i propri posti e le modalità di ammissione. Il test può variare da università a università — verifica sempre il bando del singolo ateneo.',
+    esempi: [
+      'Infermieristica',
+      'Fisioterapia',
+      'Farmacia (alcuni atenei)',
+      'Ingegneria (alcuni atenei)',
+      'Psicologia (alcuni atenei)',
+      'Scienze della Formazione Primaria',
+    ],
+    nota: 'Per i corsi a programmazione locale ogni ateneo pubblica il proprio bando. Puoi candidarti a più atenei contemporaneamente.',
+  },
+];
+
+export const ACCESSO_CONSIGLI: Consiglio[] = [
+  {
+    titolo: 'Controlla il bando ogni anno',
+    testo:
+      "Le modalità di accesso cambiano ogni anno accademico. Un corso che era libero può diventare programmato. Verifica sempre il sito ufficiale dell'ateneo e il portale universitaly.it.",
+  },
+  {
+    titolo: 'Le scadenze sono rigide',
+    testo:
+      'Per i corsi programmati, perdere la scadenza di iscrizione al test significa aspettare un anno. Segna tutte le date sul calendario con largo anticipo — alcune scadenze cadono in primavera per corsi che iniziano in ottobre.',
+  },
+  {
+    titolo: 'Iscriviti al TOLC il prima possibile',
+    testo:
+      "I TOLC si prenotano sul sito CISIA e i posti nelle sessioni si esauriscono. Non aspettare l'estate — le sessioni primaverili ti danno tempo di ritentare se il risultato non ti soddisfa.",
+  },
+  {
+    titolo: 'Studia il piano di studi prima di iscriverti',
+    testo:
+      'Per i corsi a numero chiuso, verifica il piano di studi completo prima di sostenere il test. È frustrante prepararsi mesi per un test e poi scoprire che il corso non è quello che immaginavi.',
+  },
+];
+
+export interface AccessType {
+  id: string;
+  title: string;
+  description: string;
+  examples: string[];
+  note: string;
+}
+
+export const ACCESS_TYPES: AccessType[] = [
+  {
+    id: 'free',
+    title: 'Accesso libero',
+    description:
+      'Puoi iscriverti senza superare alcun test selettivo. In alcuni casi è previsto un TOLC orientativo — non sbarramento, ma il risultato può influenzare il tuo piano di studi o darti crediti aggiuntivi.',
+    examples: [
+      'Lettere e Filosofia',
+      'Scienze Politiche',
+      'Sociologia',
+      'Economia (molti atenei)',
+      'Giurisprudenza',
+      'Comunicazione',
+    ],
+    note: 'Accesso libero non significa corso facile. Il carico didattico può essere elevato quanto un corso a numero chiuso.',
+  },
+  {
+    id: 'national-restricted',
+    title: 'Programmato nazionale',
+    description:
+      'I posti sono stabiliti a livello nazionale dal MIUR. Il test di ammissione è unico per tutti gli atenei italiani e si sostiene in una data fissa. La graduatoria è nazionale.',
+    examples: [
+      'Medicina e Chirurgia',
+      'Odontoiatria',
+      'Medicina Veterinaria',
+      'Architettura (AUIC)',
+    ],
+    note: 'Per Medicina il test si chiama TOLC-MED dal 2023. Si può tentare più volte — la graduatoria considera il punteggio migliore.',
+  },
+  {
+    id: 'local-restricted',
+    title: 'Programmato locale',
+    description:
+      'Ogni ateneo fissa autonomamente i propri posti e le modalità di ammissione. Il test può variare da università a università — verifica sempre il bando del singolo ateneo.',
+    examples: [
+      'Infermieristica',
+      'Fisioterapia',
+      'Farmacia (alcuni atenei)',
+      'Ingegneria (alcuni atenei)',
+      'Psicologia (alcuni atenei)',
+      'Scienze della Formazione Primaria',
+    ],
+    note: 'Per i corsi a programmazione locale puoi candidarti a più atenei contemporaneamente.',
+  },
+];
+
+export const ACCESS_TIPS = [
+  {
+    titolo: 'Controlla il bando ogni anno',
+    testo:
+      "Le modalità di accesso cambiano ogni anno accademico. Un corso che era libero può diventare programmato. Verifica sempre il sito ufficiale dell'ateneo e il portale universitaly.it.",
+  },
+  {
+    titolo: 'Le scadenze sono rigide',
+    testo:
+      'Per i corsi programmati, perdere la scadenza di iscrizione al test significa aspettare un anno. Segna tutte le date sul calendario con largo anticipo — alcune scadenze cadono in primavera per corsi che iniziano in ottobre.',
+  },
+  {
+    titolo: 'Iscriviti al TOLC il prima possibile',
+    testo:
+      "I TOLC si prenotano sul sito CISIA e i posti nelle sessioni si esauriscono. Non aspettare l'estate — le sessioni primaverili ti danno tempo di ritentare se il risultato non ti soddisfa.",
+  },
+  {
+    titolo: 'Studia il piano di studi prima di iscriverti',
+    testo:
+      'Per i corsi a numero chiuso, verifica il piano di studi completo prima di sostenere il test. È frustrante prepararsi mesi per un test e poi scoprire che il corso non è quello che immaginavi.',
+  },
+];
+
+export const QUIZ_QUESTIONS = [
+  {
+    id: 'quiz-access-type',
+    topicId: 'quiz',
+    text: 'Hai già in mente se affrontare un corso a numero chiuso o preferiresti uno ad accesso libero?',
+    type: 'single-select',
+    required: true,
+    options: [
+      { value: 'restricted', label: 'Voglio provare un corso a numero chiuso' },
+      { value: 'free', label: 'Preferisco un corso ad accesso libero' },
+      { value: 'undecided', label: 'Non ho ancora deciso' },
+    ],
+  },
+  {
+    id: 'quiz-tolc-done',
+    topicId: 'quiz',
+    text: 'Hai già sostenuto un TOLC?',
+    type: 'single-select',
+    required: false,
+    options: [
+      { value: 'yes', label: "Sì, l'ho già sostenuto" },
+      { value: 'no-planning', label: 'No, ma ho intenzione di farlo' },
+      { value: 'no-needed', label: 'No, il mio corso non lo richiede' },
+    ],
+  },
+  {
+    id: 'quiz-tolc-type',
+    topicId: 'quiz',
+    text: 'Quale TOLC hai sostenuto o stai pianificando?',
+    type: 'single-select',
+    required: false,
+    options: [
+      { value: 'tolc-med', label: 'TOLC-MED — Medicina e professioni sanitarie' },
+      { value: 'tolc-i', label: 'TOLC-I — Ingegneria' },
+      { value: 'tolc-e', label: 'TOLC-E — Economia' },
+      { value: 'tolc-s', label: 'TOLC-S — Scienze' },
+      { value: 'tolc-su', label: 'TOLC-SU — Scienze Umane' },
+      { value: 'tolc-f', label: 'TOLC-F — Farmacia' },
+    ],
+  },
 ];

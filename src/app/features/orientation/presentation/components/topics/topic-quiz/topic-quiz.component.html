@@ -1,29 +1,100 @@
 <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
-  <h2 appText variant="h2">Quiz e Autovalutazione</h2>
+  <!-- Header -->
+  <app-custom-badge label="Macro-area 2 di 8" variant="primary" shape="pill" size="xs" />
+
+  <h2 appText variant="h2" class="mt-4">Accesso all'università</h2>
+
   <div class="mt-3">
     <p appText variant="body-sm" color="muted">
-      Prima di iscriverti, è utile capire il tuo livello di preparazione sulle materie richieste. In
-      Italia la maggior parte dei test è gestita tramite il sistema
-      <strong>TOLC</strong> del consorzio CISIA.
+      Iscriversi all'università non è uguale per tutti i corsi. Alcuni sono liberi, altri richiedono
+      un test di ammissione. Capire come funziona l'accesso ti evita brutte sorprese a pochi mesi
+      dall'inizio.
     </p>
   </div>
 
-  <!-- TOLC -->
+  <!-- Info banner -->
+  <div class="mt-5">
+    <app-card-status
+      statusVariant="info"
+      [icon]="iconInfo"
+      title="Ci sono alcune domande per te in fondo a questa sezione"
+      description="Leggile con calma, poi rispondi — aggiornano automaticamente il tuo profilo di orientamento."
+      shadow="none"
+      padding="sm"
+      [hoverable]="true"
+      [clickable]="true"
+      (cardClick)="scrollToQuestion()" />
+  </div>
+
+  <!-- Access types -->
   <div class="mt-8">
-    <h3 appText variant="h4">Cosa sono i TOLC?</h3>
+    <h3 appText variant="h4">Libero o a numero chiuso?</h3>
     <div class="mt-2">
       <p appText variant="body-sm" color="muted">
-        I TOLC sono test di ammissione standardizzati, somministrati in modalità informatizzata.
-        Ogni tipo è specifico per un'area disciplinare e può essere ripetuto una volta al mese.
+        In Italia esistono tre modalità di accesso. Capire in quale categoria rientra il corso che
+        ti interessa è il primo passo.
       </p>
     </div>
+
+    <div class="mt-5 space-y-4">
+      @for (type of accessTypes; track type.id) {
+        <div class="rounded-xl border border-gray-200 bg-white p-5">
+          <div class="flex items-center gap-3">
+            <div
+              class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
+              [class.bg-green-50]="getAccessVariant(type.id) === 'success'"
+              [class.bg-red-50]="getAccessVariant(type.id) === 'error'"
+              [class.bg-amber-50]="getAccessVariant(type.id) === 'warning'">
+              <svg
+                [lucideIcon]="getAccessIcon(type.id)"
+                [size]="16"
+                [class.text-green-500]="getAccessVariant(type.id) === 'success'"
+                [class.text-red-500]="getAccessVariant(type.id) === 'error'"
+                [class.text-amber-500]="getAccessVariant(type.id) === 'warning'"
+                aria-hidden="true"></svg>
+            </div>
+            <h4 appText variant="h4">{{ type.title }}</h4>
+          </div>
+
+          <div class="mt-3">
+            <p appText variant="body-sm" color="muted">{{ type.description }}</p>
+          </div>
+
+          <div class="mt-4">
+            <p appText variant="caption" color="subtle">Esempi di corsi</p>
+            <div class="mt-2 flex flex-wrap gap-2">
+              @for (example of type.examples; track example) {
+                <app-custom-badge [label]="example" variant="neutral" shape="rounded" size="sm" />
+              }
+            </div>
+          </div>
+
+          <div class="mt-4 rounded-lg bg-gray-50 px-4 py-3">
+            <p appText variant="caption" color="muted">💡 {{ type.note }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- TOLC section -->
+  <div class="mt-8">
+    <h3 appText variant="h4">I TOLC — il sistema di test più diffuso</h3>
+    <div class="mt-2">
+      <p appText variant="body-sm" color="muted">
+        I TOLC sono test standardizzati gestiti dal consorzio CISIA, somministrati in modalità
+        informatizzata. Ogni tipo è specifico per un'area disciplinare e può essere ripetuto una
+        volta al mese.
+      </p>
+    </div>
+
     <div class="mt-5 space-y-3">
-      @for (test of testsEsempio; track test.tipo) {
+      @for (test of tolcTests; track test.tipo) {
         <div class="rounded-xl border border-gray-100 bg-gray-50 p-4">
           <div class="flex items-center justify-between gap-2">
-            <div>
+            <div class="flex items-center gap-2">
               <span appText variant="body-sm" weight="semibold">{{ test.tipo }}</span>
-              <span appText variant="caption" color="subtle" class="ml-2">- {{ test.corso }}</span>
+              <span appText variant="caption" color="subtle">— {{ test.corso }}</span>
             </div>
             <app-custom-badge [label]="test.ateneo" variant="primary" shape="pill" size="xs" />
           </div>
@@ -35,41 +106,115 @@
         </div>
       }
     </div>
+
+    <div class="mt-4">
+      <app-custom-link
+        href="https://www.cisiaonline.it"
+        label="CISIA — Simulazioni gratuite dei TOLC"
+        mode="external"
+        variant="primary"
+        size="sm" />
+    </div>
   </div>
 
-  <!-- Self-assessment -->
+  <!-- Tips -->
   <div class="mt-8">
-    <h3 appText variant="h4">Autovalutazione rapida per orientarti</h3>
-    <div class="mt-1">
+    <h3 appText variant="h4">Cosa fare concretamente</h3>
+    <div class="mt-2">
       <p appText variant="body-sm" color="muted">
-        Non sai ancora quale area fa per te? Rispondi mentalmente a queste domande.
+        Quattro cose che fanno la differenza tra chi si trova impreparato e chi no.
       </p>
     </div>
-    <div class="mt-4 space-y-3">
-      @for (item of autovalutazione; track item.domanda) {
-        <div class="rounded-xl border border-gray-100 p-4">
-          <p appText variant="body-sm" weight="medium">{{ item.domanda }}</p>
-          <div class="mt-1">
-            <span appText variant="body-sm" color="primary">→ {{ item.rilevante }}</span>
-          </div>
-        </div>
-      }
-    </div>
-  </div>
-
-  <!-- Advice -->
-  <div class="mt-8">
-    <h3 appText variant="h4">Consigli pratici per prepararti</h3>
-    <div class="mt-4 space-y-3">
-      @for (consiglio of consigli; track consiglio.titolo) {
+    <div class="mt-5 space-y-3">
+      @for (tip of tips; track tip.titolo) {
         <app-card-status
           statusVariant="success"
           [icon]="iconCheck"
-          [title]="consiglio.titolo"
-          [description]="consiglio.testo"
+          [title]="tip.titolo"
+          [description]="tip.testo"
           shadow="none"
           padding="sm" />
       }
+    </div>
+  </div>
+
+  <!-- Inline questions -->
+  <div id="domanda-quiz" class="mt-8 rounded-xl bg-blue-100 px-6 py-8">
+    <div class="flex items-start gap-3">
+      <div class="mt-1.5 h-8 w-1 shrink-0 rounded-full bg-blue-400"></div>
+      <div class="flex-1 space-y-8">
+        <app-custom-badge label="Domande per te" variant="info" shape="pill" size="xs" />
+
+        <!-- Question 1 — access type preference -->
+        <div>
+          <h4 appText variant="h4" class="mt-3">{{ questionAccessType.text }}</h4>
+          <div class="mt-2">
+            <p appText variant="body-sm" color="muted">
+              La risposta aggiorna il tuo profilo e influenza il risultato finale.
+            </p>
+          </div>
+          <div class="mt-5 flex flex-col gap-2">
+            @for (option of questionAccessType.options; track option.value) {
+              <app-custom-button
+                [label]="option.label"
+                [variant]="isSelected(selectedAccessType(), option.value) ? 'primary' : 'outline'"
+                [icon]="isSelected(selectedAccessType(), option.value) ? iconSelected : null"
+                iconPosition="left"
+                rounded="lg"
+                size="md"
+                [fullWidth]="true"
+                (clicked)="onSelectAccessType(option.value)" />
+            }
+          </div>
+        </div>
+
+        <!-- Question 2 — TOLC done -->
+        <div>
+          <h4 appText variant="h4">{{ questionTolcDone.text }}</h4>
+          <div class="mt-2">
+            <p appText variant="body-sm" color="muted">
+              La risposta aggiorna il tuo profilo e influenza il risultato finale.
+            </p>
+          </div>
+          <div class="mt-5 flex flex-col gap-2">
+            @for (option of questionTolcDone.options; track option.value) {
+              <app-custom-button
+                [label]="option.label"
+                [variant]="isSelected(selectedTolcDone(), option.value) ? 'primary' : 'outline'"
+                [icon]="isSelected(selectedTolcDone(), option.value) ? iconSelected : null"
+                iconPosition="left"
+                rounded="lg"
+                size="md"
+                [fullWidth]="true"
+                (clicked)="onSelectTolcDone(option.value)" />
+            }
+          </div>
+        </div>
+
+        @if (showTolcType()) {
+          <div>
+            <h4 appText variant="h4">{{ questionTolcType.text }}</h4>
+            <div class="mt-2">
+              <p appText variant="body-sm" color="muted">
+                La risposta aggiorna il tuo profilo e influenza il risultato finale.
+              </p>
+            </div>
+            <div class="mt-5 grid gap-2 sm:grid-cols-2">
+              @for (option of questionTolcType.options; track option.value) {
+                <app-custom-button
+                  [label]="option.label"
+                  [variant]="isSelected(selectedTolcType(), option.value) ? 'primary' : 'outline'"
+                  [icon]="isSelected(selectedTolcType(), option.value) ? iconSelected : null"
+                  iconPosition="left"
+                  rounded="lg"
+                  size="md"
+                  [fullWidth]="true"
+                  (clicked)="onSelectTolcType(option.value)" />
+              }
+            </div>
+          </div>
+        }
+      </div>
     </div>
   </div>
 </div>

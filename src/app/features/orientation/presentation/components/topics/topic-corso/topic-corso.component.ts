@@ -61,7 +61,6 @@ export class TopicCorsoComponent {
   // Stato locale — verrà sostituito con OrientationStateService nella fase logica
   readonly selectedValue = signal<string | null>(null);
 
-  // Funzioni utility dal shared/utils/ui.utils.ts
   readonly getIconBgClass = getIconBgClass;
   readonly getIconColorClass = getIconColorClass;
   readonly getLabelColorClass = getLabelColorClass;
