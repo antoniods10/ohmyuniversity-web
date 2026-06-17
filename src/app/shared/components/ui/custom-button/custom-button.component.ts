@@ -46,6 +46,11 @@ export type ButtonVariant =
 export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
 /**
+ * Available button rounded styles.
+ */
+export type ButtonRounded = 'none' | 'sm' | 'md' | 'lg' | 'full';
+
+/**
  * Supported operating modes.
  *
  * - button: standard HTML button
@@ -118,6 +123,11 @@ export class CustomButtonComponent {
    * Size of the button and its internal content.
    */
   @Input() size: ButtonSize = 'md';
+
+  /**
+   * Rounded style of the button.
+   */
+  @Input() rounded: ButtonRounded = 'md';
 
   /**
    * Expands the button to occupy the full width
@@ -285,6 +295,7 @@ export class CustomButtonComponent {
       'btn--succeeded-filled': this.succeeded && this.succeededStyle === 'filled',
       'btn--succeeded-ghost': this.succeeded && this.succeededStyle === 'ghost',
       [`btn--${this.size}`]: true,
+      [`btn--rounded-${this.rounded}`]: true,
       'btn--full-width': this.fullWidth,
       'btn--dark': this.darkTheme,
       'btn--disabled': this.disabled,
