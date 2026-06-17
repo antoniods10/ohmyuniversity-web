@@ -1,0 +1,71 @@
+/**
+ * @file custom-email.component.css
+ * @description Styling for CustomEmailComponent including color variants,
+ * sizing system, icon layout, and hover/underline interaction states.
+ */
+
+/* Host */
+:host {
+  display: contents;
+}
+
+/* Base Link */
+.email-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--transition-base, 200ms cubic-bezier(0.4, 0, 0.2, 1));
+}
+
+/* Size Variants */
+.email-link--sm {
+  font-size: 0.75rem;
+}
+.email-link--md {
+  font-size: 0.875rem;
+}
+.email-link--lg {
+  font-size: 1rem;
+}
+
+/* Icon */
+.email-link__icon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Color Variants */
+.email-link--primary {
+  color: var(--color-primary-dark);
+}
+.email-link--secondary {
+  color: var(--color-secondary-dark);
+}
+.email-link--neutral {
+  color: var(--color-neutral-600);
+}
+.email-link--ghost {
+  color: var(--color-neutral-500);
+}
+
+/* Hover */
+.email-link--primary:hover {
+  color: var(--color-primary-text);
+}
+.email-link--secondary:hover {
+  color: var(--color-secondary-text);
+}
+.email-link--neutral:hover {
+  color: var(--color-neutral-900);
+}
+.email-link--ghost:hover {
+  color: var(--color-neutral-700);
+}
+
+/* Underline on hover */
+.email-link--underline:hover .email-link__text {
+  text-decoration: underline;
+}
