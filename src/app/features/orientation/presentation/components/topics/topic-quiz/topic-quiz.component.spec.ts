@@ -40,7 +40,9 @@ describe('TopicQuizComponent', () => {
   });
 
   it('should render one test card per testsEsempio entry', () => {
-    const testCards = fixture.nativeElement.querySelectorAll('.rounded-xl.border.border-gray-100.bg-gray-50.p-4');
+    const testCards = fixture.nativeElement.querySelectorAll(
+      '.rounded-xl.border.border-gray-100.bg-gray-50.p-4',
+    );
     expect(testCards.length).toBeGreaterThanOrEqual(QUIZ_TESTS_ESMPIO.length);
   });
 
@@ -95,7 +97,9 @@ describe('TopicQuizComponent', () => {
   it('should emit backToList when orientation-nav emits backToList', () => {
     const spy = vi.fn();
     component.backToList.subscribe(spy);
-    fixture.debugElement.query(By.directive(OrientationNavComponent)).componentInstance.backToList.emit();
+    fixture.debugElement
+      .query(By.directive(OrientationNavComponent))
+      .componentInstance.backToList.emit();
     expect(spy).toHaveBeenCalledTimes(1);
   });
 });
