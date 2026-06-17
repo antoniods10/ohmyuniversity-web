@@ -269,38 +269,3 @@ h6 {
     transform: translateX(-50%);
   }
 }
-
-/* ========= @ToDelete Start ========= */
-
-/* Page background */
-@utility page-gradient {
-  @apply bg-gradient-to-b from-white via-sky-50 to-emerald-100;
-}
-
-/* Colored card backgrounds */
-@utility card-blue {
-  @apply bg-gradient-to-br from-blue-50 to-blue-100;
-}
-
-@utility card-blue-deep {
-  @apply bg-gradient-to-br from-blue-100 to-blue-200;
-}
-
-@utility card-green {
-  @apply bg-gradient-to-br from-emerald-50 to-emerald-100;
-}
-
-@utility card-yellow {
-  @apply bg-gradient-to-br from-amber-50 to-amber-100;
-}
-
-/* Elevation system */
-@utility elevated {
-  @apply shadow-md;
-}
-
-@utility elevated-sm {
-  @apply shadow-sm;
-}
-
-/* ========= @ToDelete End ========= */

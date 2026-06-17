@@ -23,11 +23,12 @@
   </div>
 
   <!-- Toggle -->
-  <div class="flex shrink-0" style="border-bottom: 1px solid var(--color-neutral-200)">
+  <div class="flex flex-col items-center" style="border-bottom: 1px solid var(--color-neutral-200)">
     <app-custom-button
-      variant="ghost"
+      variant="flat"
       size="sm"
       [iconOnly]="true"
+      [fullWidth]="true"
       [icon]="open() ? iconPanelClose : iconPanelOpen"
       [attr.aria-label]="open() ? 'Chiudi menu' : 'Apri menu'"
       (click)="toggleSidebar.emit()"
@@ -130,14 +131,15 @@
         <div class="w-px self-stretch my-2" style="background: var(--color-neutral-200)"></div>
 
         <!-- Logout -->
-        <button
-          type="button"
-          (click)="onLogout()"
-          aria-label="Esci dall'account"
-          title="Esci"
-          class="shrink-0 flex items-center justify-center w-12 border-none bg-transparent cursor-pointer transition-colors duration-150 logout-zone">
-          <svg [lucideIcon]="iconLogout" [size]="16" aria-hidden="true"></svg>
-        </button>
+        <app-custom-button
+          variant="error"
+          size="md"
+          rounded="none"
+          [iconOnly]="true"
+          [icon]="iconLogout"
+          ariaLabel="Esci dall'account"
+          (clicked)="onLogout()"
+          class="shrink-0 flex items-center justify-center w-12 rounded-none logout-zone" />
       </div>
 
       <!-- Panel -->
@@ -157,7 +159,7 @@
       </div>
     } @else {
       <!-- Sidebar Closed-->
-      <div class="flex flex-col items-center py-2 gap-1">
+      <div class="flex flex-col items-center py-2 gap-2">
         <app-avatar-profile-panel
           [openDirection]="'up'"
           [accounts]="accounts"
@@ -168,14 +170,16 @@
           [showLogout]="false"
           (accountSwitch)="onAccountSwitch($event)" />
 
-        <button
-          type="button"
-          (click)="onLogout()"
-          aria-label="Esci dall'account"
-          title="Esci"
-          class="flex items-center justify-center w-8 h-8 rounded-md border-none bg-transparent cursor-pointer transition-colors duration-150 logout-zone">
-          <svg [lucideIcon]="iconLogout" [size]="16" aria-hidden="true"></svg>
-        </button>
+        <!-- Logout -->
+        <app-custom-button
+          variant="error"
+          size="lg"
+          rounded="sm"
+          [iconOnly]="true"
+          [icon]="iconLogout"
+          ariaLabel="Esci dall'account"
+          (clicked)="onLogout()"
+          class="rounded-none logout-zone" />
       </div>
     }
   </div>
