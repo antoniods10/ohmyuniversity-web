@@ -71,21 +71,21 @@ export const COOKIE_MANAGEMENT_TEXT = {
 };
 
 export const COOKIE_BROWSER_LINKS: LegalListItem[] = [
-  { label: 'Google Chrome', href: 'https://support.google.com/chrome/answer/95647' },
+  { label: 'Google Chrome', url: 'https://support.google.com/chrome/answer/95647' },
   {
     label: 'Mozilla Firefox',
-    href: 'https://support.mozilla.org/it/kb/protezione-antitracciamento-avanzata-firefox',
+    url: 'https://support.mozilla.org/it/kb/protezione-antitracciamento-avanzata-firefox',
   },
-  { label: 'Apple Safari', href: 'https://support.apple.com/it-it/guide/safari/sfri11471/mac' },
+  { label: 'Apple Safari', url: 'https://support.apple.com/it-it/guide/safari/sfri11471/mac' },
   {
     label: 'Microsoft Edge',
-    href: 'https://support.microsoft.com/it-it/microsoft-edge/eliminare-i-cookie-in-microsoft-edge',
+    url: 'https://support.microsoft.com/it-it/microsoft-edge/eliminare-i-cookie-in-microsoft-edge',
   },
 ];
 
 export const LEGAL_RELATED_DOCS: LegalListItem[] = [
-  { label: 'Privacy Policy', href: '/privacy-policy', isExternal: false },
-  { label: 'Termini & Condizioni', href: '/termini-condizioni', isExternal: false },
+  { label: 'Privacy Policy', url: '/privacy-policy', isExternal: false },
+  { label: 'Termini & Condizioni', url: '/termini-condizioni', isExternal: false },
 ];
 
 // privacy-policy
@@ -150,36 +150,36 @@ export const PRIVACY_RETENTION_INTRO =
 export const PRIVACY_RETENTION_LIST: LegalLabeledItem[] = [
   {
     label: 'Dati di sessione',
-    text: 'eliminati alla scadenza della sessione o al logout esplicito',
+    value: 'eliminati alla scadenza della sessione o al logout esplicito',
   },
   {
     label: 'Dati account utenti accademici',
-    text: "per la durata del rapporto con l'ateneo + 12 mesi",
+    value: "per la durata del rapporto con l'ateneo + 12 mesi",
   },
   {
     label: 'Dati account aziende/collettivi',
-    text: 'per la durata del contratto + 10 anni (obblighi fiscali)',
+    value: 'per la durata del contratto + 10 anni (obblighi fiscali)',
   },
-  { label: 'Log di sicurezza', text: '90 giorni' },
+  { label: 'Log di sicurezza', value: '90 giorni' },
 ];
 
 export const PRIVACY_RIGHTS_INTRO = 'Ai sensi degli artt. 15–22 GDPR, hai il diritto di:';
 
 export const PRIVACY_RIGHTS_LIST: LegalLabeledItem[] = [
-  { label: 'Accesso', text: 'ottenere copia dei dati che trattiamo su di te' },
-  { label: 'Rettifica', text: 'correggere dati inesatti o incompleti' },
+  { label: 'Accesso', value: 'ottenere copia dei dati che trattiamo su di te' },
+  { label: 'Rettifica', value: 'correggere dati inesatti o incompleti' },
   {
     label: 'Cancellazione',
-    text: 'richiedere la cancellazione dei tuoi dati ("diritto all\'oblio")',
+    value: 'richiedere la cancellazione dei tuoi dati ("diritto all\'oblio")',
   },
   {
     label: 'Portabilità',
-    text: 'ricevere i tuoi dati in formato strutturato e leggibile da macchina',
+    value: 'ricevere i tuoi dati in formato strutturato e leggibile da macchina',
   },
-  { label: 'Opposizione', text: 'opporti al trattamento basato su legittimo interesse' },
+  { label: 'Opposizione', value: 'opporti al trattamento basato su legittimo interesse' },
   {
     label: 'Reclamo',
-    text: 'presentare reclamo al Garante per la Protezione dei Dati Personali (garante.it)',
+    value: 'presentare reclamo al Garante per la Protezione dei Dati Personali (garante.it)',
   },
 ];
 
@@ -193,8 +193,8 @@ export const PRIVACY_CHANGES_TEXT =
   "Ci riserviamo il diritto di aggiornare questa informativa. In caso di modifiche sostanziali, gli utenti registrati saranno notificati via email almeno 15 giorni prima dell'entrata in vigore delle modifiche. La versione aggiornata sarà sempre disponibile a questo indirizzo.";
 
 export const PRIVACY_RELATED_DOCS: LegalListItem[] = [
-  { label: 'Cookie Policy', href: '/cookie-policy', isExternal: false },
-  { label: 'Termini & Condizioni', href: '/termini-condizioni', isExternal: false },
+  { label: 'Cookie Policy', url: '/cookie-policy', isExternal: false },
+  { label: 'Termini & Condizioni', url: '/termini-condizioni', isExternal: false },
 ];
 
 // terms-conditions
@@ -202,26 +202,27 @@ export const TERMS_INTRO_WARNING =
   "Leggere attentamente prima di utilizzare la piattaforma. L'accesso e l'utilizzo di OhMyUniversity implicano l'accettazione integrale dei presenti termini.";
 
 export const TERMS_DEFINITIONS: LegalLabeledItem[] = [
-  { label: 'Piattaforma', text: 'il sito web e le applicazioni mobili OhMyUniversity' },
+  { label: 'Piattaforma', value: 'il sito web e le applicazioni mobili OhMyUniversity' },
   {
     label: 'Gestore',
-    text: 'OhMyOpenSource!, organizzazione no-profit che sviluppa e gestisce la Piattaforma',
+    value: 'OhMyOpenSource!, organizzazione no-profit che sviluppa e gestisce la Piattaforma',
   },
   {
     label: 'Utente accademico',
-    text: 'studente, dottorando, docente o personale tecnico-amministrativo che accede tramite SSO del proprio ateneo',
+    value:
+      'studente, dottorando, docente o personale tecnico-amministrativo che accede tramite SSO del proprio ateneo',
   },
   {
     label: 'Organizzazione',
-    text: 'azienda o collettivo studentesco titolare di un piano a pagamento',
+    value: 'azienda o collettivo studentesco titolare di un piano a pagamento',
   },
   {
     label: 'SSO',
-    text: "sistema di autenticazione Single Sign-On gestito dall'ateneo di appartenenza",
+    value: "sistema di autenticazione Single Sign-On gestito dall'ateneo di appartenenza",
   },
   {
     label: 'Contenuti',
-    text: 'tutti i dati, testi, grafici, interfacce e funzionalità disponibili sulla Piattaforma',
+    value: 'tutti i dati, testi, grafici, interfacce e funzionalità disponibili sulla Piattaforma',
   },
 ];
 
@@ -231,12 +232,12 @@ export const TERMS_SERVICE_DESCRIPTION = {
   paragraph2:
     'Il servizio è gratuito per gli utenti accademici (studenti, dottorandi, docenti, staff). Le Organizzazioni (aziende e collettivi studenteschi) accedono a funzionalità aggiuntive tramite piani a pagamento disciplinati da un contratto separato.',
   natureTitle: 'Natura del servizio',
-  natureText:
+  naturevalue:
     'OhMyUniversity è uno strumento di aggregazione e visualizzazione. Non è un portale universitario ufficiale e non ha potere di modificare dati accademici, risultati di esami o qualsiasi informazione presente nei sistemi degli atenei. In caso di discrepanze, fa sempre fede il portale ufficiale del proprio ateneo.',
 };
 
 export const TERMS_ACCESS = {
-  academicText:
+  academicvalue:
     "L'accesso avviene esclusivamente tramite il sistema SSO dell'ateneo di appartenenza. L'utente è responsabile della sicurezza delle proprie credenziali istituzionali. OhMyUniversity non ha accesso né memorizza tali credenziali.",
   academicTermination:
     "Il diritto di accesso è subordinato al mantenimento di un rapporto attivo con l'ateneo convenzionato. La cessazione del rapporto (ad es. conclusione degli studi, fine del contratto di docenza) comporta la disattivazione automatica dell'accesso entro i termini previsti dall'accordo con l'ateneo.",
@@ -286,6 +287,6 @@ export const TERMS_JURISDICTION =
   "I presenti Termini sono disciplinati dalla legge italiana. Per qualsiasi controversia derivante dall'interpretazione o dall'esecuzione dei presenti Termini, le parti concordano sulla competenza esclusiva del Foro di Roma, salvo diversa disposizione inderogabile di legge a tutela dei consumatori.";
 
 export const TERMS_RELATED_DOCS: LegalListItem[] = [
-  { label: 'Privacy Policy', href: '/privacy-policy', isExternal: false },
-  { label: 'Cookie Policy', href: '/cookie-policy', isExternal: false },
+  { label: 'Privacy Policy', url: '/privacy-policy', isExternal: false },
+  { label: 'Cookie Policy', url: '/cookie-policy', isExternal: false },
 ];

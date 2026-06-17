@@ -7,13 +7,13 @@
       </p>
     </div>
     <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
-      @for (link of links(); track link.path) {
+      @for (link of links(); track link.url) {
         <app-card-nav
           [title]="link.label"
           [subtitle]="link.description"
           [icon]="link.icon"
           mode="link-internal"
-          [href]="link.path"
+          [href]="link.url"
           variant="primary"
           [stretchHeight]="true" />
       }

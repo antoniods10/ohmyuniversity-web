@@ -1,5 +1,9 @@
+import { Identifiable, PersonBase } from '@shared/types';
+
+/** Campuses where a contact or office can be reached */
 export type ContactCampus = 'all' | 'campobasso' | 'termoli' | 'pesche';
 
+/** Administrative office contact with reachability details */
 export interface SecretariatContact {
   id: string;
   office: string;
@@ -11,10 +15,8 @@ export interface SecretariatContact {
   website?: string;
 }
 
-export interface ProfessorContact {
-  id: string;
-  name: string;
-  role: string;
+/** Professor contact with teaching department, courses and reachability details */
+export interface ProfessorContact extends Identifiable, PersonBase {
   department: string;
   courses: string[];
   email: string;
@@ -25,9 +27,8 @@ export interface ProfessorContact {
   website?: string;
 }
 
-export interface InstitutionalContact {
-  id: string;
-  name: string;
+/** Institutional contact (department, body, etc.) with reachability details */
+export interface InstitutionalContact extends Identifiable {
   description: string;
   phone?: string;
   email?: string;

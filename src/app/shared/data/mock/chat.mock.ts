@@ -136,19 +136,19 @@ export const MOCK_SHARED_FILES: SharedFile[] = [
 
 export const MOCK_SHARED_LINKS: SharedLink[] = [
   {
-    title: 'Documentazione ufficiale Java',
+    label: 'Documentazione ufficiale Java',
     url: 'docs.oracle.com/javase',
     sender: 'Prof. Bianchi',
     time: 'Ieri',
   },
   {
-    title: 'Visualizzatore algoritmi',
+    label: 'Visualizzatore algoritmi',
     url: 'visualgo.net',
     sender: 'Marco Testa',
     time: 'Lun',
   },
   {
-    title: 'Repository GitHub del corso',
+    label: 'Repository GitHub del corso',
     url: 'github.com/corso-asd',
     sender: 'Prof. Bianchi',
     time: '10 giu',

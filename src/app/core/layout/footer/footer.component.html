@@ -34,10 +34,10 @@
             Navigazione
           </p>
           <ul class="space-y-2.5">
-            @for (link of navLinks; track link.path) {
+            @for (link of navLinks; track link.url) {
               <li>
                 <a
-                  [routerLink]="link.path"
+                  [routerLink]="link.url"
                   class="text-sm font-medium text-gray-700 transition hover:text-blue-600">
                   {{ link.label }}
                 </a>
@@ -51,10 +51,10 @@
             Per le organizzazioni
           </p>
           <ul class="space-y-2.5">
-            @for (link of businessLinks; track link.path) {
+            @for (link of businessLinks; track link.url) {
               <li>
                 <a
-                  [routerLink]="link.path"
+                  [routerLink]="link.url"
                   class="text-sm font-medium text-gray-700 transition hover:text-blue-600">
                   {{ link.label }}
                 </a>
@@ -67,10 +67,10 @@
       <div class="lg:col-span-1">
         <p appText class="mb-4 text-xs font-bold uppercase tracking-wider text-gray-700">Legale</p>
         <ul class="space-y-2.5">
-          @for (link of legalLinks; track link.path) {
+          @for (link of legalLinks; track link.url) {
             <li>
               <a
-                [routerLink]="link.path"
+                [routerLink]="link.url"
                 class="text-sm font-medium text-gray-700 transition hover:text-blue-600">
                 {{ link.label }}
               </a>
@@ -88,7 +88,7 @@
             @for (link of faqLinks; track link.label) {
               <li>
                 <a
-                  [routerLink]="link.path"
+                  [routerLink]="link.url"
                   [fragment]="link.fragment"
                   class="text-sm font-medium text-gray-700 transition hover:text-blue-600">
                   {{ link.label }}

@@ -7,8 +7,8 @@ export const ORG_PLANS: PricingPlan[] = [
     priceDetail: 'al mese, IVA esclusa',
     description:
       'Perfetto per startup, piccoli team e collettivi studenteschi che vogliono iniziare a raggiungere studenti.',
-    cta: 'Inizia la prova gratuita',
-    ctaLink: '/business/registrazione',
+    label: 'Inizia la prova gratuita',
+    url: '/business/registrazione',
     highlighted: false,
     features: [
       { label: 'Profilo organizzazione verificato', included: true },
@@ -31,8 +31,8 @@ export const ORG_PLANS: PricingPlan[] = [
     priceDetail: 'al mese, IVA esclusa',
     description:
       'Per aziende e organizzazioni che vogliono targeting preciso, analytics complete e un flusso di candidature professionale.',
-    cta: 'Inizia la prova gratuita',
-    ctaLink: '/business/registrazione',
+    label: 'Inizia la prova gratuita',
+    url: '/business/registrazione',
     highlighted: true,
     features: [
       { label: 'Profilo organizzazione verificato', included: true },
@@ -54,8 +54,8 @@ export const ORG_PLANS: PricingPlan[] = [
     priceDetail: 'al mese, IVA esclusa',
     description:
       'Per grandi aziende con esigenze personalizzate, integrazione con sistemi HR esistenti e SLA garantiti.',
-    cta: 'Contattaci',
-    ctaLink: '/business/contatti',
+    label: 'Contattaci',
+    url: '/business/contatti',
     highlighted: false,
     features: [
       { label: 'Profilo organizzazione verificato', included: true },
@@ -80,8 +80,8 @@ export const INSTITUTION_PLANS: PricingPlan[] = [
     priceDetail: 'al mese, IVA esclusa',
     description:
       "L'essenziale per portare i tuoi studenti su OhMyUniversity con l'integrazione SSO e la dashboard accademica completa.",
-    cta: 'Richiedi una demo',
-    ctaLink: '/business/contatti',
+    label: 'Richiedi una demo',
+    url: '/business/contatti',
     highlighted: false,
     features: [
       { label: 'Integrazione SSO istituzionale', included: true },
@@ -104,8 +104,8 @@ export const INSTITUTION_PLANS: PricingPlan[] = [
     priceDetail: 'al mese, IVA esclusa',
     description:
       "Porta tutta la vita universitaria in un'unica app: dall'aula alla mensa, dalla navetta alla prenotazione degli spazi.",
-    cta: 'Richiedi una demo',
-    ctaLink: '/business/contatti',
+    label: 'Richiedi una demo',
+    url: '/business/contatti',
     highlighted: true,
     features: [
       { label: 'Integrazione SSO istituzionale', included: true },
@@ -127,8 +127,8 @@ export const INSTITUTION_PLANS: PricingPlan[] = [
     priceDetail: 'contattaci per un preventivo',
     description:
       'Una soluzione completamente personalizzata per grandi atenei con esigenze specifiche e sistemi legacy da integrare.',
-    cta: 'Contattaci',
-    ctaLink: '/business/contatti',
+    label: 'Contattaci',
+    url: '/business/contatti',
     highlighted: false,
     features: [
       { label: 'Integrazione SSO istituzionale', included: true },

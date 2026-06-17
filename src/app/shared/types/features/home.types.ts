@@ -1,6 +1,8 @@
 import { StatTrend } from '@ui/custom-card/card-variants.component';
 import { CardVariant } from '@ui/custom-card/custom-card.component';
+import { StepBase, IconContentBase, Icon } from '@shared/types';
 
+/** Statistic — alias of CardStat */
 export interface Stat {
   value: string;
   label: string;
@@ -9,6 +11,7 @@ export interface Stat {
   trend?: StatTrend;
 }
 
+/** Review — alias of CardReviewer */
 export interface Review {
   name: string;
   university: string;
@@ -18,15 +21,11 @@ export interface Review {
   verified?: boolean;
 }
 
-export interface StepHome {
-  number: number;
-  title: string;
-  description: string;
-}
+/** Home page step — alias of StepBase */
+export type StepHome = StepBase;
 
-export interface Feature {
-  title: string;
-  description: string;
-  icon: any;
+/** Home page feature — alias of IconContentBase */
+export interface Feature extends IconContentBase {
+  icon: Icon;
   variant?: CardVariant;
 }
