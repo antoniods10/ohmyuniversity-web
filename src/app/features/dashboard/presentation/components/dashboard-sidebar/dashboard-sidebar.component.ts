@@ -1,12 +1,7 @@
 import { Component, input, output, ViewChild, inject } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import {
-  LucideDynamicIcon,
-  LucidePanelLeftClose,
-  LucidePanelLeftOpen,
-  LucideLogOut,
-} from '@lucide/angular';
+import { LucidePanelLeftClose, LucidePanelLeftOpen, LucideLogOut } from '@lucide/angular';
 import { APP_LOGO, APP_NAME, SIDEBAR_ITEMS, SIDEBAR_BOTTOM_ITEMS } from '@constants';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomAvatarComponent, AvatarVariant } from '@ui/custom-avatar/custom-avatar.component';
@@ -25,7 +20,6 @@ import {
     NgComponentOutlet,
     RouterLink,
     RouterLinkActive,
-    LucideDynamicIcon,
     CustomButtonComponent,
     CustomAvatarComponent,
     AvatarProfilePanelComponent,
