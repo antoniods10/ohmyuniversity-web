@@ -1,0 +1,16 @@
+<section class="bg-white px-4 py-20 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-4xl">
+    <h2 appText class="mb-10 text-center text-2xl font-bold text-gray-900">
+      Chi ha già scelto di collaborare con noi
+    </h2>
+    <div class="grid gap-6 sm:grid-cols-2">
+      @for (t of testimonials(); track t.name) {
+        <app-card-review
+          [rating]="5"
+          [body]="t.quote"
+          [reviewer]="{ name: t.name, university: t.role }"
+          [showRatingNumber]="false" />
+      }
+    </div>
+  </div>
+</section>

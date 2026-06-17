@@ -24,6 +24,7 @@ import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.componen
 
 import { TransportCompany, TransportRoute } from '@shared/types/dashboard/transport.types';
 import { MOCK_TRANSPORT_ROUTES, MOCK_TRANSPORT_COMPANIES } from '@shared/data/mock/transport.mock';
+import { APP_NAME } from '@shared/constants';
 
 @Component({
   selector: 'app-transport',
@@ -42,6 +43,8 @@ import { MOCK_TRANSPORT_ROUTES, MOCK_TRANSPORT_COMPANIES } from '@shared/data/mo
   templateUrl: './transport.page.html',
 })
 export class TransportPage {
+  readonly APP_NAME = APP_NAME;
+
   private readonly sanitizer = inject(DomSanitizer);
 
   readonly iconSearch = LucideSearch;

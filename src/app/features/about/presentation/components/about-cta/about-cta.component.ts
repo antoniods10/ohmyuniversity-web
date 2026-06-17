@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { APP_NAME } from '@shared/constants';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 
@@ -8,4 +9,6 @@ import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
   imports: [CustomButtonComponent, CustomTextComponent],
   templateUrl: './about-cta.component.html',
 })
-export class AboutCtaComponent {}
+export class AboutCtaComponent {
+  readonly APP_NAME = APP_NAME;
+}

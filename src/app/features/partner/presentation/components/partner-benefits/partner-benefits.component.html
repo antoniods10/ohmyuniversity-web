@@ -1,0 +1,22 @@
+<section class="bg-white px-4 py-20 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-5xl">
+    <div class="text-center">
+      <h2 appText class="text-3xl font-bold text-gray-900">Perché scegliere {{ APP_NAME }}</h2>
+      <p appText class="mt-4 text-gray-500">
+        Non un altro portale di annunci. Una piattaforma pensata per il contesto accademico.
+      </p>
+    </div>
+    <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
+      @for (benefit of benefits(); track benefit.title) {
+        <app-card-simple
+          [icon]="benefit.icon"
+          [title]="benefit.title"
+          [body]="benefit.description"
+          variant="primary"
+          padding="md"
+          shadow="sm"
+          [stretchHeight]="true" />
+      }
+    </div>
+  </div>
+</section>

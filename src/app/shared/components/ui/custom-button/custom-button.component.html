@@ -23,7 +23,8 @@ modes, interactive states, icon support, and accessibility features.
 @if (mode === 'link-internal') {
   <a
     role="button"
-    [routerLink]="isInert ? null : href"
+    [routerLink]="isInert ? null : routerPath"
+    [queryParams]="routerQueryParams"
     [ngClass]="btnClasses"
     [attr.aria-label]="ariaLabel || displayLabel || null"
     [attr.aria-busy]="loading ? 'true' : null"

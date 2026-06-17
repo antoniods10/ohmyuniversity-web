@@ -41,6 +41,7 @@ import {
   MOCK_BANDI,
   MOCK_FEES,
 } from '@shared/data/mock/secretariat.mock';
+import { APP_NAME } from '@shared/constants';
 
 @Component({
   selector: 'app-secretariat',
@@ -59,6 +60,8 @@ import {
   templateUrl: './secretariat.page.html',
 })
 export class SecretariatPage {
+  readonly APP_NAME = APP_NAME;
+
   private readonly toast = inject(ToastService);
 
   readonly iconSearch = LucideSearch;

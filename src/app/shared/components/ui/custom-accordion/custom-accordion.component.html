@@ -1,0 +1,30 @@
+<!--
+@file custom-accordion.component.html
+@description Template for CustomAccordionComponent providing single-block
+data-driven rendering, animated panel expansion, and accessibility features.
+-->
+
+<div [ngClass]="accordionClasses">
+  @for (item of items; track item.title; let i = $index) {
+    <div [ngClass]="itemClasses(i)">
+      <button
+        type="button"
+        class="accordion-item__header"
+        (click)="toggle(i)"
+        [attr.aria-expanded]="isOpen(i)">
+        <span class="accordion-item__title">{{ item.title }}</span>
+        <span
+          class="accordion-item__chevron-wrap"
+          [class.accordion-item__chevron-wrap--open]="isOpen(i)">
+          <svg [lucideIcon]="iconChevron" [size]="16" class="accordion-item__chevron"></svg>
+        </span>
+      </button>
+
+      <div class="accordion-item__body" [class.accordion-item__body--open]="isOpen(i)">
+        <div class="accordion-item__content">
+          <p class="accordion-item__text">{{ item.content }}</p>
+        </div>
+      </div>
+    </div>
+  }
+</div>

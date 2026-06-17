@@ -22,6 +22,7 @@ import {
 import { CourseSchedule, ScheduleSearchResult } from '@shared/types/dashboard/schedule.types';
 import { MOCK_MY_SCHEDULES } from '@shared/data/mock/schedule.mock';
 import { acronymVariant } from '@shared/utils/ui.utils';
+import { APP_NAME } from '@shared/constants';
 
 @Component({
   selector: 'app-schedule',
@@ -40,6 +41,8 @@ import { acronymVariant } from '@shared/utils/ui.utils';
   templateUrl: './schedule.page.html',
 })
 export class SchedulePage {
+  readonly APP_NAME = APP_NAME;
+
   readonly iconDownload = LucideDownload;
   readonly iconExternalLink = LucideExternalLink;
   readonly iconCalendar = LucideCalendarDays;

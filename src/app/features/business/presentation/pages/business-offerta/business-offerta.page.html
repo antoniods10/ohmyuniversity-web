@@ -1,75 +1,94 @@
 <app-business-hero
   title="Cosa offriamo alle aziende"
-  subtitle="OhMyUniversity mette la tua organizzazione davanti agli studenti universitari italiani nel momento in cui sono più attenti e motivati. Niente scatter marketing - solo connessioni reali." />
+  [subtitle]="
+    APP_NAME +
+    ' mette la tua organizzazione davanti agli studenti universitari italiani nel momento in cui sono più attenti e motivati. Niente scatter marketing - solo connessioni reali.'
+  " />
 
-<!-- Cosa offriamo -->
-<section class="bg-white px-4 pb-16 sm:px-6 lg:px-8">
+<!-- What we offer -->
+<section class="bg-white px-4 py-20 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-5xl">
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
       @for (offer of offers; track offer.title) {
-        <div class="rounded-xl border border-gray-100 bg-white p-6 shadow-sm">
-          <span class="text-3xl">{{ offer.emoji }}</span>
-          <h3 class="mt-4 font-semibold text-gray-900">{{ offer.title }}</h3>
-          <p class="mt-2 text-sm leading-relaxed text-gray-500">{{ offer.description }}</p>
-        </div>
+        <app-card-simple
+          [icon]="offer.icon"
+          [title]="offer.title"
+          [body]="offer.description"
+          variant="primary"
+          padding="md"
+          shadow="sm"
+          [stretchHeight]="true" />
       }
     </div>
   </div>
 </section>
 
-<!-- Perché OhMyUniversity -->
-<section class="border-t border-gray-100 bg-gray-50 px-4 py-16 sm:px-6 lg:px-8">
+<!-- Why OhMyUniversity! -->
+<section class="border-t border-gray-100 bg-gray-50 px-4 py-20 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-4xl">
-    <h2 class="text-center text-2xl font-bold text-gray-900">
-      Perché OhMyUniversity è diverso dagli altri
+    <h2 appText class="text-center text-2xl font-bold text-gray-900">
+      Perché {{ APP_NAME }} è diverso dagli altri
     </h2>
-    <p class="mx-auto mt-3 max-w-xl text-center text-sm text-gray-500">
+    <p appText class="mx-auto mt-3 max-w-xl text-center text-sm text-gray-500">
       Esistono decine di portali per il recruiting universitario. Ecco cosa ci distingue.
     </p>
-    <div class="mt-10 space-y-6">
+    <div class="mt-10 flex flex-col gap-5">
       @for (d of differentiators; track d.title) {
-        <div class="flex items-start gap-5 rounded-xl border border-gray-200 bg-white p-6">
-          <div
-            class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">
-            ✓
-          </div>
-          <div>
-            <p class="font-semibold text-gray-900">{{ d.title }}</p>
-            <p class="mt-1 text-sm leading-relaxed text-gray-500">{{ d.description }}</p>
-          </div>
-        </div>
+        <app-card-status
+          [icon]="d.icon"
+          statusVariant="info"
+          [title]="d.title"
+          [description]="d.description"
+          padding="lg"
+          shadow="none" />
       }
     </div>
   </div>
 </section>
 
-<!-- Numeri -->
-<section class="bg-white px-4 py-16 sm:px-6 lg:px-8">
+<!-- Numbers -->
+<section class="bg-white px-4 py-20 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-4xl">
-    <h2 class="text-center text-2xl font-bold text-gray-900">La nostra audience in numeri</h2>
+    <h2 appText class="text-center text-2xl font-bold text-gray-900">
+      La nostra audience in numeri
+    </h2>
     <div class="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4">
-      <div class="text-center">
-        <p class="text-4xl font-bold text-blue-600">120k+</p>
-        <p class="mt-1 text-sm text-gray-500">Studenti attivi</p>
-      </div>
-      <div class="text-center">
-        <p class="text-4xl font-bold text-blue-600">50+</p>
-        <p class="mt-1 text-sm text-gray-500">Atenei italiani</p>
-      </div>
-      <div class="text-center">
-        <p class="text-4xl font-bold text-blue-600">4.8★</p>
-        <p class="mt-1 text-sm text-gray-500">Rating medio app</p>
-      </div>
-      <div class="text-center">
-        <p class="text-4xl font-bold text-blue-600">78%</p>
-        <p class="mt-1 text-sm text-gray-500">Utenti attivi settimanali</p>
-      </div>
+      <app-card-stat
+        value="120k+"
+        label="Studenti attivi"
+        variant="default"
+        padding="sm"
+        shadow="none"
+        [bordered]="false" />
+      <app-card-stat
+        value="50+"
+        label="Atenei italiani"
+        variant="default"
+        padding="sm"
+        shadow="none"
+        [bordered]="false" />
+      <app-card-stat
+        value="4.8"
+        suffix="★"
+        label="Rating medio app"
+        variant="default"
+        padding="sm"
+        shadow="none"
+        [bordered]="false" />
+      <app-card-stat
+        value="78"
+        suffix="%"
+        label="Utenti attivi settimanali"
+        variant="default"
+        padding="sm"
+        shadow="none"
+        [bordered]="false" />
     </div>
   </div>
 </section>
 
 <app-business-cta
-  title="Porta la tua azienda su OhMyUniversity"
+  [title]="'Porta la tua azienda su ' + APP_NAME"
   subtitle="Inizia con 14 giorni di prova gratuita. Nessuna carta di credito, nessun impegno."
   primaryLabel="Inizia la prova gratuita"
   primaryLink="/business/registrazione"

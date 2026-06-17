@@ -136,7 +136,7 @@
           Supporta il progetto
         </p>
         <p appText class="mb-4 text-xs leading-relaxed text-gray-400">
-          OhMyUniversity è gratuito e open source. Se ti è utile, considera una donazione per
+          {{ APP_NAME }} è gratuito e open source. Se ti è utile, considera una donazione per
           aiutarci a mantenerlo e migliorarlo.
         </p>
         <div class="flex flex-col gap-2">
@@ -210,7 +210,7 @@
       <div class="flex flex-col items-center gap-1 text-center">
         <p appText class="text-xs text-gray-400">P. IVA: {{ vatNumber }}</p>
         <p appText class="text-xs text-gray-400">
-          © {{ currentYear }} OhMyUniversity - un prodotto open source di
+          © {{ currentYear }} {{ APP_NAME }} - un prodotto open source di
           <app-custom-link
             [href]="githubOrgUrl"
             mode="external"

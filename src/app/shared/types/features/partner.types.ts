@@ -1,5 +1,5 @@
 export interface PartnerBenefit {
-  emoji: string;
+  icon: any;
   title: string;
   description: string;
 }
@@ -8,7 +8,7 @@ export interface PartnerLink {
   label: string;
   description: string;
   path: string;
-  icon: string;
+  icon: any;
 }
 
 export interface Testimonial {
