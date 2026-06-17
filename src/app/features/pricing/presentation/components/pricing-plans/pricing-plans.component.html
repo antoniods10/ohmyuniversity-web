@@ -2,7 +2,7 @@
   @for (plan of plans(); track plan.name) {
     <app-custom-card
       [variant]="plan.highlighted ? 'primary' : 'default'"
-      [accentBar]="plan.highlighted ?? false"
+      [accentBar]="plan.highlighted"
       [shadow]="plan.highlighted ? 'lg' : 'sm'"
       padding="lg"
       radius="lg"
