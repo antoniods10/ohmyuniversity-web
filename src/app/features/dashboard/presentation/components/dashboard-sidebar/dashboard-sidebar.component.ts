@@ -5,7 +5,6 @@ import {
   LucideDynamicIcon,
   LucidePanelLeftClose,
   LucidePanelLeftOpen,
-  LucideGraduationCap,
   LucideLogOut,
 } from '@lucide/angular';
 import { APP_LOGO, APP_NAME, SIDEBAR_ITEMS, SIDEBAR_BOTTOM_ITEMS } from '@constants';
@@ -27,10 +26,6 @@ import {
     RouterLink,
     RouterLinkActive,
     LucideDynamicIcon,
-    LucidePanelLeftClose,
-    LucidePanelLeftOpen,
-    LucideGraduationCap,
-    LucideLogOut,
     CustomButtonComponent,
     CustomAvatarComponent,
     AvatarProfilePanelComponent,

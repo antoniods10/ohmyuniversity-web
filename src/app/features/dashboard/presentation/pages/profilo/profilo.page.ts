@@ -6,7 +6,6 @@ import { CustomButtonComponent } from '@ui/custom-button/custom-button.component
 import { CustomInputComponent } from '@ui/custom-input/custom-input.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CustomAvatarComponent, AvatarVariant } from '@ui/custom-avatar/custom-avatar.component';
-import { CustomModalComponent } from '@ui/custom-modal/custom-modal.component';
 import {
   LucideDynamicIcon,
   LucideUser,
@@ -50,7 +49,6 @@ import { acronymVariant, cfuPercent } from '@shared/utils/ui.utils';
     CustomTabsComponent,
     CustomTextComponent,
     CustomAvatarComponent,
-    CustomModalComponent,
     LucideDynamicIcon,
   ],
   templateUrl: './profilo.page.html',

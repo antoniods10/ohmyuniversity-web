@@ -1,5 +1,4 @@
 import { Component, signal, computed, inject } from '@angular/core';
-import { NgTemplateOutlet } from '@angular/common';
 import { PageHeaderComponent } from '@ui/page-header/page-header.component';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
@@ -32,7 +31,6 @@ import { acronymVariant } from '@shared/utils/ui.utils';
   selector: 'app-exams',
   standalone: true,
   imports: [
-    NgTemplateOutlet,
     PageHeaderComponent,
     CustomCardComponent,
     CustomBadgeComponent,

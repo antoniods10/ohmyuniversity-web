@@ -1,0 +1,22 @@
+<section class="border-t border-gray-100 bg-gray-50 px-4 py-20 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-5xl">
+    <div class="text-center">
+      <h2 appText class="text-2xl font-bold text-gray-900">Tutto quello che ti serve sapere</h2>
+      <p appText class="mt-3 text-gray-500">
+        Approfondisci ogni aspetto della collaborazione con OhMyUniversity.
+      </p>
+    </div>
+    <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 items-stretch">
+      @for (link of links(); track link.path) {
+        <app-card-nav
+          [title]="link.label"
+          [subtitle]="link.description"
+          [icon]="link.icon"
+          mode="link-internal"
+          [href]="link.path"
+          variant="primary"
+          [stretchHeight]="true" />
+      }
+    </div>
+  </div>
+</section>
