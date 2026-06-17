@@ -1,0 +1,23 @@
+<!--
+@file custom-link.component.html
+@description Template for CustomLinkComponent rendering either an internal
+Angular router link or an external hyperlink, with a leading icon.
+-->
+
+@if (mode === 'internal') {
+  <a [routerLink]="href" [ngClass]="linkClasses">
+    <span class="inline-link__icon" aria-hidden="true">
+      <svg [lucideIcon]="externalIcon" [size]="iconSize"></svg>
+    </span>
+    <span class="inline-link__text">{{ label }}</span>
+  </a>
+}
+
+@if (mode === 'external') {
+  <a [href]="href" [target]="target" [rel]="externalRel" [ngClass]="linkClasses">
+    <span class="inline-link__icon" aria-hidden="true">
+      <svg [lucideIcon]="externalIcon" [size]="iconSize"></svg>
+    </span>
+    <span class="inline-link__text">{{ label }}</span>
+  </a>
+}
