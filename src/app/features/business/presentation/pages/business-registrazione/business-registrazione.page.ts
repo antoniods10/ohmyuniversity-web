@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { LucideListChecks, LucideCheck } from '@lucide/angular';
 import { BusinessHeroComponent } from '../../components/business-hero/business-hero.component';
-import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CardStatusComponent, CardMinimalComponent } from '@ui/custom-card/card-variants.component';
@@ -18,7 +17,6 @@ import { CustomEmailComponent } from '@ui/custom-email/custom-email.component';
   standalone: true,
   imports: [
     BusinessHeroComponent,
-    CustomCardComponent,
     CustomButtonComponent,
     CustomBadgeComponent,
     CardStatusComponent,

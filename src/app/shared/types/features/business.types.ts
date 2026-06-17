@@ -1,3 +1,5 @@
+import { CardVariant } from '@ui/custom-card/custom-card.component';
+
 export interface Step {
   number: number;
   title: string;
@@ -8,6 +10,13 @@ export interface TargetingOption {
   label: string;
   description: string;
   available: 'tutti' | 'professional' | 'enterprise';
+}
+
+export interface AnalyticsMetric {
+  icon: any;
+  label: string;
+  desc: string;
+  variant: CardVariant;
 }
 
 export interface OnboardingStep {
@@ -23,18 +32,19 @@ export interface Requirement {
 }
 
 export interface OfferCard {
-  emoji: string;
+  icon: any;
   title: string;
   description: string;
 }
 
 export interface Differentiator {
+  icon: any;
   title: string;
   description: string;
 }
 
 export interface UserTypeBusiness {
-  emoji: string;
+  icon: any;
   title: string;
   description: string;
   action: string;
@@ -44,7 +54,7 @@ export interface UserTypeBusiness {
 }
 
 export interface ContactChannel {
-  emoji: string;
+  icon: any;
   title: string;
   description: string;
   value: string;
@@ -52,7 +62,7 @@ export interface ContactChannel {
 }
 
 export interface UseCase {
-  emoji: string;
+  icon: any;
   title: string;
   description: string;
 }

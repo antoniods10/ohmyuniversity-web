@@ -2,20 +2,33 @@
   title="Come funziona la visibilità"
   subtitle="OhMyUniversity non è un banner o un annuncio. Le tue opportunità vengono mostrate agli studenti giusti, nel momento giusto, in un contesto in cui sono già attivamente concentrati sulla propria carriera." />
 
-<!-- Come funziona step by step -->
+<!-- How it works -->
 <section class="bg-white px-4 pb-16 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-3xl">
-    <h2 class="mb-10 text-center text-xl font-bold text-gray-900">Il percorso di un'opportunità</h2>
-    <div class="space-y-6">
+    <h2 appText class="mb-10 text-center text-xl font-bold text-gray-900">
+      Il percorso di un'opportunità
+    </h2>
+    <div class="space-y-4">
       @for (step of steps; track step.number) {
         <div class="flex items-start gap-5">
-          <div
-            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">
-            {{ step.number }}
+          <div class="flex flex-col items-center self-stretch">
+            <app-custom-badge
+              [label]="step.number.toString()"
+              variant="primary"
+              shape="pill"
+              size="lg" />
+            @if (step.number < steps.length) {
+              <div class="mt-1 h-full min-h-8 w-px bg-gray-200"></div>
+            }
           </div>
-          <div class="rounded-xl border border-gray-100 bg-white p-5 shadow-sm flex-1">
-            <p class="font-semibold text-gray-900">{{ step.title }}</p>
-            <p class="mt-1 text-sm leading-relaxed text-gray-500">{{ step.description }}</p>
+          <div class="flex-1">
+            <app-card-status
+              [icon]="iconStep"
+              statusVariant="info"
+              [title]="step.title"
+              [description]="step.description"
+              padding="md"
+              shadow="sm" />
           </div>
         </div>
       }
@@ -24,32 +37,38 @@
 </section>
 
 <!-- Targeting -->
-<section class="border-t border-gray-100 bg-gray-50 px-4 py-16 sm:px-6 lg:px-8">
+<section class="border-t border-gray-100 bg-gray-50 px-4 py-20 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-4xl">
-    <h2 class="text-center text-xl font-bold text-gray-900">Opzioni di targeting disponibili</h2>
-    <p class="mx-auto mt-3 max-w-xl text-center text-sm text-gray-500">
+    <h2 appText class="text-center text-xl font-bold text-gray-900">
+      Opzioni di targeting disponibili
+    </h2>
+    <p appText class="mx-auto mt-3 max-w-xl text-center text-sm text-gray-500">
       Più il targeting è preciso, più alta è la qualità delle candidature che ricevi.
     </p>
     <div class="mt-8 overflow-hidden rounded-xl border border-gray-200 bg-white">
       <table class="w-full text-sm">
         <thead class="bg-gray-50">
           <tr>
-            <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500">Criterio</th>
-            <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500">Cosa fa</th>
-            <th class="px-5 py-3 text-left text-xs font-semibold text-gray-500">Disponibile in</th>
+            <th appText class="px-5 py-3 text-left text-xs font-semibold text-gray-500">
+              Criterio
+            </th>
+            <th appText class="px-5 py-3 text-left text-xs font-semibold text-gray-500">Cosa fa</th>
+            <th appText class="px-5 py-3 text-left text-xs font-semibold text-gray-500">
+              Disponibile in
+            </th>
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100">
           @for (opt of targetingOptions; track opt.label) {
             <tr>
-              <td class="px-5 py-3 font-medium text-gray-800">{{ opt.label }}</td>
-              <td class="px-5 py-3 text-gray-500">{{ opt.description }}</td>
+              <td appText class="px-5 py-3 font-medium text-gray-800">{{ opt.label }}</td>
+              <td appText class="px-5 py-3 text-gray-500">{{ opt.description }}</td>
               <td class="px-5 py-3">
-                <span
-                  class="rounded-full px-2.5 py-0.5 text-xs font-medium"
-                  [class]="planColor[opt.available]">
-                  {{ planLabel[opt.available] }}
-                </span>
+                <app-custom-badge
+                  [label]="planLabel[opt.available]"
+                  [variant]="planVariant[opt.available]"
+                  shape="pill"
+                  size="sm" />
               </td>
             </tr>
           }
@@ -60,43 +79,26 @@
 </section>
 
 <!-- Analytics preview -->
-<section class="bg-white px-4 py-16 sm:px-6 lg:px-8">
+<section class="bg-white px-4 py-20 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-4xl">
-    <h2 class="text-center text-xl font-bold text-gray-900">Misuri tutto, in tempo reale</h2>
-    <p class="mx-auto mt-3 max-w-xl text-center text-sm text-gray-500">
+    <h2 appText class="text-center text-xl font-bold text-gray-900">
+      Misuri tutto, in tempo reale
+    </h2>
+    <p appText class="mx-auto mt-3 max-w-xl text-center text-sm text-gray-500">
       La dashboard analytics ti mostra cosa funziona e cosa ottimizzare.
     </p>
-    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      @for (
-        metric of [
-          {
-            label: 'Visualizzazioni',
-            desc: 'Quanti studenti hanno visto la tua opportunità',
-            icon: '👁️',
-          },
-          {
-            label: 'Click sul profilo',
-            desc: 'Quanti hanno cliccato per saperne di più',
-            icon: '🖱️',
-          },
-          {
-            label: 'Candidature ricevute',
-            desc: 'Quanti hanno inviato la loro candidatura',
-            icon: '📬',
-          },
-          {
-            label: 'Tasso di conversione',
-            desc: 'Rapporto tra visualizzazioni e candidature',
-            icon: '📈',
-          },
-        ];
-        track metric.label
-      ) {
-        <div class="rounded-xl border border-gray-100 bg-gray-50 p-5 text-center">
-          <span class="text-2xl">{{ metric.icon }}</span>
-          <p class="mt-3 font-semibold text-gray-900">{{ metric.label }}</p>
-          <p class="mt-1 text-xs leading-relaxed text-gray-500">{{ metric.desc }}</p>
-        </div>
+    <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
+      @for (metric of analyticsMetrics; track metric.label) {
+        <app-card-simple
+          [icon]="metric.icon"
+          [title]="metric.label"
+          [body]="metric.desc"
+          [variant]="metric.variant"
+          padding="lg"
+          shadow="md"
+          radius="lg"
+          [hoverable]="true"
+          [stretchHeight]="true" />
       }
     </div>
   </div>

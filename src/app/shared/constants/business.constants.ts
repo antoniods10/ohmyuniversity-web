@@ -1,4 +1,27 @@
 import {
+  LucideTarget,
+  LucideClipboardList,
+  LucideInbox,
+  LucideChartColumn,
+  LucideBadgeCheck,
+  LucideLink2,
+  LucideDrama,
+  LucideTrophy,
+  LucideVote,
+  LucideMegaphone,
+  LucideBriefcase,
+  LucideGraduationCap,
+  LucideEye,
+  LucideMousePointerClick,
+  LucideTrendingUp,
+  LucideSchool,
+  LucideBuilding2,
+  LucideHandshake,
+  LucideMail,
+  LucideMessageCircle,
+} from '@lucide/angular';
+import {
+  AnalyticsMetric,
   ContactChannel,
   Differentiator,
   OfferCard,
@@ -93,6 +116,33 @@ export const PLAN_COLORS: Record<string, string> = {
   enterprise: 'bg-purple-100 text-purple-700',
 };
 
+export const BUSINESS_ANALYTICS_METRICS: AnalyticsMetric[] = [
+  {
+    icon: LucideEye,
+    label: 'Visualizzazioni',
+    desc: 'Quanti studenti hanno visto la tua opportunità',
+    variant: 'info',
+  },
+  {
+    icon: LucideMousePointerClick,
+    label: 'Click sul profilo',
+    desc: 'Quanti hanno cliccato per saperne di più',
+    variant: 'secondary',
+  },
+  {
+    icon: LucideInbox,
+    label: 'Candidature ricevute',
+    desc: 'Quanti hanno inviato la loro candidatura',
+    variant: 'success',
+  },
+  {
+    icon: LucideTrendingUp,
+    label: 'Tasso di conversione',
+    desc: 'Rapporto tra visualizzazioni e candidature',
+    variant: 'tertiary',
+  },
+];
+
 // business-registrazione.page.ts
 export const BUSINESS_REGISTRAZIONE_STEPS: OnboardingStep[] = [
   {
@@ -166,37 +216,37 @@ export const BUSINESS_REGISTRAZIONE_FAQ = [
 // business-offerta.page.ts
 export const BUSINESS_OFFERS: OfferCard[] = [
   {
-    emoji: '🎯',
+    icon: LucideTarget,
     title: 'Visibilità mirata sugli studenti giusti',
     description:
       'Raggiungi studenti filtrati per ateneo, facoltà, corso di laurea e anno. Non sprechi budget su chi non è il tuo target - ogni impression conta.',
   },
   {
-    emoji: '📋',
+    icon: LucideClipboardList,
     title: 'Pubblicazione di opportunità',
     description:
       'Stage, tirocini, lavoro part-time, graduate program, eventi aziendali. Pubblica qualsiasi tipo di opportunità con un editor semplice e professionale.',
   },
   {
-    emoji: '📬',
+    icon: LucideInbox,
     title: 'Raccolta candidature integrata',
     description:
       "Gli studenti si candidano direttamente in-app. Ricevi CV, lettere di presentazione e portfolio in un'unica dashboard - niente email sparse.",
   },
   {
-    emoji: '📊',
+    icon: LucideChartColumn,
     title: 'Analytics in tempo reale',
     description:
       'Visualizzazioni, click, candidature ricevute, tasso di conversione. Sai esattamente quanto sta funzionando ogni opportunità pubblicata.',
   },
   {
-    emoji: '✅',
+    icon: LucideBadgeCheck,
     title: 'Profilo verificato e credibile',
     description:
       "Il badge di verifica OhMyUniversity comunica agli studenti che sei un'organizzazione reale e affidabile. Niente profili fasulli o spam.",
   },
   {
-    emoji: '🔗',
+    icon: LucideLink2,
     title: 'Integrazione con i tuoi sistemi',
     description:
       'Puoi reindirizzare le candidature verso il tuo ATS o portale HR esistente. OhMyUniversity si adatta al tuo flusso, non il contrario.',
@@ -205,16 +255,19 @@ export const BUSINESS_OFFERS: OfferCard[] = [
 
 export const BUSINESS_DIFFERENTIATORS: Differentiator[] = [
   {
+    icon: LucideBadgeCheck,
     title: 'Audience in contesto accademico',
     description:
       'Quando uno studente vede la tua opportunità su OhMyUniversity è appena entrato in app per controllare i suoi voti o il piano di studi. Non sta navigando distrattamente - è in una mindset universitaria attiva.',
   },
   {
+    icon: LucideBadgeCheck,
     title: 'Zero pubblicità, zero rumore',
     description:
       'OhMyUniversity non ha banner, pop-up o feed infiniti. Le tue opportunità sono presentate in modo pulito e professionale, senza competere con altre distrazioni.',
   },
   {
+    icon: LucideBadgeCheck,
     title: 'Dati accademici reali',
     description:
       "Grazie all'integrazione con i portali universitari, sappiamo con precisione in quale anno è lo studente, quale corso frequenta e quanti CFU ha maturato. Il targeting è basato su dati reali, non dichiarazioni.",
@@ -224,7 +277,7 @@ export const BUSINESS_DIFFERENTIATORS: Differentiator[] = [
 // business-contatti.page.ts
 export const BUSINESS_USER_TYPES: UserTypeBusiness[] = [
   {
-    emoji: '🎓',
+    icon: LucideGraduationCap,
     title: 'Studente o Dottorando',
     description:
       'Non devi creare nessun account. Accedi direttamente con le credenziali del tuo ateneo tramite SSO. OhMyUniversity legge i tuoi dati accademici in automatico - nessuna registrazione, nessun form da compilare.',
@@ -234,7 +287,7 @@ export const BUSINESS_USER_TYPES: UserTypeBusiness[] = [
     highlight: false,
   },
   {
-    emoji: '🏫',
+    icon: LucideSchool,
     title: 'Docente o Staff tecnico-amministrativo',
     description:
       'Come per gli studenti, accedi con le credenziali istituzionali del tuo ateneo tramite SSO. Il tuo ruolo (docente, ricercatore, staff) viene riconosciuto automaticamente dal sistema del tuo ateneo.',
@@ -244,30 +297,30 @@ export const BUSINESS_USER_TYPES: UserTypeBusiness[] = [
     highlight: false,
   },
   {
-    emoji: '🏢',
+    icon: LucideBuilding2,
     title: 'Azienda',
     description:
       'Le aziende non possono registrarsi in autonomia. Il processo è assistito dal nostro team commerciale: ci contatti, facciamo una breve chiamata conoscitiva, e attiviamo il tuo account con 14 giorni di prova gratuita.',
     action: 'Contattaci per iniziare',
-    actionLink: 'mailto:business@ohmyuniversity.it?subject=Richiesta%20account%20azienda',
-    isExternal: true,
+    actionLink: '/contatti?tab=organization',
+    isExternal: false,
     highlight: true,
   },
   {
-    emoji: '🤝',
+    icon: LucideHandshake,
     title: 'Collettivo studentesco',
     description:
       'Come per le aziende, i collettivi accedono tramite un account dedicato creato dal nostro team. I collettivi universitari documentati ricevono il 40% di sconto su tutti i piani. Contattaci per iniziare.',
     action: 'Contattaci per iniziare',
-    actionLink: 'mailto:business@ohmyuniversity.it?subject=Richiesta%20account%20collettivo',
-    isExternal: true,
+    actionLink: '/contatti?tab=organization',
+    isExternal: false,
     highlight: true,
   },
 ];
 
 export const BUSINESS_CONTACT_CHANNELS: ContactChannel[] = [
   {
-    emoji: '📧',
+    icon: LucideMail,
     title: 'Email commerciale',
     description:
       'Per richieste di account azienda o collettivo. Risposta entro 2 giorni lavorativi.',
@@ -275,20 +328,20 @@ export const BUSINESS_CONTACT_CHANNELS: ContactChannel[] = [
     href: 'mailto:business@ohmyuniversity.it',
   },
   {
-    emoji: '💬',
+    icon: LucideMessageCircle,
     title: 'Email supporto generale',
     description: 'Per domande tecniche, bug report o feedback sul prodotto.',
     value: 'hello@ohmyuniversity.it',
     href: 'mailto:hello@ohmyuniversity.it',
   },
-  {
-    emoji: '🐙',
-    title: 'GitHub',
-    description: 'Per segnalare bug, proporre feature o contribuire al codice open source.',
-    value: 'github.com/ohmyopensource',
-    href: 'https://github.com/ohmyopensource',
-  },
 ];
+
+export const BUSINESS_GITHUB_CHANNEL = {
+  title: 'GitHub',
+  description: 'Per segnalare bug, proporre feature o contribuire al codice open source.',
+  value: 'github.com/ohmyopensource',
+  href: 'https://github.com/ohmyopensource',
+};
 
 export const BUSINESS_ONBOARDING_STEPS: string[] = [
   'Ci invii una email con il nome della tua organizzazione e una breve descrizione',
@@ -301,37 +354,37 @@ export const BUSINESS_ONBOARDING_STEPS: string[] = [
 // business-collettivi.page.ts
 export const USE_CASES: UseCase[] = [
   {
-    emoji: '🎭',
+    icon: LucideDrama,
     title: 'Associazioni culturali e ricreative',
     description:
       'Promuovi eventi, spettacoli, mostre e attività culturali agli studenti del tuo ateneo o di atenei vicini. Raggiungi chi è già interessato alla vita universitaria extracurriculare.',
   },
   {
-    emoji: '♟️',
+    icon: LucideTrophy,
     title: 'Gruppi sportivi universitari',
     description:
       'Cerca nuovi atleti e appassionati tra gli studenti. Pubblica le tue sessioni di allenamento, i tornei e le selezioni per entrare nella squadra.',
   },
   {
-    emoji: '🗳️',
+    icon: LucideVote,
     title: 'Liste e rappresentanze studentesche',
     description:
       'Comunica con la tua base elettorale, promuovi le tue proposte e raggiungi studenti per le campagne elettorali universitarie in modo diretto e trasparente.',
   },
   {
-    emoji: '📣',
+    icon: LucideMegaphone,
     title: 'Gruppi di attivismo e volontariato',
     description:
       "Mobilita studenti per cause sociali, campagne di sensibilizzazione e progetti di volontariato. L'audience universitaria è tra le più reattive e coinvolgibili.",
   },
   {
-    emoji: '💼',
+    icon: LucideBriefcase,
     title: 'Startup e team in cerca di co-founder',
     description:
       'Stai costruendo qualcosa e cerchi collaboratori universitari? Pubblica la tua call, descrivi il progetto e attira persone motivate e con skill specifiche.',
   },
   {
-    emoji: '🎓',
+    icon: LucideGraduationCap,
     title: 'Alumni e community post-laurea',
     description:
       'Mantieni vivo il legame con il tuo ateneo. Organizza eventi, mentorship e networking tra ex studenti e studenti attivi.',

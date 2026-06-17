@@ -1,13 +1,15 @@
 import { Component, input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
+import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 
 @Component({
   selector: 'app-business-cta',
   standalone: true,
-  imports: [RouterLink],
+  imports: [CustomButtonComponent, CustomBadgeComponent],
   templateUrl: './business-cta.component.html',
 })
 export class BusinessCtaComponent {
+  readonly badge = input<string>();
   readonly title = input<string>('Pronto a iniziare?');
   readonly subtitle = input<string>(
     'Il nostro team commerciale è disponibile per una chiamata conoscitiva gratuita senza impegno.',
