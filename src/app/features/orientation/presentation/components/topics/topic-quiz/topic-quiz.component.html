@@ -18,7 +18,7 @@
       statusVariant="info"
       [icon]="iconInfo"
       title="Ci sono alcune domande per te in fondo a questa sezione"
-      description="Leggile con calma, poi rispondi — aggiornano automaticamente il tuo profilo di orientamento."
+      description="Leggile con calma, poi rispondi - aggiornano automaticamente il tuo profilo di orientamento."
       shadow="none"
       padding="sm"
       [hoverable]="true"
@@ -79,7 +79,7 @@
 
   <!-- TOLC section -->
   <div class="mt-8">
-    <h3 appText variant="h4">I TOLC — il sistema di test più diffuso</h3>
+    <h3 appText variant="h4">I TOLC - il sistema di test più diffuso</h3>
     <div class="mt-2">
       <p appText variant="body-sm" color="muted">
         I TOLC sono test standardizzati gestiti dal consorzio CISIA, somministrati in modalità
@@ -94,7 +94,7 @@
           <div class="flex items-center justify-between gap-2">
             <div class="flex items-center gap-2">
               <span appText variant="body-sm" weight="semibold">{{ test.tipo }}</span>
-              <span appText variant="caption" color="subtle">— {{ test.corso }}</span>
+              <span appText variant="caption" color="subtle">- {{ test.corso }}</span>
             </div>
             <app-custom-badge [label]="test.ateneo" variant="primary" shape="pill" size="xs" />
           </div>
@@ -110,7 +110,7 @@
     <div class="mt-4">
       <app-custom-link
         href="https://www.cisiaonline.it"
-        label="CISIA — Simulazioni gratuite dei TOLC"
+        label="CISIA - Simulazioni gratuite dei TOLC"
         mode="external"
         variant="primary"
         size="sm" />
@@ -145,7 +145,7 @@
       <div class="flex-1 space-y-8">
         <app-custom-badge label="Domande per te" variant="info" shape="pill" size="xs" />
 
-        <!-- Question 1 — access type preference -->
+        <!-- Question 1 - access type preference -->
         <div>
           <h4 appText variant="h4" class="mt-3">{{ questionAccessType.text }}</h4>
           <div class="mt-2">
@@ -168,7 +168,7 @@
           </div>
         </div>
 
-        <!-- Question 2 — TOLC done -->
+        <!-- Question 2 - TOLC done -->
         <div>
           <h4 appText variant="h4">{{ questionTolcDone.text }}</h4>
           <div class="mt-2">

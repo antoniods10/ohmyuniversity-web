@@ -124,3 +124,11 @@ export interface AreaEstesa {
   descrizione: string;
   facolta: string[];
 }
+
+export interface AccessType {
+  id: string;
+  title: string;
+  description: string;
+  examples: string[];
+  note: string;
+}
