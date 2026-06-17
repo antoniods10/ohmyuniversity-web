@@ -12,45 +12,171 @@ import {
   TempoSlice,
   TestIngresso,
   TipoEsame,
-  TopicMeta,
   VitaFuorisedeItem,
 } from '@types';
+import { TopicModel } from 'src/app/features/orientation/domain/models/topic.model';
 
-// orientation.page.ts
-export const ORIENTATION_TOPICS: TopicMeta[] = [
+// ============================================================================
+// ORIENTATION_TOPICS — 8 macro-categorie con domande inline
+// ============================================================================
+
+export const ORIENTATION_TOPICS: TopicModel[] = [
   {
     id: 'corso',
     title: 'Scegli il corso adatto a te',
     subtitle: 'Materie, aree, sedi - come orientarsi',
+    questions: [
+      {
+        id: 'corso-area',
+        topicId: 'corso',
+        text: 'Quale area di studio ti attira di più?',
+        type: 'single-select',
+        required: true,
+        options: [
+          { value: 'umanistica', label: '📚 Umanistica' },
+          { value: 'scientifica', label: '🔬 Scientifica' },
+          { value: 'ingegneria', label: '💻 Ingegneria & Informatica' },
+          { value: 'economica', label: '⚖️ Economica & Giuridica' },
+          { value: 'sanitaria', label: '🏥 Sanitaria' },
+          { value: 'artistica', label: '🎨 Artistica & del Design' },
+        ],
+      },
+    ],
   },
   {
     id: 'quiz',
     title: 'Quiz e Autovalutazione',
     subtitle: "TOLC, test d'ingresso e autovalutazione",
+    questions: [
+      {
+        id: 'quiz-corso-in-mente',
+        topicId: 'quiz',
+        text: 'Hai già un corso universitario in mente?',
+        type: 'yes-no',
+        required: false,
+      },
+    ],
   },
   {
     id: 'come-funziona',
     title: "Come funziona l'università",
     subtitle: 'CFU, esami, sessioni e autonomia',
+    questions: [
+      {
+        id: 'come-funziona-esami',
+        topicId: 'come-funziona',
+        text: 'Che tipo di esame preferisci?',
+        type: 'single-select',
+        required: false,
+        options: [
+          { value: 'orale', label: 'Orale — mi esprimo meglio a voce' },
+          { value: 'scritto', label: 'Scritto — preferisco ragionare sul foglio' },
+          { value: 'misto', label: 'Misto — dipende dalla materia' },
+        ],
+      },
+    ],
   },
   {
     id: 'vita',
     title: 'Vita universitaria concreta',
     subtitle: 'Orari, studio, fuori sede e costi reali',
+    questions: [
+      {
+        id: 'vita-fuorisede',
+        topicId: 'vita',
+        text: 'Saresti disposto ad andare a studiare fuori dalla tua città?',
+        type: 'yes-no-maybe',
+        required: true,
+        options: [
+          { value: 'si', label: 'Sì, sono aperto a trasferirmi' },
+          { value: 'forse', label: 'Forse, dipende dal corso e dai costi' },
+          { value: 'no', label: 'No, preferisco restare vicino a casa' },
+        ],
+      },
+    ],
   },
   {
     id: 'sbocchi',
     title: 'Sbocchi lavorativi reali',
     subtitle: 'Occupazione e stipendi per area di studio',
+    questions: [
+      {
+        id: 'sbocchi-stipendio',
+        topicId: 'sbocchi',
+        text: 'Quanto è importante per te lo stipendio atteso dopo la laurea?',
+        type: 'scale',
+        required: true,
+        scaleMin: 1,
+        scaleMax: 5,
+        options: [
+          { value: '1', label: 'Per niente — conta solo la passione' },
+          { value: '2', label: 'Poco importante' },
+          { value: '3', label: 'Abbastanza importante' },
+          { value: '4', label: 'Molto importante' },
+          { value: '5', label: 'Fondamentale — è il criterio principale' },
+        ],
+      },
+    ],
   },
   {
     id: 'errori',
     title: 'Errori comuni da evitare',
     subtitle: 'Le trappole in cui cadono quasi tutti',
+    questions: [
+      {
+        id: 'errori-confronto',
+        topicId: 'errori',
+        text: 'Hai già parlato con studenti universitari del corso che ti interessa?',
+        type: 'yes-no',
+        required: false,
+      },
+    ],
+  },
+  {
+    id: 'borse-studio',
+    title: 'Borse di studio e supporto economico',
+    subtitle: 'DSU, ISEE, esoneri e residenze universitarie',
+    questions: [
+      {
+        id: 'borse-isee',
+        topicId: 'borse-studio',
+        text: "Hai un'idea della fascia ISEE del tuo nucleo familiare?",
+        type: 'single-select',
+        required: true,
+        options: [
+          { value: 'sotto-15k', label: 'Sotto i 15.000 € — fascia bassa' },
+          { value: '15-30k', label: 'Tra 15.000 e 30.000 €' },
+          { value: 'sopra-30k', label: 'Sopra i 30.000 €' },
+          { value: 'non-so', label: 'Non lo so ancora' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'costi-geografici',
+    title: 'Costi reali per area geografica',
+    subtitle: 'Confronto Nord, Centro e Sud — affitti e qualità della vita',
+    questions: [
+      {
+        id: 'costi-trasferimento',
+        topicId: 'costi-geografici',
+        text: 'Sei disposto a trasferirti anche in una città lontana per il corso giusto?',
+        type: 'yes-no-maybe',
+        required: true,
+        options: [
+          { value: 'si', label: 'Sì, se il corso lo vale' },
+          { value: 'dipende', label: 'Dipende dai costi e dalla distanza' },
+          { value: 'no', label: 'No, resto nella mia area geografica' },
+        ],
+      },
+    ],
   },
 ];
 
+// ============================================================================
 // topic-vita.component.ts
+// ============================================================================
+
 export const VITA_TEMPO_SLICES: TempoSlice[] = [
   { label: 'Lezioni', percent: 30, color: '#3b82f6' },
   { label: 'Studio individuale', percent: 35, color: '#60a5fa' },
@@ -93,7 +219,10 @@ export const VITA_FUORISEDE: VitaFuorisedeItem[] = [
   { voce: 'Totale stimato', importo: '630–990 €/mese' },
 ];
 
+// ============================================================================
 // topic-sbocchi.component.ts
+// ============================================================================
+
 export const SBOCCHI_AREE: SboccoArea[] = [
   { area: 'Ingegneria & Informatica', occupazione1anno: 85, stipendioMedio: '1.450–1.800 €' },
   { area: 'Economia & Management', occupazione1anno: 72, stipendioMedio: '1.200–1.500 €' },
@@ -121,7 +250,10 @@ export const SBOCCHI_CONSIGLI: Consiglio[] = [
   },
 ];
 
+// ============================================================================
 // topic-quiz.component.ts
+// ============================================================================
+
 export const QUIZ_TESTS_ESMPIO: TestIngresso[] = [
   {
     ateneo: 'Vari atenei',
@@ -197,7 +329,10 @@ export const QUIZ_AUTOVALUTAZIONE: AutovalutazioneItem[] = [
   },
 ];
 
+// ============================================================================
 // topic-errori.component.ts
+// ============================================================================
+
 export const ERRORI_ORIENTAMENTO: Errore[] = [
   {
     emoji: '👗',
@@ -249,15 +384,14 @@ export const ERRORI_ORIENTAMENTO: Errore[] = [
   },
 ];
 
+// ============================================================================
 // topic-corso.component.ts
+// ============================================================================
+
 export const CORSO_AREE: AreaCorso[] = [
   { label: 'Umanistica', emoji: '📚', esempi: 'Lettere, Filosofia, Storia, Lingue' },
   { label: 'Scientifica', emoji: '🔬', esempi: 'Biologia, Chimica, Fisica, Matematica' },
-  {
-    label: 'Ingegneria & Informatica',
-    emoji: '💻',
-    esempi: 'Informatica, Elettronica, Meccanica',
-  },
+  { label: 'Ingegneria & Informatica', emoji: '💻', esempi: 'Informatica, Elettronica, Meccanica' },
   { label: 'Economica & Giuridica', emoji: '⚖️', esempi: 'Economia, Giurisprudenza, Management' },
   { label: 'Sanitaria', emoji: '🏥', esempi: 'Medicina, Infermieristica, Farmacia' },
   {
@@ -290,7 +424,10 @@ export const CORSO_CONSIGLI: ConsiglioCorso[] = [
   },
 ];
 
+// ============================================================================
 // topic-come-funziona.component.ts
+// ============================================================================
+
 export const COME_FUNZIONA_DIFFERENZE: Differenza[] = [
   {
     aspetto: 'Frequenza',
@@ -342,16 +479,149 @@ export const COME_FUNZIONA_TIPI_ESAME: TipoEsame[] = [
 ];
 
 export const COME_FUNZIONA_SESSIONI: SessioneInfo[] = [
-  {
-    label: 'Sessione invernale',
-    periodo: 'Gennaio – Febbraio',
-    note: 'Esami del primo semestre',
-  },
+  { label: 'Sessione invernale', periodo: 'Gennaio – Febbraio', note: 'Esami del primo semestre' },
   { label: 'Sessione estiva', periodo: 'Giugno – Luglio', note: 'Esami del secondo semestre' },
   { label: 'Sessione autunnale', periodo: 'Settembre', note: 'Recupero e straordinari' },
 ];
 
+// ============================================================================
+// topic-borse-studio.component.ts  (NUOVO)
+// ============================================================================
+
+export interface BorsaTipo {
+  titolo: string;
+  ente: string;
+  requisiti: string;
+  importoIndicativo: string;
+  nota: string;
+}
+
+export interface BorsaFaq {
+  domanda: string;
+  risposta: string;
+}
+
+export const BORSE_TIPI: BorsaTipo[] = [
+  {
+    titolo: 'Borsa di studio DSU regionale',
+    ente: 'ADISU / DSU regionale',
+    requisiti:
+      'ISEE sotto soglia (varia per regione, solitamente sotto 24–26k €) + requisiti di merito dopo il primo anno',
+    importoIndicativo: '2.000–5.500 €/anno (+ posto letto in residenza)',
+    nota: 'La borsa copre anche la mensa e spesso il vitto. Va richiesta ogni anno entro luglio–agosto, prima ancora di iscriversi.',
+  },
+  {
+    titolo: 'Esonero totale o parziale dalle tasse',
+    ente: 'Ateneo direttamente',
+    requisiti: "ISEE sotto soglia definita dall'ateneo (spesso 20–30k €)",
+    importoIndicativo: 'Risparmio da 500 a 3.000 €/anno',
+    nota: 'Molti atenei azzerano le tasse per ISEE sotto i 13k €. Controlla il regolamento tasse del tuo ateneo specifico.',
+  },
+  {
+    titolo: 'Borsa per merito',
+    ente: 'Ateneo, fondazioni bancarie, privati',
+    requisiti: 'Voto di maturità elevato (solitamente 100/100) o media universitaria alta',
+    importoIndicativo: '500–3.000 €/anno',
+    nota: "Alcune fondazioni (es. Cariplo, CRT, Monte dei Paschi) erogano borse indipendenti dall'ISEE.",
+  },
+  {
+    titolo: 'Posto in residenza universitaria',
+    ente: 'ADISU / DSU regionale',
+    requisiti: 'Stessa soglia ISEE della borsa DSU + residenza fuori comune sede ateneo',
+    importoIndicativo: '80–200 €/mese (vs 400–600 € del mercato libero)',
+    nota: 'I posti sono limitati e molto richiesti. Presentare domanda il prima possibile aumenta le probabilità.',
+  },
+];
+
+export const BORSE_FAQ: BorsaFaq[] = [
+  {
+    domanda: 'Non so il mio ISEE — devo aspettare per iscrivermi?',
+    risposta:
+      "No. Puoi iscriverti e poi presentare l'ISEE entro le scadenze dell'ateneo (solitamente entro dicembre del primo anno). Tuttavia per la borsa DSU la domanda va fatta prima dell'iscrizione — controlla le date del tuo ente regionale.",
+  },
+  {
+    domanda: 'Ho già perso la scadenza per la borsa DSU — cosa posso fare?',
+    risposta:
+      "Alcuni enti regionali aprono una seconda finestra (graduatoria supplementare) tra settembre e ottobre. Controlla il sito dell'ADISU della tua regione. Puoi comunque richiedere l'esonero tasse direttamente all'ateneo.",
+  },
+  {
+    domanda: 'La borsa si rinnova automaticamente ogni anno?',
+    risposta:
+      "No. Va richiesta ogni anno entro le scadenze. Dal secondo anno in poi sono richiesti requisiti di merito: solitamente un numero minimo di CFU acquisiti nell'anno precedente.",
+  },
+];
+
+// ============================================================================
+// topic-costi-geografici.component.ts  (NUOVO)
+// ============================================================================
+
+export interface CostoAreaGeografica {
+  area: string;
+  affittoCamera: string;
+  costoVita: string;
+  esempiCitta: string;
+  noteAggiuntive: string;
+}
+
+export interface ConsiglioGeografico {
+  titolo: string;
+  testo: string;
+}
+
+export const COSTI_AREE_GEOGRAFICHE: CostoAreaGeografica[] = [
+  {
+    area: 'Nord',
+    affittoCamera: '450–700 €/mese',
+    costoVita: 'Alto',
+    esempiCitta: 'Milano, Torino, Bologna, Padova',
+    noteAggiuntive:
+      "Milano è la città più cara d'Italia per gli studenti. Bologna e Padova sono più accessibili ma restano sopra la media.",
+  },
+  {
+    area: 'Centro',
+    affittoCamera: '350–550 €/mese',
+    costoVita: 'Medio',
+    esempiCitta: 'Roma, Firenze, Pisa, Perugia',
+    noteAggiuntive:
+      'Roma ha costi simili al Nord nelle zone universitarie. Perugia e Pisa offrono un buon rapporto qualità-prezzo.',
+  },
+  {
+    area: 'Sud e Isole',
+    affittoCamera: '200–400 €/mese',
+    costoVita: 'Basso',
+    esempiCitta: 'Napoli, Bari, Catania, Palermo, Salerno',
+    noteAggiuntive:
+      "Il costo della vita significativamente più basso può compensare una minor reputazione dell'ateneo in alcuni settori.",
+  },
+];
+
+export const CONSIGLI_GEOGRAFICI: ConsiglioGeografico[] = [
+  {
+    titolo: 'Il ranking non è tutto',
+    testo:
+      'Un ateneo del Sud con ottimi docenti nel tuo settore può darti una formazione migliore di un ateneo del Nord dove sei uno tra migliaia. Studia i singoli dipartimenti, non solo la classifica generale.',
+  },
+  {
+    titolo: 'Calcola il costo totale triennale',
+    testo:
+      'Moltiplica il costo mensile stimato per 36 mesi (o più, realisticamente). La differenza tra studiare a Milano e studiare a Bari può superare i 30.000 € in tre anni — una cifra che vale la pena considerare.',
+  },
+  {
+    titolo: "I servizi contano quanto l'ateneo",
+    testo:
+      'Trasporti pubblici efficienti, mense universitarie, biblioteche attrezzate, servizi DSU attivi: queste cose influenzano concretamente la qualità della tua vita da studente.',
+  },
+  {
+    titolo: 'Nord per il network, Sud per il risparmio',
+    testo:
+      'Studiare in grandi hub del Nord costruisce un network professionale più ampio, soprattutto in ambito aziendale e tech. Studiare al Sud con borsa DSU può invece significare laurearsi praticamente senza debiti.',
+  },
+];
+
+// ============================================================================
 // sbocchi-chart.component.ts
+// ============================================================================
+
 export const SBOCCHI_CHART_DEFAULT_DATA: SboccoDataPoint[] = [
   { area: 'Ingegneria & Informatica', occupazione: 85, colore: '#3b82f6' },
   { area: 'Economia & Management', occupazione: 72, colore: '#60a5fa' },
@@ -361,7 +631,10 @@ export const SBOCCHI_CHART_DEFAULT_DATA: SboccoDataPoint[] = [
   { area: 'Umanistica & Sociale', occupazione: 48, colore: '#dbeafe' },
 ];
 
+// ============================================================================
 // cfu-chart.component.ts
+// ============================================================================
+
 export const CFU_CHART_DEFAULT_DATA: CfuDataPoint[] = [
   { anno: '1° Anno', cfu: 60, oreStudio: 25 },
   { anno: '2° Anno', cfu: 60, oreStudio: 28 },

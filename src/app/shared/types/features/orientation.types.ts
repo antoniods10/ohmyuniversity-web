@@ -1,11 +1,3 @@
-export type TopicId = 'corso' | 'quiz' | 'come-funziona' | 'vita' | 'sbocchi' | 'errori';
-
-export interface TopicMeta {
-  id: TopicId;
-  title: string;
-  subtitle: string;
-}
-
 export interface TempoSlice {
   label: string;
   percent: number;
