@@ -1,97 +1,63 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { TopicId } from '../domain/models/topic.model';
-import { QuizAnswer } from '../domain/models/quiz-answer.model';
-import { AreaId, AreaScore, OrientationResult } from '../domain/models/orientation-result.model';
-
-// ---------------------------------------------------------------------------
-// Tabella pesi: ogni risposta (questionId + value) incrementa il punteggio
-// di una o più aree. I pesi sono additivi e verranno normalizzati su 100.
-// ---------------------------------------------------------------------------
+import { TopicId } from 'src/app/features/orientation/domain/models/topic.model';
+import { QuizAnswer } from 'src/app/features/orientation/domain/models/quiz-answer.model';
+import {
+  AreaId,
+  AreaScore,
+  OrientationResult,
+} from 'src/app/features/orientation/domain/models/orientation-result.model';
 
 type WeightMap = Partial<Record<AreaId, number>>;
-type AnswerWeights = Record<string, WeightMap>; // key: `${questionId}:${value}`
+type AnswerWeights = Record<string, WeightMap>;
 
 const ANSWER_WEIGHTS: AnswerWeights = {
-  // --- corso-area: l'utente sceglie l'area che lo attira ---
-  'corso-area:umanistica':   { umanistica: 5 },
-  'corso-area:scientifica':  { scientifica: 5 },
-  'corso-area:ingegneria':   { ingegneria: 5 },
-  'corso-area:economica':    { economica: 5 },
-  'corso-area:sanitaria':    { sanitaria: 5 },
-  'corso-area:artistica':    { artistica: 5 },
+  'corso-area:umanistica': { umanistica: 5 },
+  'corso-area:scientifica': { scientifica: 5 },
+  'corso-area:ingegneria': { ingegneria: 5 },
+  'corso-area:economica': { economica: 5 },
+  'corso-area:sanitaria': { sanitaria: 5 },
+  'corso-area:artistica': { artistica: 5 },
 
-  // --- quiz-corso-in-mente: ha già un corso in mente ---
-  // neutro sulle aree, influenza solo la completezza
-  'quiz-corso-in-mente:si':  {},
-  'quiz-corso-in-mente:no':  {},
+  'quiz-corso-in-mente:si': {},
+  'quiz-corso-in-mente:no': {},
 
-  // --- come-funziona-esami: preferenza tipo esame ---
-  // orale → umanistica/giuridica; scritto → ingegneria/economica
-  'come-funziona-esami:orale':   { umanistica: 2, economica: 1 },
+  'come-funziona-esami:orale': { umanistica: 2, economica: 1 },
   'come-funziona-esami:scritto': { ingegneria: 2, economica: 2, scientifica: 1 },
-  'come-funziona-esami:misto':   {},
+  'come-funziona-esami:misto': {},
 
-  // --- vita-fuorisede: disposto ad andare fuori sede ---
-  // fuori sede apre atenei più specializzati (ingegneria, medicina)
-  'vita-fuorisede:si':      { ingegneria: 1, sanitaria: 1, scientifica: 1 },
-  'vita-fuorisede:no':      {},
-  'vita-fuorisede:forse':   {},
+  'vita-fuorisede:si': { ingegneria: 1, sanitaria: 1, scientifica: 1 },
+  'vita-fuorisede:no': {},
+  'vita-fuorisede:forse': {},
 
-  // --- sbocchi-stipendio: importanza dello stipendio atteso (scala 1-5) ---
-  // peso alto → aree con stipendi più elevati
-  'sbocchi-stipendio:1':    { umanistica: 1, artistica: 1 },
-  'sbocchi-stipendio:2':    { umanistica: 1, artistica: 1 },
-  'sbocchi-stipendio:3':    { economica: 1, scientifica: 1 },
-  'sbocchi-stipendio:4':    { ingegneria: 2, economica: 2, sanitaria: 1 },
-  'sbocchi-stipendio:5':    { ingegneria: 3, sanitaria: 2, economica: 2 },
+  'sbocchi-stipendio:1': { umanistica: 1, artistica: 1 },
+  'sbocchi-stipendio:2': { umanistica: 1, artistica: 1 },
+  'sbocchi-stipendio:3': { economica: 1, scientifica: 1 },
+  'sbocchi-stipendio:4': { ingegneria: 2, economica: 2, sanitaria: 1 },
+  'sbocchi-stipendio:5': { ingegneria: 3, sanitaria: 2, economica: 2 },
 
-  // --- errori-confronto: ha già parlato con studenti universitari ---
-  // neutro sulle aree
-  'errori-confronto:si':    {},
-  'errori-confronto:no':    {},
+  'errori-confronto:si': {},
+  'errori-confronto:no': {},
 
-  // --- borse-isee: fascia ISEE familiare ---
-  // non influenza l'area consigliata, serve solo per il campo fasciaIsee nel risultato
-  'borse-isee:sotto-15k':   {},
-  'borse-isee:15-30k':      {},
-  'borse-isee:sopra-30k':   {},
-  'borse-isee:non-so':      {},
+  'borse-isee:sotto-15k': {},
+  'borse-isee:15-30k': {},
+  'borse-isee:sopra-30k': {},
+  'borse-isee:non-so': {},
 
-  // --- costi-trasferimento: disposto a trasferirsi per studiare ---
-  // simile a vita-fuorisede, rinforza aree con atenei specializzati
-  'costi-trasferimento:si':       { ingegneria: 1, sanitaria: 1, scientifica: 1 },
-  'costi-trasferimento:no':       {},
-  'costi-trasferimento:dipende':  {},
+  'costi-trasferimento:si': { ingegneria: 1, sanitaria: 1, scientifica: 1 },
+  'costi-trasferimento:no': {},
+  'costi-trasferimento:dipende': {},
 };
-
-// ---------------------------------------------------------------------------
-// Metadati delle aree — usati per costruire AreaScore nel risultato
-// ---------------------------------------------------------------------------
 
 const AREA_META: Record<AreaId, { label: string; emoji: string }> = {
-  umanistica:  { label: 'Umanistica',              emoji: '📚' },
-  scientifica: { label: 'Scientifica',             emoji: '🔬' },
-  ingegneria:  { label: 'Ingegneria & Informatica', emoji: '💻' },
-  economica:   { label: 'Economica & Giuridica',   emoji: '⚖️' },
-  sanitaria:   { label: 'Sanitaria',               emoji: '🏥' },
-  artistica:   { label: 'Artistica & del Design',  emoji: '🎨' },
+  umanistica: { label: 'Umanistica', emoji: '📚' },
+  scientifica: { label: 'Scientifica', emoji: '🔬' },
+  ingegneria: { label: 'Ingegneria & Informatica', emoji: '💻' },
+  economica: { label: 'Economica & Giuridica', emoji: '⚖️' },
+  sanitaria: { label: 'Sanitaria', emoji: '🏥' },
+  artistica: { label: 'Artistica & del Design', emoji: '🎨' },
 };
 
-// ---------------------------------------------------------------------------
-// Topic obbligatori per la validazione (devono avere almeno una risposta)
-// ---------------------------------------------------------------------------
-
-const REQUIRED_TOPICS: TopicId[] = [
-  'corso',
-  'vita',
-  'sbocchi',
-  'borse-studio',
-  'costi-geografici',
-];
-
-// ---------------------------------------------------------------------------
-// Service
-// ---------------------------------------------------------------------------
+const REQUIRED_TOPICS: TopicId[] = ['corso', 'vita', 'sbocchi', 'borse-studio', 'costi-geografici'];
 
 @Injectable({ providedIn: 'root' })
 export class OrientationStateService {
@@ -100,15 +66,12 @@ export class OrientationStateService {
   readonly completedTopics = signal<Set<TopicId>>(new Set());
   readonly userMode = signal<'flow' | 'standalone'>('flow');
 
-  // --- Derived ---
   readonly missingTopics = computed<TopicId[]>(() => {
     const answered = new Set(this.answers().map(a => a.topicId));
     return REQUIRED_TOPICS.filter(id => !answered.has(id));
   });
 
   readonly isReadyToSubmit = computed<boolean>(() => this.missingTopics().length === 0);
-
-  // --- Mutations ---
 
   setAnswer(answer: QuizAnswer): void {
     this.answers.update(current => {
@@ -135,8 +98,6 @@ export class OrientationStateService {
     this.userMode.set('flow');
   }
 
-  // --- Scoring ---
-
   computeResult(): OrientationResult | null {
     if (!this.isReadyToSubmit()) return null;
 
@@ -149,7 +110,6 @@ export class OrientationStateService {
       artistica: 0,
     };
 
-    // Accumula i pesi per ogni risposta data
     for (const answer of this.answers()) {
       const key = `${answer.questionId}:${answer.value}`;
       const weights = ANSWER_WEIGHTS[key];
@@ -159,7 +119,6 @@ export class OrientationStateService {
       }
     }
 
-    // Normalizza su 100
     const total = Object.values(scores).reduce((sum, s) => sum + s, 0);
     const normalized: Record<AreaId, number> = { ...scores };
     if (total > 0) {
@@ -168,7 +127,6 @@ export class OrientationStateService {
       }
     }
 
-    // Costruisce AreaScore[] ordinato per score desc
     const topAreas: AreaScore[] = (Object.keys(normalized) as AreaId[])
       .map(areaId => ({
         areaId,

@@ -2,41 +2,43 @@
   <h2 appText variant="h2">Scegli il corso adatto a te</h2>
   <div class="mt-3">
     <p appText variant="body-sm" color="muted">
-      Scegliere il corso universitario è una delle decisioni più importanti della vita. Non esiste
-      una risposta giusta valida per tutti - ma ci sono domande giuste da porsi.
+      Scegliere il corso universitario giusto è la decisione più importante di questo momento.
+      Non si tratta solo di trovare "quello che sbocca meglio" — si tratta di capire dove puoi
+      dare il meglio di te per i prossimi tre anni e oltre.
     </p>
   </div>
 
-  <!-- Study Areas -->
+  <!-- Aree di studio -->
   <div class="mt-8">
-    <h3 appText variant="h4">Le macro-aree di studio</h3>
+    <h3 appText variant="h4">Le grandi aree di studio</h3>
     <div class="mt-1">
       <p appText variant="body-sm" color="muted">
-        I corsi universitari italiani si raggruppano in grandi aree tematiche.
+        Il sistema universitario italiano si divide in sei macro-aree. Ognuna raccoglie corsi
+        molto diversi tra loro, ma con un filo conduttore comune.
       </p>
     </div>
     <div class="mt-4 grid gap-3 sm:grid-cols-2">
       @for (area of aree; track area.label) {
-        <div class="flex items-start gap-3 rounded-xl border border-gray-100 bg-gray-50 p-4">
-          <span class="text-2xl">{{ area.emoji }}</span>
-          <div>
-            <p appText variant="body-sm" weight="semibold">{{ area.label }}</p>
-            <div class="mt-0.5">
-              <span appText variant="caption" color="subtle">{{ area.esempi }}</span>
-            </div>
+        <div class="rounded-xl border border-gray-100 bg-gray-50 p-4">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">{{ area.emoji }}</span>
+            <span appText variant="body-sm" weight="semibold">{{ area.label }}</span>
+          </div>
+          <div class="mt-1">
+            <span appText variant="caption" color="subtle">{{ area.esempi }}</span>
           </div>
         </div>
       }
     </div>
   </div>
 
-  <!-- Advice -->
+  <!-- Consigli -->
   <div class="mt-8">
-    <h3 appText variant="h4">Come fare la scelta giusta</h3>
+    <h3 appText variant="h4">Come orientarsi nella scelta</h3>
     <div class="mt-4 space-y-3">
       @for (consiglio of consigli; track consiglio.titolo) {
         <app-card-status
-          statusVariant="info"
+          statusVariant="success"
           [icon]="iconCheck"
           [title]="consiglio.titolo"
           [description]="consiglio.testo"
@@ -46,15 +48,11 @@
     </div>
   </div>
 
-  <!-- Callout -->
-  <div class="mt-8">
-    <app-card-status
-      statusVariant="info"
-      [icon]="iconInfo"
-      title="La media scolastica conta?"
-      description="Per molti corsi a numero chiuso (Medicina, Architettura) il voto di maturità e i test di ammissione sono determinanti. Per i corsi a numero aperto, invece, chiunque può iscriversi. Verifica sempre il bando del corso che ti interessa."
-      shadow="sm" />
-  </div>
+  <!-- Domanda inline -->
+  <app-inline-question
+    [question]="question"
+    [selectedValue]="selectedValue()"
+    (answered)="onAnswered($event)" />
 </div>
 
 <app-orientation-nav
