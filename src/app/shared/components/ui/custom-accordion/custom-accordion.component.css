@@ -1,0 +1,219 @@
+/**
+ * @file custom-accordion.component.css
+ * @description Styling for CustomAccordionComponent including color variants,
+ * sizing system, animated chevron and panel expansion, focus states,
+ * and color-coordinated open-state shadows.
+ */
+
+/* Host */
+:host {
+  display: contents;
+}
+
+/* Container */
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.accordion-item {
+  overflow: hidden;
+  background: var(--accordion-bg, white);
+  border: 1.5px solid var(--color-neutral-200);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  transition:
+    border-color 220ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Radius Variants */
+.accordion--radius-sm .accordion-item {
+  border-radius: 8px;
+}
+.accordion--radius-md .accordion-item {
+  border-radius: 14px;
+}
+.accordion--radius-lg .accordion-item {
+  border-radius: 20px;
+}
+
+/* Open State — Color Variants */
+.accordion-item--primary.accordion-item--open {
+  border-color: var(--color-primary-dark);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--color-primary-dark) 18%, transparent);
+}
+.accordion-item--secondary.accordion-item--open {
+  border-color: var(--color-secondary-dark);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--color-secondary-dark) 18%, transparent);
+}
+.accordion-item--tertiary.accordion-item--open {
+  border-color: var(--color-tertiary-dark);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--color-tertiary-dark) 18%, transparent);
+}
+.accordion-item--success.accordion-item--open {
+  border-color: var(--color-success-dark);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--color-success-dark) 18%, transparent);
+}
+.accordion-item--info.accordion-item--open {
+  border-color: var(--color-info-dark);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--color-info-dark) 18%, transparent);
+}
+.accordion-item--neutral.accordion-item--open {
+  border-color: var(--color-neutral-400);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+
+/* Header */
+.accordion-item__header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  text-align: left;
+  font-family: inherit;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Header — Size Variants */
+.accordion--sm .accordion-item__header {
+  padding: 0.85rem 1.1rem;
+  font-size: 0.85rem;
+}
+.accordion--md .accordion-item__header {
+  padding: 1.1rem 1.35rem;
+  font-size: 0.95rem;
+}
+.accordion--lg .accordion-item__header {
+  padding: 1.35rem 1.6rem;
+  font-size: 1.05rem;
+}
+
+.accordion-item__header:hover {
+  background: var(--color-neutral-50);
+}
+
+.accordion-item__header:focus-visible {
+  outline: 3px solid var(--color-primary-light);
+  outline-offset: -3px;
+}
+
+/* Header — Open State — Color Variants */
+.accordion-item--primary.accordion-item--open .accordion-item__header {
+  color: var(--color-primary-dark);
+}
+.accordion-item--secondary.accordion-item--open .accordion-item__header {
+  color: var(--color-secondary-dark);
+}
+.accordion-item--tertiary.accordion-item--open .accordion-item__header {
+  color: var(--color-tertiary-dark);
+}
+.accordion-item--success.accordion-item--open .accordion-item__header {
+  color: var(--color-success-dark);
+}
+.accordion-item--info.accordion-item--open .accordion-item__header {
+  color: var(--color-info-dark);
+}
+
+/* Title */
+.accordion-item__title {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.4;
+}
+
+/* Chevron */
+.accordion-item__chevron-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-400);
+  transition:
+    transform 220ms cubic-bezier(0.4, 0, 0.2, 1),
+    background 220ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion-item__chevron-wrap--open {
+  transform: rotate(180deg);
+}
+
+/* Chevron — Open State — Color Variants */
+.accordion-item--primary .accordion-item__chevron-wrap--open {
+  background: var(--color-primary-dark);
+  color: white;
+}
+.accordion-item--secondary .accordion-item__chevron-wrap--open {
+  background: var(--color-secondary-dark);
+  color: white;
+}
+.accordion-item--tertiary .accordion-item__chevron-wrap--open {
+  background: var(--color-tertiary-dark);
+  color: white;
+}
+.accordion-item--success .accordion-item__chevron-wrap--open {
+  background: var(--color-success-dark);
+  color: white;
+}
+.accordion-item--info .accordion-item__chevron-wrap--open {
+  background: var(--color-info-dark);
+  color: white;
+}
+
+.accordion-item__chevron {
+  display: block;
+}
+
+/* Panel — Expand/Collapse Animation */
+.accordion-item__body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.accordion-item__body--open {
+  max-height: 600px;
+}
+
+/* Content */
+.accordion-item__content {
+  padding: 0 1.35rem 1.1rem;
+  border-top: 1px solid var(--color-neutral-100);
+  padding-top: 0.9rem;
+}
+
+.accordion--sm .accordion-item__content {
+  padding: 0 1.1rem 0.85rem;
+  padding-top: 0.7rem;
+}
+.accordion--lg .accordion-item__content {
+  padding: 0 1.6rem 1.35rem;
+  padding-top: 1.1rem;
+}
+
+.accordion-item__text {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--color-neutral-500);
+}
+
+/* Responsive - Media Queries */
+@media (max-width: 480px) {
+  .accordion-item__header {
+    padding: 0.95rem 1.1rem;
+    font-size: 0.9rem;
+  }
+}
