@@ -11,3 +11,4 @@ export * from './contact.constants';
 export * from './business.constants';
 export * from './user.constants';
 export * from './university.constants';
+export * from './footer.constants';
