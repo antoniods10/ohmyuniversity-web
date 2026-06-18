@@ -10,30 +10,41 @@
  */
 
 import { Component, input, output } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import {
   LucideDynamicIcon,
   LucideChevronDown,
   LucideCheck,
   LucideCalendarClock,
   LucideLock,
+  LucidePencil,
 } from '@lucide/angular';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomTabsComponent } from '@ui/custom-tab/custom-tab.component';
+import { CustomInputComponent, SelectOption } from '@ui/custom-input/custom-input.component';
+
 import { TEACHING_PERIOD_LABELS, ATTENDANCE_LABELS } from '@constants';
 import { Exam, ExamFilter, ExamGroup, FilterOption, TeachingPeriod, AttendanceType } from '@types';
+import { GradeSimulatorPopupComponent } from '../grade-simulator-popup/grade-simulator-popup.component';
+
+interface PopupState {
+  courseCode: string;
+  rect: DOMRect;
+}
 
 @Component({
   selector: 'app-career-exams',
   standalone: true,
   imports: [
-    RouterLink,
+    FormsModule,
     CustomCardComponent,
     CustomBadgeComponent,
     CustomButtonComponent,
     CustomTabsComponent,
+    CustomInputComponent,
+    GradeSimulatorPopupComponent,
     LucideDynamicIcon,
   ],
   templateUrl: './career-exams.component.html',
@@ -43,14 +54,29 @@ export class CareerExamsComponent {
   readonly iconCheck = LucideCheck;
   readonly iconBooking = LucideCalendarClock;
   readonly iconLock = LucideLock;
+  readonly iconPencil = LucidePencil;
 
   readonly mandatoryGroups = input.required<ExamGroup[]>();
   readonly electiveExams = input.required<Exam[]>();
   readonly filterOptions = input.required<FilterOption[]>();
   readonly activeFilter = input.required<ExamFilter>();
+  readonly yearFilterOptions = input.required<SelectOption[]>();
+  readonly selectedYear = input.required<string>();
+
   readonly filterChange = output<ExamFilter>();
+  readonly yearChange = output<string>();
+  readonly simulatedGradeChange = output<{ courseCode: string; grade: number | null }>();
 
   readonly openExamCodes = new Set<string>();
+  activePopup: PopupState | null = null;
+
+  get selectedYearModel(): string {
+    return this.selectedYear();
+  }
+
+  set selectedYearModel(value: string) {
+    this.yearChange.emit(value);
+  }
 
   onFilterChange(id: string): void {
     this.filterChange.emit(id as ExamFilter);
@@ -66,6 +92,24 @@ export class CareerExamsComponent {
 
   isOpen(courseCode: string): boolean {
     return this.openExamCodes.has(courseCode);
+  }
+
+  openSimulator(event: MouseEvent, courseCode: string): void {
+    event.stopPropagation();
+    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    this.activePopup = { courseCode, rect };
+  }
+
+  closeSimulator(): void {
+    this.activePopup = null;
+  }
+
+  getSimulatedGrade(exam: Exam): number | undefined {
+    return exam.simulatedGrade;
+  }
+
+  onSimulatedGradeChange(courseCode: string, grade: number | null): void {
+    this.simulatedGradeChange.emit({ courseCode, grade });
   }
 
   periodLabel(period: TeachingPeriod): string {

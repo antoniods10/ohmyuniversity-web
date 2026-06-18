@@ -7,7 +7,12 @@
  */
 
 import { Component, input } from '@angular/core';
-import { LucideCalculator, LucideScale, LucideGraduationCap, LucideAward } from '@lucide/angular';
+import {
+  LucideCalculator,
+  LucideScale,
+  LucideGraduationCap,
+  LucideSparkles,
+} from '@lucide/angular';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CardStatComponent, CardStatusComponent } from '@ui/custom-card/card-variants.component';
@@ -22,7 +27,7 @@ export class CareerStatsComponent {
   readonly iconCalculator = LucideCalculator;
   readonly iconScale = LucideScale;
   readonly iconGraduation = LucideGraduationCap;
-  readonly iconAward = LucideAward;
+  readonly iconSparkles = LucideSparkles;
 
   readonly arithmeticAverage = input.required<number>();
   readonly weightedAverage = input.required<number>();
@@ -30,4 +35,6 @@ export class CareerStatsComponent {
   readonly earnedCfu = input.required<number>();
   readonly totalCfu = input.required<number>();
   readonly cfuProgress = input.required<number>();
+  readonly laudeCount = input.required<number>();
+  readonly isSimulation = input.required<boolean>();
 }

@@ -53,19 +53,15 @@ export interface Exam {
   cfu: number;
   status: ExamStatus;
   grade: string;
+  simulatedGrade?: number;
   category: ExamCategory;
-
-  /** Free-text teaching language (not a closed enum — many languages are possible). */
   language: string;
-
   period: TeachingPeriod;
   durationHours: number;
   attendance: AttendanceType;
   scientificSector: string;
   location: string;
   cfuBreakdown: CfuBreakdownItem[];
-
-  /** Course names this exam requires as prerequisites (empty if none). */
   prerequisites: string[];
 }
 
@@ -107,3 +103,5 @@ export type SessionFilterOption = OptionBase<SessionFilter>;
 
 /** Descriptor for exam-type filter tabs. */
 export type TypeFilterOption = OptionBase<TypeFilter>;
+
+export type GradeValue = number | 'L';

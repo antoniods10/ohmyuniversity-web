@@ -11,7 +11,9 @@
       [graduationBase]="graduationBase()"
       [earnedCfu]="earnedCfu()"
       [totalCfu]="totalCfu"
-      [cfuProgress]="cfuProgress()" />
+      [cfuProgress]="cfuProgress()"
+      [laudeCount]="laudeCount()"
+      [isSimulation]="hasSimulation()" />
   </div>
 
   <div class="mt-6">
@@ -24,6 +26,10 @@
       [electiveExams]="electiveExams()"
       [filterOptions]="filterOptions"
       [activeFilter]="activeFilter()"
-      (filterChange)="applyFilter($event)" />
+      [yearFilterOptions]="yearFilterOptions()"
+      [selectedYear]="yearFilter() === 'ALL' ? 'ALL' : yearFilter().toString()"
+      (filterChange)="applyFilter($event)"
+      (yearChange)="applyYearFilter($event)"
+      (simulatedGradeChange)="setSimulatedGrade($event.courseCode, $event.grade)" />
   </div>
 </app-dashboard-container>

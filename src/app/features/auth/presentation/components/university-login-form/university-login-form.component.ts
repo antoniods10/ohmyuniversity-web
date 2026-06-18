@@ -1,7 +1,7 @@
 import { Component, signal, inject, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LucideDynamicIcon, LucideShieldCheck, LucideIdCard } from '@lucide/angular';
+import { LucideShieldCheck, LucideIdCard } from '@lucide/angular';
 import { CustomTabsComponent } from '@ui/custom-tab/custom-tab.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomInputComponent } from '@ui/custom-input/custom-input.component';
@@ -25,7 +25,6 @@ type UniversityTab = 'ateneo' | 'spid' | 'cie';
     CustomLinkComponent,
     CustomModalComponent,
     UniversitySearchSelectComponent,
-    LucideDynamicIcon,
   ],
   templateUrl: './university-login-form.component.html',
 })
