@@ -131,42 +131,101 @@ export const ORIENTATION_TOPICS: TopicModel[] = [
   },
   {
     id: 'vita',
-    title: 'Vita universitaria concreta',
-    subtitle: 'Orari, studio, fuori sede e costi reali',
+    title: 'Orari e impegno',
+    subtitle: 'Come si struttura la settimana, studio individuale e lavoro',
     questions: [
       {
-        id: 'vita-fuorisede',
+        id: 'vita-study-hours',
         topicId: 'vita',
-        text: 'Saresti disposto ad andare a studiare fuori dalla tua città?',
-        type: 'yes-no-maybe',
+        text: 'Quante ore al giorno pensi di poter dedicare allo studio individuale, oltre alle lezioni?',
+        type: 'single-select',
         required: true,
         options: [
-          { value: 'si', label: 'Sì, sono aperto a trasferirmi' },
-          { value: 'forse', label: 'Forse, dipende dal corso e dai costi' },
-          { value: 'no', label: 'No, preferisco restare vicino a casa' },
+          { value: 'less-2', label: 'Meno di 2 ore' },
+          { value: '2-4', label: '2–4 ore' },
+          { value: 'more-4', label: 'Più di 4 ore' },
+          { value: 'unsure', label: 'Non ci ho ancora pensato' },
+        ],
+      },
+      {
+        id: 'vita-work',
+        topicId: 'vita',
+        text: 'Pensi di lavorare mentre studi?',
+        type: 'single-select',
+        required: false,
+        options: [
+          { value: 'yes', label: 'Sì, ho già un lavoro part-time' },
+          { value: 'maybe', label: 'Forse, dipende dalle esigenze' },
+          { value: 'no', label: 'No, voglio concentrarmi solo sullo studio' },
         ],
       },
     ],
   },
   {
     id: 'sbocchi',
-    title: 'Sbocchi lavorativi reali',
+    title: 'Sbocchi lavorativi',
     subtitle: 'Occupazione e stipendi per area di studio',
     questions: [
       {
-        id: 'sbocchi-stipendio',
+        id: 'sbocchi-career-priority',
         topicId: 'sbocchi',
-        text: 'Quanto è importante per te lo stipendio atteso dopo la laurea?',
-        type: 'scale',
+        text: 'Cosa conta di più per te nel lavoro che vorresti fare?',
+        type: 'single-select',
         required: true,
-        scaleMin: 1,
-        scaleMax: 5,
         options: [
-          { value: '1', label: 'Per niente - conta solo la passione' },
-          { value: '2', label: 'Poco importante' },
-          { value: '3', label: 'Abbastanza importante' },
-          { value: '4', label: 'Molto importante' },
-          { value: '5', label: 'Fondamentale - è il criterio principale' },
+          { value: 'stability', label: 'La stabilità e la sicurezza economica' },
+          { value: 'growth', label: 'La possibilità di crescere e fare carriera' },
+          { value: 'passion', label: 'Fare qualcosa che mi appassiona davvero' },
+          { value: 'impact', label: "L'impatto sociale o ambientale del mio lavoro" },
+        ],
+      },
+      {
+        id: 'sbocchi-work-context',
+        topicId: 'sbocchi',
+        text: 'In che tipo di ambiente ti immagini a lavorare?',
+        type: 'single-select',
+        required: false,
+        options: [
+          { value: 'big-company', label: 'Grande azienda o multinazionale' },
+          { value: 'startup', label: 'Piccola impresa o startup' },
+          { value: 'public', label: 'Settore pubblico o enti statali' },
+          { value: 'freelance', label: 'Libera professione o lavoro autonomo' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'borse-studio',
+    title: 'Budget e costi reali',
+    subtitle: 'Costi universitari, vita da studente e gestione del budget',
+    questions: [
+      {
+        id: 'budget-availability',
+        topicId: 'borse-studio',
+        text: 'Come descriveresti la tua disponibilità economica per gli anni universitari?',
+        type: 'single-select',
+        required: true,
+        options: [
+          { value: 'good', label: 'Ho una buona disponibilità, posso coprire le spese' },
+          {
+            value: 'limited',
+            label: 'Ho una disponibilità limitata, dovrò gestirmi con attenzione',
+          },
+          { value: 'support', label: 'Avrò bisogno di supporto esterno (borse, lavoro, famiglia)' },
+          { value: 'unsure', label: 'Non ho ancora fatto i conti' },
+        ],
+      },
+      {
+        id: 'budget-monthly',
+        topicId: 'borse-studio',
+        text: "Hai già un'idea di quanto budget mensile potresti avere a disposizione da studente?",
+        type: 'single-select',
+        required: false,
+        options: [
+          { value: 'less-400', label: 'Meno di 400 €/mese' },
+          { value: '400-700', label: 'Tra 400 e 700 €/mese' },
+          { value: '700-1000', label: 'Tra 700 e 1.000 €/mese' },
+          { value: 'more-1000', label: 'Più di 1.000 €/mese' },
         ],
       },
     ],
@@ -182,26 +241,6 @@ export const ORIENTATION_TOPICS: TopicModel[] = [
         text: 'Hai già parlato con studenti universitari del corso che ti interessa?',
         type: 'yes-no',
         required: false,
-      },
-    ],
-  },
-  {
-    id: 'borse-studio',
-    title: 'Borse di studio e supporto economico',
-    subtitle: 'DSU, ISEE, esoneri e residenze universitarie',
-    questions: [
-      {
-        id: 'borse-isee',
-        topicId: 'borse-studio',
-        text: "Hai un'idea della fascia ISEE del tuo nucleo familiare?",
-        type: 'single-select',
-        required: true,
-        options: [
-          { value: 'sotto-15k', label: 'Sotto i 15.000 € - fascia bassa' },
-          { value: '15-30k', label: 'Tra 15.000 e 30.000 €' },
-          { value: 'sopra-30k', label: 'Sopra i 30.000 €' },
-          { value: 'non-so', label: 'Non lo so ancora' },
-        ],
       },
     ],
   },
@@ -757,12 +796,43 @@ export const SBOCCHI_CHART_DEFAULT_DATA: SboccoDataPoint[] = [
   { area: 'Umanistica & Sociale', occupazione: 48, colore: '#dbeafe' },
 ];
 
-// ============================================================================
-// cfu-chart.component.ts
-// ============================================================================
-
 export const CFU_CHART_DEFAULT_DATA: CfuDataPoint[] = [
   { anno: '1° Anno', cfu: 60, oreStudio: 25 },
   { anno: '2° Anno', cfu: 60, oreStudio: 28 },
   { anno: '3° Anno', cfu: 60, oreStudio: 22 },
+];
+
+export const VITA_SCHEDULE_TIPS = [
+  {
+    titolo: 'I "buchi" tra le lezioni non sono tempo libero',
+    testo:
+      'Potresti avere 2 ore di lezione alle 9 e niente fino alle 15. Questi intervalli vanno riempiti con lo studio; chi li usa bene arriva a sessione con settimane di vantaggio.',
+  },
+  {
+    titolo: 'Costruisci una routine settimanale fissa',
+    testo:
+      'Studia sempre negli stessi orari, anche quando non ne hai voglia. La routine elimina la fatica decisionale, non devi decidere se studiare, lo fai e basta.',
+  },
+  {
+    titolo: 'Il weekend non è una pausa, è un recupero',
+    testo:
+      'Usare il sabato mattina per consolidare la settimana appena passata riduce drasticamente il panico pre-esame. Anche solo 3 ore cambiano tutto.',
+  },
+];
+export const BUDGET_TIPS = [
+  {
+    titolo: 'Tieni traccia delle spese dal primo mese',
+    testo:
+      "Usa un foglio o un'app per annotare ogni uscita. Chi sa dove vanno i soldi può tagliare il superfluo — chi non lo sa finisce i soldi senza capire perché.",
+  },
+  {
+    titolo: 'Separa le spese fisse da quelle variabili',
+    testo:
+      'Affitto, utenze e abbonamenti sono fissi — devi averli coperti prima di tutto. Le spese variabili (cibo fuori, svago) sono quelle su cui puoi agire.',
+  },
+  {
+    titolo: 'Chiedi sempre lo sconto studenti',
+    testo:
+      'Trasporti, musei, software, cinema, palestre — moltissimi servizi hanno tariffe agevolate per gli universitari. Basta avere il badge o il certificato di iscrizione.',
+  },
 ];
