@@ -4,10 +4,10 @@ import { OptionBase } from '@shared/types';
 export type ExamStatus = 'PASSED' | 'TO_TAKE';
 
 /** Distinguishes between mandatory curriculum exams and freely chosen electives. */
-export type CourseType = 'MANDATORY' | 'ELECTIVE';
+export type ExamCategory = 'MANDATORY' | 'ELECTIVE';
 
 /** Filter values available in the exam list view. */
-export type ExamFilter = 'ALL' | 'PASSED' | 'TO_TAKE' | 'ELECTIVE';
+export type ExamFilter = 'ALL' | 'PASSED' | 'TO_TAKE';
 
 /** Direction of a statistical trend over time. */
 export type TrendDirection = 'up' | 'down' | 'flat';
@@ -27,15 +27,46 @@ export type SessionFilter = 'ALL' | AcademicSession;
 /** Filter applied to the exam modality column. */
 export type TypeFilter = 'ALL' | SessionType;
 
+/**
+ * Teaching period, stored in English internally for scalability/i18n.
+ * Mapped to Italian labels in the UI via TEACHING_PERIOD_LABELS.
+ */
+export type TeachingPeriod = 'FIRST_SEMESTER' | 'SECOND_SEMESTER' | 'ANNUAL';
+
+/**
+ * Attendance requirement, stored in English internally.
+ * Mapped to Italian labels in the UI via ATTENDANCE_LABELS.
+ */
+export type AttendanceType = 'MANDATORY' | 'NOT_MANDATORY';
+
+/** A single CFU-by-CFU program breakdown entry. */
+export interface CfuBreakdownItem {
+  cfuNumber: number;
+  description: string;
+}
+
 /** A single exam entry in the student's academic record. */
 export interface Exam {
   courseCode: string;
   courseName: string;
-  cfu: number;
-  grade: string;
-  status: ExamStatus;
-  type: CourseType;
   academicYear: number;
+  cfu: number;
+  status: ExamStatus;
+  grade: string;
+  category: ExamCategory;
+
+  /** Free-text teaching language (not a closed enum — many languages are possible). */
+  language: string;
+
+  period: TeachingPeriod;
+  durationHours: number;
+  attendance: AttendanceType;
+  scientificSector: string;
+  location: string;
+  cfuBreakdown: CfuBreakdownItem[];
+
+  /** Course names this exam requires as prerequisites (empty if none). */
+  prerequisites: string[];
 }
 
 /** Descriptor for a selectable exam list filter option. */

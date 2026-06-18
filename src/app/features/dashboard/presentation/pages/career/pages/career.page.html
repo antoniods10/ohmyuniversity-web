@@ -4,19 +4,26 @@
     title="Didattica"
     description="Gestisci la tua carriera accademica e i tuoi esami." />
 
-  <app-career-stats
-    [arithmeticAverage]="arithmeticAverage()"
-    [weightedAverage]="weightedAverage()"
-    [graduationBase]="graduationBase()"
-    [earnedCfu]="earnedCfu()"
-    [totalCfu]="totalCfu"
-    [cfuProgress]="cfuProgress()" />
+  <div class="mt-6">
+    <app-career-stats
+      [arithmeticAverage]="arithmeticAverage()"
+      [weightedAverage]="weightedAverage()"
+      [graduationBase]="graduationBase()"
+      [earnedCfu]="earnedCfu()"
+      [totalCfu]="totalCfu"
+      [cfuProgress]="cfuProgress()" />
+  </div>
 
-  <app-career-charts [gradeHistory]="gradeHistory()" [averageHistory]="averageHistory()" />
+  <div class="mt-6">
+    <app-career-charts [gradeHistory]="gradeHistory()" [averageHistory]="averageHistory()" />
+  </div>
 
-  <app-career-exams
-    [examGroups]="examGroups()"
-    [filterOptions]="filterOptions"
-    [activeFilter]="activeFilter()"
-    (filterChange)="applyFilter($event)" />
+  <div class="mt-6">
+    <app-career-exams
+      [mandatoryGroups]="mandatoryGroups()"
+      [electiveExams]="electiveExams()"
+      [filterOptions]="filterOptions"
+      [activeFilter]="activeFilter()"
+      (filterChange)="applyFilter($event)" />
+  </div>
 </app-dashboard-container>

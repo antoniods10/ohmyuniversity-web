@@ -1,7 +1,8 @@
-<app-custom-card padding="none" shadow="sm" radius="md">
-  <header class="border-b border-gray-100 p-4">
-    <div class="flex items-center justify-between gap-4">
-      <h2 appText class="text-lg font-semibold text-gray-900">Registro Esami</h2>
+<div class="space-y-6">
+  <!-- Study Plan -->
+  <app-custom-card padding="lg" shadow="sm" radius="md">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <h2 appText class="text-lg font-semibold text-gray-900">Piano di Studi</h2>
       <app-custom-tabs
         [tabs]="filterOptions()"
         [activeTab]="activeFilter()"
@@ -9,44 +10,273 @@
         variant="primary"
         (tabChange)="onFilterChange($event)" />
     </div>
-  </header>
 
-  <div class="overflow-x-auto">
-    <table class="w-full text-left">
-      <thead class="bg-gray-50 text-xs font-semibold uppercase text-gray-500">
-        <tr>
-          <th class="px-5 py-3">Insegnamento</th>
-          <th class="px-5 py-3 text-center">CFU</th>
-          <th class="px-5 py-3 text-center">Voto</th>
-          <th class="px-5 py-3 text-center">Stato</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-gray-100 text-sm">
-        @for (group of examGroups(); track group.year) {
-          <tr class="bg-gray-50 font-semibold text-gray-700">
-            <td colspan="4" class="px-5 py-2 text-xs uppercase tracking-wider">
-              {{ group.yearLabel }}
-            </td>
-          </tr>
-          @for (exam of group.exams; track exam.courseCode) {
-            <tr class="transition-colors hover:bg-gray-50">
-              <td class="px-5 py-3.5">
-                <p appText class="font-semibold text-gray-900">{{ exam.courseName }}</p>
-                <p appText class="font-mono text-xs text-gray-400">{{ exam.courseCode }}</p>
-              </td>
-              <td class="px-5 py-3.5 text-center">{{ exam.cfu }}</td>
-              <td class="px-5 py-3.5 text-center font-bold">{{ exam.grade || '—' }}</td>
-              <td class="px-5 py-3.5 text-center">
-                <app-custom-badge
-                  [label]="exam.status === 'PASSED' ? 'Superato' : 'Da sostenere'"
-                  [variant]="exam.status === 'PASSED' ? 'success' : 'neutral'"
-                  shape="rounded"
-                  size="sm" />
-              </td>
-            </tr>
-          }
+    <div class="mt-5 space-y-6">
+      @for (group of mandatoryGroups(); track group.year) {
+        <div>
+          <p appText class="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-400">
+            {{ group.yearLabel }}
+          </p>
+          <div class="flex flex-col gap-3">
+            @for (exam of group.exams; track exam.courseCode) {
+              <div class="overflow-hidden rounded-xl border border-gray-200">
+                <button
+                  type="button"
+                  (click)="toggleExam(exam.courseCode)"
+                  class="flex w-full items-center justify-between gap-4 px-4 py-3.5 text-left transition-colors hover:bg-gray-50">
+                  <div class="flex min-w-0 flex-1 items-center gap-3">
+                    <svg
+                      [lucideIcon]="iconChevron"
+                      [size]="16"
+                      class="shrink-0 text-gray-400 transition-transform"
+                      [class.rotate-180]="isOpen(exam.courseCode)"></svg>
+                    <div class="min-w-0">
+                      <p appText class="truncate text-sm font-semibold text-gray-900">
+                        {{ exam.courseName }}
+                      </p>
+                      <p appText class="font-mono text-xs text-gray-400">
+                        {{ exam.courseCode }} · {{ exam.cfu }} CFU
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex shrink-0 items-center gap-2">
+                    @if (exam.prerequisites.length > 0) {
+                      <app-custom-badge
+                        label="Propedeutico"
+                        variant="info"
+                        shape="rounded"
+                        size="sm"
+                        [icon]="iconLock" />
+                    }
+                    @if (exam.status === 'PASSED') {
+                      <app-custom-badge
+                        [label]="'Superato — ' + exam.grade"
+                        variant="success"
+                        shape="rounded"
+                        size="sm"
+                        [icon]="iconCheck" />
+                    } @else {
+                      <app-custom-badge
+                        label="Da sostenere"
+                        variant="warning"
+                        shape="rounded"
+                        size="sm" />
+                    }
+                  </div>
+                </button>
+
+                @if (isOpen(exam.courseCode)) {
+                  <div class="border-t border-gray-100 bg-gray-50 px-4 py-4">
+                    <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                      <div>
+                        <p appText class="text-xs text-gray-400">Lingua</p>
+                        <p appText class="text-sm font-medium text-gray-700">{{ exam.language }}</p>
+                      </div>
+                      <div>
+                        <p appText class="text-xs text-gray-400">Periodo didattico</p>
+                        <p appText class="text-sm font-medium text-gray-700">
+                          {{ periodLabel(exam.period) }}
+                        </p>
+                      </div>
+                      <div>
+                        <p appText class="text-xs text-gray-400">Durata</p>
+                        <p appText class="text-sm font-medium text-gray-700">
+                          {{ exam.durationHours }} ore
+                        </p>
+                      </div>
+                      <div>
+                        <p appText class="text-xs text-gray-400">Frequenza</p>
+                        <p appText class="text-sm font-medium text-gray-700">
+                          {{ attendanceLabel(exam.attendance) }}
+                        </p>
+                      </div>
+                      <div>
+                        <p appText class="text-xs text-gray-400">Settore disciplinare</p>
+                        <p appText class="text-sm font-medium text-gray-700">
+                          {{ exam.scientificSector }}
+                        </p>
+                      </div>
+                      <div>
+                        <p appText class="text-xs text-gray-400">Sede</p>
+                        <p appText class="text-sm font-medium text-gray-700">{{ exam.location }}</p>
+                      </div>
+                    </div>
+
+                    @if (exam.prerequisites.length > 0) {
+                      <div class="mt-4 rounded-lg bg-blue-50 px-3 py-2.5">
+                        <p appText class="text-xs font-semibold text-blue-700">
+                          Esami propedeutici richiesti
+                        </p>
+                        <p appText class="mt-1 text-sm text-blue-800">
+                          {{ exam.prerequisites.join(', ') }}
+                        </p>
+                      </div>
+                    }
+
+                    <div class="mt-4">
+                      <p
+                        appText
+                        class="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                        Programma per CFU
+                      </p>
+                      <div class="flex flex-col gap-2">
+                        @for (item of exam.cfuBreakdown; track item.cfuNumber) {
+                          <div class="flex gap-3 text-sm">
+                            <span class="shrink-0 font-semibold text-gray-500"
+                              >CFU {{ item.cfuNumber }}</span
+                            >
+                            <span appText class="text-gray-600">{{ item.description }}</span>
+                          </div>
+                        }
+                      </div>
+                    </div>
+
+                    @if (exam.status !== 'PASSED') {
+                      <div class="mt-4">
+                        <app-custom-button
+                          label="Vai alle prenotazioni"
+                          [icon]="iconBooking"
+                          mode="link-internal"
+                          href="/dashboard/appelli"
+                          variant="primary"
+                          size="sm" />
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </app-custom-card>
+
+  <!-- Exams -->
+  <div class="mt-6">
+    <app-custom-card padding="lg" shadow="sm" radius="md">
+      <h2 appText class="text-lg font-semibold text-gray-900">Esami a scelta</h2>
+      <p appText class="mt-1 text-sm text-gray-500">
+        Esami extra rispetto al piano obbligatorio. Non tutti gli esami a scelta sono prenotabili:
+        scegli quelli che intendi sostenere.
+      </p>
+
+      <div class="mt-5 flex flex-col gap-3">
+        @for (exam of electiveExams(); track exam.courseCode) {
+          <div class="overflow-hidden rounded-xl border border-gray-200">
+            <button
+              type="button"
+              (click)="toggleExam(exam.courseCode)"
+              class="flex w-full items-center justify-between gap-4 px-4 py-3.5 text-left transition-colors hover:bg-gray-50">
+              <div class="flex min-w-0 flex-1 items-center gap-3">
+                <svg
+                  [lucideIcon]="iconChevron"
+                  [size]="16"
+                  class="shrink-0 text-gray-400 transition-transform"
+                  [class.rotate-180]="isOpen(exam.courseCode)"></svg>
+                <div class="min-w-0">
+                  <p appText class="truncate text-sm font-semibold text-gray-900">
+                    {{ exam.courseName }}
+                  </p>
+                  <p appText class="font-mono text-xs text-gray-400">
+                    {{ exam.courseCode }} · {{ exam.cfu }} CFU
+                  </p>
+                </div>
+              </div>
+
+              <div class="flex shrink-0 items-center gap-2">
+                @if (exam.prerequisites.length > 0) {
+                  <app-custom-badge
+                    label="Propedeutico"
+                    variant="info"
+                    shape="rounded"
+                    size="sm"
+                    [icon]="iconLock" />
+                }
+                @if (exam.status === 'PASSED') {
+                  <app-custom-badge
+                    [label]="'Superato — ' + exam.grade"
+                    variant="success"
+                    shape="rounded"
+                    size="sm"
+                    [icon]="iconCheck" />
+                } @else {
+                  <app-custom-badge label="—" variant="neutral" shape="rounded" size="sm" />
+                }
+              </div>
+            </button>
+
+            @if (isOpen(exam.courseCode)) {
+              <div class="border-t border-gray-100 bg-gray-50 px-4 py-4">
+                <div class="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  <div>
+                    <p appText class="text-xs text-gray-400">Lingua</p>
+                    <p appText class="text-sm font-medium text-gray-700">{{ exam.language }}</p>
+                  </div>
+                  <div>
+                    <p appText class="text-xs text-gray-400">Periodo didattico</p>
+                    <p appText class="text-sm font-medium text-gray-700">
+                      {{ periodLabel(exam.period) }}
+                    </p>
+                  </div>
+                  <div>
+                    <p appText class="text-xs text-gray-400">Durata</p>
+                    <p appText class="text-sm font-medium text-gray-700">
+                      {{ exam.durationHours }} ore
+                    </p>
+                  </div>
+                  <div>
+                    <p appText class="text-xs text-gray-400">Frequenza</p>
+                    <p appText class="text-sm font-medium text-gray-700">
+                      {{ attendanceLabel(exam.attendance) }}
+                    </p>
+                  </div>
+                  <div>
+                    <p appText class="text-xs text-gray-400">Settore disciplinare</p>
+                    <p appText class="text-sm font-medium text-gray-700">
+                      {{ exam.scientificSector }}
+                    </p>
+                  </div>
+                  <div>
+                    <p appText class="text-xs text-gray-400">Sede</p>
+                    <p appText class="text-sm font-medium text-gray-700">{{ exam.location }}</p>
+                  </div>
+                </div>
+
+                @if (exam.prerequisites.length > 0) {
+                  <div class="mt-4 rounded-lg bg-blue-50 px-3 py-2.5">
+                    <p appText class="text-xs font-semibold text-blue-700">
+                      Esami propedeutici richiesti
+                    </p>
+                    <p appText class="mt-1 text-sm text-blue-800">
+                      {{ exam.prerequisites.join(', ') }}
+                    </p>
+                  </div>
+                }
+
+                <div class="mt-4">
+                  <p
+                    appText
+                    class="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                    Programma per CFU
+                  </p>
+                  <div class="flex flex-col gap-2">
+                    @for (item of exam.cfuBreakdown; track item.cfuNumber) {
+                      <div class="flex gap-3 text-sm">
+                        <span class="shrink-0 font-semibold text-gray-500"
+                          >CFU {{ item.cfuNumber }}</span
+                        >
+                        <span appText class="text-gray-600">{{ item.description }}</span>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
+            }
+          </div>
         }
-      </tbody>
-    </table>
+      </div>
+    </app-custom-card>
   </div>
-</app-custom-card>
+</div>

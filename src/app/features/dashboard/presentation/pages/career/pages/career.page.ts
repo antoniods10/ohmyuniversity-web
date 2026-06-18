@@ -43,9 +43,12 @@ export class CareerPage {
     { id: 'ALL', label: 'Tutti' },
     { id: 'PASSED', label: 'Superati' },
     { id: 'TO_TAKE', label: 'Da sostenere' },
-    { id: 'ELECTIVE', label: 'A scelta' },
   ];
 
+  // Filtro ora lavora solo su status (PASSED/TO_TAKE), non più su category.
+  // La distinzione MANDATORY/ELECTIVE è gestita a parte da mandatoryGroups
+  // ed electiveExams, che restano due liste sempre separate indipendentemente
+  // dal filtro di stato applicato.
   readonly filteredExams = computed<Exam[]>(() => {
     const all = this.exams();
     switch (this.activeFilter()) {
@@ -55,14 +58,16 @@ export class CareerPage {
         return all.filter(e => e.status === 'PASSED');
       case 'TO_TAKE':
         return all.filter(e => e.status === 'TO_TAKE');
-      case 'ELECTIVE':
-        return all.filter(e => e.type === 'ELECTIVE');
+      default:
+        return all;
     }
   });
 
-  readonly examGroups = computed<ExamGroup[]>(() => {
+  // Sostituisce il vecchio examGroups: stesso raggruppamento per anno, ma
+  // solo sugli esami MANDATORY (piano di studi obbligatorio).
+  readonly mandatoryGroups = computed<ExamGroup[]>(() => {
     const byYear = new Map<number, Exam[]>();
-    for (const exam of this.filteredExams()) {
+    for (const exam of this.filteredExams().filter(e => e.category === 'MANDATORY')) {
       const list = byYear.get(exam.academicYear) ?? [];
       list.push(exam);
       byYear.set(exam.academicYear, list);
@@ -76,6 +81,11 @@ export class CareerPage {
         passedCount: exams.filter(e => e.status === 'PASSED').length,
       }));
   });
+
+  // Nuovo: lista flat (non raggruppata per anno) dei soli esami ELECTIVE.
+  readonly electiveExams = computed<Exam[]>(() =>
+    this.filteredExams().filter(e => e.category === 'ELECTIVE'),
+  );
 
   readonly earnedCfu = computed(() =>
     this.exams()
