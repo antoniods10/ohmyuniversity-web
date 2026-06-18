@@ -42,8 +42,8 @@
       <!-- Question row -->
       <button
         type="button"
-        class="flex w-full items-start gap-4 px-5 py-4 text-left transition-colors hover:bg-gray-50"
-        [class.bg-gray-50]="isExpanded(q.questionId)"
+        class="group flex w-full items-start gap-4 px-5 py-4 text-left transition-colors hover:bg-blue-50 cursor-pointer"
+        [class.bg-blue-50]="isExpanded(q.questionId)"
         (click)="toggleQuestion(q.questionId)">
         <!-- Status badge -->
         <div class="mt-1 shrink-0">
@@ -79,7 +79,7 @@
         <svg
           [lucideIcon]="iconChevron"
           [size]="16"
-          class="mt-1 shrink-0 text-gray-400 transition-transform duration-200"
+          class="mt-1 shrink-0 text-gray-400 transition-transform duration-200 group-hover:text-blue-500"
           [class.rotate-90]="isExpanded(q.questionId)"
           aria-hidden="true"></svg>
       </button>
@@ -90,7 +90,7 @@
           <div class="flex flex-col gap-2">
             @for (option of q.options; track option.value) {
               <app-custom-button
-                [label]="getLabelClean(option.label)"
+                [label]="option.label"
                 [variant]="isSelected(q.questionId, option.value) ? 'primary' : 'outline'"
                 [icon]="isSelected(q.questionId, option.value) ? iconSelected : null"
                 iconPosition="left"
