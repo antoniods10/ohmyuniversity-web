@@ -6,7 +6,7 @@
 
   <div class="mt-3">
     <p appText variant="body-sm" color="muted">
-      Studiare ha un costo — e conoscerlo in anticipo ti permette di pianificare senza sorprese.
+      Studiare ha un costo, e conoscerlo in anticipo ti permette di pianificare senza sorprese.
       Questa sezione divide i costi in due categorie: quello che paghi all'università e quello che
       spendi per vivere.
     </p>
@@ -18,7 +18,7 @@
       statusVariant="info"
       [icon]="iconInfo"
       title="Ci sono alcune domande per te in fondo a questa sezione"
-      description="Leggile con calma, poi rispondi — aggiornano automaticamente il tuo profilo di orientamento."
+      description="Leggile con calma, poi rispondi, aggiornano automaticamente il tuo profilo di orientamento."
       shadow="none"
       padding="sm"
       [hoverable]="true"
@@ -26,7 +26,7 @@
       (cardClick)="scrollToQuestion()" />
   </div>
 
-  <!-- Costi universitari — accordion con badge range -->
+  <!-- Costi universitari - accordion con badge range -->
   <div class="mt-8">
     <h3 appText variant="h4">Costi universitari</h3>
     <div class="mt-2">
@@ -124,7 +124,7 @@
     <div class="mt-2">
       <p appText variant="body-sm" color="muted">
         Questi sono i costi mensili per chi studia fuori sede. Chi resta in famiglia risparmia la
-        parte più consistente — affitto e vitto.
+        parte più consistente - affitto e vitto.
       </p>
     </div>
     <div class="mt-5 space-y-2">
@@ -187,13 +187,13 @@
     <div class="mt-3 flex flex-col gap-3">
       <app-custom-link
         href="https://www.universitaly.it/index.php/cercauniversita/testatimonianze"
-        label="Universitaly — Testimonianze di studenti sui costi reali"
+        label="Universitaly - Testimonianze di studenti sui costi reali"
         mode="external"
         variant="primary"
         size="sm" />
       <app-custom-link
         href="https://www.inps.it/it/it/dettaglio-scheda.schede-informative.107.dichiarazione-sostitutiva-unica-dsu-e-isee.html"
-        label="INPS — Come calcolare il tuo ISEE"
+        label="INPS - Come calcolare il tuo ISEE"
         mode="external"
         variant="primary"
         size="sm" />
@@ -207,7 +207,7 @@
       <div class="flex-1 space-y-8">
         <app-custom-badge label="Domande per te" variant="info" shape="pill" size="xs" />
 
-        <!-- Question 1 — budget availability -->
+        <!-- Question 1 - budget availability -->
         <div>
           <h4 appText variant="h4" class="mt-3">{{ questionBudgetAvailability.text }}</h4>
           <div class="mt-2">
@@ -234,7 +234,7 @@
           </div>
         </div>
 
-        <!-- Question 2 — monthly budget -->
+        <!-- Question 2 - monthly budget -->
         <div>
           <h4 appText variant="h4">{{ questionMonthlyBudget.text }}</h4>
           <div class="mt-2">

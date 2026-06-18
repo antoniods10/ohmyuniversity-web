@@ -1,0 +1,300 @@
+<div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
+  <!-- Header -->
+  <app-custom-badge label="Macro-area 8 di 8" variant="primary" shape="pill" size="xs" />
+
+  <h2 appText variant="h2" class="mt-4">Dove studiare in Italia</h2>
+
+  <div class="mt-3">
+    <p appText variant="body-sm" color="muted">
+      La città in cui studi influenza molto più del budget : influenza il tuo stile di vita e le
+      opportunità che trovi. Ecco una guida onesta per orientarsi tra Nord, Centro e Sud.
+    </p>
+  </div>
+
+  <!-- Info banner -->
+  <div class="mt-5">
+    <app-card-status
+      statusVariant="info"
+      [icon]="iconInfo"
+      title="Ci sono alcune domande per te in fondo a questa sezione"
+      description="Leggile con calma, poi rispondi, aggiornano automaticamente il tuo profilo di orientamento."
+      shadow="none"
+      padding="sm"
+      [hoverable]="true"
+      [clickable]="true"
+      (cardClick)="scrollToQuestion()" />
+  </div>
+
+  <!-- Confronto aree - tab interattivo -->
+  <div class="mt-8">
+    <h3 appText variant="h4">Confronto tra aree geografiche</h3>
+    <div class="mt-2">
+      <p appText variant="body-sm" color="muted">
+        Seleziona un'area per vedere come si comporta su quattro dimensioni chiave della vita
+        universitaria.
+      </p>
+    </div>
+
+    <!-- Tab selector - CustomButtonComponent con icone Lucide -->
+    <div class="mt-5 flex gap-2">
+      @for (area of areeInfo; track area.area) {
+        <app-custom-button
+          [label]="area.area"
+          [icon]="getAreaIcon(area.area)"
+          iconPosition="left"
+          [variant]="isActiveArea(area.area) ? getTabVariant(area.area) : 'outline'"
+          rounded="lg"
+          size="sm"
+          [fullWidth]="true"
+          (clicked)="setActiveArea(area.area)" />
+      }
+    </div>
+
+    <!-- Tab content -->
+    @for (area of areeInfo; track area.area) {
+      @if (activeArea() === area.area) {
+        <div
+          class="mt-4 overflow-hidden rounded-xl border"
+          [class]="getAreaVariantLight(area.variant)">
+          <div class="divide-y divide-gray-100">
+            @for (voto of area.voti; track voto.aspetto) {
+              <div class="flex items-start gap-4 px-5 py-4">
+                <div class="min-w-0 flex-1">
+                  <p appText variant="body-sm" weight="semibold">{{ voto.aspetto }}</p>
+                  <div class="mt-0.5">
+                    <p appText variant="caption" color="muted">{{ voto.descrizione }}</p>
+                  </div>
+                </div>
+                <!-- Rating dots -->
+                <div class="flex shrink-0 items-center gap-1 pt-0.5">
+                  @for (dot of dots; track dot) {
+                    <div
+                      class="h-2.5 w-2.5 rounded-full transition-colors"
+                      [class]="
+                        dot < voto.voto ? getAreaVariantBg(area.variant) : 'bg-gray-200'
+                      "></div>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    }
+  </div>
+
+  <!-- Costi per area -->
+  <div class="mt-8">
+    <h3 appText variant="h4">Costi medi per area geografica</h3>
+    <div class="mt-2">
+      <p appText variant="body-sm" color="muted">
+        Affitti e costo della vita variano enormemente tra Nord e Sud. Ecco una panoramica
+        realistica.
+      </p>
+    </div>
+    <div class="mt-5 space-y-3">
+      @for (area of costiAree; track area.area) {
+        <div class="rounded-xl border border-gray-200 bg-white p-5">
+          <div class="flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <app-custom-badge
+                [label]="area.area"
+                [variant]="getCostoVariant(area.area)"
+                shape="pill"
+                size="sm" />
+              <span appText variant="body-sm" weight="semibold">{{ area.affittoCamera }}</span>
+            </div>
+            <app-custom-badge
+              [label]="area.costoVita"
+              variant="neutral"
+              shape="rounded"
+              size="xs" />
+          </div>
+          <div class="mt-3">
+            <p appText variant="caption" color="subtle">{{ area.esempiCitta }}</p>
+          </div>
+          <div class="mt-2">
+            <p appText variant="body-sm" color="muted">{{ area.noteAggiuntive }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Città top per categoria - accordion -->
+  <div class="mt-8">
+    <h3 appText variant="h4">Città universitarie : le migliori per categoria</h3>
+    <div class="mt-2">
+      <p appText variant="body-sm" color="muted">
+        Non esiste la città perfetta per tutti. Clicca su una città per scoprire perché eccelle in
+        quella categoria.
+      </p>
+    </div>
+
+    <div class="mt-5 divide-y divide-gray-100 overflow-hidden rounded-xl border border-gray-200">
+      @for (citta of cittaTop; track citta.citta) {
+        <button
+          type="button"
+          class="flex w-full items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-gray-50"
+          [class.bg-gray-50]="isCittaExpanded(citta.citta)"
+          (click)="toggleCitta(citta.citta)">
+          <!-- Icona - colore unico per città -->
+          <div
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-colors"
+            [class]="
+              isCittaExpanded(citta.citta)
+                ? getCittaColors(citta.citta).bgOn
+                : getCittaColors(citta.citta).bgOff
+            ">
+            <svg
+              [lucideIcon]="getCittaIcon(citta.citta)"
+              [size]="18"
+              [class.text-white]="isCittaExpanded(citta.citta)"
+              [class]="!isCittaExpanded(citta.citta) ? getCittaColors(citta.citta).textOff : ''"
+              aria-hidden="true"></svg>
+          </div>
+
+          <!-- Nome + badge categoria -->
+          <div class="min-w-0 flex-1">
+            <span appText variant="body-sm" weight="semibold">{{ citta.citta }}</span>
+            <div class="mt-1">
+              <app-custom-badge [label]="citta.badge" variant="primary" shape="pill" size="xs" />
+            </div>
+          </div>
+
+          <!-- Chevron -->
+          <svg
+            [lucideIcon]="iconChevron"
+            [size]="16"
+            class="shrink-0 text-gray-400 transition-transform duration-200"
+            [class.rotate-90]="isCittaExpanded(citta.citta)"
+            aria-hidden="true"></svg>
+        </button>
+
+        @if (isCittaExpanded(citta.citta)) {
+          <div
+            class="border-t px-5 py-4"
+            [class]="getCittaColors(citta.citta).border + ' ' + getCittaColors(citta.citta).panel">
+            <app-custom-badge
+              [label]="citta.categoria"
+              variant="neutral"
+              shape="rounded"
+              size="xs" />
+            <div class="mt-3">
+              <p appText variant="body-sm" color="muted">{{ citta.motivo }}</p>
+            </div>
+            <!-- Stats badges -->
+            <div class="mt-4 flex flex-wrap gap-2">
+              @for (stat of citta.stats; track stat) {
+                <app-custom-badge
+                  [label]="stat"
+                  [variant]="
+                    citta.area === 'Nord'
+                      ? 'primary'
+                      : citta.area === 'Centro'
+                        ? 'warning'
+                        : 'success'
+                  "
+                  shape="rounded"
+                  size="sm" />
+              }
+            </div>
+          </div>
+        }
+      }
+    </div>
+  </div>
+
+  <!-- Tips - timeline -->
+  <div class="mt-8">
+    <h3 appText variant="h4">Come scegliere la città giusta</h3>
+    <div class="mt-2">
+      <p appText variant="body-sm" color="muted">
+        Tre consigli pratici prima di prendere una decisione definitiva.
+      </p>
+    </div>
+    <div class="mt-5 flex flex-col gap-0">
+      @for (tip of tips; track tip.titolo; let last = $last) {
+        <div class="flex gap-4">
+          <div class="flex flex-col items-center">
+            <div class="mt-1 h-3 w-3 shrink-0 rounded-full bg-blue-400"></div>
+            @if (!last) {
+              <div class="my-1 w-px flex-1 bg-blue-100"></div>
+            }
+          </div>
+          <div [class.pb-6]="!last">
+            <p appText variant="body-sm" weight="semibold">{{ tip.titolo }}</p>
+            <div class="mt-1">
+              <p appText variant="body-sm" color="muted">{{ tip.testo }}</p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Inline questions -->
+  <div id="domanda-geo" class="mt-8 rounded-xl bg-blue-100 px-6 py-8">
+    <div class="flex items-start gap-3">
+      <div class="mt-1.5 h-8 w-1 shrink-0 rounded-full bg-blue-400"></div>
+      <div class="flex-1 space-y-8">
+        <app-custom-badge label="Domande per te" variant="info" shape="pill" size="xs" />
+
+        <!-- Question 1 - area preference -->
+        <div>
+          <h4 appText variant="h4" class="mt-3">{{ questionAreaPreference.text }}</h4>
+          <div class="mt-2">
+            <p appText variant="body-sm" color="muted">
+              La risposta aggiorna il tuo profilo e influenza il risultato finale.
+            </p>
+          </div>
+          <div class="mt-5 flex flex-col gap-2">
+            @for (option of questionAreaPreference.options; track option.value) {
+              <app-custom-button
+                [label]="option.label"
+                [variant]="
+                  isSelected(selectedAreaPreference(), option.value) ? 'primary' : 'outline'
+                "
+                [icon]="isSelected(selectedAreaPreference(), option.value) ? iconSelected : null"
+                iconPosition="left"
+                rounded="lg"
+                size="md"
+                [fullWidth]="true"
+                (clicked)="onSelectAreaPreference(option.value)" />
+            }
+          </div>
+        </div>
+
+        <!-- Question 2 - city priority -->
+        <div>
+          <h4 appText variant="h4">{{ questionCityPriority.text }}</h4>
+          <div class="mt-2">
+            <p appText variant="body-sm" color="muted">
+              La risposta aggiorna il tuo profilo e influenza il risultato finale.
+            </p>
+          </div>
+          <div class="mt-5 flex flex-col gap-2">
+            @for (option of questionCityPriority.options; track option.value) {
+              <app-custom-button
+                [label]="option.label"
+                [variant]="isSelected(selectedCityPriority(), option.value) ? 'primary' : 'outline'"
+                [icon]="isSelected(selectedCityPriority(), option.value) ? iconSelected : null"
+                iconPosition="left"
+                rounded="lg"
+                size="md"
+                [fullWidth]="true"
+                (clicked)="onSelectCityPriority(option.value)" />
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-orientation-nav
+  [hasPrev]="hasPrev()"
+  [hasNext]="hasNext()"
+  (prev)="prev.emit()"
+  (next)="next.emit()"
+  (backToList)="backToList.emit()" />
