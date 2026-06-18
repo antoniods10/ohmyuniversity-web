@@ -1,66 +1,51 @@
-import { Component, signal, computed, inject } from '@angular/core';
-import { RouterLink, Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { USER_TYPE_OPTIONS, UNIVERSITIES, APP_NAME } from '@shared/constants';
-import { LoginStep, UserType, University } from '@types';
+import { Component, signal } from '@angular/core';
+import { LoginMode } from '@types';
+import { RouterLink } from '@angular/router';
+import { CustomTabsComponent } from '@ui/custom-tab/custom-tab.component';
+import { LoginMarqueeComponent } from '../components/login-marquee/login-marquee.component';
+import { UniversityLoginFormComponent } from '../components/university-login-form/university-login-form.component';
+import { PartnerLoginFormComponent } from '../components/partner-login-form/partner-login-form.component';
+import {
+  ORGANIZATION_NAME,
+  APP_NAME,
+  APP_LOGO,
+  UNIVERSITY_MARQUEE_IMAGES,
+  UNIVERSITY_LOGIN_STATS,
+  PARTNER_MARQUEE_IMAGES,
+  PARTNER_LOGIN_STATS,
+} from '@constants';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [RouterLink, FormsModule],
+  imports: [
+    RouterLink,
+    CustomTabsComponent,
+    LoginMarqueeComponent,
+    UniversityLoginFormComponent,
+    PartnerLoginFormComponent,
+  ],
   templateUrl: './login.page.html',
 })
 export class LoginPage {
-  readonly step = signal<LoginStep>(1);
-  private readonly router = inject(Router);
-  readonly selectedType = signal<UserType>(null);
-  readonly universitySearch = signal('');
-  readonly selectedUniversity = signal<University | null>(null);
-
-  readonly userTypeOptions = USER_TYPE_OPTIONS;
-  readonly universities = UNIVERSITIES;
+  readonly ORGANIZATION_NAME = ORGANIZATION_NAME;
   readonly APP_NAME = APP_NAME;
+  readonly APP_LOGO = APP_LOGO;
 
-  readonly filteredUniversities = computed(() => {
-    const q = this.universitySearch().toLowerCase().trim();
-    if (!q) return this.universities;
-    return this.universities.filter(
-      u => u.name.toLowerCase().includes(q) || u.shortName.toLowerCase().includes(q),
-    );
-  });
+  readonly mode = signal<LoginMode>('university');
 
-  readonly isAcademicFlow = computed(
-    () => this.selectedType() === 'academic' || this.selectedType() === 'staff',
-  );
+  readonly modeTabs = [
+    { id: 'university', label: 'Università' },
+    { id: 'partner', label: 'Partner' },
+  ];
 
-  selectType(type: UserType): void {
-    this.selectedType.set(type);
-  }
+  readonly universityImages = UNIVERSITY_MARQUEE_IMAGES;
+  readonly universityStats = UNIVERSITY_LOGIN_STATS;
 
-  goToStep2(): void {
-    if (!this.selectedType()) return;
-    this.step.set(2);
-  }
+  readonly partnerImages = PARTNER_MARQUEE_IMAGES;
+  readonly partnerStats = PARTNER_LOGIN_STATS;
 
-  goBack(): void {
-    this.step.set(1);
-    this.selectedUniversity.set(null);
-    this.universitySearch.set('');
-  }
-
-  selectUniversity(university: University): void {
-    this.selectedUniversity.set(university);
-  }
-
-  onSearchInput(value: string): void {
-    this.universitySearch.set(value);
-    this.selectedUniversity.set(null);
-  }
-
-  proceedWithSSO(): void {
-    const uni = this.selectedUniversity();
-    if (!uni) return;
-
-    this.router.navigate(['/dashboard']);
+  setMode(mode: string): void {
+    this.mode.set(mode as LoginMode);
   }
 }

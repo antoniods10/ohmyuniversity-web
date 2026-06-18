@@ -1,0 +1,33 @@
+<form class="space-y-4" (ngSubmit)="submit()">
+  <app-custom-input
+    type="email"
+    label="Email organizzazione"
+    placeholder="info@azienda.it"
+    [(ngModel)]="email"
+    name="orgEmail" />
+
+  <app-custom-input
+    type="password"
+    label="Password"
+    placeholder="••••••••"
+    [(ngModel)]="password"
+    name="orgPassword" />
+
+  <app-custom-button
+    label="Accedi"
+    type="submit"
+    variant="primary"
+    size="md"
+    [fullWidth]="true"
+    [disabled]="!canSubmit" />
+</form>
+
+<p class="mt-5 text-center text-xs text-gray-400">
+  Non hai ancora un account?
+  <a
+    routerLink="/contatti"
+    [queryParams]="{ tab: 'organization' }"
+    class="text-blue-600 hover:underline">
+    Richiedi l'accesso per la tua organizzazione
+  </a>
+</p>
