@@ -1,0 +1,35 @@
+<section class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+  <app-custom-card padding="md" shadow="sm" radius="md">
+    <h3 class="mb-3 text-sm font-semibold text-gray-900">Storico voti</h3>
+    <apx-chart
+      [series]="gradeChartOptions().series"
+      [chart]="gradeChartOptions().chart"
+      [plotOptions]="gradeChartOptions().plotOptions"
+      [colors]="gradeChartOptions().colors"
+      [fill]="gradeChartOptions().fill"
+      [dataLabels]="gradeChartOptions().dataLabels"
+      [stroke]="gradeChartOptions().stroke"
+      [grid]="gradeChartOptions().grid"
+      [xaxis]="gradeChartOptions().xaxis"
+      [yaxis]="gradeChartOptions().yaxis"
+      [tooltip]="gradeChartOptions().tooltip"
+      [legend]="gradeChartOptions().legend" />
+  </app-custom-card>
+
+  <app-custom-card padding="md" shadow="sm" radius="md">
+    <h3 class="mb-3 text-sm font-semibold text-gray-900">Storico media ponderata</h3>
+    <apx-chart
+      [series]="averageChartOptions().series"
+      [chart]="averageChartOptions().chart"
+      [plotOptions]="averageChartOptions().plotOptions"
+      [colors]="averageChartOptions().colors"
+      [fill]="averageChartOptions().fill"
+      [dataLabels]="averageChartOptions().dataLabels"
+      [stroke]="averageChartOptions().stroke"
+      [grid]="averageChartOptions().grid"
+      [xaxis]="averageChartOptions().xaxis"
+      [yaxis]="averageChartOptions().yaxis"
+      [tooltip]="averageChartOptions().tooltip"
+      [legend]="averageChartOptions().legend" />
+  </app-custom-card>
+</section>

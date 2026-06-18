@@ -35,7 +35,7 @@ import { DashboardLayoutComponent } from './features/dashboard/presentation/layo
 
 // Dashboard Pages
 import { DashboardHomePage } from './features/dashboard/presentation/pages/home/home.page';
-import { CareerPage } from './features/dashboard/presentation/pages/career/career.page';
+import { CareerPage } from './features/dashboard/presentation/pages/career/pages/career.page';
 import { ExamsPage } from './features/dashboard/presentation/pages/exams/exams.page';
 import { AgendaPage } from './features/dashboard/presentation/pages/agenda/agenda.page';
 import { SchedulePage } from './features/dashboard/presentation/pages/schedule/schedule.page';
