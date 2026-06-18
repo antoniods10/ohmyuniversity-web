@@ -73,6 +73,9 @@ import {
   LucideCreditCard,
   LucideCircleAlert,
   LucideEuro,
+  LucideBookMarked,
+  LucideThumbsUp,
+  LucideSun,
 } from '@lucide/angular';
 
 export const appConfig: ApplicationConfig = {
@@ -150,6 +153,9 @@ export const appConfig: ApplicationConfig = {
       LucideCreditCard,
       LucideCircleAlert,
       LucideEuro,
+      LucideBookMarked,
+      LucideThumbsUp,
+      LucideSun,
     ),
   ],
 };

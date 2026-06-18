@@ -7,10 +7,10 @@ import { TopicQuizComponent } from '../components/topics/topic-quiz/topic-quiz.c
 import { TopicSbocchiComponent } from '../components/topics/topic-sbocchi/topic-sbocchi.component';
 import { TopicVitaComponent } from '../components/topics/topic-vita/topic-vita.component';
 import { TopicBudgetComponent } from '../components/topics/topic-budget/topic-budget.component';
+import { TopicCostiGeograficiComponent } from '../components/topics/topic-costi-geografici/topic-aree-geografiche.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { ORIENTATION_TOPICS } from '@constants';
-import { TopicCostiGeograficiComponent } from '../components/topics/topic-costi-geografici/topic-costi-geografici.component';
 import { TopicId } from '@types';
 import { CardNavComponent } from '@ui/custom-card/card-variants.component';
 
@@ -26,10 +26,10 @@ import { CardNavComponent } from '@ui/custom-card/card-variants.component';
     TopicSbocchiComponent,
     TopicErroriComponent,
     TopicBudgetComponent,
+    TopicCostiGeograficiComponent,
     CustomBadgeComponent,
     CustomTextComponent,
     CardNavComponent,
-    TopicCostiGeograficiComponent,
   ],
   templateUrl: './orientation.page.html',
 })

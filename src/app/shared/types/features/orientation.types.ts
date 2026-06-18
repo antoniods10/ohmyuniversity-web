@@ -132,3 +132,19 @@ export interface AccessType {
   examples: string[];
   note: string;
 }
+
+export interface CittaTop {
+  citta: string;
+  area: 'Nord' | 'Centro' | 'Sud';
+  categoria: string;
+  motivo: string;
+  badge: string;
+  stats: string[];
+}
+
+export interface AreaGeoInfo {
+  area: string;
+  emoji: string;
+  variant: string;
+  voti: { aspetto: string; voto: number; descrizione: string }[];
+}
