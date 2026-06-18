@@ -1,0 +1,271 @@
+<div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8">
+  <!-- Header -->
+  <app-custom-badge label="Macro-area 6 di 8" variant="primary" shape="pill" size="xs" />
+
+  <h2 appText variant="h2" class="mt-4">Budget e costi reali</h2>
+
+  <div class="mt-3">
+    <p appText variant="body-sm" color="muted">
+      Studiare ha un costo — e conoscerlo in anticipo ti permette di pianificare senza sorprese.
+      Questa sezione divide i costi in due categorie: quello che paghi all'università e quello che
+      spendi per vivere.
+    </p>
+  </div>
+
+  <!-- Info banner -->
+  <div class="mt-5">
+    <app-card-status
+      statusVariant="info"
+      [icon]="iconInfo"
+      title="Ci sono alcune domande per te in fondo a questa sezione"
+      description="Leggile con calma, poi rispondi — aggiornano automaticamente il tuo profilo di orientamento."
+      shadow="none"
+      padding="sm"
+      [hoverable]="true"
+      [clickable]="true"
+      (cardClick)="scrollToQuestion()" />
+  </div>
+
+  <!-- Costi universitari — accordion con badge range -->
+  <div class="mt-8">
+    <h3 appText variant="h4">Costi universitari</h3>
+    <div class="mt-2">
+      <p appText variant="body-sm" color="muted">
+        Clicca su una voce per scoprire i dettagli. Alcuni costi dipendono dall'ISEE e dall'ateneo
+        scelto.
+      </p>
+    </div>
+
+    <div class="mt-5 divide-y divide-gray-100 overflow-hidden rounded-xl border border-gray-200">
+      @for (cost of universityCosts; track cost.label) {
+        <!-- Riga chiusa -->
+        <button
+          type="button"
+          class="flex w-full items-center gap-4 px-5 py-4 text-left transition-colors hover:bg-gray-50"
+          [class.bg-gray-50]="isExpanded(cost.label)"
+          (click)="toggleCost(cost.label)">
+          <!-- Icona colorata -->
+          <div
+            class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl transition-colors"
+            [class.bg-blue-500]="cost.variant === 'primary' && isExpanded(cost.label)"
+            [class.bg-blue-50]="cost.variant === 'primary' && !isExpanded(cost.label)"
+            [class.bg-sky-500]="cost.variant === 'info' && isExpanded(cost.label)"
+            [class.bg-sky-50]="cost.variant === 'info' && !isExpanded(cost.label)"
+            [class.bg-green-500]="cost.variant === 'success' && isExpanded(cost.label)"
+            [class.bg-green-50]="cost.variant === 'success' && !isExpanded(cost.label)"
+            [class.bg-amber-500]="cost.variant === 'warning' && isExpanded(cost.label)"
+            [class.bg-amber-50]="cost.variant === 'warning' && !isExpanded(cost.label)">
+            <svg
+              [lucideIcon]="cost.icon"
+              [size]="18"
+              [class.text-white]="isExpanded(cost.label)"
+              [class.text-blue-500]="cost.variant === 'primary' && !isExpanded(cost.label)"
+              [class.text-sky-500]="cost.variant === 'info' && !isExpanded(cost.label)"
+              [class.text-green-500]="cost.variant === 'success' && !isExpanded(cost.label)"
+              [class.text-amber-500]="cost.variant === 'warning' && !isExpanded(cost.label)"
+              aria-hidden="true"></svg>
+          </div>
+
+          <!-- Nome + badge range -->
+          <div class="min-w-0 flex-1">
+            <span appText variant="body-sm" weight="semibold">{{ cost.label }}</span>
+            <div class="mt-1 flex flex-wrap gap-1.5">
+              <app-custom-badge [label]="cost.min" variant="neutral" shape="pill" size="xs" />
+              <span appText variant="caption" color="subtle">→</span>
+              <app-custom-badge
+                [label]="cost.max"
+                [variant]="cost.variant"
+                shape="pill"
+                size="xs" />
+            </div>
+          </div>
+
+          <!-- Chevron -->
+          <svg
+            [lucideIcon]="iconChevron"
+            [size]="16"
+            class="shrink-0 text-gray-400 transition-transform duration-200"
+            [class.rotate-90]="isExpanded(cost.label)"
+            aria-hidden="true"></svg>
+        </button>
+
+        <!-- Pannello espanso -->
+        @if (isExpanded(cost.label)) {
+          <div
+            class="border-t px-5 py-4"
+            [class.border-blue-100]="cost.variant === 'primary'"
+            [class.bg-blue-50]="cost.variant === 'primary'"
+            [class.border-sky-100]="cost.variant === 'info'"
+            [class.bg-sky-50]="cost.variant === 'info'"
+            [class.border-green-100]="cost.variant === 'success'"
+            [class.bg-green-50]="cost.variant === 'success'"
+            [class.border-amber-100]="cost.variant === 'warning'"
+            [class.bg-amber-50]="cost.variant === 'warning'">
+            <p appText variant="body-sm" color="muted">{{ cost.note }}</p>
+          </div>
+        }
+      }
+    </div>
+
+    <div class="mt-4">
+      <app-card-status
+        statusVariant="success"
+        [icon]="iconCheck"
+        title="Le tasse si possono azzerare"
+        description="Con un ISEE sotto i 13.000 € molti atenei azzerano completamente le tasse. Vale sempre la pena controllare il regolamento del tuo ateneo prima di scoraggiarti."
+        shadow="none"
+        padding="sm" />
+    </div>
+  </div>
+
+  <!-- Costi vita da studente -->
+  <div class="mt-8">
+    <h3 appText variant="h4">Costi della vita da studente</h3>
+    <div class="mt-2">
+      <p appText variant="body-sm" color="muted">
+        Questi sono i costi mensili per chi studia fuori sede. Chi resta in famiglia risparmia la
+        parte più consistente — affitto e vitto.
+      </p>
+    </div>
+    <div class="mt-5 space-y-2">
+      @for (voce of livingCosts; track voce.voce; let last = $last) {
+        <div
+          class="flex items-center justify-between rounded-xl px-5 py-4"
+          [class.border]="!last"
+          [class.border-gray-100]="!last"
+          [class.bg-white]="!last"
+          [class.bg-blue-500]="last">
+          @if (!last) {
+            <p appText variant="body-sm" weight="medium">{{ voce.voce }}</p>
+            <app-custom-badge [label]="voce.importo" variant="neutral" shape="pill" size="sm" />
+          } @else {
+            <p class="text-sm font-semibold text-white">{{ voce.voce }}</p>
+            <span class="text-sm font-bold text-white">{{ voce.importo }}</span>
+          }
+        </div>
+      }
+    </div>
+    <div class="mt-3">
+      <p appText variant="caption" color="subtle">
+        * Le borse di studio DSU possono coprire parte o tutto questo importo. Controlla i requisiti
+        del tuo ente regionale.
+      </p>
+    </div>
+  </div>
+
+  <!-- Tips -->
+  <div class="mt-8">
+    <h3 appText variant="h4">Come gestire il budget da studente</h3>
+    <div class="mt-2">
+      <p appText variant="body-sm" color="muted">
+        Tre abitudini che fanno la differenza tra chi arriva a fine mese e chi no.
+      </p>
+    </div>
+    <div class="mt-5 flex flex-col gap-0">
+      @for (tip of tips; track tip.titolo; let last = $last) {
+        <div class="flex gap-4">
+          <div class="flex flex-col items-center">
+            <div class="mt-1 h-3 w-3 shrink-0 rounded-full bg-blue-400"></div>
+            @if (!last) {
+              <div class="my-1 w-px flex-1 bg-blue-100"></div>
+            }
+          </div>
+          <div [class.pb-6]="!last">
+            <p appText variant="body-sm" weight="semibold">{{ tip.titolo }}</p>
+            <div class="mt-1">
+              <p appText variant="body-sm" color="muted">{{ tip.testo }}</p>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Link utili -->
+  <div class="mt-8 rounded-xl border border-gray-100 bg-gray-50 p-5">
+    <p appText variant="body-sm" weight="semibold">Strumenti utili per pianificare</p>
+    <div class="mt-3 flex flex-col gap-3">
+      <app-custom-link
+        href="https://www.universitaly.it/index.php/cercauniversita/testatimonianze"
+        label="Universitaly — Testimonianze di studenti sui costi reali"
+        mode="external"
+        variant="primary"
+        size="sm" />
+      <app-custom-link
+        href="https://www.inps.it/it/it/dettaglio-scheda.schede-informative.107.dichiarazione-sostitutiva-unica-dsu-e-isee.html"
+        label="INPS — Come calcolare il tuo ISEE"
+        mode="external"
+        variant="primary"
+        size="sm" />
+    </div>
+  </div>
+
+  <!-- Inline questions -->
+  <div id="domanda-budget" class="mt-8 rounded-xl bg-blue-100 px-6 py-8">
+    <div class="flex items-start gap-3">
+      <div class="mt-1.5 h-8 w-1 shrink-0 rounded-full bg-blue-400"></div>
+      <div class="flex-1 space-y-8">
+        <app-custom-badge label="Domande per te" variant="info" shape="pill" size="xs" />
+
+        <!-- Question 1 — budget availability -->
+        <div>
+          <h4 appText variant="h4" class="mt-3">{{ questionBudgetAvailability.text }}</h4>
+          <div class="mt-2">
+            <p appText variant="body-sm" color="muted">
+              La risposta aggiorna il tuo profilo e influenza il risultato finale.
+            </p>
+          </div>
+          <div class="mt-5 flex flex-col gap-2">
+            @for (option of questionBudgetAvailability.options; track option.value) {
+              <app-custom-button
+                [label]="option.label"
+                [variant]="
+                  isSelected(selectedBudgetAvailability(), option.value) ? 'primary' : 'outline'
+                "
+                [icon]="
+                  isSelected(selectedBudgetAvailability(), option.value) ? iconSelected : null
+                "
+                iconPosition="left"
+                rounded="lg"
+                size="md"
+                [fullWidth]="true"
+                (clicked)="onSelectBudgetAvailability(option.value)" />
+            }
+          </div>
+        </div>
+
+        <!-- Question 2 — monthly budget -->
+        <div>
+          <h4 appText variant="h4">{{ questionMonthlyBudget.text }}</h4>
+          <div class="mt-2">
+            <p appText variant="body-sm" color="muted">
+              La risposta aggiorna il tuo profilo e influenza il risultato finale.
+            </p>
+          </div>
+          <div class="mt-5 grid gap-2 sm:grid-cols-2">
+            @for (option of questionMonthlyBudget.options; track option.value) {
+              <app-custom-button
+                [label]="option.label"
+                [variant]="
+                  isSelected(selectedMonthlyBudget(), option.value) ? 'primary' : 'outline'
+                "
+                [icon]="isSelected(selectedMonthlyBudget(), option.value) ? iconSelected : null"
+                iconPosition="left"
+                rounded="lg"
+                size="md"
+                [fullWidth]="true"
+                (clicked)="onSelectMonthlyBudget(option.value)" />
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-orientation-nav
+  [hasPrev]="hasPrev()"
+  [hasNext]="hasNext()"
+  (prev)="prev.emit()"
+  (next)="next.emit()"
+  (backToList)="backToList.emit()" />
