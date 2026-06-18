@@ -18,7 +18,6 @@
       </div>
     </div>
 
-    <!-- Args List -->
     <div class="space-y-2">
       @for (topic of topics; track topic.id) {
         <app-card-nav
@@ -44,9 +43,9 @@
   <div class="sticky top-0 z-10 border-b border-gray-100 bg-white px-4 py-3 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-2xl">
       <div class="mb-1.5 flex items-center justify-between">
-        <span appText variant="caption" color="subtle"
-          >{{ activeIndex() + 1 }} di {{ topics.length }}</span
-        >
+        <span appText variant="caption" color="subtle">
+          {{ activeIndex() + 1 }} di {{ topics.length }}
+        </span>
         <span appText variant="caption" weight="semibold">{{ topics[activeIndex()].title }}</span>
       </div>
       <div class="h-1 w-full overflow-hidden rounded-full bg-gray-100">
@@ -58,7 +57,7 @@
   </div>
 }
 
-<!-- Args Details -->
+<!-- Topic Detail -->
 <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:px-8">
   @if (activeTopic() === 'corso') {
     <app-topic-corso
@@ -102,6 +101,22 @@
   }
   @if (activeTopic() === 'errori') {
     <app-topic-errori
+      [hasPrev]="hasPrev()"
+      [hasNext]="hasNext()"
+      (prev)="prev()"
+      (next)="next()"
+      (backToList)="close()" />
+  }
+  @if (activeTopic() === 'borse-studio') {
+    <app-topic-budget
+      [hasPrev]="hasPrev()"
+      [hasNext]="hasNext()"
+      (prev)="prev()"
+      (next)="next()"
+      (backToList)="close()" />
+  }
+  @if (activeTopic() === 'costi-geografici') {
+    <app-topic-costi-geografici
       [hasPrev]="hasPrev()"
       [hasNext]="hasNext()"
       (prev)="prev()"
