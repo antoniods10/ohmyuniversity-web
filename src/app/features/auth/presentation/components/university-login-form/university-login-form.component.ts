@@ -1,12 +1,15 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, inject, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LucideDynamicIcon, LucideShieldCheck, LucideIdCard } from '@lucide/angular';
 import { CustomTabsComponent } from '@ui/custom-tab/custom-tab.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
-import { CustomInputComponent, SelectOption } from '@ui/custom-input/custom-input.component';
+import { CustomInputComponent } from '@ui/custom-input/custom-input.component';
+import { CustomLinkComponent } from '@ui/custom-link/custom-link.component';
+import { CustomModalComponent } from '@ui/custom-modal/custom-modal.component';
+import { UniversitySearchSelectComponent } from '../university-search-select/university-search-select.component';
 import { ToastService } from '@ui/custom-toast/toast.service';
-import { UNIVERSITIES } from '@constants';
+import { APP_NAME, UNIVERSITIES } from '@constants';
 import { University } from '@types';
 
 type UniversityTab = 'ateneo' | 'spid' | 'cie';
@@ -19,16 +22,22 @@ type UniversityTab = 'ateneo' | 'spid' | 'cie';
     CustomTabsComponent,
     CustomButtonComponent,
     CustomInputComponent,
+    CustomLinkComponent,
+    CustomModalComponent,
+    UniversitySearchSelectComponent,
     LucideDynamicIcon,
   ],
   templateUrl: './university-login-form.component.html',
 })
 export class UniversityLoginFormComponent {
+  readonly APP_NAME = APP_NAME;
   private readonly router = inject(Router);
   private readonly toast = inject(ToastService);
 
   readonly iconShield = LucideShieldCheck;
   readonly iconCie = LucideIdCard;
+
+  readonly recoveryModal = viewChild<CustomModalComponent>('recoveryModal');
 
   readonly activeTab = signal<UniversityTab>('ateneo');
   readonly tabs = [
@@ -38,22 +47,18 @@ export class UniversityLoginFormComponent {
   ];
 
   readonly universities = UNIVERSITIES;
-  readonly universityOptions: SelectOption[] = UNIVERSITIES.map(u => ({
-    value: u.id,
-    label: u.shortName,
-  }));
 
-  selectedUniversityId = '';
+  selectedUniversity: University | undefined = undefined;
   email = '';
   password = '';
 
-  get selectedUniversity(): University | undefined {
-    return this.universities.find(u => u.id === this.selectedUniversityId);
-  }
+  readonly cieInfoUrl = 'https://www.cartaidentita.interno.gov.it';
+  readonly spidInfoUrl = 'https://www.spid.gov.it';
+  readonly spidNoSpidUrl = 'https://www.spid.gov.it/cos-e-spid/come-attivare-spid/';
+  readonly spidHelpUrl = 'https://www.spid.gov.it/ottieni-assistenza-dagli-identity-provider/';
 
   get domainUnavailable(): boolean {
-    const uni = this.selectedUniversity;
-    return !!uni && uni.emailDomains.length === 0;
+    return !!this.selectedUniversity && this.selectedUniversity.emailDomains.length === 0;
   }
 
   get emailError(): string {
@@ -87,7 +92,8 @@ export class UniversityLoginFormComponent {
     this.activeTab.set(tab as UniversityTab);
   }
 
-  onUniversityChange(): void {
+  onUniversitySelected(uni: University): void {
+    this.selectedUniversity = uni;
     this.email = '';
   }
 
@@ -98,5 +104,9 @@ export class UniversityLoginFormComponent {
 
   notifyUnavailable(provider: 'SPID' | 'CIE'): void {
     this.toast.show(`L'accesso con ${provider} non è ancora attivo.`, 'warning');
+  }
+
+  openRecoveryModal(): void {
+    this.recoveryModal()?.open();
   }
 }

@@ -13,13 +13,24 @@
     [(ngModel)]="password"
     name="orgPassword" />
 
-  <app-custom-button
-    label="Accedi"
-    type="submit"
-    variant="primary"
-    size="md"
-    [fullWidth]="true"
-    [disabled]="!canSubmit" />
+  <div class="mt-3">
+    <app-custom-button
+      label="Accedi"
+      type="submit"
+      variant="primary"
+      size="md"
+      [fullWidth]="true"
+      [disabled]="!canSubmit" />
+  </div>
+
+  <p class="text-center text-xs text-gray-400">
+    <button
+      type="button"
+      (click)="notifyPasswordRecoveryUnavailable()"
+      class="text-blue-600 hover:underline">
+      Password dimenticata?
+    </button>
+  </p>
 </form>
 
 <p class="mt-5 text-center text-xs text-gray-400">

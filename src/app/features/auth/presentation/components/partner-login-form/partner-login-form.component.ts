@@ -33,4 +33,8 @@ export class PartnerLoginFormComponent {
     if (!this.canSubmit) return;
     this.toast.show('Il login organizzazioni non è ancora attivo.', 'warning');
   }
+
+  notifyPasswordRecoveryUnavailable(): void {
+    this.toast.show('Il recupero password non è ancora disponibile.', 'warning');
+  }
 }
