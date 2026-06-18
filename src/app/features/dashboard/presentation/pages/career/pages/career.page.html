@@ -1,23 +1,22 @@
-<div class="page-gradient">
-  <div class="mx-auto max-w-7xl space-y-6 px-4 py-8 sm:px-6 lg:px-8">
-    <app-page-header
-      title="Didattica"
-      description="Gestisci la tua carriera accademica e i tuoi esami." />
+<app-dashboard-container>
+  <!-- Page Header -->
+  <app-dashboard-header
+    title="Didattica"
+    description="Gestisci la tua carriera accademica e i tuoi esami." />
 
-    <app-career-stats
-      [arithmeticAverage]="arithmeticAverage()"
-      [weightedAverage]="weightedAverage()"
-      [graduationBase]="graduationBase()"
-      [earnedCfu]="earnedCfu()"
-      [totalCfu]="totalCfu"
-      [cfuProgress]="cfuProgress()" />
+  <app-career-stats
+    [arithmeticAverage]="arithmeticAverage()"
+    [weightedAverage]="weightedAverage()"
+    [graduationBase]="graduationBase()"
+    [earnedCfu]="earnedCfu()"
+    [totalCfu]="totalCfu"
+    [cfuProgress]="cfuProgress()" />
 
-    <app-career-charts [gradeHistory]="gradeHistory()" [averageHistory]="averageHistory()" />
+  <app-career-charts [gradeHistory]="gradeHistory()" [averageHistory]="averageHistory()" />
 
-    <app-career-exams
-      [examGroups]="examGroups()"
-      [filterOptions]="filterOptions"
-      [activeFilter]="activeFilter()"
-      (filterChange)="applyFilter($event)" />
-  </div>
-</div>
+  <app-career-exams
+    [examGroups]="examGroups()"
+    [filterOptions]="filterOptions"
+    [activeFilter]="activeFilter()"
+    (filterChange)="applyFilter($event)" />
+</app-dashboard-container>

@@ -1,6 +1,6 @@
 import { Component, signal, computed } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
-import { PageHeaderComponent } from '@ui/page-header/page-header.component';
+import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
@@ -35,13 +35,15 @@ import {
   MOCK_PROFESSOR_CONTACTS,
   MOCK_INSTITUTIONAL_CONTACTS,
 } from '@shared/data/mock/university-contacts.mock';
+import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 
 @Component({
   selector: 'app-university-contacts',
   standalone: true,
   imports: [
     NgTemplateOutlet,
-    PageHeaderComponent,
+    DashboardContainerComponent,
+    DashboardHeaderComponent,
     CustomCardComponent,
     CustomBadgeComponent,
     CustomButtonComponent,

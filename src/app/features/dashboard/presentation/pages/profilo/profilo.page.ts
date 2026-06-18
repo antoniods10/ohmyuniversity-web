@@ -36,12 +36,16 @@ import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.componen
 import { CourseEntry } from '@shared/types/dashboard/profile.types';
 import { MOCK_ACCOUNT, MOCK_COURSES, MOCK_PROFILE_EDIT } from '@shared/data/mock/profilo.mock';
 import { acronymVariant, cfuPercent } from '@shared/utils/ui.utils';
+import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
+import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 
 @Component({
   selector: 'app-profilo',
   standalone: true,
   imports: [
     FormsModule,
+    DashboardContainerComponent,
+    DashboardHeaderComponent,
     CustomCardComponent,
     CustomBadgeComponent,
     CustomButtonComponent,

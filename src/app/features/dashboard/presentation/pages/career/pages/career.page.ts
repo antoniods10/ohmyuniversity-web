@@ -11,7 +11,8 @@ import type {
   ExamGroup,
   FilterOption,
 } from '@shared/types/dashboard/career.types';
-import { PageHeaderComponent } from '@ui/page-header/page-header.component';
+import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
+import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 
 const TOTAL_CFU = 180;
 const MAX_GRADE = 30;
@@ -22,11 +23,12 @@ const AVERAGE_DECIMALS = 2;
   selector: 'app-didattica-page',
   standalone: true,
   imports: [
+    DashboardContainerComponent,
+    DashboardHeaderComponent,
     CustomBadgeComponent,
     CareerStatsComponent,
     CareerChartsComponent,
     CareerExamsComponent,
-    PageHeaderComponent,
   ],
   templateUrl: './career.page.html',
 })

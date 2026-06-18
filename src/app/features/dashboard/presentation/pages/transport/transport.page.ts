@@ -1,7 +1,7 @@
 import { Component, signal, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { PageHeaderComponent } from '@ui/page-header/page-header.component';
+import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
@@ -25,13 +25,15 @@ import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.componen
 import { TransportCompany, TransportRoute } from '@shared/types/dashboard/transport.types';
 import { MOCK_TRANSPORT_ROUTES, MOCK_TRANSPORT_COMPANIES } from '@shared/data/mock/transport.mock';
 import { APP_NAME } from '@shared/constants';
+import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 
 @Component({
   selector: 'app-transport',
   standalone: true,
   imports: [
     FormsModule,
-    PageHeaderComponent,
+    DashboardContainerComponent,
+    DashboardHeaderComponent,
     CustomCardComponent,
     CustomBadgeComponent,
     CustomButtonComponent,

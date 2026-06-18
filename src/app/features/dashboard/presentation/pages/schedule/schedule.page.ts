@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { PageHeaderComponent } from '@ui/page-header/page-header.component';
+import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
@@ -23,13 +23,15 @@ import { CourseSchedule, ScheduleSearchResult } from '@shared/types/dashboard/sc
 import { MOCK_MY_SCHEDULES } from '@shared/data/mock/schedule.mock';
 import { acronymVariant } from '@shared/utils/ui.utils';
 import { APP_NAME } from '@shared/constants';
+import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 
 @Component({
   selector: 'app-schedule',
   standalone: true,
   imports: [
     FormsModule,
-    PageHeaderComponent,
+    DashboardContainerComponent,
+    DashboardHeaderComponent,
     CustomCardComponent,
     CustomBadgeComponent,
     CustomButtonComponent,
