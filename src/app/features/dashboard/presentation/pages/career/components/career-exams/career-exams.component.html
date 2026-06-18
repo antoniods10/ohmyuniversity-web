@@ -1,0 +1,52 @@
+<app-custom-card padding="none" shadow="sm" radius="md">
+  <header class="border-b border-gray-100 p-4">
+    <div class="flex items-center justify-between gap-4">
+      <h2 appText class="text-lg font-semibold text-gray-900">Registro Esami</h2>
+      <app-custom-tabs
+        [tabs]="filterOptions()"
+        [activeTab]="activeFilter()"
+        tabStyle="pill"
+        variant="primary"
+        (tabChange)="onFilterChange($event)" />
+    </div>
+  </header>
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-left">
+      <thead class="bg-gray-50 text-xs font-semibold uppercase text-gray-500">
+        <tr>
+          <th class="px-5 py-3">Insegnamento</th>
+          <th class="px-5 py-3 text-center">CFU</th>
+          <th class="px-5 py-3 text-center">Voto</th>
+          <th class="px-5 py-3 text-center">Stato</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100 text-sm">
+        @for (group of examGroups(); track group.year) {
+          <tr class="bg-gray-50 font-semibold text-gray-700">
+            <td colspan="4" class="px-5 py-2 text-xs uppercase tracking-wider">
+              {{ group.yearLabel }}
+            </td>
+          </tr>
+          @for (exam of group.exams; track exam.courseCode) {
+            <tr class="transition-colors hover:bg-gray-50">
+              <td class="px-5 py-3.5">
+                <p appText class="font-semibold text-gray-900">{{ exam.courseName }}</p>
+                <p appText class="font-mono text-xs text-gray-400">{{ exam.courseCode }}</p>
+              </td>
+              <td class="px-5 py-3.5 text-center">{{ exam.cfu }}</td>
+              <td class="px-5 py-3.5 text-center font-bold">{{ exam.grade || '—' }}</td>
+              <td class="px-5 py-3.5 text-center">
+                <app-custom-badge
+                  [label]="exam.status === 'PASSED' ? 'Superato' : 'Da sostenere'"
+                  [variant]="exam.status === 'PASSED' ? 'success' : 'neutral'"
+                  shape="rounded"
+                  size="sm" />
+              </td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </div>
+</app-custom-card>

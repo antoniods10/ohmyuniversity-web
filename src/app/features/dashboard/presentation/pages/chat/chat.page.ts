@@ -36,11 +36,13 @@ import {
   MOCK_SHARED_LINKS,
 } from '@shared/data/mock/chat.mock';
 import { acronymVariant } from '@shared/utils/ui.utils';
+import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
   imports: [
+    DashboardContainerComponent,
     NgTemplateOutlet,
     CustomCardComponent,
     CustomBadgeComponent,

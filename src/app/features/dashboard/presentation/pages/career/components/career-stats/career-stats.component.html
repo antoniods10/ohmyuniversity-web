@@ -1,0 +1,45 @@
+<section class="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+  <app-card-stat
+    [icon]="iconCalculator"
+    [value]="arithmeticAverage().toString()"
+    suffix="/ 30"
+    label="Media aritmetica"
+    variant="info"
+    padding="md"
+    shadow="sm" />
+
+  <app-card-stat
+    [icon]="iconScale"
+    [value]="weightedAverage().toString()"
+    suffix="/ 30"
+    label="Media ponderata"
+    variant="secondary"
+    padding="md"
+    shadow="sm" />
+
+  <app-card-stat
+    [icon]="iconGraduation"
+    [value]="graduationBase().toString()"
+    suffix="/ 110"
+    label="Base di laurea"
+    variant="success"
+    padding="md"
+    shadow="sm" />
+
+  <app-card-stat
+    [icon]="iconAward"
+    [value]="earnedCfu().toString()"
+    [suffix]="'/ ' + totalCfu()"
+    label="CFU acquisiti"
+    variant="warning"
+    padding="md"
+    shadow="sm" />
+</section>
+
+<div class="mt-4">
+  <app-card-status
+    statusVariant="info"
+    description="La media ponderata considera i CFU di ogni esame; la base di laurea è (media ponderata / 30) × 110."
+    padding="md"
+    shadow="none" />
+</div>

@@ -269,3 +269,46 @@ h6 {
     transform: translateX(-50%);
   }
 }
+
+@keyframes marquee-login-up {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes marquee-login-down {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-marquee-login-up {
+  animation-name: marquee-login-up;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.animate-marquee-login-down {
+  animation-name: marquee-login-down;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.duration-1 {
+  animation-duration: 26s;
+}
+.duration-2 {
+  animation-duration: 32s;
+}
+.duration-3 {
+  animation-duration: 29s;
+}
+.duration-4 {
+  animation-duration: 35s;
+}

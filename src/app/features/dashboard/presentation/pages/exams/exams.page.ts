@@ -1,5 +1,5 @@
 import { Component, signal, computed, inject } from '@angular/core';
-import { PageHeaderComponent } from '@ui/page-header/page-header.component';
+import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
@@ -26,12 +26,14 @@ import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.componen
 import { Exam, Questionnaire, ExamStatus } from '@shared/types/dashboard/exams.types';
 import { MOCK_EXAMS, MOCK_QUESTIONNAIRES } from '@shared/data/mock/exams.mock';
 import { acronymVariant } from '@shared/utils/ui.utils';
+import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 
 @Component({
   selector: 'app-exams',
   standalone: true,
   imports: [
-    PageHeaderComponent,
+    DashboardHeaderComponent,
+    DashboardContainerComponent,
     CustomCardComponent,
     CustomBadgeComponent,
     CustomButtonComponent,
