@@ -1,4 +1,4 @@
-import { Component, input, output, inject, signal } from '@angular/core';
+import { Component, input, output, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
@@ -22,6 +22,7 @@ import {
   ORIENTATION_TOPICS,
   VITA_SCHEDULE_TIPS,
 } from '@constants';
+import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
 
 @Component({
   selector: 'app-topic-vita',
@@ -45,18 +46,16 @@ export class TopicVitaComponent {
   readonly backToList = output<void>();
 
   private readonly toast = inject(ToastService);
+  private readonly state = inject(OrientationStateService);
 
-  // Icons
   readonly iconCheck = LucideCircleCheck;
   readonly iconSelected = LucideCheck;
   readonly iconInfo = LucideInfo;
 
-  // Data
   readonly consigliOrari = VITA_CONSIGLI_ORARI;
   readonly consigliStudio = VITA_CONSIGLI_STUDIO;
   readonly scheduleTips = VITA_SCHEDULE_TIPS;
 
-  // Weekly schedule blocks - defined locally, UI only
   readonly weekBlocks: {
     icon: any;
     label: string;
@@ -94,14 +93,12 @@ export class TopicVitaComponent {
     },
   ];
 
-  // Questions
   private readonly questions = ORIENTATION_TOPICS.find(t => t.id === 'vita')!.questions;
   readonly questionStudyHours = this.questions[0];
   readonly questionWork = this.questions[1];
 
-  // Local selection state
-  readonly selectedStudyHours = signal<string | null>(null);
-  readonly selectedWork = signal<string | null>(null);
+  readonly selectedStudyHours = computed(() => this.state.getAnswer(this.questionStudyHours.id));
+  readonly selectedWork = computed(() => this.state.getAnswer(this.questionWork.id));
 
   scrollToQuestion(): void {
     document.getElementById('domanda-vita')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -113,13 +110,15 @@ export class TopicVitaComponent {
 
   onSelectStudyHours(value: string): void {
     if (this.selectedStudyHours() === value) return;
-    this.selectedStudyHours.set(value);
+    const label = this.questionStudyHours.options!.find(o => o.value === value)!.label;
+    this.state.saveAnswer(this.questionStudyHours.id, 'vita', value, label);
     this.toast.success('Risposta salvata', { duration: 3000 });
   }
 
   onSelectWork(value: string): void {
     if (this.selectedWork() === value) return;
-    this.selectedWork.set(value);
+    const label = this.questionWork.options!.find(o => o.value === value)!.label;
+    this.state.saveAnswer(this.questionWork.id, 'vita', value, label);
     this.toast.success('Risposta salvata', { duration: 3000 });
   }
 }

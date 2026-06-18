@@ -1,0 +1,117 @@
+<div class="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
+  <!-- Header -->
+  <div class="text-center">
+    <app-custom-badge label="Riepilogo orientamento" variant="primary" shape="pill" size="sm" />
+
+    <div class="mt-4">
+      <h1 appText variant="h1" align="center">Le tue risposte</h1>
+    </div>
+
+    <div class="mt-4">
+      <p appText variant="body-lg" color="muted" align="center" class="mx-auto max-w-lg">
+        Sulla base delle tue risposte elaboreremo un profilo di orientamento personalizzato, con
+        suggerimenti su corsi, atenei e aree di studio più adatte a te. Puoi rivedere o modificare
+        qualsiasi risposta cliccando sulla domanda.
+      </p>
+    </div>
+  </div>
+
+  <!-- Completion banner -->
+  <div class="mt-8">
+    @if (answeredCount() === totalCount()) {
+      <app-card-status
+        statusVariant="success"
+        [icon]="iconCheck"
+        title="Profilo completo"
+        description="Hai risposto a tutte le domande. Il tuo profilo di orientamento è pronto."
+        shadow="sm" />
+    } @else {
+      <app-card-status
+        statusVariant="warning"
+        [icon]="iconInfo"
+        [title]="'Hai risposto a ' + answeredCount() + ' domande su ' + totalCount()"
+        description="Alcune domande non hanno ancora una risposta. Clicca su una voce per completarla."
+        shadow="sm" />
+    }
+  </div>
+
+  <!-- Questions accordion -->
+  <div
+    class="mt-8 divide-y divide-gray-100 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
+    @for (q of summaryQuestions(); track q.questionId) {
+      <!-- Question row -->
+      <button
+        type="button"
+        class="flex w-full items-start gap-4 px-5 py-4 text-left transition-colors hover:bg-gray-50"
+        [class.bg-gray-50]="isExpanded(q.questionId)"
+        (click)="toggleQuestion(q.questionId)">
+        <!-- Status badge -->
+        <div class="mt-1 shrink-0">
+          @if (q.savedAnswer) {
+            <app-custom-badge
+              label=""
+              variant="success"
+              shape="pill"
+              size="xs"
+              [icon]="iconCheck" />
+          } @else {
+            <app-custom-badge label="" variant="neutral" shape="pill" size="xs" />
+          }
+        </div>
+
+        <!-- Content -->
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center gap-2">
+            <app-custom-badge [label]="q.topicTitle" variant="neutral" shape="rounded" size="xs" />
+          </div>
+          <p appText variant="body-sm" weight="semibold" class="mt-1">{{ q.questionText }}</p>
+          @if (q.savedAnswer && !isExpanded(q.questionId)) {
+            <p appText variant="caption" color="primary" class="mt-0.5">
+              {{ q.savedAnswer.label }}
+            </p>
+          }
+          @if (!q.savedAnswer && !isExpanded(q.questionId)) {
+            <p appText variant="caption" color="subtle" class="mt-0.5">Nessuna risposta ancora</p>
+          }
+        </div>
+
+        <!-- Chevron -->
+        <svg
+          [lucideIcon]="iconChevron"
+          [size]="16"
+          class="mt-1 shrink-0 text-gray-400 transition-transform duration-200"
+          [class.rotate-90]="isExpanded(q.questionId)"
+          aria-hidden="true"></svg>
+      </button>
+
+      <!-- Expanded panel with options -->
+      @if (isExpanded(q.questionId)) {
+        <div class="border-t border-blue-200 bg-blue-100 px-5 py-5">
+          <div class="flex flex-col gap-2">
+            @for (option of q.options; track option.value) {
+              <app-custom-button
+                [label]="getLabelClean(option.label)"
+                [variant]="isSelected(q.questionId, option.value) ? 'primary' : 'outline'"
+                [icon]="isSelected(q.questionId, option.value) ? iconSelected : null"
+                iconPosition="left"
+                rounded="lg"
+                size="md"
+                [fullWidth]="true"
+                (clicked)="onSelect(q, option.value)" />
+            }
+          </div>
+        </div>
+      }
+    }
+  </div>
+
+  <!-- Back button -->
+  <div class="mt-8 text-center">
+    <app-custom-button
+      label="Torna alla lista degli argomenti"
+      variant="outline"
+      rounded="lg"
+      size="md"
+      (clicked)="backToList.emit()" />
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, input, output, inject, signal } from '@angular/core';
+import { Component, input, output, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
@@ -19,8 +19,8 @@ import {
   LucideEuro,
 } from '@lucide/angular';
 import { VITA_FUORISEDE, ORIENTATION_TOPICS, BUDGET_TIPS } from '@constants';
+import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
 
-// University cost items with separate min/max for badge display
 const UNIVERSITY_COST_ITEMS: {
   icon: any;
   label: string;
@@ -86,29 +86,29 @@ export class TopicBudgetComponent {
   readonly backToList = output<void>();
 
   private readonly toast = inject(ToastService);
+  private readonly state = inject(OrientationStateService);
 
-  // Icons
   readonly iconCheck = LucideCircleCheck;
   readonly iconSelected = LucideCheck;
   readonly iconInfo = LucideInfo;
   readonly iconChevron = LucideChevronRight;
 
-  // Data
   readonly universityCosts = UNIVERSITY_COST_ITEMS;
   readonly livingCosts = VITA_FUORISEDE;
   readonly tips = BUDGET_TIPS;
 
-  // Accordion state for university costs
   readonly expandedCost = signal<string | null>(null);
 
-  // Questions
   private readonly questions = ORIENTATION_TOPICS.find(t => t.id === 'borse-studio')!.questions;
   readonly questionBudgetAvailability = this.questions[0];
   readonly questionMonthlyBudget = this.questions[1];
 
-  // Local selection state
-  readonly selectedBudgetAvailability = signal<string | null>(null);
-  readonly selectedMonthlyBudget = signal<string | null>(null);
+  readonly selectedBudgetAvailability = computed(() =>
+    this.state.getAnswer(this.questionBudgetAvailability.id),
+  );
+  readonly selectedMonthlyBudget = computed(() =>
+    this.state.getAnswer(this.questionMonthlyBudget.id),
+  );
 
   scrollToQuestion(): void {
     document
@@ -123,20 +123,21 @@ export class TopicBudgetComponent {
   isExpanded(label: string): boolean {
     return this.expandedCost() === label;
   }
-
   isSelected(current: string | null, value: string): boolean {
     return current === value;
   }
 
   onSelectBudgetAvailability(value: string): void {
     if (this.selectedBudgetAvailability() === value) return;
-    this.selectedBudgetAvailability.set(value);
+    const label = this.questionBudgetAvailability.options!.find(o => o.value === value)!.label;
+    this.state.saveAnswer(this.questionBudgetAvailability.id, 'borse-studio', value, label);
     this.toast.success('Risposta salvata', { duration: 3000 });
   }
 
   onSelectMonthlyBudget(value: string): void {
     if (this.selectedMonthlyBudget() === value) return;
-    this.selectedMonthlyBudget.set(value);
+    const label = this.questionMonthlyBudget.options!.find(o => o.value === value)!.label;
+    this.state.saveAnswer(this.questionMonthlyBudget.id, 'borse-studio', value, label);
     this.toast.success('Risposta salvata', { duration: 3000 });
   }
 }

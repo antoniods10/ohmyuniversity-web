@@ -1,4 +1,4 @@
-import { Component, input, output, inject, signal, computed } from '@angular/core';
+import { Component, input, output, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
@@ -17,6 +17,7 @@ import {
 } from '@lucide/angular';
 import { ToastService } from '@ui/custom-toast/toast.service';
 import { QUIZ_TESTS_ESMPIO, ACCESS_TYPES, ACCESS_TIPS, ORIENTATION_TOPICS } from '@constants';
+import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
 
 const ACCESS_ICON_MAP: Record<string, any> = {
   free: LucideBookOpen,
@@ -53,6 +54,7 @@ export class TopicQuizComponent {
   readonly backToList = output<void>();
 
   private readonly toast = inject(ToastService);
+  private readonly state = inject(OrientationStateService);
 
   readonly iconCheck = LucideCircleCheck;
   readonly iconSelected = LucideCheck;
@@ -67,10 +69,12 @@ export class TopicQuizComponent {
   readonly questionTolcDone = this.questions[1];
   readonly questionTolcType = this.questions[2];
 
-  readonly selectedAccessType = signal<string | null>(null);
-  readonly selectedTolcDone = signal<string | null>(null);
-  readonly selectedTolcType = signal<string | null>(null);
+  // Read from state service
+  readonly selectedAccessType = computed(() => this.state.getAnswer(this.questionAccessType.id));
+  readonly selectedTolcDone = computed(() => this.state.getAnswer(this.questionTolcDone.id));
+  readonly selectedTolcType = computed(() => this.state.getAnswer(this.questionTolcType.id));
 
+  // Question 3 visible only when question 2 = 'yes' or 'no-planning'
   readonly showTolcType = computed(
     () => this.selectedTolcDone() === 'yes' || this.selectedTolcDone() === 'no-planning',
   );
@@ -93,21 +97,24 @@ export class TopicQuizComponent {
 
   onSelectAccessType(value: string): void {
     if (this.selectedAccessType() === value) return;
-    this.selectedAccessType.set(value);
+    const label = this.questionAccessType.options!.find(o => o.value === value)!.label;
+    this.state.saveAnswer(this.questionAccessType.id, 'quiz', value, label);
     this.toast.success('Risposta salvata', { duration: 3000 });
   }
 
   onSelectTolcDone(value: string): void {
     if (this.selectedTolcDone() === value) return;
-    this.selectedTolcDone.set(value);
-    // Reset question 3 when question 2 changes
-    this.selectedTolcType.set(null);
+    const label = this.questionTolcDone.options!.find(o => o.value === value)!.label;
+    this.state.saveAnswer(this.questionTolcDone.id, 'quiz', value, label);
+    // Clear question 3 when question 2 changes
+    this.state.clearAnswer(this.questionTolcType.id);
     this.toast.success('Risposta salvata', { duration: 3000 });
   }
 
   onSelectTolcType(value: string): void {
     if (this.selectedTolcType() === value) return;
-    this.selectedTolcType.set(value);
+    const label = this.questionTolcType.options!.find(o => o.value === value)!.label;
+    this.state.saveAnswer(this.questionTolcType.id, 'quiz', value, label);
     this.toast.success('Risposta salvata', { duration: 3000 });
   }
 }

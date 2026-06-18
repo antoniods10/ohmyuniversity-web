@@ -1,4 +1,4 @@
-import { Component, input, output, inject, signal } from '@angular/core';
+import { Component, input, output, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
@@ -30,10 +30,10 @@ import {
   GEO_TIPS,
   ORIENTATION_TOPICS,
 } from '@constants';
+import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
 
 const MAX_VOTO = 5;
 
-// Color map: citta → variant colors
 const CITTA_COLOR_MAP: Record<
   string,
   { bgOn: string; bgOff: string; textOff: string; border: string; panel: string }
@@ -82,14 +82,12 @@ const CITTA_COLOR_MAP: Record<
   },
 };
 
-// Icon map: area → Lucide icon for tab buttons
 const AREA_ICON_MAP: Record<string, any> = {
   Nord: LucideBuilding2,
   Centro: LucideCompass,
   'Sud e Isole': LucideSun,
 };
 
-// Icon map: citta → Lucide icon
 const CITTA_ICON_MAP: Record<string, any> = {
   Bologna: LucideBookMarked,
   Milano: LucideBriefcase,
@@ -121,35 +119,32 @@ export class TopicCostiGeograficiComponent {
   readonly backToList = output<void>();
 
   private readonly toast = inject(ToastService);
+  private readonly state = inject(OrientationStateService);
 
-  // Icons
   readonly iconCheck = LucideCircleCheck;
   readonly iconSelected = LucideCheck;
   readonly iconInfo = LucideInfo;
   readonly iconChevron = LucideChevronRight;
 
-  // Data
   readonly costiAree = COSTI_AREE_GEOGRAFICHE;
   readonly cittaTop = CITTA_TOP;
   readonly areeInfo = AREE_GEO_INFO;
   readonly tips = GEO_TIPS;
 
-  // Active area tab
   readonly activeArea = signal<string>('Nord');
-
-  // Accordion state for città
   readonly expandedCitta = signal<string | null>(null);
 
-  // Questions
   private readonly questions = ORIENTATION_TOPICS.find(t => t.id === 'costi-geografici')!.questions;
   readonly questionAreaPreference = this.questions[0];
   readonly questionCityPriority = this.questions[1];
 
-  // Local selection state
-  readonly selectedAreaPreference = signal<string | null>(null);
-  readonly selectedCityPriority = signal<string | null>(null);
+  readonly selectedAreaPreference = computed(() =>
+    this.state.getAnswer(this.questionAreaPreference.id),
+  );
+  readonly selectedCityPriority = computed(() =>
+    this.state.getAnswer(this.questionCityPriority.id),
+  );
 
-  // Dots array for rating
   readonly dots = Array.from({ length: MAX_VOTO }, (_, i) => i);
 
   scrollToQuestion(): void {
@@ -159,54 +154,56 @@ export class TopicCostiGeograficiComponent {
   setActiveArea(area: string): void {
     this.activeArea.set(area);
   }
-
   toggleCitta(citta: string): void {
     this.expandedCitta.set(this.expandedCitta() === citta ? null : citta);
   }
-
   isCittaExpanded(citta: string): boolean {
     return this.expandedCitta() === citta;
   }
-
   getAreaIcon(area: string): any {
     return AREA_ICON_MAP[area] ?? LucideMapPin;
   }
-
   getCittaIcon(citta: string): any {
     return CITTA_ICON_MAP[citta] ?? LucideMapPin;
   }
-
   getCittaColors(citta: string) {
     return CITTA_COLOR_MAP[citta] ?? CITTA_COLOR_MAP['Bologna'];
   }
+  isSelected(current: string | null, value: string): boolean {
+    return current === value;
+  }
+  isActiveArea(area: string): boolean {
+    return this.activeArea() === area;
+  }
 
   getAreaVariantBg(variant: string): string {
-    const map: Record<string, string> = {
-      primary: 'bg-blue-500',
-      warning: 'bg-amber-500',
-      success: 'bg-green-500',
-    };
-    return map[variant] ?? 'bg-gray-500';
+    return (
+      { primary: 'bg-blue-500', warning: 'bg-amber-500', success: 'bg-green-500' }[variant] ??
+      'bg-gray-500'
+    );
   }
 
   getAreaVariantLight(variant: string): string {
-    const map: Record<string, string> = {
-      primary: 'bg-blue-50 border-blue-200',
-      warning: 'bg-amber-50 border-amber-200',
-      success: 'bg-green-50 border-green-200',
-    };
-    return map[variant] ?? 'bg-gray-50 border-gray-200';
+    return (
+      {
+        primary: 'bg-blue-50 border-blue-200',
+        warning: 'bg-amber-50 border-amber-200',
+        success: 'bg-green-50 border-green-200',
+      }[variant] ?? 'bg-gray-50 border-gray-200'
+    );
   }
 
   getTabVariant(area: string): 'primary' | 'success' | 'warning' {
     if (this.activeArea() !== area) return 'primary';
     const info = this.areeInfo.find(a => a.area === area);
-    const map: Record<string, 'primary' | 'success' | 'warning'> = {
-      primary: 'primary',
-      warning: 'warning',
-      success: 'success',
-    };
-    return map[info?.variant ?? 'primary'] ?? 'primary';
+    return (
+      (
+        { primary: 'primary', warning: 'warning', success: 'success' } as Record<
+          string,
+          'primary' | 'success' | 'warning'
+        >
+      )[info?.variant ?? 'primary'] ?? 'primary'
+    );
   }
 
   getCostoVariant(area: string): 'success' | 'warning' | 'error' {
@@ -215,23 +212,17 @@ export class TopicCostiGeograficiComponent {
     return 'error';
   }
 
-  isSelected(current: string | null, value: string): boolean {
-    return current === value;
-  }
-
-  isActiveArea(area: string): boolean {
-    return this.activeArea() === area;
-  }
-
   onSelectAreaPreference(value: string): void {
     if (this.selectedAreaPreference() === value) return;
-    this.selectedAreaPreference.set(value);
+    const label = this.questionAreaPreference.options!.find(o => o.value === value)!.label;
+    this.state.saveAnswer(this.questionAreaPreference.id, 'costi-geografici', value, label);
     this.toast.success('Risposta salvata', { duration: 3000 });
   }
 
   onSelectCityPriority(value: string): void {
     if (this.selectedCityPriority() === value) return;
-    this.selectedCityPriority.set(value);
+    const label = this.questionCityPriority.options!.find(o => o.value === value)!.label;
+    this.state.saveAnswer(this.questionCityPriority.id, 'costi-geografici', value, label);
     this.toast.success('Risposta salvata', { duration: 3000 });
   }
 }
