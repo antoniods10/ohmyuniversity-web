@@ -5,7 +5,6 @@ import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
-import { CustomLinkComponent } from '@ui/custom-link/custom-link.component';
 import {
   LucideDynamicIcon,
   LucideCircleCheck,
@@ -20,8 +19,8 @@ import {
   LucideLayers,
 } from '@lucide/angular';
 import { ToastService } from '@ui/custom-toast/toast.service';
-import { CORSO_CONSIGLI, ORIENTATION_TOPICS } from '@constants';
-import { InlineOption, AreaEstesa } from '@types';
+import { STUDY_AREA_TIPS, ORIENTATION_TOPICS } from '@constants';
+import { InlineOption, ExtendedStudyArea } from '@types';
 import {
   getIconBgClass,
   getIconColorClass,
@@ -30,7 +29,7 @@ import {
 } from '@shared/utils/orientation.utils';
 import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
 
-const AREE_ESTESE: AreaEstesa[] = [
+const AREE_ESTESE: ExtendedStudyArea[] = [
   {
     value: 'umanistica',
     label: 'Umanistica',
@@ -173,12 +172,11 @@ export class TopicCorsoComponent {
   readonly iconInfo = LucideInfo;
 
   readonly areeEstese = AREE_ESTESE;
-  readonly consigli = CORSO_CONSIGLI;
+  readonly consigli = STUDY_AREA_TIPS;
   readonly question = ORIENTATION_TOPICS.find(t => t.id === 'corso')!.questions[0];
 
   readonly expandedArea = signal<string | null>(null);
 
-  // Read from state service
   readonly selectedValue = computed(() => this.state.getAnswer(this.question.id));
 
   readonly getIconBgClass = getIconBgClass;
@@ -208,14 +206,9 @@ export class TopicCorsoComponent {
     return AREA_ICONS[value] ?? null;
   }
 
-  getLabelClean(option: InlineOption): string {
-    return option.label.replace(/^\S+\s/, '');
-  }
-
   onSelect(value: string): void {
     const option = this.question.options!.find((o: InlineOption) => o.value === value)!;
-    const label = this.getLabelClean(option);
-    this.state.saveAnswer(this.question.id, 'corso', value, label);
-    this.toast.success(`Area selezionata: ${label}`, { duration: 3000 });
+    this.state.saveAnswer(this.question.id, 'corso', value, option.label);
+    this.toast.success(`Area selezionata: ${option.label}`, { duration: 3000 });
   }
 }

@@ -9,7 +9,7 @@ import { CustomLinkComponent } from '@ui/custom-link/custom-link.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 import { ToastService } from '@ui/custom-toast/toast.service';
 import { LucideCircleCheck, LucideCheck, LucideInfo, LucideTriangleAlert } from '@lucide/angular';
-import { SBOCCHI_AREE, SBOCCHI_CONSIGLI, ORIENTATION_TOPICS } from '@constants';
+import { CAREER_AREAS, CAREER_TIPS, ORIENTATION_TOPICS } from '@constants';
 import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
 
 @Component({
@@ -42,8 +42,8 @@ export class TopicSbocchiComponent {
   readonly iconInfo = LucideInfo;
   readonly iconWarn = LucideTriangleAlert;
 
-  readonly aree = SBOCCHI_AREE;
-  readonly consigli = SBOCCHI_CONSIGLI;
+  readonly aree = CAREER_AREAS;
+  readonly consigli = CAREER_TIPS;
 
   private readonly questions = ORIENTATION_TOPICS.find(t => t.id === 'sbocchi')!.questions;
   readonly questionCareerPriority = this.questions[0];

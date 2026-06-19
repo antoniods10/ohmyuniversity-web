@@ -1,0 +1,307 @@
+import { TopicModel } from '@types';
+
+/** All 8 orientation topics with their inline questions (20 total) */
+export const ORIENTATION_TOPICS: TopicModel[] = [
+  {
+    id: 'corso',
+    title: 'Scegli il corso adatto a te',
+    subtitle: 'Materie, aree, sedi - come orientarsi',
+    questions: [
+      {
+        id: 'corso-area',
+        topicId: 'corso',
+        text: 'Quale area di studio ti attira di più?',
+        type: 'single-select',
+        required: true,
+        options: [
+          { value: 'umanistica', label: 'Umanistica' },
+          { value: 'scientifica', label: 'Scientifica' },
+          { value: 'ingegneria', label: 'Ingegneria & Informatica' },
+          { value: 'economica', label: 'Economica & Giuridica' },
+          { value: 'sanitaria', label: 'Sanitaria' },
+          { value: 'artistica', label: 'Artistica & del Design' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'quiz',
+    title: "Accesso all'università",
+    subtitle: "TOLC, test d'ingresso e modalità di accesso",
+    questions: [
+      {
+        id: 'quiz-access-type',
+        topicId: 'quiz',
+        text: 'Hai già in mente se affrontare un corso a numero chiuso o preferiresti uno ad accesso libero?',
+        type: 'single-select',
+        required: true,
+        options: [
+          { value: 'restricted', label: 'Voglio provare un corso a numero chiuso' },
+          { value: 'free', label: 'Preferisco un corso ad accesso libero' },
+          { value: 'undecided', label: 'Non ho ancora deciso' },
+        ],
+      },
+      {
+        id: 'quiz-tolc-done',
+        topicId: 'quiz',
+        text: 'Hai già sostenuto un TOLC?',
+        type: 'single-select',
+        required: false,
+        options: [
+          { value: 'yes', label: "Sì, l'ho già sostenuto" },
+          { value: 'no-planning', label: 'No, ma ho intenzione di farlo' },
+          { value: 'no-unsure', label: 'Non ancora, devo capire quale fare' },
+        ],
+      },
+      {
+        id: 'quiz-tolc-type',
+        topicId: 'quiz',
+        text: 'Quale TOLC hai sostenuto o stai pianificando?',
+        type: 'single-select',
+        required: false,
+        options: [
+          { value: 'tolc-med', label: 'TOLC-MED - Medicina e professioni sanitarie' },
+          { value: 'tolc-i', label: 'TOLC-I - Ingegneria' },
+          { value: 'tolc-e', label: 'TOLC-E - Economia' },
+          { value: 'tolc-s', label: 'TOLC-S - Scienze' },
+          { value: 'tolc-su', label: 'TOLC-SU - Scienze Umane' },
+          { value: 'tolc-f', label: 'TOLC-F - Farmacia' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'come-funziona',
+    title: "Come funziona l'università",
+    subtitle: 'CFU, esami, sessioni e autonomia',
+    questions: [
+      {
+        id: 'come-funziona-study-style',
+        topicId: 'come-funziona',
+        text: 'Come preferisci organizzare il tuo studio?',
+        type: 'single-select',
+        required: true,
+        options: [
+          { value: 'continuous', label: 'Seguo le lezioni e studio subito dopo' },
+          { value: 'binge', label: 'Studio tutto prima degli esami' },
+          { value: 'unsure', label: 'Non lo so ancora, devo capire come funziona' },
+        ],
+      },
+      {
+        id: 'come-funziona-esami',
+        topicId: 'come-funziona',
+        text: 'Che tipo di esame preferisci?',
+        type: 'single-select',
+        required: false,
+        options: [
+          { value: 'oral', label: 'Orale - mi esprimo meglio a voce' },
+          { value: 'written', label: 'Scritto - preferisco ragionare sul foglio' },
+          { value: 'mixed', label: 'Misto - dipende dalla materia' },
+        ],
+      },
+      {
+        id: 'come-funziona-autonomy',
+        topicId: 'come-funziona',
+        text: "Come ti senti rispetto all'autonomia che richiede l'università?",
+        type: 'single-select',
+        required: false,
+        options: [
+          { value: 'ready', label: 'Mi sento pronto/a a gestirmi da solo' },
+          { value: 'nervous', label: 'Ho qualche preoccupazione ma voglio provarci' },
+          { value: 'unsure', label: 'Ho bisogno di capire meglio cosa mi aspetta' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'vita',
+    title: 'Orari e impegno',
+    subtitle: 'Come si struttura la settimana, studio individuale e lavoro',
+    questions: [
+      {
+        id: 'vita-study-hours',
+        topicId: 'vita',
+        text: 'Quante ore al giorno pensi di poter dedicare allo studio individuale, oltre alle lezioni?',
+        type: 'single-select',
+        required: true,
+        options: [
+          { value: 'less-2', label: 'Meno di 2 ore' },
+          { value: '2-4', label: '2-4 ore' },
+          { value: 'more-4', label: 'Più di 4 ore' },
+          { value: 'unsure', label: 'Non ci ho ancora pensato' },
+        ],
+      },
+      {
+        id: 'vita-work',
+        topicId: 'vita',
+        text: 'Pensi di lavorare mentre studi?',
+        type: 'single-select',
+        required: false,
+        options: [
+          { value: 'yes', label: 'Sì, ho già un lavoro part-time' },
+          { value: 'maybe', label: 'Forse, dipende dalle esigenze' },
+          { value: 'no', label: 'No, voglio concentrarmi solo sullo studio' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'sbocchi',
+    title: 'Sbocchi lavorativi',
+    subtitle: 'Occupazione e stipendi per area di studio',
+    questions: [
+      {
+        id: 'sbocchi-career-priority',
+        topicId: 'sbocchi',
+        text: 'Cosa conta di più per te nel lavoro che vorresti fare?',
+        type: 'single-select',
+        required: true,
+        options: [
+          { value: 'stability', label: 'La stabilità e la sicurezza economica' },
+          { value: 'growth', label: 'La possibilità di crescere e fare carriera' },
+          { value: 'passion', label: 'Fare qualcosa che mi appassiona davvero' },
+          { value: 'impact', label: "L'impatto sociale o ambientale del mio lavoro" },
+        ],
+      },
+      {
+        id: 'sbocchi-work-context',
+        topicId: 'sbocchi',
+        text: 'In che tipo di ambiente ti immagini a lavorare?',
+        type: 'single-select',
+        required: false,
+        options: [
+          { value: 'big-company', label: 'Grande azienda o multinazionale' },
+          { value: 'startup', label: 'Piccola impresa o startup' },
+          { value: 'public', label: 'Settore pubblico o enti statali' },
+          { value: 'freelance', label: 'Libera professione o lavoro autonomo' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'borse-studio',
+    title: 'Budget e costi reali',
+    subtitle: 'Costi universitari, vita da studente e gestione del budget',
+    questions: [
+      {
+        id: 'budget-availability',
+        topicId: 'borse-studio',
+        text: 'Come descriveresti la tua disponibilità economica per gli anni universitari?',
+        type: 'single-select',
+        required: true,
+        options: [
+          { value: 'good', label: 'Ho una buona disponibilità, posso coprire le spese' },
+          {
+            value: 'limited',
+            label: 'Ho una disponibilità limitata, dovrò gestirmi con attenzione',
+          },
+          { value: 'support', label: 'Avrò bisogno di supporto esterno (borse, lavoro, famiglia)' },
+          { value: 'unsure', label: 'Non ho ancora fatto i conti' },
+        ],
+      },
+      {
+        id: 'budget-monthly',
+        topicId: 'borse-studio',
+        text: "Hai già un'idea di quanto budget mensile potresti avere a disposizione da studente?",
+        type: 'single-select',
+        required: false,
+        options: [
+          { value: 'less-400', label: 'Meno di 400 €/mese' },
+          { value: '400-700', label: 'Tra 400 e 700 €/mese' },
+          { value: '700-1000', label: 'Tra 700 e 1.000 €/mese' },
+          { value: 'more-1000', label: 'Più di 1.000 €/mese' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'costi-geografici',
+    title: 'Dove studiare in Italia',
+    subtitle: 'Aree geografiche, qualità della vita e costi per regione',
+    questions: [
+      {
+        id: 'geo-area-preference',
+        topicId: 'costi-geografici',
+        text: 'Hai già in mente in quale area geografica vorresti studiare?',
+        type: 'single-select',
+        required: true,
+        options: [
+          { value: 'nord', label: 'Nord - grandi città, più opportunità' },
+          { value: 'centro', label: 'Centro - equilibrio tra costi e servizi' },
+          { value: 'sud', label: 'Sud e Isole - costi bassi, vita più tranquilla' },
+          { value: 'no-pref', label: 'Non ho preferenze geografiche' },
+        ],
+      },
+      {
+        id: 'geo-city-priority',
+        topicId: 'costi-geografici',
+        text: 'Cosa conta di più per te nella scelta della città universitaria?',
+        type: 'single-select',
+        required: false,
+        options: [
+          { value: 'proximity', label: 'La vicinanza a casa' },
+          { value: 'job-market', label: 'Le opportunità lavorative nella zona' },
+          { value: 'cost', label: 'Il costo della vita' },
+          { value: 'social-life', label: 'La vivacità culturale e sociale' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'errori',
+    title: 'Errori comuni da evitare',
+    subtitle: 'Le trappole in cui cadono quasi tutti',
+    questions: [
+      {
+        id: 'errori-confidence',
+        topicId: 'errori',
+        text: 'Quanto ti senti sicuro/a riguardo alla scelta che stai per fare?',
+        type: 'single-select',
+        required: true,
+        options: [
+          { value: 'very-sure', label: 'Molto sicuro, ho già le idee chiare' },
+          { value: 'fairly-sure', label: 'Abbastanza sicuro, ma con qualche dubbio' },
+          { value: 'unsure', label: 'Poco sicuro, sto ancora valutando' },
+          { value: 'confused', label: 'Per niente sicuro, sono confuso/a' },
+        ],
+      },
+      {
+        id: 'errori-info-source',
+        topicId: 'errori',
+        text: 'Da chi hai ricevuto più consigli sulla scelta universitaria finora?',
+        type: 'single-select',
+        required: true,
+        options: [
+          { value: 'family', label: 'Famiglia' },
+          { value: 'friends', label: 'Amici e coetanei' },
+          { value: 'teachers', label: 'Insegnanti o orientatori scolastici' },
+          { value: 'internet', label: 'Internet e social media' },
+          { value: 'alone', label: 'Nessuno, sto decidendo da solo/a' },
+        ],
+      },
+      {
+        id: 'errori-talked-to-students',
+        topicId: 'errori',
+        text: 'Hai già parlato con studenti universitari del corso che ti interessa?',
+        type: 'single-select',
+        required: true,
+        options: [
+          { value: 'yes', label: 'Sì' },
+          { value: 'no', label: 'No' },
+        ],
+      },
+      {
+        id: 'errori-study-plan-check',
+        topicId: 'errori',
+        text: 'Hai già controllato il piano di studi completo del corso che ti interessa?',
+        type: 'single-select',
+        required: true,
+        options: [
+          { value: 'thoroughly', label: "Sì, l'ho guardato nel dettaglio" },
+          { value: 'briefly', label: "L'ho visto solo di passaggio" },
+          { value: 'no', label: 'No, non ancora' },
+        ],
+      },
+    ],
+  },
+];

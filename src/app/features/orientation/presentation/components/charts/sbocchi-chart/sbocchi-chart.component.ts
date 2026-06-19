@@ -1,6 +1,6 @@
 import { Component, input, AfterViewInit, ElementRef, ViewChild, OnChanges } from '@angular/core';
 import { SBOCCHI_CHART_DEFAULT_DATA } from '@constants';
-import { SboccoDataPoint } from '@types';
+import { CareerChartDataPoint } from '@types';
 
 @Component({
   selector: 'app-sbocchi-chart',
@@ -8,7 +8,7 @@ import { SboccoDataPoint } from '@types';
   templateUrl: './sbocchi-chart.component.html',
 })
 export class SbocchiChartComponent implements AfterViewInit, OnChanges {
-  readonly data = input<SboccoDataPoint[]>(SBOCCHI_CHART_DEFAULT_DATA);
+  readonly data = input<CareerChartDataPoint[]>(SBOCCHI_CHART_DEFAULT_DATA);
 
   @ViewChild('canvas') canvasRef!: ElementRef<HTMLCanvasElement>;
 

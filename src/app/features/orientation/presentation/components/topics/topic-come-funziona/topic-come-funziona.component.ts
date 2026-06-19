@@ -25,9 +25,9 @@ import {
   LucideSun,
 } from '@lucide/angular';
 import {
-  COME_FUNZIONA_DIFFERENZE,
-  COME_FUNZIONA_TIPI_ESAME,
-  COME_FUNZIONA_SESSIONI,
+  UNIVERSITY_VS_SCHOOL_DIFFERENCES,
+  EXAM_TYPES,
+  EXAM_SESSIONS,
   COME_FUNZIONA_TIPS,
   ORIENTATION_TOPICS,
 } from '@constants';
@@ -77,9 +77,9 @@ export class TopicComeFunzionaComponent {
   readonly iconSelected = LucideCheck;
   readonly iconInfo = LucideInfo;
 
-  readonly differenze = COME_FUNZIONA_DIFFERENZE;
-  readonly tipiEsame = COME_FUNZIONA_TIPI_ESAME;
-  readonly sessioniInfo = COME_FUNZIONA_SESSIONI;
+  readonly differenze = UNIVERSITY_VS_SCHOOL_DIFFERENCES;
+  readonly tipiEsame = EXAM_TYPES;
+  readonly sessioniInfo = EXAM_SESSIONS;
   readonly tips = COME_FUNZIONA_TIPS;
 
   private readonly questions = ORIENTATION_TOPICS.find(t => t.id === 'come-funziona')!.questions;

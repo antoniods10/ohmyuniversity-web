@@ -18,10 +18,9 @@ import {
   LucideMapPin,
   LucideHourglass,
 } from '@lucide/angular';
-import { APP_NAME, ERRORI_ORIENTAMENTO, ORIENTATION_TOPICS } from '@constants';
+import { APP_NAME, COMMON_MISTAKES, ORIENTATION_TOPICS } from '@constants';
 import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
 
-// Icon map: error title → Lucide icon (replaces emoji)
 const ERROR_ICON_MAP: Record<string, any> = {
   'Scegliere per moda': LucideSparkles,
   'Seguire gli amici': LucideUsers,
@@ -58,22 +57,18 @@ export class TopicErroriComponent {
   private readonly toast = inject(ToastService);
   private readonly state = inject(OrientationStateService);
 
-  // Icons
   readonly iconCheck = LucideCircleCheck;
   readonly iconSelected = LucideCheck;
   readonly iconInfo = LucideInfo;
 
-  // Data
-  readonly errori = ERRORI_ORIENTAMENTO;
+  readonly errori = COMMON_MISTAKES;
 
-  // Questions (4 awareness questions)
   private readonly questions = ORIENTATION_TOPICS.find(t => t.id === 'errori')!.questions;
   readonly questionConfidence = this.questions[0];
   readonly questionInfoSource = this.questions[1];
   readonly questionTalkedTo = this.questions[2];
   readonly questionStudyPlan = this.questions[3];
 
-  // Read from state service
   readonly selectedConfidence = computed(() => this.state.getAnswer(this.questionConfidence.id));
   readonly selectedInfoSource = computed(() => this.state.getAnswer(this.questionInfoSource.id));
   readonly selectedTalkedTo = computed(() => this.state.getAnswer(this.questionTalkedTo.id));

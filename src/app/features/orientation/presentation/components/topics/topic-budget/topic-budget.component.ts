@@ -18,7 +18,7 @@ import {
   LucideWallet,
   LucideEuro,
 } from '@lucide/angular';
-import { VITA_FUORISEDE, ORIENTATION_TOPICS, BUDGET_TIPS } from '@constants';
+import { BUDGET_LIVING_COSTS, ORIENTATION_TOPICS, BUDGET_TIPS } from '@constants';
 import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
 
 const UNIVERSITY_COST_ITEMS: {
@@ -94,7 +94,7 @@ export class TopicBudgetComponent {
   readonly iconChevron = LucideChevronRight;
 
   readonly universityCosts = UNIVERSITY_COST_ITEMS;
-  readonly livingCosts = VITA_FUORISEDE;
+  readonly livingCosts = BUDGET_LIVING_COSTS;
   readonly tips = BUDGET_TIPS;
 
   readonly expandedCost = signal<string | null>(null);

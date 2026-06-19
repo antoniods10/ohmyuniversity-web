@@ -17,8 +17,8 @@ import {
   LucideZap,
 } from '@lucide/angular';
 import {
-  VITA_CONSIGLI_ORARI,
-  VITA_CONSIGLI_STUDIO,
+  VITA_TIMETABLE_TIPS,
+  VITA_STUDY_TIPS,
   ORIENTATION_TOPICS,
   VITA_SCHEDULE_TIPS,
 } from '@constants';
@@ -52,8 +52,8 @@ export class TopicVitaComponent {
   readonly iconSelected = LucideCheck;
   readonly iconInfo = LucideInfo;
 
-  readonly consigliOrari = VITA_CONSIGLI_ORARI;
-  readonly consigliStudio = VITA_CONSIGLI_STUDIO;
+  readonly consigliOrari = VITA_TIMETABLE_TIPS;
+  readonly consigliStudio = VITA_STUDY_TIPS;
   readonly scheduleTips = VITA_SCHEDULE_TIPS;
 
   readonly weekBlocks: {

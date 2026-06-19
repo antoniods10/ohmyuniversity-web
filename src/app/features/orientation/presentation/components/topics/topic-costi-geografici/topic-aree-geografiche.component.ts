@@ -24,9 +24,9 @@ import {
   LucideSun,
 } from '@lucide/angular';
 import {
-  COSTI_AREE_GEOGRAFICHE,
-  CITTA_TOP,
-  AREE_GEO_INFO,
+  GEOGRAPHIC_AREA_COSTS,
+  TOP_CITIES,
+  GEOGRAPHIC_AREA_INFO,
   GEO_TIPS,
   ORIENTATION_TOPICS,
 } from '@constants';
@@ -126,9 +126,9 @@ export class TopicCostiGeograficiComponent {
   readonly iconInfo = LucideInfo;
   readonly iconChevron = LucideChevronRight;
 
-  readonly costiAree = COSTI_AREE_GEOGRAFICHE;
-  readonly cittaTop = CITTA_TOP;
-  readonly areeInfo = AREE_GEO_INFO;
+  readonly costiAree = GEOGRAPHIC_AREA_COSTS;
+  readonly cittaTop = TOP_CITIES;
+  readonly areeInfo = GEOGRAPHIC_AREA_INFO;
   readonly tips = GEO_TIPS;
 
   readonly activeArea = signal<string>('Nord');
@@ -178,18 +178,24 @@ export class TopicCostiGeograficiComponent {
 
   getAreaVariantBg(variant: string): string {
     return (
-      { primary: 'bg-blue-500', warning: 'bg-amber-500', success: 'bg-green-500' }[variant] ??
-      'bg-gray-500'
+      (
+        { primary: 'bg-blue-500', warning: 'bg-amber-500', success: 'bg-green-500' } as Record<
+          string,
+          string
+        >
+      )[variant] ?? 'bg-gray-500'
     );
   }
 
   getAreaVariantLight(variant: string): string {
     return (
-      {
-        primary: 'bg-blue-50 border-blue-200',
-        warning: 'bg-amber-50 border-amber-200',
-        success: 'bg-green-50 border-green-200',
-      }[variant] ?? 'bg-gray-50 border-gray-200'
+      (
+        {
+          primary: 'bg-blue-50 border-blue-200',
+          warning: 'bg-amber-50 border-amber-200',
+          success: 'bg-green-50 border-green-200',
+        } as Record<string, string>
+      )[variant] ?? 'bg-gray-50 border-gray-200'
     );
   }
 
