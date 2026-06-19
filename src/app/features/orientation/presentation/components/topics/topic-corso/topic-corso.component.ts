@@ -154,7 +154,6 @@ const AREA_ICONS: Record<string, any> = {
     CustomButtonComponent,
     CustomBadgeComponent,
     CardStatusComponent,
-    CustomLinkComponent,
   ],
   templateUrl: './topic-corso.component.html',
 })

@@ -137,7 +137,8 @@
       [hasNext]="hasNext()"
       (prev)="prev()"
       (next)="next()"
-      (backToList)="close()" />
+      (backToList)="close()"
+      (goToSummary)="openSummary()" />
   }
   @if (activeTopic() === 'borse-studio') {
     <app-topic-budget
