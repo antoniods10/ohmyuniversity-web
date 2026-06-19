@@ -13,7 +13,7 @@ import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CardNavComponent } from '@ui/custom-card/card-variants.component';
-import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
+import { OrientationStateService } from '@orientation/application/state/orientation.state';
 import { ORIENTATION_TOPICS } from '@constants';
 import { TopicId } from '@types';
 import { LucideClipboardList } from '@lucide/angular';

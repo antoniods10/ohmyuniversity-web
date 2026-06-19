@@ -19,7 +19,7 @@ import {
   LucideEuro,
 } from '@lucide/angular';
 import { BUDGET_LIVING_COSTS, ORIENTATION_TOPICS, BUDGET_TIPS } from '@constants';
-import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
+import { OrientationStateService } from '@orientation/application/state/orientation.state';
 
 const UNIVERSITY_COST_ITEMS: {
   icon: any;

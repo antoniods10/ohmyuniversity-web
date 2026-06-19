@@ -30,7 +30,7 @@ import {
   GEO_TIPS,
   ORIENTATION_TOPICS,
 } from '@constants';
-import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
+import { OrientationStateService } from '@orientation/application/state/orientation.state';
 
 const MAX_VOTO = 5;
 

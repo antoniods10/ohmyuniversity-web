@@ -7,3 +7,4 @@ export * from './orientation-sbocchi.constants';
 export * from './orientation-budget.constants';
 export * from './orientation-errori.constants';
 export * from './orientation-geografia.constants';
+export * from './university-orientation.constants';

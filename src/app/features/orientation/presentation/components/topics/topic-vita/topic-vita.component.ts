@@ -22,7 +22,7 @@ import {
   ORIENTATION_TOPICS,
   VITA_SCHEDULE_TIPS,
 } from '@constants';
-import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
+import { OrientationStateService } from '@orientation/application/state/orientation.state';
 
 @Component({
   selector: 'app-topic-vita',

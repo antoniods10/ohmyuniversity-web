@@ -27,7 +27,7 @@ import {
   getLabelColorClass,
   getVariantBorderClass,
 } from '@shared/utils/orientation.utils';
-import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
+import { OrientationStateService } from '@orientation/application/state/orientation.state';
 
 const AREE_ESTESE: ExtendedStudyArea[] = [
   {

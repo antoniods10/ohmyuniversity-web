@@ -1,6 +1,7 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { ORIENTATION_TOPICS } from '@constants';
 import { TopicId } from '@types';
+import { computeOrientationResult, OrientationResult } from './orientation-scoring';
 
 export interface SavedAnswer {
   questionId: string;
@@ -11,18 +12,23 @@ export interface SavedAnswer {
 
 @Injectable({ providedIn: 'root' })
 export class OrientationStateService {
-  // Map: questionId → SavedAnswer
   private readonly _answers = signal<Map<string, SavedAnswer>>(new Map());
 
   readonly answers = computed(() => Array.from(this._answers().values()));
 
   readonly totalQuestions = computed(() =>
-    ORIENTATION_TOPICS.reduce((sum, t) => sum + t.questions.length, 0),
+    ORIENTATION_TOPICS.reduce((sum, t) => sum + t.questions.length, 0)
   );
 
   readonly answeredCount = computed(() => this._answers().size);
 
   readonly isComplete = computed(() => this.answeredCount() === this.totalQuestions());
+
+  /** Computed orientation result — recalculated automatically whenever answers change */
+  readonly result = computed<OrientationResult | null>(() => {
+    if (!this.isComplete()) return null;
+    return computeOrientationResult(this.answers());
+  });
 
   getAnswer(questionId: string): string | null {
     return this._answers().get(questionId)?.value ?? null;
