@@ -7,18 +7,18 @@
   <div class="mt-3">
     <p appText variant="body-sm" color="muted">
       La scelta del corso è la decisione più importante di questo momento. Non si tratta solo di
-      quello "migliore", si tratta di capire dove puoi dare il meglio di te per i prossimi tre anni
-      e oltre.
+      trovare "il migliore" si tratta di capire dove puoi dare il meglio di te per i prossimi tre
+      anni e oltre.
     </p>
   </div>
 
-  <!-- Banner domanda -->
+  <!-- Question banner -->
   <div class="mt-5">
     <app-card-status
       statusVariant="info"
       [icon]="iconInfo"
       title="C'è una domanda per te in fondo a questa sezione"
-      description="Leggila con calma, poi rispondi - aggiorna automaticamente il tuo profilo di orientamento."
+      description="Leggila con calma, poi rispondi, aggiorna automaticamente il tuo profilo di orientamento."
       shadow="none"
       padding="sm"
       [hoverable]="true"
@@ -26,7 +26,7 @@
       (cardClick)="scrollToQuestion()" />
   </div>
 
-  <!-- Aree di studio -->
+  <!-- Study areas -->
   <div class="mt-8">
     <h3 appText variant="h4">Le grandi aree di studio</h3>
     <div class="mt-2">
@@ -95,7 +95,7 @@
     </div>
   </div>
 
-  <!-- Consigli pratici -->
+  <!-- Practical tips -->
   <div class="mt-8">
     <h3 appText variant="h4">Come orientarsi nella scelta</h3>
     <div class="mt-2">
@@ -116,7 +116,7 @@
     </div>
   </div>
 
-  <!-- Domanda inline -->
+  <!-- Inline question -->
   <div id="domanda-corso" class="mt-8 rounded-xl bg-blue-100 px-6 py-8">
     <div class="flex items-start gap-3">
       <div class="mt-1.5 h-8 w-1 shrink-0 rounded-full bg-blue-400"></div>
@@ -134,7 +134,7 @@
         <div class="mt-5 grid gap-2 sm:grid-cols-2">
           @for (option of question.options; track option.value) {
             <app-custom-button
-              [label]="getLabelClean(option)"
+              [label]="option.label"
               [variant]="isSelected(option.value) ? 'primary' : 'outline'"
               [icon]="isSelected(option.value) ? iconSelected : getAreaIcon(option.value)"
               iconPosition="left"

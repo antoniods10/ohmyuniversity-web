@@ -1,4 +1,4 @@
-import { Component, input, output, inject, signal } from '@angular/core';
+import { Component, input, output, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
 import { CfuChartComponent } from '../../charts/cfu-chart/cfu-chart.component';
@@ -25,14 +25,14 @@ import {
   LucideSun,
 } from '@lucide/angular';
 import {
-  COME_FUNZIONA_DIFFERENZE,
-  COME_FUNZIONA_TIPI_ESAME,
-  COME_FUNZIONA_SESSIONI,
+  UNIVERSITY_VS_SCHOOL_DIFFERENCES,
+  EXAM_TYPES,
+  EXAM_SESSIONS,
   COME_FUNZIONA_TIPS,
   ORIENTATION_TOPICS,
 } from '@constants';
+import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
 
-// Icon map: exam type → Lucide icon (all registered in app.config.ts)
 const EXAM_ICON_MAP: Record<string, any> = {
   Scritto: LucideFilePenLine,
   Orale: LucideMessageSquare,
@@ -40,7 +40,6 @@ const EXAM_ICON_MAP: Record<string, any> = {
   'Progetto / Elaborato': LucideFolderOpen,
 };
 
-// Icon map: session label → Lucide icon
 const SESSION_ICON_MAP: Record<string, any> = {
   'Sessione invernale': LucideCalendarDays,
   'Sessione estiva': LucideSun,
@@ -71,15 +70,16 @@ export class TopicComeFunzionaComponent {
   readonly backToList = output<void>();
 
   private readonly toast = inject(ToastService);
+  private readonly state = inject(OrientationStateService);
 
   readonly iconWarn = LucideTriangleAlert;
   readonly iconCheck = LucideCircleCheck;
   readonly iconSelected = LucideCheck;
   readonly iconInfo = LucideInfo;
 
-  readonly differenze = COME_FUNZIONA_DIFFERENZE;
-  readonly tipiEsame = COME_FUNZIONA_TIPI_ESAME;
-  readonly sessioniInfo = COME_FUNZIONA_SESSIONI;
+  readonly differenze = UNIVERSITY_VS_SCHOOL_DIFFERENCES;
+  readonly tipiEsame = EXAM_TYPES;
+  readonly sessioniInfo = EXAM_SESSIONS;
   readonly tips = COME_FUNZIONA_TIPS;
 
   private readonly questions = ORIENTATION_TOPICS.find(t => t.id === 'come-funziona')!.questions;
@@ -87,9 +87,9 @@ export class TopicComeFunzionaComponent {
   readonly questionExamType = this.questions[1];
   readonly questionAutonomy = this.questions[2];
 
-  readonly selectedStudyStyle = signal<string | null>(null);
-  readonly selectedExamType = signal<string | null>(null);
-  readonly selectedAutonomy = signal<string | null>(null);
+  readonly selectedStudyStyle = computed(() => this.state.getAnswer(this.questionStudyStyle.id));
+  readonly selectedExamType = computed(() => this.state.getAnswer(this.questionExamType.id));
+  readonly selectedAutonomy = computed(() => this.state.getAnswer(this.questionAutonomy.id));
 
   scrollToQuestion(): void {
     document
@@ -100,11 +100,9 @@ export class TopicComeFunzionaComponent {
   getExamIcon(tipo: string): any {
     return EXAM_ICON_MAP[tipo] ?? LucideFilePenLine;
   }
-
   getSessionIcon(label: string): any {
     return SESSION_ICON_MAP[label] ?? LucideCalendar;
   }
-
   getSessionSubtitle(periodo: string, note: string): string {
     return `${periodo} · ${note}`;
   }
@@ -115,19 +113,22 @@ export class TopicComeFunzionaComponent {
 
   onSelectStudyStyle(value: string): void {
     if (this.selectedStudyStyle() === value) return;
-    this.selectedStudyStyle.set(value);
+    const label = this.questionStudyStyle.options!.find(o => o.value === value)!.label;
+    this.state.saveAnswer(this.questionStudyStyle.id, 'come-funziona', value, label);
     this.toast.success('Risposta salvata', { duration: 3000 });
   }
 
   onSelectExamType(value: string): void {
     if (this.selectedExamType() === value) return;
-    this.selectedExamType.set(value);
+    const label = this.questionExamType.options!.find(o => o.value === value)!.label;
+    this.state.saveAnswer(this.questionExamType.id, 'come-funziona', value, label);
     this.toast.success('Risposta salvata', { duration: 3000 });
   }
 
   onSelectAutonomy(value: string): void {
     if (this.selectedAutonomy() === value) return;
-    this.selectedAutonomy.set(value);
+    const label = this.questionAutonomy.options!.find(o => o.value === value)!.label;
+    this.state.saveAnswer(this.questionAutonomy.id, 'come-funziona', value, label);
     this.toast.success('Risposta salvata', { duration: 3000 });
   }
 }

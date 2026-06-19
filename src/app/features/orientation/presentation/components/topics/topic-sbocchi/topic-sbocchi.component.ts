@@ -1,4 +1,4 @@
-import { Component, input, output, inject, signal } from '@angular/core';
+import { Component, input, output, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
 import { SbocchiChartComponent } from '../../charts/sbocchi-chart/sbocchi-chart.component';
@@ -9,7 +9,8 @@ import { CustomLinkComponent } from '@ui/custom-link/custom-link.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 import { ToastService } from '@ui/custom-toast/toast.service';
 import { LucideCircleCheck, LucideCheck, LucideInfo, LucideTriangleAlert } from '@lucide/angular';
-import { SBOCCHI_AREE, SBOCCHI_CONSIGLI, ORIENTATION_TOPICS } from '@constants';
+import { CAREER_AREAS, CAREER_TIPS, ORIENTATION_TOPICS } from '@constants';
+import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
 
 @Component({
   selector: 'app-topic-sbocchi',
@@ -34,25 +35,24 @@ export class TopicSbocchiComponent {
   readonly backToList = output<void>();
 
   private readonly toast = inject(ToastService);
+  private readonly state = inject(OrientationStateService);
 
-  // Icons
   readonly iconCheck = LucideCircleCheck;
   readonly iconSelected = LucideCheck;
   readonly iconInfo = LucideInfo;
   readonly iconWarn = LucideTriangleAlert;
 
-  // Data
-  readonly aree = SBOCCHI_AREE;
-  readonly consigli = SBOCCHI_CONSIGLI;
+  readonly aree = CAREER_AREAS;
+  readonly consigli = CAREER_TIPS;
 
-  // Questions
   private readonly questions = ORIENTATION_TOPICS.find(t => t.id === 'sbocchi')!.questions;
   readonly questionCareerPriority = this.questions[0];
   readonly questionWorkContext = this.questions[1];
 
-  // Local selection state
-  readonly selectedCareerPriority = signal<string | null>(null);
-  readonly selectedWorkContext = signal<string | null>(null);
+  readonly selectedCareerPriority = computed(() =>
+    this.state.getAnswer(this.questionCareerPriority.id),
+  );
+  readonly selectedWorkContext = computed(() => this.state.getAnswer(this.questionWorkContext.id));
 
   scrollToQuestion(): void {
     document
@@ -72,13 +72,15 @@ export class TopicSbocchiComponent {
 
   onSelectCareerPriority(value: string): void {
     if (this.selectedCareerPriority() === value) return;
-    this.selectedCareerPriority.set(value);
+    const label = this.questionCareerPriority.options!.find(o => o.value === value)!.label;
+    this.state.saveAnswer(this.questionCareerPriority.id, 'sbocchi', value, label);
     this.toast.success('Risposta salvata', { duration: 3000 });
   }
 
   onSelectWorkContext(value: string): void {
     if (this.selectedWorkContext() === value) return;
-    this.selectedWorkContext.set(value);
+    const label = this.questionWorkContext.options!.find(o => o.value === value)!.label;
+    this.state.saveAnswer(this.questionWorkContext.id, 'sbocchi', value, label);
     this.toast.success('Risposta salvata', { duration: 3000 });
   }
 }
