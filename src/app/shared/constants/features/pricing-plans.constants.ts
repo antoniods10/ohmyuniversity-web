@@ -1,4 +1,4 @@
-import { PricingPlan } from '@types';
+import { PricingPlan } from '@shared/types';
 
 export const ORG_PLANS: PricingPlan[] = [
   {

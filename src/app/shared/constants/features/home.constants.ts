@@ -6,7 +6,7 @@ import {
   LucideLock,
   LucideCalendarDays,
 } from '@lucide/angular';
-import { Feature, Review, Stat, StepHome } from '@types';
+import { Feature, Review, Stat, StepHome } from '@shared/types';
 
 // home-stats.component.ts
 export const HOME_STATS: Stat[] = [

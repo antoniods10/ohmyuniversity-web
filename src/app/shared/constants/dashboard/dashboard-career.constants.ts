@@ -1,4 +1,4 @@
-import { TeachingPeriod, AttendanceType } from '@types';
+import { TeachingPeriod, AttendanceType } from '@shared/types';
 
 export const TEACHING_PERIOD_LABELS: Record<TeachingPeriod, string> = {
   FIRST_SEMESTER: 'Primo Ciclo Semestrale',

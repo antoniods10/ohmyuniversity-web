@@ -10,7 +10,7 @@ import {
   LucideUserPlus,
   LucideCircleQuestionMark,
 } from '@lucide/angular';
-import { PartnerBenefit, PartnerLink, Testimonial } from '@types';
+import { PartnerBenefit, PartnerLink, Testimonial } from '@shared/types';
 
 export const PARTNER_BENEFITS: PartnerBenefit[] = [
   {

@@ -3,6 +3,7 @@ export * from './dashboard/career.types';
 export * from './dashboard/chat.types';
 export * from './dashboard/classrooms.types';
 //export * from './dashboard/exams.types';
+export * from './dashboard/home.types';
 export * from './dashboard/profile.types';
 export * from './dashboard/schedule.types';
 export * from './dashboard/secretariat.types';

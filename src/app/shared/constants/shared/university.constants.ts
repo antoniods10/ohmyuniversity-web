@@ -1,4 +1,4 @@
-import { University } from '@types';
+import { University } from '@shared/types';
 
 /**
  * Comprehensive list of Italian universities (statali, private, telematiche).

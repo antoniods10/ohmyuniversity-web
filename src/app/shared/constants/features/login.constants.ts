@@ -1,4 +1,4 @@
-import { MarqueeImage, LoginStat } from '@types';
+import { MarqueeImage, LoginStat } from '@shared/types';
 
 // Universities Marquee
 export const UNIVERSITY_MARQUEE_IMAGES: MarqueeImage[] = [
