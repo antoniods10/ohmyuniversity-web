@@ -7,13 +7,13 @@ const MOCK_CATEGORIES: FaqCategory[] = [
   {
     title: 'Categoria A',
     items: [
-      { question: 'Domanda A1', answer: 'Risposta A1' },
-      { question: 'Domanda A2', answer: 'Risposta A2' },
+      { title: 'Domanda A1', description: 'Risposta A1' },
+      { title: 'Domanda A2', description: 'Risposta A2' },
     ],
   },
   {
     title: 'Categoria B',
-    items: [{ question: 'Domanda B1', answer: 'Risposta B1' }],
+    items: [{ title: 'Domanda B1', description: 'Risposta B1' }],
   },
 ];
 
@@ -64,7 +64,7 @@ describe('FaqListComponent', () => {
   it('should render each question text inside a button', () => {
     MOCK_CATEGORIES.forEach(cat => {
       cat.items.forEach(item => {
-        expect(fixture.nativeElement.textContent).toContain(item.question);
+        expect(fixture.nativeElement.textContent).toContain(item.title);
       });
     });
   });
@@ -101,7 +101,7 @@ describe('FaqListComponent', () => {
   it('should display the correct answer text after opening', () => {
     component.toggle(0, 0);
     fixture.detectChanges();
-    expect(fixture.nativeElement.textContent).toContain('Risposta A1');
+    expect(fixture.nativeElement.textContent).toContain(MOCK_CATEGORIES[0].items[0].description);
   });
 
   it('should set aria-expanded="true" on the toggled button', () => {
@@ -174,25 +174,25 @@ describe('FaqListComponent', () => {
     const buttons = fixture.nativeElement.querySelectorAll('button[type="button"]');
     buttons[0].click();
     fixture.detectChanges();
-    expect(fixture.nativeElement.textContent).toContain('Risposta A1');
+    expect(fixture.nativeElement.textContent).toContain(MOCK_CATEGORIES[0].items[0].description);
   });
 
   it('should update the rendered categories when the categories input changes', () => {
     const newCategories: FaqCategory[] = [
       {
         title: 'Nuova categoria',
-        items: [{ question: 'Nuova domanda', answer: 'Nuova risposta' }],
+        items: [{ title: 'Nuova domanda', description: 'Nuova risposta' }],
       },
     ];
     componentRef.setInput('categories', newCategories);
     fixture.detectChanges();
-    expect(fixture.nativeElement.textContent).toContain('Nuova categoria');
-    expect(fixture.nativeElement.textContent).toContain('Nuova domanda');
+    expect(fixture.nativeElement.textContent).toContain(newCategories[0].title);
+    expect(fixture.nativeElement.textContent).toContain(newCategories[0].items[0].title);
   });
 
   it('should render the correct number of sections after input update', () => {
     const singleCategory: FaqCategory[] = [
-      { title: 'Solo', items: [{ question: 'Q', answer: 'A' }] },
+      { title: 'Solo', items: [{ title: 'Q', description: 'A' }] },
     ];
     componentRef.setInput('categories', singleCategory);
     fixture.detectChanges();

@@ -1,5 +1,5 @@
 <div class="mx-auto max-w-3xl px-4 pb-16 sm:px-6 lg:px-8">
-  @for (category of categories(); track category.title; let catIndex = $index) {
+  @for (category of categories(); track $index; let catIndex = $index) {
     <div class="mt-10">
       <!-- Category Title -->
       <span appText variant="overline" color="primary" class="mb-4 block">
@@ -8,7 +8,7 @@
 
       <!-- Items accordion -->
       <div class="space-y-2">
-        @for (item of category.items; track item.title; let itemIndex = $index) {
+        @for (item of category.items; track $index; let itemIndex = $index) {
           <div class="overflow-hidden rounded-xl border border-gray-200 bg-white">
             <button
               type="button"
