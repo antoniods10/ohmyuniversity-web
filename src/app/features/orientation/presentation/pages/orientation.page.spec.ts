@@ -10,6 +10,8 @@ import { TopicVitaComponent } from '../components/topics/topic-vita/topic-vita.c
 import { TopicSbocchiComponent } from '../components/topics/topic-sbocchi/topic-sbocchi.component';
 import { TopicErroriComponent } from '../components/topics/topic-errori/topic-errori.component';
 import { TopicQuizComponent } from '../components/topics/topic-quiz/topic-quiz.component';
+import { OrientationSummaryComponent } from '../components/orientation-summary/orientation-summary.component';
+import { OrientationResultComponent } from '../components/orientation-result/orientation-result.component';
 import { ORIENTATION_TOPICS } from '@constants';
 
 describe('OrientationPage', () => {
@@ -98,11 +100,13 @@ describe('OrientationPage', () => {
     expect(component.activeTopic()).toBe(ORIENTATION_TOPICS[0].id);
   });
 
-  it('should hide the list view after open() is called', () => {
+  it('should hide the list view badge after open() is called', () => {
     component.open(ORIENTATION_TOPICS[0].id);
     fixture.detectChanges();
-    const badge = fixture.debugElement.query(By.directive(CustomBadgeComponent));
-    expect(badge).toBeNull();
+    const listViewBadge = fixture.debugElement
+      .queryAll(By.directive(CustomBadgeComponent))
+      .find(b => b.componentInstance.label === 'Per chi non è ancora iscritto');
+    expect(listViewBadge).toBeUndefined();
   });
 
   it('should show the progress bar after open() is called', () => {
@@ -213,8 +217,10 @@ describe('OrientationPage', () => {
     component.open(ORIENTATION_TOPICS[0].id);
     component.close();
     fixture.detectChanges();
-    const badge = fixture.debugElement.query(By.directive(CustomBadgeComponent));
-    expect(badge).toBeTruthy();
+    const listViewBadge = fixture.debugElement
+      .queryAll(By.directive(CustomBadgeComponent))
+      .find(b => b.componentInstance.label === 'Per chi non è ancora iscritto');
+    expect(listViewBadge).toBeTruthy();
   });
 
   it('should compute activeIndex correctly', () => {
@@ -225,5 +231,124 @@ describe('OrientationPage', () => {
 
   it('should return -1 for activeIndex when activeTopic is null', () => {
     expect(component.activeIndex()).toBe(-1);
+  });
+
+  describe('openSummaryOrStart', () => {
+    it('opens the first topic when no answer has been given yet', () => {
+      // answeredCount is 0 by default since no real answers were saved
+      component.openSummaryOrStart();
+      fixture.detectChanges();
+
+      expect(component.activeTopic()).toBe(component.topics[0].id);
+      expect(component.showSummary()).toBe(false);
+    });
+
+    it('opens the summary when at least one answer has been given', () => {
+      // Simulate at least one answered question via the real state service
+      const stateAny = (component as any).state;
+      stateAny.saveAnswer('corso-area', 'corso', 'ingegneria', 'Ingegneria & Informatica');
+
+      component.openSummaryOrStart();
+      fixture.detectChanges();
+
+      expect(component.showSummary()).toBe(true);
+      expect(component.activeTopic()).toBeNull();
+    });
+  });
+
+  describe('openSummary / closeSummary', () => {
+    it('shows the summary and hides the topic detail and result views', () => {
+      component.open(ORIENTATION_TOPICS[0].id);
+      component.openSummary();
+      fixture.detectChanges();
+
+      expect(component.showSummary()).toBe(true);
+      expect(component.activeTopic()).toBeNull();
+      expect(component.showResult()).toBe(false);
+      expect(fixture.debugElement.query(By.directive(OrientationSummaryComponent))).toBeTruthy();
+    });
+
+    it('hides the summary again when closeSummary() is called', () => {
+      component.openSummary();
+      component.closeSummary();
+      fixture.detectChanges();
+
+      expect(component.showSummary()).toBe(false);
+      expect(fixture.debugElement.query(By.directive(OrientationSummaryComponent))).toBeNull();
+    });
+  });
+
+  describe('openResult / closeResult', () => {
+    it('shows the result view and hides the summary', () => {
+      component.openSummary();
+      component.openResult();
+      fixture.detectChanges();
+
+      expect(component.showResult()).toBe(true);
+      expect(component.showSummary()).toBe(false);
+      expect(fixture.debugElement.query(By.directive(OrientationResultComponent))).toBeTruthy();
+    });
+
+    it('returns to the summary view when closeResult() is called', () => {
+      component.openResult();
+      component.closeResult();
+      fixture.detectChanges();
+
+      expect(component.showResult()).toBe(false);
+      expect(component.showSummary()).toBe(true);
+      expect(fixture.debugElement.query(By.directive(OrientationSummaryComponent))).toBeTruthy();
+    });
+  });
+
+  describe('OrientationSummaryComponent event wiring', () => {
+    it('calls closeSummary when the summary emits backToList', () => {
+      component.openSummary();
+      fixture.detectChanges();
+
+      const summary = fixture.debugElement.query(By.directive(OrientationSummaryComponent));
+      summary.componentInstance.backToList.emit();
+      fixture.detectChanges();
+
+      expect(component.showSummary()).toBe(false);
+    });
+
+    it('calls openResult when the summary emits viewResult', () => {
+      component.openSummary();
+      fixture.detectChanges();
+
+      const summary = fixture.debugElement.query(By.directive(OrientationSummaryComponent));
+      summary.componentInstance.viewResult.emit();
+      fixture.detectChanges();
+
+      expect(component.showResult()).toBe(true);
+    });
+  });
+
+  describe('OrientationResultComponent event wiring', () => {
+    it('calls closeResult when the result emits backToSummary', () => {
+      component.openResult();
+      fixture.detectChanges();
+
+      const result = fixture.debugElement.query(By.directive(OrientationResultComponent));
+      result.componentInstance.backToSummary.emit();
+      fixture.detectChanges();
+
+      expect(component.showResult()).toBe(false);
+      expect(component.showSummary()).toBe(true);
+    });
+  });
+
+  describe('TopicErroriComponent goToSummary wiring', () => {
+    it('calls openSummary when the errori topic emits goToSummary', () => {
+      component.open('errori');
+      fixture.detectChanges();
+
+      const errori = fixture.debugElement.query(By.directive(TopicErroriComponent));
+      errori.componentInstance.goToSummary.emit();
+      fixture.detectChanges();
+
+      expect(component.showSummary()).toBe(true);
+      expect(component.activeTopic()).toBeNull();
+    });
   });
 });
