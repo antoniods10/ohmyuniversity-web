@@ -12,6 +12,8 @@ import {
   LucideMapPin,
   LucideWallet,
   LucideBuilding2,
+  LucideEuro,
+  LucideBookOpen,
 } from '@lucide/angular';
 import { OrientationStateService } from '@orientation/application/state/orientation.state';
 
@@ -52,6 +54,8 @@ export class OrientationResultComponent {
   readonly iconMap = LucideMapPin;
   readonly iconWallet = LucideWallet;
   readonly iconBuilding = LucideBuilding2;
+  readonly iconEuro = LucideEuro;
+  readonly iconCourse = LucideBookOpen;
 
   readonly result = computed(() => this.state.result());
 

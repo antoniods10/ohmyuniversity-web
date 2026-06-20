@@ -64,6 +64,15 @@ export class OrientationPage {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  /** Opens the summary if at least one answer was given, otherwise starts the guide from the first topic */
+  openSummaryOrStart(): void {
+    if (this.answeredCount() === 0) {
+      this.open(this.topics[0].id);
+    } else {
+      this.openSummary();
+    }
+  }
+
   close(): void {
     this.activeTopic.set(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });

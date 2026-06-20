@@ -1,9 +1,51 @@
-import { AreaId, CostTier, University } from '@types';
+import { AreaId, CostTier, University, UniversityCourse } from '@types';
 import { SavedAnswer } from './orientation.state';
 import { UNIVERSITY_ORIENTATION_INFO, UNIVERSITIES } from '@constants';
 
 // ============================================================================
-// Weight tables — how much each answer pushes towards each study area
+// Deterministic shuffle - same answers always produce the same order, but
+// different answer sets produce different orderings, avoiding the same
+// fixed top-5 universities being shown to everyone with a similar profile.
+// ============================================================================
+
+/** Simple deterministic string hash (djb2 variant), used as a PRNG seed */
+function hashAnswers(answers: SavedAnswer[]): number {
+  const key = answers
+    .map(a => `${a.questionId}:${a.value}`)
+    .sort((a, b) => a.localeCompare(b))
+    .join('|');
+
+  let hash = 5381;
+  for (const char of key) {
+    hash = (hash * 33) ^ char.codePointAt(0)!;
+  }
+  return hash >>> 0; // force unsigned
+}
+
+/** Mulberry32 - small, fast, deterministic PRNG seeded from a number */
+function createSeededRandom(seed: number): () => number {
+  let state = seed;
+  return () => {
+    state = Math.trunc(state);
+    state = Math.trunc(state + 0x6d2b79f5);
+    let t = Math.imul(state ^ (state >>> 15), 1 | state);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/** Fisher-Yates shuffle using a seeded PRNG, so the result is reproducible for the same seed */
+function seededShuffle<T>(items: T[], random: () => number): T[] {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+// ============================================================================
+// Weight tables - how much each answer pushes towards each study area
 // ============================================================================
 
 /**
@@ -49,7 +91,7 @@ const AREA_WEIGHTS: Record<string, Partial<Record<AreaId, number>>> = {
 };
 
 // ============================================================================
-// Awareness scoring — for the topic-errori questions
+// Awareness scoring - for the topic-errori questions
 // ============================================================================
 
 /** Maps each answer of the 4 awareness questions to a +1/0/-1 awareness point */
@@ -86,9 +128,16 @@ export interface AreaScoreResult {
 export interface UniversitySuggestion {
   university: University;
   matchReason: string;
+  tuitionRange: string;
+  relevantCourses: string[];
 }
 
 export interface AwarenessTip {
+  titolo: string;
+  testo: string;
+}
+
+export interface BudgetTip {
   titolo: string;
   testo: string;
 }
@@ -100,6 +149,7 @@ export interface OrientationResult {
   awarenessTips: AwarenessTip[];
   estimatedMonthlyBudget: string | null;
   geoPreferenceLabel: string | null;
+  budgetTips: BudgetTip[];
 }
 
 type GeoArea = 'nord' | 'centro' | 'sud';
@@ -179,10 +229,19 @@ function geoPreferenceToArea(value: string | null): GeoArea | null {
   return null;
 }
 
-const MONTHLY_BUDGET_ESTIMATES: Record<GeoArea, string> = {
-  nord: '750–1.050 €/mese (affitto + vitto + trasporti)',
-  centro: '600–900 €/mese (affitto + vitto + trasporti)',
-  sud: '450–700 €/mese (affitto + vitto + trasporti)',
+// Indicative living cost range per geographic area (rent + food + transport)
+const MONTHLY_LIVING_COST_RANGE: Record<GeoArea, { min: number; max: number; label: string }> = {
+  nord: { min: 750, max: 1050, label: '750–1.050 €/mese (affitto + vitto + trasporti)' },
+  centro: { min: 600, max: 900, label: '600–900 €/mese (affitto + vitto + trasporti)' },
+  sud: { min: 450, max: 700, label: '450–700 €/mese (affitto + vitto + trasporti)' },
+};
+
+// Approximate midpoint of each monthly budget bracket the student selected
+const BUDGET_BRACKET_MIDPOINT: Record<string, number> = {
+  'less-400': 300,
+  '400-700': 550,
+  '700-1000': 850,
+  'more-1000': 1200,
 };
 
 function findAnswerValue(answers: SavedAnswer[], questionId: string): string | undefined {
@@ -194,7 +253,7 @@ function findAnswerLabel(answers: SavedAnswer[], questionId: string): string | n
 }
 
 // ============================================================================
-// Step 1 — Area scoring
+// Step 1 - Area scoring
 // ============================================================================
 
 /** Computes raw area scores from the weight table, then converts to percentages */
@@ -233,7 +292,7 @@ function computeAreaScores(answers: SavedAnswer[]): AreaScoreResult[] {
 }
 
 // ============================================================================
-// Step 2 — University suggestions
+// Step 2 - University suggestions
 // ============================================================================
 
 interface UniversityCandidate {
@@ -282,24 +341,43 @@ function orderCandidatesByGeoPreference(
   return [...geoMatched, ...others];
 }
 
+/** Filters a university's courses down to only those matching the student's top areas */
+function filterRelevantCourses(courses: UniversityCourse[], targetAreaIds: Set<AreaId>): string[] {
+  return courses.filter(course => targetAreaIds.has(course.area)).map(course => course.name);
+}
+
 function buildUniversitySuggestions(
+  answers: SavedAnswer[],
   topAreas: AreaScoreResult[],
   preferredGeoArea: GeoArea | null,
   acceptableCostTiers: CostTier[],
 ): UniversitySuggestion[] {
   const targetAreaIds = new Set(topAreas.map(a => a.areaId));
   const candidates = buildUniversityCandidates(targetAreaIds, acceptableCostTiers);
-  const ordered = orderCandidatesByGeoPreference(candidates, preferredGeoArea);
+
+  // Shuffle deterministically before splitting by geo preference, so within
+  // each group (geo-matched / others) the order varies by answer profile
+  // instead of always reflecting the static declaration order in the constants file.
+  const seed = hashAnswers(answers);
+  const random = createSeededRandom(seed);
+  const shuffled = seededShuffle(candidates, random);
+
+  const ordered = orderCandidatesByGeoPreference(shuffled, preferredGeoArea);
   const dominantLabel = AREA_LABELS[topAreas[0].areaId];
 
-  return ordered.slice(0, 5).map(({ university, info }) => ({
-    university,
-    matchReason: info.notes ?? `Forte nell'area ${dominantLabel}.`,
-  }));
+  return ordered.slice(0, 5).map(({ university, info }) => {
+    const relevantCourses = filterRelevantCourses(info.courses, targetAreaIds);
+    return {
+      university,
+      matchReason: info.notes ?? `Forte nell'area ${dominantLabel}.`,
+      tuitionRange: info.tuitionRange,
+      relevantCourses: relevantCourses.length > 0 ? relevantCourses : info.courses.map(c => c.name),
+    };
+  });
 }
 
 // ============================================================================
-// Step 3 — Awareness tips
+// Step 3 - Awareness tips
 // ============================================================================
 
 function computeAwarenessScore(answers: SavedAnswer[]): number {
@@ -363,12 +441,80 @@ function buildAwarenessTips(answers: SavedAnswer[]): AwarenessTip[] {
 }
 
 // ============================================================================
+// Step 4 - Budget tips (real disposable budget vs cost of living + tuition)
+// ============================================================================
+
+/**
+ * Compares the student's stated monthly budget bracket against the real cost
+ * of living in their preferred geographic area, then gives a tailored tip.
+ * Falls back to a generic savings-oriented tip when geographic preference
+ * hasn't been given, since there's no concrete range to compare against.
+ */
+function buildBudgetTips(
+  answers: SavedAnswer[],
+  preferredGeoArea: GeoArea | null,
+  acceptableCostTiers: CostTier[],
+): BudgetTip[] {
+  const tips: BudgetTip[] = [];
+
+  const budgetValue = findAnswerValue(answers, 'budget-monthly');
+  const availabilityValue = findAnswerValue(answers, 'budget-availability');
+
+  if (!preferredGeoArea || !budgetValue) {
+    tips.push({
+      titolo: 'Stima i costi prima di scegliere la città',
+      testo:
+        "Una volta scelta l'area geografica, potremo confrontare il tuo budget con i costi reali di vita e darti un quadro più preciso.",
+    });
+    return tips;
+  }
+
+  const studentBudget = BUDGET_BRACKET_MIDPOINT[budgetValue] ?? 0;
+  const livingCost = MONTHLY_LIVING_COST_RANGE[preferredGeoArea];
+
+  if (studentBudget < livingCost.min) {
+    tips.push({
+      titolo: 'Il tuo budget potrebbe essere insufficiente per questa zona',
+      testo: `Nella zona che hai scelto si spendono in media ${livingCost.label}. Valuta soluzioni come stanza condivisa, residenze universitarie o, se possibile, una borsa di studio DSU per coprire la differenza.`,
+    });
+  } else if (studentBudget <= livingCost.max) {
+    tips.push({
+      titolo: 'Il tuo budget è nella media per questa zona',
+      testo: `Con la disponibilità indicata dovresti riuscire a coprire le spese base (${livingCost.label}), ma con margini ridotti. Tieni un fondo per spese impreviste come libri o materiale didattico.`,
+    });
+  } else {
+    tips.push({
+      titolo: 'Hai un buon margine di disponibilità',
+      testo: `Il tuo budget è superiore alla media della zona (${livingCost.label}). Potresti permetterti una sistemazione più comoda o atenei con tasse leggermente più alte se offrono un corso più adatto a te.`,
+    });
+  }
+
+  if (availabilityValue === 'support') {
+    tips.push({
+      titolo: 'Valuta le borse di studio DSU',
+      testo:
+        "Hai indicato di avere bisogno di supporto esterno: verifica subito i requisiti ISEE per la borsa di studio regionale, spesso copre anche l'alloggio in residenza universitaria.",
+    });
+  }
+
+  if (acceptableCostTiers.length === 1 && acceptableCostTiers[0] === 'basso') {
+    tips.push({
+      titolo: 'Considera anche gli atenei statali con ISEE basso',
+      testo:
+        "Con un ISEE contenuto, molti atenei statali azzerano le tasse universitarie. Controlla sempre il simulatore tasse del sito dell'ateneo prima di scartare un'opzione per il costo.",
+    });
+  }
+
+  return tips;
+}
+
+// ============================================================================
 // Main scoring function
 // ============================================================================
 
 /**
  * Computes the full orientation result from the list of saved answers.
- * Pure function — no side effects, easy to test and to call from the state service.
+ * Pure function - no side effects, easy to test and to call from the state service.
  */
 export function computeOrientationResult(answers: SavedAnswer[]): OrientationResult {
   const sortedAreas = computeAreaScores(answers);
@@ -382,14 +528,16 @@ export function computeOrientationResult(answers: SavedAnswer[]): OrientationRes
   const acceptableCostTiers = budgetToCostTiers(findAnswerValue(answers, 'budget-monthly') ?? null);
 
   const suggestedUniversities = buildUniversitySuggestions(
+    answers,
     topAreas,
     preferredGeoArea,
     acceptableCostTiers,
   );
   const awarenessTips = buildAwarenessTips(answers);
+  const budgetTips = buildBudgetTips(answers, preferredGeoArea, acceptableCostTiers);
 
   const estimatedMonthlyBudget = preferredGeoArea
-    ? MONTHLY_BUDGET_ESTIMATES[preferredGeoArea]
+    ? MONTHLY_LIVING_COST_RANGE[preferredGeoArea].label
     : null;
 
   return {
@@ -399,5 +547,6 @@ export function computeOrientationResult(answers: SavedAnswer[]): OrientationRes
     awarenessTips,
     estimatedMonthlyBudget,
     geoPreferenceLabel,
+    budgetTips,
   };
 }

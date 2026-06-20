@@ -29,6 +29,12 @@ export type AreaId =
 /** Indicative overall cost tier for a university (tuition + cost of living factored in) */
 export type CostTier = 'basso' | 'medio' | 'alto';
 
+/** A specific degree course offered by a university, tagged with its study area */
+export interface UniversityCourse {
+  area: AreaId;
+  name: string;
+}
+
 /**
  * Orientation-specific enrichment data for a university, linked by id.
  * Kept separate from the core University interface since this data is
@@ -38,5 +44,7 @@ export interface UniversityOrientationInfo {
   universityId: string;
   strongAreas: AreaId[];
   costTier: CostTier;
+  tuitionRange: string;
+  courses: UniversityCourse[];
   notes?: string;
 }

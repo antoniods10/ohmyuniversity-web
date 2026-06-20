@@ -45,24 +45,32 @@
       <app-card-status
         statusVariant="info"
         [icon]="iconSummary"
-        title="Le tue risposte"
-        [description]="answeredCount() + ' di ' + totalCount() + ' domande completate'"
+        [title]="
+          answeredCount() === 0 ? 'Inizia il tuo percorso di orientamento' : 'Le tue risposte'
+        "
+        [description]="
+          answeredCount() === 0
+            ? 'Rispondi alle domande nei vari argomenti per ricevere un profilo personalizzato.'
+            : answeredCount() + ' di ' + totalCount() + ' domande completate'
+        "
         shadow="sm"
         padding="md">
         <div class="mt-4 flex flex-col gap-3">
-          <!-- Progress bar — no custom component available for this -->
-          <div class="h-1.5 w-full overflow-hidden rounded-full bg-blue-100">
-            <div
-              class="h-full rounded-full bg-blue-500 transition-all duration-300"
-              [style.width.%]="(answeredCount() / totalCount()) * 100"></div>
-          </div>
+          @if (answeredCount() > 0) {
+            <!-- Progress bar - no custom component available for this -->
+            <div class="h-1.5 w-full overflow-hidden rounded-full bg-blue-100">
+              <div
+                class="h-full rounded-full bg-blue-500 transition-all duration-300"
+                [style.width.%]="(answeredCount() / totalCount()) * 100"></div>
+            </div>
+          }
           <app-custom-button
-            label="Vedi riepilogo"
+            [label]="answeredCount() === 0 ? 'Inizia la guida' : 'Vedi riepilogo'"
             variant="primary"
             rounded="lg"
             size="sm"
             [fullWidth]="true"
-            (clicked)="openSummary()" />
+            (clicked)="openSummaryOrStart()" />
         </div>
       </app-card-status>
     </div>

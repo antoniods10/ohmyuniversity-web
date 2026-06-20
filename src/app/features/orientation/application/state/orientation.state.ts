@@ -17,14 +17,14 @@ export class OrientationStateService {
   readonly answers = computed(() => Array.from(this._answers().values()));
 
   readonly totalQuestions = computed(() =>
-    ORIENTATION_TOPICS.reduce((sum, t) => sum + t.questions.length, 0)
+    ORIENTATION_TOPICS.reduce((sum, t) => sum + t.questions.length, 0),
   );
 
   readonly answeredCount = computed(() => this._answers().size);
 
   readonly isComplete = computed(() => this.answeredCount() === this.totalQuestions());
 
-  /** Computed orientation result — recalculated automatically whenever answers change */
+  /** Computed orientation result - recalculated automatically whenever answers change */
   readonly result = computed<OrientationResult | null>(() => {
     if (!this.isComplete()) return null;
     return computeOrientationResult(this.answers());
