@@ -43,6 +43,7 @@ interface SummaryQuestion {
 })
 export class OrientationSummaryComponent {
   readonly backToList = output<void>();
+  readonly viewResult = output<void>();
 
   private readonly state = inject(OrientationStateService);
 

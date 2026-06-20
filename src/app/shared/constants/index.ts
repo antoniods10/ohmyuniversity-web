@@ -19,6 +19,7 @@ export * from './features/orientation/orientation-sbocchi.constants';
 export * from './features/orientation/orientation-budget.constants';
 export * from './features/orientation/orientation-errori.constants';
 export * from './features/orientation/orientation-geografia.constants';
+export * from './features/orientation/university-orientation.constants';
 export * from './features/partner.constants';
 export * from './features/pricing-plans.constants';
 export * from './features/team.constants';

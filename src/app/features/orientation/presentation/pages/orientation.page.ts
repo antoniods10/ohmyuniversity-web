@@ -9,6 +9,7 @@ import { TopicVitaComponent } from '../components/topics/topic-vita/topic-vita.c
 import { TopicBudgetComponent } from '../components/topics/topic-budget/topic-budget.component';
 import { TopicCostiGeograficiComponent } from '../components/topics/topic-costi-geografici/topic-aree-geografiche.component';
 import { OrientationSummaryComponent } from '../components/orientation-summary/orientation-summary.component';
+import { OrientationResultComponent } from '../components/orientation-result/orientation-result.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
@@ -32,6 +33,7 @@ import { LucideClipboardList } from '@lucide/angular';
     TopicBudgetComponent,
     TopicCostiGeograficiComponent,
     OrientationSummaryComponent,
+    OrientationResultComponent,
     CustomBadgeComponent,
     CustomButtonComponent,
     CustomTextComponent,
@@ -44,6 +46,7 @@ export class OrientationPage {
 
   readonly activeTopic = signal<TopicId | null>(null);
   readonly showSummary = signal<boolean>(false);
+  readonly showResult = signal<boolean>(false);
   readonly topics = ORIENTATION_TOPICS;
   readonly activeIndex = computed(() => this.topics.findIndex(t => t.id === this.activeTopic()));
   readonly hasPrev = computed(() => this.activeIndex() > 0);
@@ -55,6 +58,7 @@ export class OrientationPage {
 
   open(id: TopicId): void {
     this.showSummary.set(false);
+    this.showResult.set(false);
     this.activeTopic.set(id);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -66,12 +70,25 @@ export class OrientationPage {
 
   openSummary(): void {
     this.activeTopic.set(null);
+    this.showResult.set(false);
     this.showSummary.set(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   closeSummary(): void {
     this.showSummary.set(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  openResult(): void {
+    this.showSummary.set(false);
+    this.showResult.set(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  closeResult(): void {
+    this.showResult.set(false);
+    this.showSummary.set(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 

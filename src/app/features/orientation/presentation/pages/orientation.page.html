@@ -1,10 +1,15 @@
 <!-- Summary View -->
 @if (showSummary()) {
-  <app-orientation-summary (backToList)="closeSummary()" />
+  <app-orientation-summary (backToList)="closeSummary()" (viewResult)="openResult()" />
+}
+
+<!-- Result View -->
+@if (showResult()) {
+  <app-orientation-result (backToSummary)="closeResult()" />
 }
 
 <!-- List View -->
-@if (!activeTopic() && !showSummary()) {
+@if (!activeTopic() && !showSummary() && !showResult()) {
   <div class="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
     <div class="mb-10 text-center">
       <app-custom-badge
