@@ -167,34 +167,33 @@
   </div>
 
   <!-- CTA -->
-  <div class="mt-8 rounded-xl border border-blue-100 bg-blue-50 p-6 text-center">
-    <p appText variant="h4" color="primary" class="text-center">
-      Hai completato la guida all'orientamento
-    </p>
-    <div class="mt-2">
-      <p appText variant="body-sm" class="text-center" class="text-blue-700">
-        Ora hai gli strumenti per fare una scelta consapevole. Rivedi le tue risposte nel riepilogo
-        per scoprire i suggerimenti pensati per te.
-      </p>
-    </div>
-    <div class="mt-5 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-      <div class="w-full sm:w-auto">
-        <app-custom-button
-          label="Rileggi un argomento"
-          variant="outline"
-          size="sm"
-          [fullWidth]="true"
-          (clicked)="backToList.emit()" />
+  <div class="mt-8">
+    <app-card-status
+      statusVariant="success"
+      [icon]="iconCheck"
+      title="Hai completato la guida all'orientamento"
+      description="Ora hai gli strumenti per fare una scelta consapevole. Rivedi le tue risposte nel riepilogo per scoprire i suggerimenti pensati per te."
+      shadow="sm"
+      padding="md">
+      <div class="mt-5 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        <div class="w-full sm:w-auto">
+          <app-custom-button
+            label="Rileggi un argomento"
+            variant="outline"
+            size="sm"
+            [fullWidth]="true"
+            (clicked)="backToList.emit()" />
+        </div>
+        <div class="w-full sm:w-auto">
+          <app-custom-button
+            label="Vai al riepilogo"
+            variant="primary"
+            size="sm"
+            [fullWidth]="true"
+            (clicked)="goToSummary.emit()" />
+        </div>
       </div>
-      <div class="w-full sm:w-auto">
-        <app-custom-button
-          label="Vai al riepilogo"
-          variant="primary"
-          size="sm"
-          [fullWidth]="true"
-          (clicked)="goToSummary.emit()" />
-      </div>
-    </div>
+    </app-card-status>
   </div>
 </div>
 
