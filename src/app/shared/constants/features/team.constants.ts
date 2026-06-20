@@ -1,4 +1,4 @@
-import { TEAM_MEMBERS_INFO } from '@constants';
+import { TEAM_MEMBERS_INFO } from '../shared/common.constants';
 import {
   LucideCodeXml,
   LucideUsers,
@@ -7,7 +7,7 @@ import {
   LucideZap,
   LucideGlobe,
 } from '@lucide/angular';
-import { TeamMember, TeamValue } from '@types';
+import { TeamMember, TeamValue } from '@shared/types';
 
 export const ABOUT_ORG_STATS = [
   { value: '4', label: 'Contributori attivi' },

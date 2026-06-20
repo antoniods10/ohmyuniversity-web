@@ -1,4 +1,4 @@
-import { FaqCategory } from '@types';
+import { FaqCategory } from '@shared/types';
 
 // Student / Classic FAQ
 export const FAQ_CATEGORIES: FaqCategory[] = [

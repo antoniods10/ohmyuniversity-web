@@ -1,4 +1,4 @@
-import { UserTypeOption } from '@types';
+import { UserTypeOption } from '@shared/types';
 
 export const USER_TYPE_OPTIONS: UserTypeOption[] = [
   {

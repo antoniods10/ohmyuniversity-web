@@ -325,7 +325,7 @@ export class CustomButtonComponent {
    * @returns Path without query parameters.
    */
   get routerPath(): string {
-    return this.href.split('?')[0];
+    return (this.href ?? '').split('?')[0];
   }
 
   /**
@@ -335,7 +335,7 @@ export class CustomButtonComponent {
    * @returns Object of query parameters, or null if href has no query string.
    */
   get routerQueryParams(): Record<string, string> | null {
-    const queryIndex = this.href.indexOf('?');
+    const queryIndex = (this.href ?? '').indexOf('?');
     if (queryIndex === -1) return null;
 
     const queryString = this.href.slice(queryIndex + 1);
