@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomBadgeComponent, BadgeVariant } from '@ui/custom-badge/custom-badge.component';
-import { CardStatusComponent, CardSimpleComponent } from '@ui/custom-card/card-variants.component';
+import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 import {
   LucideDynamicIcon,
   LucideCircleCheck,
@@ -39,7 +39,6 @@ const UNIVERSITY_TYPE_VARIANTS: Record<string, BadgeVariant> = {
     CustomButtonComponent,
     CustomBadgeComponent,
     CardStatusComponent,
-    CardSimpleComponent,
   ],
   templateUrl: './orientation-result.component.html',
 })
