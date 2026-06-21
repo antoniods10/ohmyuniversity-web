@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
+import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { LucideDynamicIcon } from '@lucide/angular';
 import type { CalendarEvent } from '@shared/types/dashboard/calendar.types';
 import {
@@ -9,17 +10,14 @@ import {
   calendarEventTypeIcon,
   calendarEventTypeVariant,
 } from '@shared/utils/calendar.utils';
-import {
-  getIconBgClass,
-  getIconColorClass,
-  getLabelColorClass,
-} from '@shared/utils/orientation.utils';
+import { getLabelColorClass } from '@shared/utils/orientation.utils';
 
 @Component({
   selector: 'app-calendar-event-card',
   standalone: true,
-  imports: [CustomCardComponent, CustomBadgeComponent, LucideDynamicIcon],
+  imports: [CustomCardComponent, CustomBadgeComponent, CustomTextComponent, LucideDynamicIcon],
   templateUrl: './calendar-event-card.component.html',
+  styleUrls: ['./calendar-event-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarEventCardComponent {
@@ -33,8 +31,6 @@ export class CalendarEventCardComponent {
   readonly timeRange = computed(() => calendarEventTimeRange(this.event()));
   readonly durationLabel = computed(() => calendarEventDurationLabel(this.event()));
 
-  readonly iconBgClass = computed(() => getIconBgClass(this.variant(), true));
-  readonly iconColorClass = computed(() => getIconColorClass(this.variant(), true));
   readonly titleColorClass = computed(() => getLabelColorClass(this.variant()));
 
   onCardClick(): void {

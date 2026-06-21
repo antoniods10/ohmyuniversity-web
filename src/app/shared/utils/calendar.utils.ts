@@ -82,6 +82,35 @@ export function calendarEventDurationLabel(event: CalendarEvent): string {
   return `${remainingMinutes}m`;
 }
 
+const WEEKDAY_LABELS = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
+
+/** Italian 3-letter weekday label for a date (e.g. "Lun"), used by the day strip */
+export function calendarWeekdayLabel(date: Date): string {
+  return WEEKDAY_LABELS[(date.getDay() + 6) % 7];
+}
+
+/** Whether two dates fall on the same calendar day (ignores time of day) */
+export function calendarIsSameDay(a: Date, b: Date): boolean {
+  return (
+    a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() &&
+    a.getDate() === b.getDate()
+  );
+}
+
+/**
+ * Returns the 7 dates (Monday to Sunday) of the week containing the given date.
+ * Mirrors _weekDaysFor in calendar_day_strip.dart.
+ */
+export function calendarWeekDays(date: Date): Date[] {
+  const isoWeekday = (date.getDay() + 6) % 7; // 0 = Monday, ..., 6 = Sunday
+  const monday = new Date(date.getFullYear(), date.getMonth(), date.getDate() - isoWeekday);
+  return Array.from(
+    { length: 7 },
+    (_, i) => new Date(monday.getFullYear(), monday.getMonth(), monday.getDate() + i),
+  );
+}
+
 interface ActiveLane {
   index: number;
   lane: number;
@@ -145,4 +174,59 @@ function nextFreeLane(active: ActiveLane[]): number {
     lane++;
   }
   return lane;
+}
+
+/** Timeline layout constants, mirrors calendar_timeline.dart's startHour/endHour/hourHeight */
+export const CALENDAR_TIMELINE = {
+  startHour: 8,
+  endHour: 20,
+  hourHeight: 104,
+  leftGutter: 70,
+} as const;
+
+/** Clamps an hour to the visible timeline range [startHour, endHour] */
+function visibleHour(hour: number): number {
+  if (hour < CALENDAR_TIMELINE.startHour) return CALENDAR_TIMELINE.startHour;
+  if (hour > CALENDAR_TIMELINE.endHour) return CALENDAR_TIMELINE.endHour;
+  return hour;
+}
+
+/** Top offset in px of a given hour's row within the timeline */
+export function calendarHourTop(hour: number): number {
+  return (hour - CALENDAR_TIMELINE.startHour) * CALENDAR_TIMELINE.hourHeight;
+}
+
+/** Top offset in px of a specific date/time within the timeline, clamped to the visible range */
+export function calendarTimeTop(date: Date): number {
+  const hour = visibleHour(date.getHours());
+  const minutes = hour === date.getHours() ? date.getMinutes() : 0;
+  return calendarHourTop(hour) + (minutes / 60) * CALENDAR_TIMELINE.hourHeight;
+}
+
+/** Top offset in px of an event's card, exactly on the hour gridline */
+export function calendarEventTop(event: CalendarEvent): number {
+  return calendarTimeTop(event.startDate);
+}
+
+/** Height in px of an event's card, proportional to its duration, with a 62px minimum */
+export function calendarEventHeight(event: CalendarEvent): number {
+  if (!event.endDate) return 62;
+  const durationMinutes = (event.endDate.getTime() - event.startDate.getTime()) / 60000;
+  const proportionalHeight = (durationMinutes / 60) * CALENDAR_TIMELINE.hourHeight;
+  return Math.max(62, proportionalHeight);
+}
+
+/** Total height in px of the timeline, spanning startHour to endHour inclusive */
+export function calendarTimelineTotalHeight(): number {
+  const totalHours = CALENDAR_TIMELINE.endHour - CALENDAR_TIMELINE.startHour + 1;
+  return totalHours * CALENDAR_TIMELINE.hourHeight;
+}
+
+/** List of whole hours shown in the timeline's left gutter, from startHour to endHour */
+export function calendarTimelineHours(): number[] {
+  const hours: number[] = [];
+  for (let hour = CALENDAR_TIMELINE.startHour; hour <= CALENDAR_TIMELINE.endHour; hour++) {
+    hours.push(hour);
+  }
+  return hours;
 }

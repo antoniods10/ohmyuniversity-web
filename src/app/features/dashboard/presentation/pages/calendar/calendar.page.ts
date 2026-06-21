@@ -1,22 +1,21 @@
 import { Component, computed, signal } from '@angular/core';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
+import { CalendarDayStripComponent } from './components/calendar-day-strip/calendar-day-strip.component';
+import { CalendarTimelineComponent } from './components/calendar-timeline/calendar-timeline.component';
 import { MOCK_CALENDAR_EVENTS } from '@shared/data/mock/calendar.mock';
 import type { CalendarEvent, CalendarEventLayout } from '@shared/types/dashboard/calendar.types';
-import { calculateEventLayouts } from '@shared/utils/calendar.utils';
-
-function isSameDay(a: Date, b: Date): boolean {
-  return (
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate()
-  );
-}
+import { calculateEventLayouts, calendarIsSameDay } from '@shared/utils/calendar.utils';
 
 @Component({
   selector: 'app-dashboard-calendar-page',
   standalone: true,
-  imports: [DashboardContainerComponent, DashboardHeaderComponent],
+  imports: [
+    DashboardContainerComponent,
+    DashboardHeaderComponent,
+    CalendarDayStripComponent,
+    CalendarTimelineComponent,
+  ],
   templateUrl: './calendar.page.html',
 })
 export class CalendarPage {
@@ -26,7 +25,7 @@ export class CalendarPage {
   readonly eventsForSelectedDate = computed<CalendarEvent[]>(() => {
     const day = this.selectedDate();
     return this.events()
-      .filter(event => isSameDay(event.startDate, day))
+      .filter(event => calendarIsSameDay(event.startDate, day))
       .sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
   });
 
@@ -36,6 +35,11 @@ export class CalendarPage {
 
   selectDate(date: Date): void {
     this.selectedDate.set(date);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- event param kept for the future detail sheet handler
+  onEventSelected(event: CalendarEvent): void {
+    // TODO: open the detail bottom sheet once it exists
   }
 
   async createEvent(

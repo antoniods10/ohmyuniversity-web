@@ -1,0 +1,23 @@
+<div class="flex gap-1 px-1 py-2">
+  @for (day of days(); track day.date.getTime()) {
+    <button
+      type="button"
+      class="flex flex-1 flex-col items-center gap-1.5 rounded-xl px-2 py-2.5 transition-colors hover:bg-gray-50"
+      [class.bg-blue-500]="day.isSelected"
+      (click)="onSelect(day.date)">
+      <span
+        class="text-xs font-bold"
+        [class.text-white]="day.isSelected"
+        [class.text-red-500]="!day.isSelected && day.isSunday"
+        [class.text-gray-400]="!day.isSelected && !day.isSunday">
+        {{ day.weekdayLabel }}
+      </span>
+      <span
+        class="text-base font-extrabold"
+        [class.text-white]="day.isSelected"
+        [class.text-gray-900]="!day.isSelected">
+        {{ day.date.getDate() }}
+      </span>
+    </button>
+  }
+</div>
