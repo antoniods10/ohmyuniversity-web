@@ -1,0 +1,48 @@
+@switch (size) {
+  @case ('small') {
+    <div class="flex flex-col h-full gap-2 justify-between">
+      <div class="flex items-center gap-1.5">
+        <svg [lucideIcon]="lucideCalendar" [size]="14" class="text-primary shrink-0"></svg>
+        <p appText variant="caption" color="muted">Prossimo appello</p>
+      </div>
+      <div class="flex flex-col gap-1">
+        <p appText variant="body" weight="semibold" class="line-clamp-2">{{ data.examName }}</p>
+        <p appText variant="caption" color="muted">{{ data.date }}</p>
+      </div>
+      <app-custom-badge
+        [label]="data.enrolled ? 'Iscritto' : 'Non iscritto'"
+        [variant]="data.enrolled ? 'success' : 'warning'"
+        size="sm" />
+    </div>
+  }
+
+  @case ('medium') {
+    <div class="flex flex-col h-full gap-3 justify-between">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-1.5">
+          <svg [lucideIcon]="lucideCalendar" [size]="14" class="text-primary shrink-0"></svg>
+          <p appText variant="caption" color="muted">Prossimo appello</p>
+        </div>
+        <app-custom-badge
+          [label]="data.enrolled ? 'Iscritto' : 'Non iscritto'"
+          [variant]="data.enrolled ? 'success' : 'warning'"
+          size="sm" />
+      </div>
+      <p appText variant="h5" weight="semibold">{{ data.examName }}</p>
+      <div class="flex flex-col gap-1.5">
+        <div class="flex items-center gap-2">
+          <svg [lucideIcon]="lucideCalendar" [size]="13" class="text-gray-400 shrink-0"></svg>
+          <p appText variant="body-sm" color="muted">{{ data.date }}</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg [lucideIcon]="lucideClock" [size]="13" class="text-gray-400 shrink-0"></svg>
+          <p appText variant="body-sm" color="muted">{{ data.time }}</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <svg [lucideIcon]="lucideMapPin" [size]="13" class="text-gray-400 shrink-0"></svg>
+          <p appText variant="body-sm" color="muted">{{ data.room }}</p>
+        </div>
+      </div>
+    </div>
+  }
+}

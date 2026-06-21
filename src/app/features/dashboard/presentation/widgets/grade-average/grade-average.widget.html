@@ -1,0 +1,27 @@
+@switch (size) {
+  @case ('small') {
+    <div class="flex flex-col h-full gap-2 justify-between">
+      <p appText variant="caption" color="muted">Media ponderata</p>
+      <p appText variant="h2" weight="bold" color="primary">{{ data.weighted }}</p>
+      <p appText variant="caption" color="muted">su 30</p>
+    </div>
+  }
+
+  @case ('medium') {
+    <div class="flex flex-col h-full gap-4 justify-between">
+      <p appText variant="caption" color="muted">Media voti</p>
+      <div class="flex gap-4">
+        <div class="flex flex-col gap-1">
+          <p appText variant="caption" color="muted">Ponderata</p>
+          <p appText variant="h3" weight="bold" color="primary">{{ data.weighted }}</p>
+        </div>
+        <div class="w-px bg-gray-100"></div>
+        <div class="flex flex-col gap-1">
+          <p appText variant="caption" color="muted">Aritmetica</p>
+          <p appText variant="h3" weight="bold">{{ data.arithmetic }}</p>
+        </div>
+      </div>
+      <app-custom-badge [label]="data.honors + ' lodi'" variant="warning" size="sm" />
+    </div>
+  }
+}

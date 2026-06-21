@@ -4,14 +4,28 @@
   [style.grid-auto-rows]="'120px'">
   @for (widget of placedWidgets; track widget.instanceId) {
     <div
-      class="relative rounded-2xl bg-white border border-gray-100 shadow-sm p-4 transition-all"
+      class="relative rounded-2xl bg-white border border-gray-100 shadow-sm p-4 overflow-hidden transition-all"
       [class.animate-wiggle]="isEditMode"
       [style.grid-column]="getGridColumn(widget)"
       [style.grid-row]="getGridRow(widget)"
       (contextmenu)="$event.preventDefault(); editModeToggled.emit()">
-      <p appText variant="body-sm" color="muted">
-        {{ getWidgetDefinition(widget.widgetId)?.label }}
-      </p>
+      @switch (widget.widgetId) {
+        @case ('next-exam') {
+          <app-next-exam-widget [size]="widget.size" />
+        }
+        @case ('grade-average') {
+          <app-grade-average-widget [size]="widget.size" />
+        }
+        @case ('messages') {
+          <app-messages-widget [size]="widget.size" />
+        }
+        @case ('schedule-today') {
+          <app-schedule-today-widget [size]="widget.size" />
+        }
+        @case ('cfu-progress') {
+          <app-cfu-progress-widget [size]="widget.size" />
+        }
+      }
 
       @if (isEditMode) {
         <button

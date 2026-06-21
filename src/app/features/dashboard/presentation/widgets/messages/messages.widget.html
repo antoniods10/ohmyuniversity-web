@@ -1,0 +1,42 @@
+@switch (size) {
+  @case ('medium') {
+    <div class="flex flex-col h-full gap-2 justify-between">
+      <div class="flex items-center justify-between">
+        <p appText variant="caption" color="muted">Messaggi</p>
+        <app-custom-badge label="2 non letti" variant="error" size="sm" />
+      </div>
+      <div class="flex flex-col gap-1">
+        <p appText variant="body-sm" weight="semibold">{{ messages[0].sender }}</p>
+        <p appText variant="caption" color="muted" class="line-clamp-2">
+          {{ messages[0].subject }}
+        </p>
+      </div>
+      <p appText variant="caption" color="muted">{{ messages[0].date }}</p>
+    </div>
+  }
+
+  @case ('large') {
+    <div class="flex flex-col h-full gap-3">
+      <div class="flex items-center justify-between">
+        <p appText variant="caption" color="muted">Messaggi recenti</p>
+        <app-custom-badge label="2 non letti" variant="error" size="sm" />
+      </div>
+      <div class="flex flex-col gap-2 overflow-hidden">
+        @for (msg of messages; track msg.subject) {
+          <div class="flex items-start gap-2 py-1.5 border-b border-gray-50 last:border-0">
+            @if (msg.unread) {
+              <div class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></div>
+            } @else {
+              <div class="w-1.5 h-1.5 shrink-0"></div>
+            }
+            <div class="flex flex-col gap-0.5 flex-1 min-w-0">
+              <p appText variant="caption" weight="semibold" class="truncate">{{ msg.sender }}</p>
+              <p appText variant="caption" color="muted" class="truncate">{{ msg.subject }}</p>
+            </div>
+            <p appText variant="caption" color="muted" class="shrink-0">{{ msg.date }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  }
+}

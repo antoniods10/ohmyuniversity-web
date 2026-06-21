@@ -1,0 +1,59 @@
+@switch (size) {
+  @case ('medium') {
+    <div class="flex flex-col h-full gap-2 justify-between">
+      <div class="flex items-center justify-between">
+        <p appText variant="caption" color="muted">Prossima lezione</p>
+        @if (nextLesson?.ongoing) {
+          <app-custom-badge label="In corso" variant="success" size="sm" />
+        }
+      </div>
+      <p appText variant="body" weight="semibold">{{ nextLesson?.name }}</p>
+      <div class="flex flex-col gap-1">
+        <div class="flex items-center gap-1.5">
+          <svg [lucideIcon]="lucideClock" [size]="12" class="text-gray-400"></svg>
+          <p appText variant="caption" color="muted">{{ nextLesson?.time }}</p>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <svg [lucideIcon]="lucideMapPin" [size]="12" class="text-gray-400"></svg>
+          <p appText variant="caption" color="muted">{{ nextLesson?.room }}</p>
+        </div>
+      </div>
+    </div>
+  }
+
+  @case ('large') {
+    <div class="flex flex-col h-full gap-3">
+      <p appText variant="caption" color="muted">Lezioni di oggi</p>
+      <div class="flex flex-col gap-2">
+        @for (lesson of lessons; track lesson.name) {
+          <div
+            class="flex items-center gap-3 p-2 rounded-xl transition-all"
+            [class.bg-primary/5]="lesson.ongoing"
+            [class.border]="lesson.ongoing"
+            [class.border-primary/20]="lesson.ongoing">
+            <div class="flex flex-col gap-0.5 flex-1 min-w-0">
+              <div class="flex items-center gap-2">
+                <p appText variant="caption" weight="semibold" class="truncate">
+                  {{ lesson.name }}
+                </p>
+                @if (lesson.ongoing) {
+                  <app-custom-badge label="In corso" variant="success" size="sm" />
+                }
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="flex items-center gap-1">
+                  <svg [lucideIcon]="lucideClock" [size]="11" class="text-gray-400"></svg>
+                  <p appText variant="caption" color="muted">{{ lesson.time }}</p>
+                </div>
+                <div class="flex items-center gap-1">
+                  <svg [lucideIcon]="lucideMapPin" [size]="11" class="text-gray-400"></svg>
+                  <p appText variant="caption" color="muted">{{ lesson.room }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+}

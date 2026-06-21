@@ -1,13 +1,24 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { LucideDynamicIcon, LucideX } from '@lucide/angular';
 import { PlacedWidget, WidgetDefinition } from '@shared/types';
 import { WIDGET_SIZE_CONFIG, AVAILABLE_WIDGETS, GRID_COLS } from '@shared/constants';
+import { NextExamWidgetComponent } from '../../../../widgets/next-exam/next-exam.widget';
+import { CfuProgressWidgetComponent } from '../../../../widgets/cfu-progress/cfu-progress.widget';
+import { GradeAverageWidgetComponent } from '../../../../widgets/grade-average/grade-average.widget';
+import { MessagesWidgetComponent } from '../../../../widgets/messages/messages.widget';
+import { ScheduleTodayWidgetComponent } from '../../../../widgets/schedule-today/schedule-today.widget';
 
 @Component({
   selector: 'app-home-widget-grid',
   standalone: true,
-  imports: [CustomTextComponent, LucideDynamicIcon],
+  imports: [
+    NextExamWidgetComponent,
+    GradeAverageWidgetComponent,
+    MessagesWidgetComponent,
+    ScheduleTodayWidgetComponent,
+    CfuProgressWidgetComponent,
+    LucideDynamicIcon,
+  ],
   templateUrl: './home-widget-grid.component.html',
 })
 export class HomeWidgetGridComponent {
