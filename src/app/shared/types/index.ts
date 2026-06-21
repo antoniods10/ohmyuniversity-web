@@ -12,6 +12,7 @@ export * from './dashboard/university-contacts.types';
 
 // Features
 export * from './features/business.types';
+export * from './features/calendar.types';
 export * from './features/contact.types';
 export * from './features/faq.types';
 export * from './features/home.types';
