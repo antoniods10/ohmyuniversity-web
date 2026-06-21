@@ -1,10 +1,15 @@
 <!-- Summary View -->
 @if (showSummary()) {
-  <app-orientation-summary (backToList)="closeSummary()" />
+  <app-orientation-summary (backToList)="closeSummary()" (viewResult)="openResult()" />
+}
+
+<!-- Result View -->
+@if (showResult()) {
+  <app-orientation-result (backToSummary)="closeResult()" />
 }
 
 <!-- List View -->
-@if (!activeTopic() && !showSummary()) {
+@if (!activeTopic() && !showSummary() && !showResult()) {
   <div class="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
     <div class="mb-10 text-center">
       <app-custom-badge
@@ -35,30 +40,39 @@
       }
     </div>
 
-    <!-- Summary button -->
+    <!-- Summary card -->
     <div class="mt-6">
-      <div class="rounded-xl border border-blue-100 bg-blue-50 p-4">
-        <div class="flex items-center justify-between gap-4">
-          <div>
-            <p appText variant="body-sm" weight="semibold">Le tue risposte</p>
-            <p appText variant="caption" color="muted" class="mt-0.5">
-              {{ answeredCount() }} di {{ totalCount() }} domande completate
-            </p>
-          </div>
+      <app-card-status
+        statusVariant="info"
+        [icon]="iconSummary"
+        [title]="
+          answeredCount() === 0 ? 'Inizia il tuo percorso di orientamento' : 'Le tue risposte'
+        "
+        [description]="
+          answeredCount() === 0
+            ? 'Rispondi alle domande nei vari argomenti per ricevere un profilo personalizzato.'
+            : answeredCount() + ' di ' + totalCount() + ' domande completate'
+        "
+        shadow="sm"
+        padding="md">
+        <div class="mt-4 flex flex-col gap-3">
+          @if (answeredCount() > 0) {
+            <!-- Progress bar - no custom component available for this -->
+            <div class="h-1.5 w-full overflow-hidden rounded-full bg-blue-100">
+              <div
+                class="h-full rounded-full bg-blue-500 transition-all duration-300"
+                [style.width.%]="(answeredCount() / totalCount()) * 100"></div>
+            </div>
+          }
           <app-custom-button
-            label="Vedi riepilogo"
+            [label]="answeredCount() === 0 ? 'Inizia la guida' : 'Vedi riepilogo'"
             variant="primary"
             rounded="lg"
             size="sm"
-            (clicked)="openSummary()" />
+            [fullWidth]="true"
+            (clicked)="openSummaryOrStart()" />
         </div>
-        <!-- Progress bar -->
-        <div class="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-blue-100">
-          <div
-            class="h-full rounded-full bg-blue-500 transition-all duration-300"
-            [style.width.%]="(answeredCount() / totalCount()) * 100"></div>
-        </div>
-      </div>
+      </app-card-status>
     </div>
 
     <div class="mt-8 text-center">

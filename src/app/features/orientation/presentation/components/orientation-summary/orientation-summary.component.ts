@@ -15,7 +15,7 @@ import {
 import {
   OrientationStateService,
   SavedAnswer,
-} from 'src/app/features/orientation/application/state/orientation.state';
+} from '@orientation/application/state/orientation.state';
 import { ORIENTATION_TOPICS } from '@constants';
 import { TopicId, InlineOption } from '@types';
 
@@ -43,6 +43,7 @@ interface SummaryQuestion {
 })
 export class OrientationSummaryComponent {
   readonly backToList = output<void>();
+  readonly viewResult = output<void>();
 
   private readonly state = inject(OrientationStateService);
 
@@ -90,7 +91,7 @@ export class OrientationSummaryComponent {
     this.state.saveAnswer(q.questionId, q.topicId, value, label);
   }
 
-  // Remove leading emoji from option labels (e.g. "📚 Umanistica" → "Umanistica")
+  // Remove leading emoji from option labels (e.g. "Umanistica" → "Umanistica")
   getLabelClean(label: string): string {
     return label.replace(/^\S+\s/, '');
   }

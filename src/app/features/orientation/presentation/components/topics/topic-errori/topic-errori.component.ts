@@ -19,7 +19,7 @@ import {
   LucideHourglass,
 } from '@lucide/angular';
 import { APP_NAME, COMMON_MISTAKES, ORIENTATION_TOPICS } from '@constants';
-import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
+import { OrientationStateService } from '@orientation/application/state/orientation.state';
 
 const ERROR_ICON_MAP: Record<string, any> = {
   'Scegliere per moda': LucideSparkles,

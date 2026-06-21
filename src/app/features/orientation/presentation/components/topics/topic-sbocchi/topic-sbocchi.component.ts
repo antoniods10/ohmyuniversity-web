@@ -10,7 +10,7 @@ import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 import { ToastService } from '@ui/custom-toast/toast.service';
 import { LucideCircleCheck, LucideCheck, LucideInfo, LucideTriangleAlert } from '@lucide/angular';
 import { CAREER_AREAS, CAREER_TIPS, ORIENTATION_TOPICS } from '@constants';
-import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
+import { OrientationStateService } from '@orientation/application/state/orientation.state';
 
 @Component({
   selector: 'app-topic-sbocchi',

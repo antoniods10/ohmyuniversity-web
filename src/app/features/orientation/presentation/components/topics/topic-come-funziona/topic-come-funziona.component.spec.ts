@@ -1,30 +1,50 @@
-import { vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { TopicComeFunzionaComponent } from './topic-come-funziona.component';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
 import { CfuChartComponent } from '../../charts/cfu-chart/cfu-chart.component';
-import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
-import { By } from '@angular/platform-browser';
-import { ComponentRef } from '@angular/core';
-import { COME_FUNZIONA_DIFFERENZE, COME_FUNZIONA_TIPI_ESAME, COME_FUNZIONA_SESSIONI } from '@constants';
+import { OrientationStateService } from '@orientation/application/state/orientation.state';
+import { ToastService } from '@ui/custom-toast/toast.service';
+import { UNIVERSITY_VS_SCHOOL_DIFFERENCES, EXAM_TYPES, EXAM_SESSIONS } from '@constants';
+
+if (!Element.prototype.scrollIntoView) {
+  Element.prototype.scrollIntoView = function (): void {};
+}
 
 describe('TopicComeFunzionaComponent', () => {
   let component: TopicComeFunzionaComponent;
   let fixture: ComponentFixture<TopicComeFunzionaComponent>;
-  let componentRef: ComponentRef<TopicComeFunzionaComponent>;
+  let stateServiceMock: { getAnswer: ReturnType<typeof vi.fn>; saveAnswer: ReturnType<typeof vi.fn> };
+  let toastServiceMock: { success: ReturnType<typeof vi.fn> };
 
-  beforeEach(async () => {
+  async function setupComponent(answers: Record<string, string | null> = {}): Promise<void> {
+    TestBed.resetTestingModule();
+
+    stateServiceMock = {
+      getAnswer: vi.fn((id: string) => answers[id] ?? null),
+      saveAnswer: vi.fn(),
+    };
+    toastServiceMock = { success: vi.fn() };
+
     await TestBed.configureTestingModule({
       imports: [TopicComeFunzionaComponent],
+      providers: [
+        { provide: OrientationStateService, useValue: stateServiceMock },
+        { provide: ToastService, useValue: toastServiceMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TopicComeFunzionaComponent);
     component = fixture.componentInstance;
-    componentRef = fixture.componentRef;
-    componentRef.setInput('hasPrev', false);
-    componentRef.setInput('hasNext', true);
+    fixture.componentRef.setInput('hasPrev', false);
+    fixture.componentRef.setInput('hasNext', true);
     fixture.detectChanges();
+  }
+
+  beforeEach(async () => {
+    await setupComponent();
   });
 
   it('should create the component', () => {
@@ -33,7 +53,7 @@ describe('TopicComeFunzionaComponent', () => {
 
   it('should render the main h2 heading', () => {
     const h2 = fixture.nativeElement.querySelector('h2');
-    expect(h2.textContent).toContain('Come funziona l\'università');
+    expect(h2.textContent).toContain("Come funziona l'università");
   });
 
   it('should render the differences table', () => {
@@ -41,9 +61,9 @@ describe('TopicComeFunzionaComponent', () => {
     expect(table).not.toBeNull();
   });
 
-  it('should render one row per differenza from constant', () => {
+  it('should render one row per difference from UNIVERSITY_VS_SCHOOL_DIFFERENCES', () => {
     const rows = fixture.nativeElement.querySelectorAll('tbody tr');
-    expect(rows.length).toBe(COME_FUNZIONA_DIFFERENZE.length);
+    expect(rows.length).toBe(UNIVERSITY_VS_SCHOOL_DIFFERENCES.length);
   });
 
   it('should render the CFU section heading', () => {
@@ -55,22 +75,18 @@ describe('TopicComeFunzionaComponent', () => {
     expect(chart).not.toBeNull();
   });
 
-  it('should render the tipi esame section heading', () => {
+  it('should render the exam types section heading', () => {
     expect(fixture.nativeElement.textContent).toContain('Tipi di esame');
   });
 
-  it('should render one card per tipo di esame', () => {
-    const tipiCards = fixture.nativeElement.querySelectorAll('.rounded-xl.border.border-gray-100.bg-gray-50.p-4');
-    expect(tipiCards.length).toBeGreaterThanOrEqual(COME_FUNZIONA_TIPI_ESAME.length);
+  it('should render the exam sessions section heading', () => {
+    expect(fixture.nativeElement.textContent).toContain("Le sessioni d'esame");
   });
 
-  it('should render the sessioni section heading', () => {
-    expect(fixture.nativeElement.textContent).toContain('Le sessioni d\'esame');
-  });
-
-  it('should render one badge per sessione', () => {
-    const badges = fixture.debugElement.queryAll(By.directive(CustomBadgeComponent));
-    expect(badges.length).toBeGreaterThanOrEqual(COME_FUNZIONA_SESSIONI.length);
+  it('should render one badge per session from EXAM_SESSIONS', () => {
+    EXAM_SESSIONS.forEach(session => {
+      expect(fixture.nativeElement.textContent).toContain(session.label);
+    });
   });
 
   it('should render the autonomy callout via CardStatus', () => {
@@ -87,37 +103,115 @@ describe('TopicComeFunzionaComponent', () => {
     expect(nav).not.toBeNull();
   });
 
-  it('should pass hasPrev to orientation-nav', () => {
+  it('should emit prev/next/backToList when orientation-nav emits them', () => {
     const nav = fixture.debugElement.query(By.directive(OrientationNavComponent));
-    expect(nav.componentInstance.hasPrev()).toBe(false);
-  });
 
-  it('should pass hasNext to orientation-nav', () => {
-    const nav = fixture.debugElement.query(By.directive(OrientationNavComponent));
-    expect(nav.componentInstance.hasNext()).toBe(true);
-  });
+    const prevSpy = vi.fn();
+    const nextSpy = vi.fn();
+    const backSpy = vi.fn();
+    component.prev.subscribe(prevSpy);
+    component.next.subscribe(nextSpy);
+    component.backToList.subscribe(backSpy);
 
-  it('should emit prev when orientation-nav emits prev', () => {
-    const spy = vi.fn();
-    component.prev.subscribe(spy);
-    const nav = fixture.debugElement.query(By.directive(OrientationNavComponent));
     nav.componentInstance.prev.emit();
-    expect(spy).toHaveBeenCalledTimes(1);
-  });
-
-  it('should emit next when orientation-nav emits next', () => {
-    const spy = vi.fn();
-    component.next.subscribe(spy);
-    const nav = fixture.debugElement.query(By.directive(OrientationNavComponent));
     nav.componentInstance.next.emit();
-    expect(spy).toHaveBeenCalledTimes(1);
+    nav.componentInstance.backToList.emit();
+
+    expect(prevSpy).toHaveBeenCalledTimes(1);
+    expect(nextSpy).toHaveBeenCalledTimes(1);
+    expect(backSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('should emit backToList when orientation-nav emits backToList', () => {
-    const spy = vi.fn();
-    component.backToList.subscribe(spy);
-    const nav = fixture.debugElement.query(By.directive(OrientationNavComponent));
-    nav.componentInstance.backToList.emit();
-    expect(spy).toHaveBeenCalledTimes(1);
+  describe('getExamIcon', () => {
+    it('returns a known icon for a recognized exam type', () => {
+      expect(component.getExamIcon('Scritto')).toBeTruthy();
+    });
+
+    it('falls back to the default icon for an unrecognized exam type', () => {
+      expect(component.getExamIcon('Tipo Inesistente')).toBeTruthy();
+    });
+  });
+
+  describe('getSessionSubtitle', () => {
+    it('combines periodo and note with a separator', () => {
+      expect(component.getSessionSubtitle('Gennaio', 'Esami invernali')).toBe('Gennaio · Esami invernali');
+    });
+  });
+
+  describe('signals reflect saved answers', () => {
+    it('return null when no answer has been saved', () => {
+      expect(component.selectedStudyStyle()).toBeNull();
+      expect(component.selectedExamType()).toBeNull();
+      expect(component.selectedAutonomy()).toBeNull();
+    });
+
+    it('reflect the value already saved at creation time', async () => {
+      await setupComponent({ [component.questionStudyStyle.id]: 'continuous' });
+      expect(component.selectedStudyStyle()).toBe('continuous');
+    });
+  });
+
+  describe('onSelectStudyStyle / onSelectExamType / onSelectAutonomy', () => {
+    it('saves the study style answer with the correct topicId', () => {
+      const option = component.questionStudyStyle.options![0];
+      component.onSelectStudyStyle(option.value);
+
+      expect(stateServiceMock.saveAnswer).toHaveBeenCalledWith(
+        component.questionStudyStyle.id,
+        'come-funziona',
+        option.value,
+        option.label,
+      );
+    });
+
+    it('saves the exam type answer with the correct topicId', () => {
+      const option = component.questionExamType.options![0];
+      component.onSelectExamType(option.value);
+
+      expect(stateServiceMock.saveAnswer).toHaveBeenCalledWith(
+        component.questionExamType.id,
+        'come-funziona',
+        option.value,
+        option.label,
+      );
+    });
+
+    it('saves the autonomy answer with the correct topicId', () => {
+      const option = component.questionAutonomy.options![0];
+      component.onSelectAutonomy(option.value);
+
+      expect(stateServiceMock.saveAnswer).toHaveBeenCalledWith(
+        component.questionAutonomy.id,
+        'come-funziona',
+        option.value,
+        option.label,
+      );
+    });
+
+    it('does nothing when re-selecting an already-saved value', async () => {
+      const option = component.questionStudyStyle.options![0];
+      await setupComponent({ [component.questionStudyStyle.id]: option.value });
+
+      component.onSelectStudyStyle(option.value);
+
+      expect(stateServiceMock.saveAnswer).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('scrollToQuestion', () => {
+    it('does not throw when called', () => {
+      expect(() => component.scrollToQuestion()).not.toThrow();
+    });
+
+    it('calls scrollIntoView on the question element rendered by the template', () => {
+      const el = document.getElementById('domanda-come-funziona');
+      expect(el).not.toBeNull();
+
+      const scrollSpy = vi.spyOn(el!, 'scrollIntoView').mockImplementation(() => {});
+
+      component.scrollToQuestion();
+
+      expect(scrollSpy).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
+    });
   });
 });

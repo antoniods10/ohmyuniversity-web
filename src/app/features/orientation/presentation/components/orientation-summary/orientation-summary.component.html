@@ -105,13 +105,21 @@
     }
   </div>
 
-  <!-- Back button -->
-  <div class="mt-8 text-center">
+  <!-- Actions -->
+  <div class="mt-8 flex flex-col-reverse items-center justify-center gap-3 sm:flex-row">
     <app-custom-button
       label="Torna alla lista degli argomenti"
       variant="outline"
       rounded="lg"
       size="md"
       (clicked)="backToList.emit()" />
+    <app-custom-button
+      label="Vedi il tuo risultato"
+      variant="primary"
+      rounded="lg"
+      size="md"
+      [icon]="iconChevron"
+      iconPosition="right"
+      (clicked)="viewResult.emit()" />
   </div>
 </div>

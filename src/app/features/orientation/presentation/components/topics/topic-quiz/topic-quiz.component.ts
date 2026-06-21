@@ -17,7 +17,7 @@ import {
 } from '@lucide/angular';
 import { ToastService } from '@ui/custom-toast/toast.service';
 import { TOLC_TESTS, ACCESS_TYPES, ACCESS_TIPS, ORIENTATION_TOPICS } from '@constants';
-import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
+import { OrientationStateService } from '@orientation/application/state/orientation.state';
 
 const ACCESS_ICON_MAP: Record<string, any> = {
   free: LucideBookOpen,

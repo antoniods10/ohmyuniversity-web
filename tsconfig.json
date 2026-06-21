@@ -8,7 +8,8 @@
       "@types": ["./src/app/shared/types/index.ts"],
       "@constants": ["./src/app/shared/constants/index.ts"],
       "@ui/*": ["./src/app/shared/components/ui/*"],
-      "@shared/*": ["./src/app/shared/*"]
+      "@shared/*": ["./src/app/shared/*"],
+      "@orientation/*": ["./src/app/features/orientation/*"]
     },
     "strict": true,
     "noImplicitOverride": true,

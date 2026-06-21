@@ -9,11 +9,12 @@ import { TopicVitaComponent } from '../components/topics/topic-vita/topic-vita.c
 import { TopicBudgetComponent } from '../components/topics/topic-budget/topic-budget.component';
 import { TopicCostiGeograficiComponent } from '../components/topics/topic-costi-geografici/topic-aree-geografiche.component';
 import { OrientationSummaryComponent } from '../components/orientation-summary/orientation-summary.component';
+import { OrientationResultComponent } from '../components/orientation-result/orientation-result.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
-import { CardNavComponent } from '@ui/custom-card/card-variants.component';
-import { OrientationStateService } from 'src/app/features/orientation/application/state/orientation.state';
+import { CardNavComponent, CardStatusComponent } from '@ui/custom-card/card-variants.component';
+import { OrientationStateService } from '@orientation/application/state/orientation.state';
 import { ORIENTATION_TOPICS } from '@constants';
 import { TopicId } from '@types';
 import { LucideClipboardList } from '@lucide/angular';
@@ -32,10 +33,12 @@ import { LucideClipboardList } from '@lucide/angular';
     TopicBudgetComponent,
     TopicCostiGeograficiComponent,
     OrientationSummaryComponent,
+    OrientationResultComponent,
     CustomBadgeComponent,
     CustomButtonComponent,
     CustomTextComponent,
     CardNavComponent,
+    CardStatusComponent,
   ],
   templateUrl: './orientation.page.html',
 })
@@ -44,6 +47,7 @@ export class OrientationPage {
 
   readonly activeTopic = signal<TopicId | null>(null);
   readonly showSummary = signal<boolean>(false);
+  readonly showResult = signal<boolean>(false);
   readonly topics = ORIENTATION_TOPICS;
   readonly activeIndex = computed(() => this.topics.findIndex(t => t.id === this.activeTopic()));
   readonly hasPrev = computed(() => this.activeIndex() > 0);
@@ -55,8 +59,18 @@ export class OrientationPage {
 
   open(id: TopicId): void {
     this.showSummary.set(false);
+    this.showResult.set(false);
     this.activeTopic.set(id);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /** Opens the summary if at least one answer was given, otherwise starts the guide from the first topic */
+  openSummaryOrStart(): void {
+    if (this.answeredCount() === 0) {
+      this.open(this.topics[0].id);
+    } else {
+      this.openSummary();
+    }
   }
 
   close(): void {
@@ -66,12 +80,25 @@ export class OrientationPage {
 
   openSummary(): void {
     this.activeTopic.set(null);
+    this.showResult.set(false);
     this.showSummary.set(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   closeSummary(): void {
     this.showSummary.set(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  openResult(): void {
+    this.showSummary.set(false);
+    this.showResult.set(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  closeResult(): void {
+    this.showResult.set(false);
+    this.showSummary.set(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 

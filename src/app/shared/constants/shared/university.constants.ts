@@ -6,7 +6,7 @@ import { University } from '@shared/types';
  * emailDomains are derived from each university's CINECA/Esse3 slug where
  * available, since in most cases the institutional email domain matches it
  * (e.g. unimol.esse3.cineca.it → @studenti.unimol.it / @unimol.it).
- * This is a reasonable default, NOT a verified guarantee for every entry —
+ * This is a reasonable default, NOT a verified guarantee for every entry,
  * universities marked with an empty emailDomains array had no slug source
  * available and need manual verification before being usable for login
  * validation.
