@@ -1,4 +1,4 @@
-import { WidgetDefinition, WidgetSize } from '@shared/types';
+import { WidgetDefinition, WidgetSizeConfig, WidgetSize } from '@shared/types';
 
 export const MOTIVATIONAL_QUOTES: string[] = [
   'Ogni esame superato è un passo in più verso il tuo futuro.',
@@ -13,10 +13,28 @@ export const MOTIVATIONAL_QUOTES: string[] = [
   'Studia come se dovessi vivere per sempre, vivi come se dovessi morire domani.',
 ];
 
-export const WIDGET_COLUMNS: Record<WidgetSize, number> = {
-  small: 2,
-  medium: 3,
-  large: 6,
+export const GRID_COLS = 3;
+export const GRID_ROWS = 10;
+
+export const WIDGET_SIZE_CONFIG: Record<WidgetSize, WidgetSizeConfig> = {
+  small: {
+    cols: 1,
+    rows: 1,
+    label: 'Piccolo',
+    description: '1 × 1 — compatto, ideale per info rapide',
+  },
+  medium: {
+    cols: 2,
+    rows: 2,
+    label: 'Medio',
+    description: '2 × 2 — bilanciato, mostra più dettagli',
+  },
+  large: {
+    cols: 3,
+    rows: 3,
+    label: 'Grande',
+    description: '3 × 3 — espanso, massimo dettaglio',
+  },
 };
 
 export const AVAILABLE_WIDGETS: WidgetDefinition[] = [

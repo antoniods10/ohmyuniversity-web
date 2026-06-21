@@ -1,0 +1,68 @@
+<app-dashboard-container>
+  <!-- Page Header -->
+  <app-dashboard-header
+    title="Dashboard"
+    description="Personalizza la tua dashboard con i tuoi widget preferiti." />
+
+  <app-home-greeting [greeting]="greeting()" [userName]="mockUserName" [quote]="quote" />
+
+  <div class="px-6 pb-6">
+    @switch (step()) {
+      @case ('placing') {
+        <app-home-placing-grid
+          [pendingWidget]="pendingWidget()"
+          [pendingSize]="pendingSize()"
+          [placedWidgets]="placedWidgets()"
+          (placed)="onPlaced($event)"
+          (cancelled)="cancelFlow()" />
+      }
+
+      @default {
+        @if (placedWidgets().length === 0) {
+          <div class="flex flex-col items-center justify-center py-24 gap-3 text-center">
+            <p appText variant="body" color="muted">La tua dashboard è vuota.</p>
+            <p appText variant="body-sm" color="muted">
+              Premi <strong>+</strong> per aggiungere i tuoi widget.
+            </p>
+          </div>
+        } @else {
+          <app-home-widget-grid
+            [placedWidgets]="placedWidgets()"
+            [isEditMode]="isEditMode()"
+            (editModeToggled)="toggleEditMode()"
+            (widgetRemoved)="removeWidget($event)" />
+        }
+      }
+    }
+  </div>
+
+  <app-home-widget-panel
+    #widgetPanel
+    [availableWidgets]="availableWidgets"
+    [placedWidgets]="placedWidgets()"
+    (widgetSelected)="onWidgetSelected($event)" />
+
+  <div class="fixed bottom-24 right-8 sm:right-20 z-50 flex flex-col gap-3">
+    @if (!isPlacingMode) {
+      <app-custom-button
+        [icon]="isEditMode() ? lucideX : lucidePencil"
+        [iconOnly]="true"
+        [ariaLabel]="isEditMode() ? 'Esci dalla modalità modifica' : 'Modifica dashboard'"
+        size="lg"
+        rounded="full"
+        [variant]="isEditMode() ? 'error' : 'info'"
+        (clicked)="toggleEditMode()" />
+    }
+
+    @if (!isEditMode()) {
+      <app-custom-button
+        [icon]="isPlacingMode ? lucideX : lucidePlus"
+        [iconOnly]="true"
+        [ariaLabel]="isPlacingMode ? 'Annulla' : 'Aggiungi widget'"
+        size="lg"
+        rounded="full"
+        [variant]="isPlacingMode ? 'error' : 'success'"
+        (clicked)="isPlacingMode ? cancelFlow() : openWidgetPanel()" />
+    }
+  </div>
+</app-dashboard-container>

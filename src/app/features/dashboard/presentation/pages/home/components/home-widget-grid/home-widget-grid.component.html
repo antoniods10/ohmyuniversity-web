@@ -1,0 +1,25 @@
+<div
+  class="grid gap-3"
+  [style.grid-template-columns]="'repeat(' + GRID_COLS + ', minmax(0, 1fr))'"
+  [style.grid-auto-rows]="'120px'">
+  @for (widget of placedWidgets; track widget.instanceId) {
+    <div
+      class="relative rounded-2xl bg-white border border-gray-100 shadow-sm p-4 transition-all"
+      [class.animate-wiggle]="isEditMode"
+      [style.grid-column]="getGridColumn(widget)"
+      [style.grid-row]="getGridRow(widget)"
+      (contextmenu)="$event.preventDefault(); editModeToggled.emit()">
+      <p appText variant="body-sm" color="muted">
+        {{ getWidgetDefinition(widget.widgetId)?.label }}
+      </p>
+
+      @if (isEditMode) {
+        <button
+          class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center shadow-md hover:bg-red-600 transition-colors z-10"
+          (click)="widgetRemoved.emit(widget.instanceId)">
+          <svg [lucideIcon]="lucideX" [size]="12"></svg>
+        </button>
+      }
+    </div>
+  }
+</div>

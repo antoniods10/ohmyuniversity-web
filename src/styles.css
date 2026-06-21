@@ -288,6 +288,16 @@ h6 {
   }
 }
 
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(-1deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
 .animate-marquee-login-up {
   animation-name: marquee-login-up;
   animation-timing-function: linear;
@@ -311,4 +321,8 @@ h6 {
 }
 .duration-4 {
   animation-duration: 35s;
+}
+
+.animate-wiggle {
+  animation: wiggle 0.3s ease-in-out infinite;
 }

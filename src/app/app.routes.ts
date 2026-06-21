@@ -34,7 +34,7 @@ import { TermsPage } from './features/legal/presentation/pages/terms-conditions/
 import { DashboardLayoutComponent } from './features/dashboard/presentation/layout/dashboard-layout.component';
 
 // Dashboard Pages
-import { DashboardHomePage } from './features/dashboard/presentation/pages/home/home.page';
+import { DashboardHomePage } from './features/dashboard/presentation/pages/home/pages/home.page';
 import { CareerPage } from './features/dashboard/presentation/pages/career/pages/career.page';
 import { ExamsPage } from './features/dashboard/presentation/pages/exams/exams.page';
 import { AgendaPage } from './features/dashboard/presentation/pages/agenda/agenda.page';
