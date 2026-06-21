@@ -62,7 +62,9 @@ export function calendarHourLabel(hour: number): string {
 
 /** Precise 24h time (e.g. "09:30"), used on individual event cards */
 export function calendarPreciseTime(date: Date): string {
-  return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  return `${hours}:${minutes}`;
 }
 
 /** Time range label for an event (e.g. "09:30-11:00"), falls back to a single time if no endDate */
