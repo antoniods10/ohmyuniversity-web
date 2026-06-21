@@ -63,3 +63,12 @@ export interface UniversityEvent {
 
 /** The 3 event categories selectable from the "new element" form tabs */
 export type CalendarFormEventType = 'ESAME' | 'PROMEMORIA' | 'EVENTO';
+
+/** Lane assignment for one event within an overlapping group, used by the timeline view */
+export interface CalendarEventLayout {
+  event: CalendarEvent;
+  /** 0-based column index among overlapping events */
+  lane: number;
+  /** Max number of simultaneous lanes within this event's overlap group */
+  laneCount: number;
+}
