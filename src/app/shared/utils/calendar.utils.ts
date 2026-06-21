@@ -1,4 +1,3 @@
-import type { BadgeVariant } from '@ui/custom-badge/custom-badge.component';
 import { LucideBell, LucideCalendarDays, LucideGraduationCap } from '@lucide/angular';
 import type {
   CalendarEvent,
@@ -32,14 +31,18 @@ export function calendarEventTypeIcon(type: CalendarEventType): any {
 }
 
 /**
+ * The 3 variant values actually used to color an event by type — a subset shared by both
+ * custom-card's CardVariant and custom-badge's BadgeVariant, so it's safely assignable to
+ * either [variant] input without a type mismatch (BadgeVariant has members like 'ghost'
+ * that don't exist on CardVariant, so the full BadgeVariant type isn't assignable to it).
+ */
+export type CalendarEventVariant = 'error' | 'secondary' | 'warning';
+
+/**
  * app-custom-card / app-custom-badge variant for the event's type.
  * Mirrors the Flutter mapping: EXAM=error, REMINDER=secondary, everything else=warning.
- *
- * Typed against BadgeVariant — custom-card's CardVariant and custom-badge's BadgeVariant
- * are separate unions in this codebase but share the 'error'/'secondary'/'warning' members
- * used here, so the same value is valid for both [variant] inputs.
  */
-export function calendarEventTypeVariant(type: CalendarEventType): BadgeVariant {
+export function calendarEventTypeVariant(type: CalendarEventType): CalendarEventVariant {
   switch (type) {
     case 'EXAM':
       return 'error';
