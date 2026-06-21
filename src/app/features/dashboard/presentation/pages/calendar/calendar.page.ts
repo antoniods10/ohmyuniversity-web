@@ -3,9 +3,9 @@ import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-c
 import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
 
 @Component({
-  selector: 'app-dashboard-agenda-page',
+  selector: 'app-dashboard-calendar-page',
   standalone: true,
   imports: [DashboardContainerComponent, DashboardHeaderComponent],
-  templateUrl: './agenda.page.html',
+  templateUrl: './calendar.page.html',
 })
-export class AgendaPage {}
+export class CalendarPage {}

@@ -37,7 +37,7 @@ import { DashboardLayoutComponent } from './features/dashboard/presentation/layo
 import { DashboardHomePage } from './features/dashboard/presentation/pages/home/pages/home.page';
 import { CareerPage } from './features/dashboard/presentation/pages/career/pages/career.page';
 import { ExamsPage } from './features/dashboard/presentation/pages/exams/exams.page';
-import { AgendaPage } from './features/dashboard/presentation/pages/agenda/agenda.page';
+import { CalendarPage } from './features/dashboard/presentation/pages/calendar/calendar.page';
 import { SchedulePage } from './features/dashboard/presentation/pages/schedule/schedule.page';
 
 // =============================================
@@ -175,7 +175,7 @@ export const routes: Routes = [
       },
       {
         path: 'agenda',
-        component: AgendaPage,
+        component: CalendarPage,
       },
       {
         path: 'orario-lezioni',
