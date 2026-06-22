@@ -2,22 +2,52 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { LucideDynamicIcon, LucideX } from '@lucide/angular';
 import { PlacedWidget, WidgetDefinition } from '@shared/types';
 import { WIDGET_SIZE_CONFIG, AVAILABLE_WIDGETS, GRID_COLS } from '@shared/constants';
-import { NextExamWidgetComponent } from '../../../../widgets/next-exam/next-exam.widget';
-import { CfuProgressWidgetComponent } from '../../../../widgets/cfu-progress/cfu-progress.widget';
-import { GradeAverageWidgetComponent } from '../../../../widgets/grade-average/grade-average.widget';
-import { MessagesWidgetComponent } from '../../../../widgets/messages/messages.widget';
-import { ScheduleTodayWidgetComponent } from '../../../../widgets/schedule-today/schedule-today.widget';
+import { CareerArithmeticAvgWidgetComponent } from '../../../../widgets/career/career-arithmetic-avg/career-arithmetic-avg.widget';
+import { CareerBaseWidgetComponent } from '../../../../widgets/career/career-base/career-base.widget';
+import { CareerCfuWidgetComponent } from '../../../../widgets/career/career-cfu/career-cfu.widget';
+import { CareerOverviewWidgetComponent } from '../../../../widgets/career/career-overview/career-overview.widget';
+import { CareerWeightedAvgWidgetComponent } from '../../../../widgets/career/career-weighted-avg/career-weighted-avg.widget';
+import { PortalsEsse3WidgetComponent } from '../../../../widgets/portals/portals-esse3/portals-esse3.widget';
+import { PortalsMailWidgetComponent } from '../../../../widgets/portals/portals-mail/portals-mail.widget';
+import { PortalsMoodleWidgetComponent } from '../../../../widgets/portals/portals-moodle/portals-moodle.widget';
+import { PortalsOverviewWidgetComponent } from '../../../../widgets/portals/portals-overview/portals-overview.widget';
+import { PortalsWebsiteWidgetComponent } from '../../../../widgets/portals/portals-website/portals-website.widget';
+import { SchedulesOverviewWidgetComponent } from '../../../../widgets/schedules/schedules-overview/schedules-overview.widget';
+import { ContactsUsefulWidgetComponent } from '../../../../widgets/contacts/contacts-useful/contacts-useful.widget';
+import { ContactsTeachersWidgetComponent } from '../../../../widgets/contacts/contacts-teachers/contacts-teachers.widget';
+import { SecretariatFormsWidgetComponent } from '../../../../widgets/secretariat/secretariat-forms/secretariat-forms.widget';
+import { SecretariatCallsWidgetComponent } from '../../../../widgets/secretariat/secretariat-calls/secretariat-calls.widget';
+import { SecretariatGrantsWidgetComponent } from '../../../../widgets/secretariat/secretariat-grants/secretariat-grants.widget';
+import { SecretariatOverviewWidgetComponent } from '../../../../widgets/secretariat/secretariat-overview/secretariat-overview.widget';
+import { SecretariatTaxesWidgetComponent } from '../../../../widgets/secretariat/secretariat-taxes/secretariat-taxes.widget';
+import { AgendaMonthlyWidgetComponent } from '../../../../widgets/agenda/agenda-monthly/agenda-monthly.widget';
+import { AgendaTodayWidgetComponent } from '../../../../widgets/agenda/agenda-today/agenda-today.widget';
 
 @Component({
   selector: 'app-home-widget-grid',
   standalone: true,
   imports: [
-    NextExamWidgetComponent,
-    GradeAverageWidgetComponent,
-    MessagesWidgetComponent,
-    ScheduleTodayWidgetComponent,
-    CfuProgressWidgetComponent,
     LucideDynamicIcon,
+    CareerArithmeticAvgWidgetComponent,
+    CareerBaseWidgetComponent,
+    CareerCfuWidgetComponent,
+    CareerOverviewWidgetComponent,
+    CareerWeightedAvgWidgetComponent,
+    PortalsEsse3WidgetComponent,
+    PortalsMoodleWidgetComponent,
+    PortalsMailWidgetComponent,
+    PortalsWebsiteWidgetComponent,
+    PortalsOverviewWidgetComponent,
+    SchedulesOverviewWidgetComponent,
+    ContactsTeachersWidgetComponent,
+    ContactsUsefulWidgetComponent,
+    SecretariatGrantsWidgetComponent,
+    SecretariatFormsWidgetComponent,
+    SecretariatCallsWidgetComponent,
+    SecretariatTaxesWidgetComponent,
+    SecretariatOverviewWidgetComponent,
+    AgendaTodayWidgetComponent,
+    AgendaMonthlyWidgetComponent,
   ],
   templateUrl: './home-widget-grid.component.html',
 })

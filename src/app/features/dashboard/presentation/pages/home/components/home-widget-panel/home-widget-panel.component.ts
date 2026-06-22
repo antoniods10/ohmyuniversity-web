@@ -1,26 +1,43 @@
 import { Component, Input, Output, EventEmitter, signal, viewChild } from '@angular/core';
 import { CustomModalComponent } from '@ui/custom-modal/custom-modal.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
-import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
+import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import {
   LucideDynamicIcon,
   LucidePlus,
-  LucideCalendarCheck,
-  LucideChartNoAxesColumn,
-  LucideMail,
-  LucideClock,
-  LucideGraduationCap,
   LucideArrowLeft,
+  LucideChartLine,
+  LucideCalendarCheck,
+  LucideCalendarDays,
+  LucideCalendarClock,
+  LucideSignpostBig,
+  LucideMessageSquare,
+  LucideBus,
+  LucideDoorOpen,
+  LucideExternalLink,
+  LucideHandshake,
+  LucideContactRound,
+  LucidePrinter,
+  LucideGraduationCap,
+  LucideLayoutDashboard,
+  LucideSquareDashed,
+  LucideSquare,
 } from '@lucide/angular';
-import { WidgetDefinition, WidgetSize, WidgetSizeConfig, PlacedWidget } from '@shared/types';
-import { WIDGET_SIZE_CONFIG, GRID_COLS } from '@shared/constants';
+import {
+  WidgetDefinition,
+  WidgetSection,
+  WidgetSize,
+  WidgetSizeConfig,
+  PlacedWidget,
+} from '@shared/types';
+import { WIDGET_SIZE_CONFIG, WIDGET_SECTIONS, GRID_COLS } from '@shared/constants';
 
 type PanelStep = 'list' | 'size';
 
 @Component({
   selector: 'app-home-widget-panel',
   standalone: true,
-  imports: [CustomModalComponent, CustomButtonComponent, CustomTextComponent, LucideDynamicIcon],
+  imports: [CustomModalComponent, CustomButtonComponent, CustomBadgeComponent, LucideDynamicIcon],
   templateUrl: './home-widget-panel.component.html',
 })
 export class HomeWidgetPanelComponent {
@@ -33,8 +50,12 @@ export class HomeWidgetPanelComponent {
   }>();
 
   readonly modal = viewChild<CustomModalComponent>('widgetModal');
+
   readonly lucidePlus = LucidePlus;
   readonly lucideArrowLeft = LucideArrowLeft;
+  readonly lucideSmall = LucideSquare;
+  readonly lucideMedium = LucideSquareDashed;
+  readonly lucideLarge = LucideLayoutDashboard;
 
   readonly step = signal<PanelStep>('list');
   readonly selectedWidget = signal<WidgetDefinition | null>(null);
@@ -42,13 +63,21 @@ export class HomeWidgetPanelComponent {
 
   readonly GRID_COLS = GRID_COLS;
   readonly GRID_ROWS = 3;
+  readonly widgetSections = WIDGET_SECTIONS;
 
   private readonly widgetIconMap: Record<string, any> = {
-    'next-exam': LucideCalendarCheck,
-    'grade-average': LucideChartNoAxesColumn,
-    messages: LucideMail,
-    'schedule-today': LucideClock,
-    'cfu-progress': LucideGraduationCap,
+    career: LucideChartLine,
+    exams: LucideCalendarCheck,
+    agenda: LucideCalendarDays,
+    schedules: LucideCalendarClock,
+    future: LucideSignpostBig,
+    messages: LucideMessageSquare,
+    transport: LucideBus,
+    classrooms: LucideDoorOpen,
+    portals: LucideExternalLink,
+    partner: LucideHandshake,
+    contacts: LucideContactRound,
+    secretariat: LucidePrinter,
   };
 
   open(): void {
@@ -61,8 +90,8 @@ export class HomeWidgetPanelComponent {
     this.modal()?.close('programmatic');
   }
 
-  getWidgetIcon(widgetId: string): any {
-    return this.widgetIconMap[widgetId] ?? LucidePlus;
+  getWidgetIcon(widget: WidgetDefinition): any {
+    return this.widgetIconMap[widget.section] ?? LucidePlus;
   }
 
   isWidgetPlaced(widgetId: string): boolean {
@@ -80,6 +109,7 @@ export class HomeWidgetPanelComponent {
   }
 
   selectWidget(widget: WidgetDefinition): void {
+    if (widget.comingSoon) return;
     this.selectedWidget.set(widget);
     const placedSize = this.getPlacedSize(widget.id);
     const firstAvailable = widget.availableSizes.find(s => s !== placedSize);

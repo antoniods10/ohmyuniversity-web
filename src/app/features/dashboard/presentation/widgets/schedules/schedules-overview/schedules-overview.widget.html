@@ -1,0 +1,35 @@
+<app-dashboard-widget-card
+  [size]="size"
+  [sectionIcon]="lucideSchedule"
+  [sectionLabel]="'Orario Lezioni'"
+  [widgetLabel]="mockCourseLabel"
+  color="schedules">
+  <div class="flex items-center justify-center h-full gap-2">
+    <app-custom-button
+      label="Visualizza"
+      variant="outline"
+      size="sm"
+      mode="link-external"
+      [href]="mockPdfUrl"
+      target="_blank"
+      [icon]="LucideExternalLink"
+      iconPosition="right" />
+    <app-custom-button
+      label="Scarica"
+      variant="ghost"
+      size="sm"
+      mode="link-external"
+      [href]="mockPdfUrl"
+      target="_blank"
+      [icon]="lucideDownload"
+      iconPosition="right" />
+  </div>
+
+  <div footer>
+    <app-custom-link
+      href="/dashboard/orario-lezioni"
+      label="Vai agli orari"
+      mode="internal"
+      size="sm" />
+  </div>
+</app-dashboard-widget-card>

@@ -9,12 +9,13 @@ import {
   GRID_COLS,
 } from '@shared/constants';
 import { PlacedWidget, WidgetDefinition, WidgetSize } from '@shared/types';
-import { LucidePlus, LucideX, LucidePencil } from '@lucide/angular';
+import { LucidePlus, LucideX, LucidePencil, LucideAlertTriangle } from '@lucide/angular';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { HomeGreetingComponent } from '../components/home-greeting/home-greeting.component';
 import { HomeWidgetPanelComponent } from '../components/home-widget-panel/home-widget-panel.component';
 import { HomePlacingGridComponent } from '../components/home-placing-grid/home-placing-grid.component';
 import { HomeWidgetGridComponent } from '../components/home-widget-grid/home-widget-grid.component';
+import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 
 export type DashboardStep = 'idle' | 'selecting-size' | 'placing';
 
@@ -29,10 +30,13 @@ export type DashboardStep = 'idle' | 'selecting-size' | 'placing';
     HomeWidgetPanelComponent,
     HomePlacingGridComponent,
     HomeWidgetGridComponent,
+    CardStatusComponent,
   ],
   templateUrl: './home.page.html',
 })
 export class DashboardHomePage {
+  readonly lucideAlertTriangle = LucideAlertTriangle;
+
   readonly mockUserName = 'Luca';
   readonly layoutService = inject(DashboardLayoutService);
   readonly placedWidgets = computed(() => this.layoutService.layout().widgets);

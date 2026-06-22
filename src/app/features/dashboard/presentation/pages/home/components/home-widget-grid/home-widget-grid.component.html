@@ -10,20 +10,71 @@
       [style.grid-row]="getGridRow(widget)"
       (contextmenu)="$event.preventDefault(); editModeToggled.emit()">
       @switch (widget.widgetId) {
-        @case ('next-exam') {
-          <app-next-exam-widget [size]="widget.size" />
+        @case ('career-arithmetic-avg') {
+          <app-career-arithmetic-avg-widget [size]="widget.size" />
         }
-        @case ('grade-average') {
-          <app-grade-average-widget [size]="widget.size" />
+        @case ('career-base') {
+          <app-career-base-widget [size]="widget.size" />
         }
-        @case ('messages') {
-          <app-messages-widget [size]="widget.size" />
+        @case ('career-cfu') {
+          <app-career-cfu-widget [size]="widget.size" />
         }
-        @case ('schedule-today') {
-          <app-schedule-today-widget [size]="widget.size" />
+        @case ('career-overview') {
+          <app-career-overview-widget [size]="widget.size" />
         }
-        @case ('cfu-progress') {
-          <app-cfu-progress-widget [size]="widget.size" />
+        @case ('career-weighted-avg') {
+          <app-career-weighted-avg-widget [size]="widget.size" />
+        }
+        @case ('portals-esse3') {
+          <app-portals-esse3-widget [size]="widget.size" />
+        }
+        @case ('portals-moodle') {
+          <app-portals-moodle-widget [size]="widget.size" />
+        }
+        @case ('portals-mail') {
+          <app-portals-mail-widget [size]="widget.size" />
+        }
+        @case ('portals-website') {
+          <app-portals-website-widget [size]="widget.size" />
+        }
+        @case ('portals-overview') {
+          <app-portals-overview-widget [size]="widget.size" />
+        }
+        @case ('schedules-overview') {
+          <app-schedules-overview-widget [size]="widget.size" />
+        }
+        @case ('contacts-teachers') {
+          <app-contacts-teachers-widget [size]="widget.size" />
+        }
+        @case ('contacts-useful') {
+          <app-contacts-useful-widget [size]="widget.size" />
+        }
+        @case ('secretariat-grants') {
+          <app-secretariat-grants-widget [size]="widget.size" />
+        }
+        @case ('secretariat-forms') {
+          <app-secretariat-forms-widget [size]="widget.size" />
+        }
+        @case ('secretariat-calls') {
+          <app-secretariat-calls-widget [size]="widget.size" />
+        }
+        @case ('secretariat-taxes') {
+          <app-secretariat-taxes-widget [size]="widget.size" />
+        }
+        @case ('secretariat-overview') {
+          <app-secretariat-overview-widget [size]="widget.size" />
+        }
+        @case ('agenda-today') {
+          <app-agenda-today-widget [size]="widget.size" />
+        }
+        @case ('agenda-monthly') {
+          <app-agenda-monthly-widget [size]="widget.size" />
+        }
+        @default {
+          <div
+            class="flex items-center justify-center h-full rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50">
+            <p class="text-xs text-gray-400">Widget in arrivo</p>
+          </div>
         }
       }
 

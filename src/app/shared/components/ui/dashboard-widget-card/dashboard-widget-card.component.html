@@ -1,9 +1,10 @@
-<div class="h-full rounded-2xl overflow-hidden" [style]="cardStyle">
+<div class="flex flex-col rounded-2xl overflow-hidden" [style]="cardStyle">
   <!-- Header -->
   <div
-    class="flex items-center justify-between gap-2 flex-wrap px-3 py-2 sm:flex-nowrap"
-    [style]="'border-bottom: 1px solid var(--color-' + color + '-light)'">
-    <div class="flex items-center gap-1.5 min-w-0">
+    class="flex items-center justify-between gap-2 flex-wrap px-3 sm:flex-nowrap shrink-0"
+    style="height: 20%"
+    [style.border-bottom]="'1px solid var(--color-' + color + '-light)'">
+    <div class="flex items-center gap-1.5 min-w-0 overflow-hidden">
       @if (sectionIcon) {
         <svg
           [lucideIcon]="sectionIcon"
@@ -40,12 +41,15 @@
   </div>
 
   <!-- Body -->
-  <div class="flex-1 px-3 py-2 overflow-hidden">
+  <div class="px-3 py-2 overflow-hidden" style="height: 60%">
     <ng-content />
   </div>
 
   <!-- Footer -->
-  <div [style]="'border-top: 1px solid var(--color-' + color + '-light)'">
+  <div
+    class="flex items-center justify-center px-3 pt-1 shrink-0"
+    style="height: 20%"
+    [style.border-top]="'1px solid var(--color-' + color + '-light)'">
     <ng-content select="[footer]" />
   </div>
 </div>

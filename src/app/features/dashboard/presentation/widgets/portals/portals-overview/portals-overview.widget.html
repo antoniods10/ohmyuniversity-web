@@ -1,0 +1,67 @@
+<app-dashboard-widget-card
+  [size]="size"
+  [sectionIcon]="lucideExternal"
+  sectionLabel="Portali"
+  widgetLabel="Panoramica"
+  color="portals">
+  @switch (size) {
+    @case ('medium') {
+      <div class="grid grid-cols-2 gap-2 py-1">
+        @for (portal of portals; track portal.label) {
+          <a
+            [href]="portal.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex flex-col gap-0.5 p-2 rounded-xl bg-white/60 no-underline hover:bg-white transition-all">
+            <p
+              appText
+              variant="caption"
+              weight="semibold"
+              class="truncate"
+              style="color: var(--color-portals-dark)">
+              {{ portal.label }}
+            </p>
+            <p appText variant="caption" color="muted" class="truncate text-[10px]">
+              {{ portal.description }}
+            </p>
+          </a>
+        }
+      </div>
+    }
+
+    @case ('large') {
+      <div class="flex flex-col gap-2 py-1">
+        @for (portal of portals; track portal.label) {
+          <a
+            [href]="portal.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-between gap-3 p-2.5 rounded-xl bg-white/60 no-underline hover:bg-white transition-all group">
+            <div class="flex flex-col gap-0.5 min-w-0">
+              <p
+                appText
+                variant="body-sm"
+                weight="semibold"
+                class="truncate"
+                style="color: var(--color-portals-dark)">
+                {{ portal.label }}
+              </p>
+              <p appText variant="caption" color="muted" class="truncate">
+                {{ portal.description }}
+              </p>
+            </div>
+            <svg
+              [lucideIcon]="lucideExternal"
+              [size]="14"
+              class="shrink-0 opacity-40 group-hover:opacity-100 transition-opacity"
+              style="color: var(--color-portals-dark)"></svg>
+          </a>
+        }
+      </div>
+    }
+  }
+
+  <div footer class="px-3 pb-2">
+    <app-custom-link href="/dashboard/portali" label="Vai ai portali" mode="internal" size="sm" />
+  </div>
+</app-dashboard-widget-card>

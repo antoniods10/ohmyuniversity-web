@@ -1,0 +1,22 @@
+<app-dashboard-widget-card
+  [size]="size"
+  [sectionIcon]="lucideExternal"
+  sectionLabel="Portali"
+  widgetLabel="Esse3"
+  color="portals">
+  <div class="flex items-center justify-center h-full">
+    <app-custom-button
+      [label]="portal.label"
+      variant="outline"
+      size="sm"
+      mode="link-external"
+      [href]="portal.url"
+      target="_blank"
+      [icon]="lucideExternal"
+      iconPosition="right" />
+  </div>
+
+  <div footer class="px-3 pb-2">
+    <app-custom-link href="/dashboard/portali" label="Vai ai portali" mode="internal" size="sm" />
+  </div>
+</app-dashboard-widget-card>
