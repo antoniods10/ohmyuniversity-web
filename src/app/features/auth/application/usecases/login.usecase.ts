@@ -9,6 +9,7 @@ const ACCESS_TOKEN_KEY = 'omu_access_token';
 const REFRESH_TOKEN_KEY = 'omu_refresh_token';
 
 export { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY };
+export const UNIVERSITY_ID_KEY = 'omu_university_id';
 
 @Injectable()
 export class LoginUseCase {
@@ -20,6 +21,7 @@ export class LoginUseCase {
       tap(tokens => {
         localStorage.setItem(ACCESS_TOKEN_KEY, tokens.accessToken);
         localStorage.setItem(REFRESH_TOKEN_KEY, tokens.refreshToken);
+        localStorage.setItem(UNIVERSITY_ID_KEY, request.universityId);
         this.router.navigate(['/dashboard']);
       }),
     );

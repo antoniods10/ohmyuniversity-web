@@ -13,6 +13,7 @@ import {
   STATUS_VARIANT,
 } from '@ui/avatar-profile-panel/avatar-profile-panel.component';
 import { SidebarItem } from '@constants';
+import { AuthFacade } from 'src/app/features/auth/application/facades/auth.facade';
 
 @Component({
   selector: 'app-dashboard-sidebar',
@@ -32,6 +33,7 @@ export class DashboardSidebarComponent {
   readonly APP_LOGO = APP_LOGO;
 
   private readonly router = inject(Router);
+  private readonly auth = inject(AuthFacade);
 
   readonly open = input.required<boolean>();
   readonly toggleSidebar = output<void>();
@@ -112,7 +114,7 @@ export class DashboardSidebarComponent {
   }
 
   onLogout(): void {
-    console.log('Logout');
+    this.auth.logout().subscribe();
   }
 
   goToProfile(): void {
