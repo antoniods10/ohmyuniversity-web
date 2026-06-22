@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { WidgetSize } from '@shared/types';
+import { LucideDynamicIcon, LucideMessageSquare } from '@lucide/angular';
+import { DashboardWidgetCardComponent } from '@ui/dashboard-widget-card/dashboard-widget-card.component';
 
 interface MessageItem {
   sender: string;
@@ -24,10 +26,16 @@ const MOCK_MESSAGES: MessageItem[] = [
 @Component({
   selector: 'app-messages-widget',
   standalone: true,
-  imports: [CustomTextComponent, CustomBadgeComponent],
+  imports: [
+    CustomTextComponent,
+    CustomBadgeComponent,
+    DashboardWidgetCardComponent,
+    LucideDynamicIcon,
+  ],
   templateUrl: './messages.widget.html',
 })
 export class MessagesWidgetComponent {
   @Input() size: WidgetSize = 'medium';
+  readonly lucideMessages = LucideMessageSquare;
   readonly messages = MOCK_MESSAGES;
 }

@@ -154,6 +154,19 @@ h6 {
   --color-settings-dark: #7880a0;
   --color-settings-text: #1a2030;
 
+  /* Widget background colors — ultra light */
+  --color-exams-bg: rgba(184, 192, 240, 0.35);
+  --color-exams-shadow: rgba(80, 96, 212, 0.12);
+
+  --color-career-bg: rgba(240, 220, 168, 0.35);
+  --color-career-shadow: rgba(212, 168, 48, 0.12);
+
+  --color-messages-bg: rgba(184, 240, 208, 0.35);
+  --color-messages-shadow: rgba(48, 196, 120, 0.12);
+
+  --color-schedules-bg: rgba(168, 232, 240, 0.35);
+  --color-schedules-shadow: rgba(42, 176, 200, 0.12);
+
   /* Typography & Spacing */
   --radius-sm: 6px;
   --radius-md: 10px;

@@ -1,34 +1,32 @@
-@switch (size) {
-  @case ('medium') {
-    <div class="flex flex-col h-full gap-2 justify-between">
-      <div class="flex items-center justify-between">
-        <p appText variant="caption" color="muted">Messaggi</p>
-        <app-custom-badge label="2 non letti" variant="error" size="sm" />
+<app-dashboard-widget-card
+  [size]="size"
+  [sectionIcon]="lucideMessages"
+  sectionLabel="Messaggi"
+  widgetLabel="Recenti"
+  badgeLabel="2 non letti"
+  badgeVariant="error"
+  color="messages">
+  @switch (size) {
+    @case ('medium') {
+      <div class="flex flex-col h-full gap-2 justify-between py-1">
+        <div class="flex flex-col gap-1">
+          <p appText variant="body-sm" weight="semibold">{{ messages[0].sender }}</p>
+          <p appText variant="caption" color="muted" class="line-clamp-2">
+            {{ messages[0].subject }}
+          </p>
+        </div>
+        <p appText variant="caption" color="muted">{{ messages[0].date }}</p>
       </div>
-      <div class="flex flex-col gap-1">
-        <p appText variant="body-sm" weight="semibold">{{ messages[0].sender }}</p>
-        <p appText variant="caption" color="muted" class="line-clamp-2">
-          {{ messages[0].subject }}
-        </p>
-      </div>
-      <p appText variant="caption" color="muted">{{ messages[0].date }}</p>
-    </div>
-  }
+    }
 
-  @case ('large') {
-    <div class="flex flex-col h-full gap-3">
-      <div class="flex items-center justify-between">
-        <p appText variant="caption" color="muted">Messaggi recenti</p>
-        <app-custom-badge label="2 non letti" variant="error" size="sm" />
-      </div>
-      <div class="flex flex-col gap-2 overflow-hidden">
+    @case ('large') {
+      <div class="flex flex-col h-full gap-2 overflow-hidden py-1">
         @for (msg of messages; track msg.subject) {
-          <div class="flex items-start gap-2 py-1.5 border-b border-gray-50 last:border-0">
-            @if (msg.unread) {
-              <div class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></div>
-            } @else {
-              <div class="w-1.5 h-1.5 shrink-0"></div>
-            }
+          <div class="flex items-start gap-2 py-1.5 border-b border-gray-100 last:border-0">
+            <div
+              class="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0"
+              [class.bg-primary]="msg.unread"
+              [class.bg-transparent]="!msg.unread"></div>
             <div class="flex flex-col gap-0.5 flex-1 min-w-0">
               <p appText variant="caption" weight="semibold" class="truncate">{{ msg.sender }}</p>
               <p appText variant="caption" color="muted" class="truncate">{{ msg.subject }}</p>
@@ -37,6 +35,6 @@
           </div>
         }
       </div>
-    </div>
+    }
   }
-}
+</app-dashboard-widget-card>

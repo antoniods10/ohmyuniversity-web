@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
-import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { WidgetSize } from '@shared/types';
 import { LucideDynamicIcon, LucideCalendarCheck, LucideClock, LucideMapPin } from '@lucide/angular';
+import { DashboardWidgetCardComponent } from '@ui/dashboard-widget-card/dashboard-widget-card.component';
 
 interface NextExamData {
   examName: string;
@@ -23,7 +23,7 @@ const MOCK_NEXT_EXAM: NextExamData = {
 @Component({
   selector: 'app-next-exam-widget',
   standalone: true,
-  imports: [CustomTextComponent, CustomBadgeComponent, LucideDynamicIcon],
+  imports: [CustomTextComponent, LucideDynamicIcon, DashboardWidgetCardComponent],
   templateUrl: './next-exam.widget.html',
 })
 export class NextExamWidgetComponent {

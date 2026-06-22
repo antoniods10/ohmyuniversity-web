@@ -1,0 +1,51 @@
+<div class="h-full rounded-2xl overflow-hidden" [style]="cardStyle">
+  <!-- Header -->
+  <div
+    class="flex items-center justify-between gap-2 flex-wrap px-3 py-2 sm:flex-nowrap"
+    [style]="'border-bottom: 1px solid var(--color-' + color + '-light)'">
+    <div class="flex items-center gap-1.5 min-w-0">
+      @if (sectionIcon) {
+        <svg
+          [lucideIcon]="sectionIcon"
+          [size]="iconSize"
+          [style]="headerIconStyle"
+          class="shrink-0"></svg>
+      }
+      <span
+        class="text-xs font-bold tracking-widest uppercase whitespace-nowrap"
+        [style]="sectionLabelStyle">
+        {{ sectionLabel }}
+      </span>
+      @if (widgetLabel) {
+        <span class="text-xs text-gray-300 mx-0.5">—</span>
+        <span class="text-xs font-medium text-gray-500 truncate">
+          {{ widgetLabel }}
+        </span>
+      }
+    </div>
+
+    @if (!hideBadge) {
+      <div class="shrink-0">
+        @if (badgeLabel) {
+          <app-custom-badge [label]="badgeLabel" [variant]="badgeVariant" size="sm" />
+        } @else if (sectionIcon) {
+          <svg
+            [lucideIcon]="sectionIcon"
+            [size]="14"
+            [style]="headerIconStyle"
+            class="opacity-40"></svg>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Body -->
+  <div class="flex-1 px-3 py-2 overflow-hidden">
+    <ng-content />
+  </div>
+
+  <!-- Footer -->
+  <div [style]="'border-top: 1px solid var(--color-' + color + '-light)'">
+    <ng-content select="[footer]" />
+  </div>
+</div>

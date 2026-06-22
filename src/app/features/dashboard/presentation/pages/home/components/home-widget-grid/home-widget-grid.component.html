@@ -4,7 +4,7 @@
   [style.grid-auto-rows]="'120px'">
   @for (widget of placedWidgets; track widget.instanceId) {
     <div
-      class="relative rounded-2xl bg-white border border-gray-100 shadow-sm p-4 overflow-hidden transition-all"
+      class="relative transition-all"
       [class.animate-wiggle]="isEditMode"
       [style.grid-column]="getGridColumn(widget)"
       [style.grid-row]="getGridRow(widget)"

@@ -1,12 +1,7 @@
 <app-dashboard-container>
-  <!-- Page Header -->
-  <app-dashboard-header
-    title="Dashboard"
-    description="Personalizza la tua dashboard con i tuoi widget preferiti." />
-
   <app-home-greeting [greeting]="greeting()" [userName]="mockUserName" [quote]="quote" />
 
-  <div class="px-6 pb-6">
+  <div class="pb-6">
     @switch (step()) {
       @case ('placing') {
         <app-home-placing-grid

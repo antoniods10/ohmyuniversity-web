@@ -1,30 +1,31 @@
-@switch (size) {
-  @case ('medium') {
-    <div class="flex flex-col h-full gap-2 justify-between">
-      <div class="flex items-center justify-between">
-        <p appText variant="caption" color="muted">Prossima lezione</p>
+<app-dashboard-widget-card
+  [size]="size"
+  [sectionIcon]="lucideSchedule"
+  sectionLabel="Orario"
+  widgetLabel="Lezioni di Oggi"
+  color="schedules">
+  @switch (size) {
+    @case ('medium') {
+      <div class="flex flex-col h-full gap-2 justify-between py-1">
+        <p appText variant="body" weight="semibold">{{ nextLesson?.name }}</p>
+        <div class="flex flex-col gap-1">
+          <div class="flex items-center gap-1.5">
+            <svg [lucideIcon]="lucideClock" [size]="12" class="text-gray-400"></svg>
+            <p appText variant="caption" color="muted">{{ nextLesson?.time }}</p>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <svg [lucideIcon]="lucideMapPin" [size]="12" class="text-gray-400"></svg>
+            <p appText variant="caption" color="muted">{{ nextLesson?.room }}</p>
+          </div>
+        </div>
         @if (nextLesson?.ongoing) {
           <app-custom-badge label="In corso" variant="success" size="sm" />
         }
       </div>
-      <p appText variant="body" weight="semibold">{{ nextLesson?.name }}</p>
-      <div class="flex flex-col gap-1">
-        <div class="flex items-center gap-1.5">
-          <svg [lucideIcon]="lucideClock" [size]="12" class="text-gray-400"></svg>
-          <p appText variant="caption" color="muted">{{ nextLesson?.time }}</p>
-        </div>
-        <div class="flex items-center gap-1.5">
-          <svg [lucideIcon]="lucideMapPin" [size]="12" class="text-gray-400"></svg>
-          <p appText variant="caption" color="muted">{{ nextLesson?.room }}</p>
-        </div>
-      </div>
-    </div>
-  }
+    }
 
-  @case ('large') {
-    <div class="flex flex-col h-full gap-3">
-      <p appText variant="caption" color="muted">Lezioni di oggi</p>
-      <div class="flex flex-col gap-2">
+    @case ('large') {
+      <div class="flex flex-col h-full gap-2 py-1">
         @for (lesson of lessons; track lesson.name) {
           <div
             class="flex items-center gap-3 p-2 rounded-xl transition-all"
@@ -54,6 +55,6 @@
           </div>
         }
       </div>
-    </div>
+    }
   }
-}
+</app-dashboard-widget-card>
