@@ -1,8 +1,14 @@
 import { Component, computed, signal } from '@angular/core';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
+import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
+import {
+  CalendarViewHeaderComponent,
+  type CalendarViewMode,
+} from './components/calendar-view-header/calendar-view-header.component';
 import { CalendarDayStripComponent } from './components/calendar-day-strip/calendar-day-strip.component';
 import { CalendarTimelineComponent } from './components/calendar-timeline/calendar-timeline.component';
+import { CalendarMonthViewComponent } from './components/calendar-month-view/calendar-month-view.component';
 import { MOCK_CALENDAR_EVENTS } from '@shared/data/mock/calendar.mock';
 import type { CalendarEvent, CalendarEventLayout } from '@shared/types/dashboard/calendar.types';
 import { calculateEventLayouts, calendarIsSameDay } from '@shared/utils/calendar.utils';
@@ -13,28 +19,55 @@ import { calculateEventLayouts, calendarIsSameDay } from '@shared/utils/calendar
   imports: [
     DashboardContainerComponent,
     DashboardHeaderComponent,
+    CustomTextComponent,
+    CalendarViewHeaderComponent,
     CalendarDayStripComponent,
     CalendarTimelineComponent,
+    CalendarMonthViewComponent,
   ],
   templateUrl: './calendar.page.html',
 })
 export class CalendarPage {
   readonly events = signal<CalendarEvent[]>(MOCK_CALENDAR_EVENTS);
-  readonly selectedDate = signal<Date>(new Date());
 
-  readonly eventsForSelectedDate = computed<CalendarEvent[]>(() => {
-    const day = this.selectedDate();
+  /** The date currently "in focus", the selected day, or the month/year being browsed */
+  readonly focusedDate = signal<Date>(new Date());
+
+  /** Which of the 3 nested views (year / month / day) is currently shown */
+  readonly currentView = signal<CalendarViewMode>('day');
+
+  readonly eventsForFocusedDay = computed<CalendarEvent[]>(() => {
+    const day = this.focusedDate();
     return this.events()
       .filter(event => calendarIsSameDay(event.startDate, day))
       .sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
   });
 
   readonly eventLayouts = computed<CalendarEventLayout[]>(() =>
-    calculateEventLayouts(this.eventsForSelectedDate()),
+    calculateEventLayouts(this.eventsForFocusedDay()),
   );
 
   selectDate(date: Date): void {
-    this.selectedDate.set(date);
+    this.focusedDate.set(date);
+  }
+
+  /** Drills down into a more specific view (e.g. clicking a month in year view) */
+  goToView(view: CalendarViewMode, date: Date): void {
+    this.focusedDate.set(date);
+    this.currentView.set(view);
+  }
+
+  onMonthDaySelected(date: Date): void {
+    this.goToView('day', date);
+  }
+
+  /** Goes up one level: day -> month -> year. No-op at the year view (the root). */
+  goBack(): void {
+    if (this.currentView() === 'day') {
+      this.currentView.set('month');
+    } else if (this.currentView() === 'month') {
+      this.currentView.set('year');
+    }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars -- event param kept for the future detail sheet handler

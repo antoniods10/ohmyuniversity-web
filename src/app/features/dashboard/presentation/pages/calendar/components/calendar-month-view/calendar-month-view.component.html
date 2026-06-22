@@ -1,0 +1,49 @@
+<div class="grid grid-cols-7 gap-0 text-center">
+  @for (label of weekdayLabels; track label) {
+    <p appText variant="caption" color="subtle" weight="bold">{{ label }}</p>
+  }
+</div>
+
+<div class="mt-2 grid grid-cols-7 gap-0">
+  @for (cell of cells(); track cell.date.getTime()) {
+    <app-custom-card
+      [variant]="cell.isToday ? 'info' : 'default'"
+      padding="sm"
+      shadow="none"
+      radius="sm"
+      [bordered]="true"
+      [clickable]="true"
+      (cardClick)="onDayClick(cell.date)">
+      <div class="flex h-24 flex-col gap-1 overflow-hidden">
+        <p appText variant="h4" weight="extrabold" [color]="cell.isInMonth ? 'default' : 'subtle'">
+          {{ cell.date.getDate() }}
+        </p>
+
+        @for (item of cell.visibleEvents; track $index) {
+          <app-custom-badge
+            class="block sm:hidden"
+            [label]="item.labelMobile"
+            [variant]="calendarEventTypeVariant(item.event.type)"
+            shape="rounded"
+            size="xs" />
+          <app-custom-badge
+            class="hidden sm:block md:hidden"
+            [label]="item.labelTablet"
+            [variant]="calendarEventTypeVariant(item.event.type)"
+            shape="rounded"
+            size="xs" />
+          <app-custom-badge
+            class="hidden md:block"
+            [label]="item.labelDesktop"
+            [variant]="calendarEventTypeVariant(item.event.type)"
+            shape="rounded"
+            size="xs" />
+        }
+
+        @if (cell.overflowCount > 0) {
+          <p appText variant="caption" color="subtle">+{{ cell.overflowCount }}</p>
+        }
+      </div>
+    </app-custom-card>
+  }
+</div>

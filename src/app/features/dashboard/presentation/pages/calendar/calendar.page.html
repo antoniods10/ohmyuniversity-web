@@ -1,11 +1,33 @@
 <app-dashboard-container>
   <app-dashboard-header title="Agenda" description="I tuoi impegni, esami e promemoria" />
 
-  <app-calendar-day-strip [selectedDate]="selectedDate()" (dateSelected)="selectDate($event)" />
-
-  <div class="mt-2">
-    <app-calendar-timeline
-      [eventLayouts]="eventLayouts()"
-      (eventSelected)="onEventSelected($event)" />
+  <div class="mt-4 flex items-center justify-between">
+    <app-calendar-view-header
+      [currentView]="currentView()"
+      [focusedDate]="focusedDate()"
+      (back)="goBack()" />
   </div>
+
+  @switch (currentView()) {
+    @case ('day') {
+      <app-calendar-day-strip [selectedDate]="focusedDate()" (dateSelected)="selectDate($event)" />
+
+      <div class="mt-2">
+        <app-calendar-timeline
+          [eventLayouts]="eventLayouts()"
+          (eventSelected)="onEventSelected($event)" />
+      </div>
+    }
+    @case ('month') {
+      <div class="mt-4">
+        <app-calendar-month-view
+          [focusedDate]="focusedDate()"
+          [events]="events()"
+          (daySelected)="onMonthDaySelected($event)" />
+      </div>
+    }
+    @case ('year') {
+      <p appText variant="body" color="subtle" align="center" class="mt-8"></p>
+    }
+  }
 </app-dashboard-container>
