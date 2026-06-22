@@ -24,6 +24,7 @@ export interface SidebarItem {
   icon: Type<unknown>;
   route: string;
   roles: UserRole[];
+  color: string;
   dividerAfter?: boolean;
 }
 
@@ -38,6 +39,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: LucideLayoutDashboard,
     route: '/dashboard',
     roles: ['student', 'admin', 'professor'],
+    color: 'dashboard',
   },
   {
     id: 'career',
@@ -45,35 +47,16 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: LucideChartLine,
     route: '/dashboard/carriera',
     roles: ['student', 'admin', 'professor'],
+    color: 'career',
   },
-  // @TODO: Sub-path didattica
-  // {
-  //   id: 'panoramica-didattica',
-  //   label: 'panoramica-didattica',
-  //   icon: LucideGraduationCap,
-  //   route: '/dashboard/didattica/panoramica-didattica',
-  //   roles: ['student', 'admin', 'professor'],
-  // },
-  // {
-  //   id: 'esami',
-  //   label: 'Esami',
-  //   icon: LucideGraduationCap,
-  //   route: '/dashboard/didattica/esami',
-  //   roles: ['student', 'admin', 'professor'],
-  // },
-  // {
-  //   id: 'piano-di-studi',
-  //   label: 'Piano di Studi',
-  //   icon: LucideGraduationCap,
-  //   route: '/dashboard/didattica/piano-di-studi',
-  //   roles: ['student', 'admin', 'professor'],
-  // },
+
   {
     id: 'exams',
     label: 'Appelli',
     icon: LucideBookOpenCheck,
     route: '/dashboard/appelli',
     roles: ['student', 'admin', 'professor'],
+    color: 'exams',
   },
   {
     id: 'agenda',
@@ -81,6 +64,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: LucideCalendarDays,
     route: '/dashboard/agenda',
     roles: ['student', 'admin', 'professor'],
+    color: 'agenda',
   },
   {
     id: 'schedules',
@@ -88,6 +72,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: LucideCalendarClock,
     route: '/dashboard/orario-lezioni',
     roles: ['student', 'admin', 'professor'],
+    color: 'schedules',
   },
   {
     id: 'sviluppi-futuri',
@@ -95,6 +80,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: LucideSignpostBig,
     route: '/dashboard/sviluppi-futuri',
     roles: ['student', 'admin', 'professor'],
+    color: 'future',
     dividerAfter: true,
   },
   {
@@ -103,6 +89,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: LucideMessageSquare,
     route: '/dashboard/messaggi',
     roles: ['student', 'admin', 'professor'],
+    color: 'messages',
     dividerAfter: true,
   },
   {
@@ -111,6 +98,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: LucideBus,
     route: '/dashboard/trasporti',
     roles: ['student', 'admin', 'professor'],
+    color: 'transport',
     dividerAfter: true,
   },
   {
@@ -119,6 +107,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: LucideDoorOpen,
     route: '/dashboard/aule',
     roles: ['student', 'admin', 'professor'],
+    color: 'classrooms',
   },
   {
     id: 'portals',
@@ -126,6 +115,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     icon: LucideExternalLink,
     route: '/dashboard/portali',
     roles: ['student', 'admin', 'professor'],
+    color: 'portals',
     dividerAfter: true,
   },
 ];
@@ -140,6 +130,7 @@ export const SIDEBAR_BOTTOM_ITEMS: SidebarItem[] = [
     icon: LucideHandshake,
     route: '/dashboard/partner-universitari',
     roles: ['student', 'admin', 'professor'],
+    color: 'partner',
   },
   {
     id: 'university-contacts',
@@ -147,6 +138,7 @@ export const SIDEBAR_BOTTOM_ITEMS: SidebarItem[] = [
     icon: LucideContactRound,
     route: '/dashboard/contatti-universitari',
     roles: ['student', 'admin', 'professor'],
+    color: 'contacts',
   },
   {
     id: 'segreteria',
@@ -154,6 +146,7 @@ export const SIDEBAR_BOTTOM_ITEMS: SidebarItem[] = [
     icon: LucidePrinter,
     route: '/dashboard/segreteria',
     roles: ['student', 'admin', 'professor'],
+    color: 'secretariat',
   },
   {
     id: 'settings',
@@ -161,5 +154,6 @@ export const SIDEBAR_BOTTOM_ITEMS: SidebarItem[] = [
     icon: LucideSettings,
     route: '/dashboard/impostazioni',
     roles: ['student', 'admin', 'professor'],
+    color: 'settings',
   },
 ];
