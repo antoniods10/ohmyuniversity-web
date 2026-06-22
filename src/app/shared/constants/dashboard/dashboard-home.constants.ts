@@ -45,6 +45,7 @@ export const AVAILABLE_WIDGETS: WidgetDefinition[] = [
     icon: 'calendar-check',
     availableSizes: ['small', 'medium'],
     defaultSize: 'small',
+    color: 'exams',
   },
   {
     id: 'grade-average',
@@ -53,6 +54,7 @@ export const AVAILABLE_WIDGETS: WidgetDefinition[] = [
     icon: 'bar-chart-2',
     availableSizes: ['small', 'medium'],
     defaultSize: 'small',
+    color: 'career',
   },
   {
     id: 'messages',
@@ -61,6 +63,7 @@ export const AVAILABLE_WIDGETS: WidgetDefinition[] = [
     icon: 'mail',
     availableSizes: ['medium', 'large'],
     defaultSize: 'medium',
+    color: 'messages',
   },
   {
     id: 'schedule-today',
@@ -69,6 +72,7 @@ export const AVAILABLE_WIDGETS: WidgetDefinition[] = [
     icon: 'clock',
     availableSizes: ['medium', 'large'],
     defaultSize: 'medium',
+    color: 'schedules',
   },
   {
     id: 'cfu-progress',
@@ -77,5 +81,6 @@ export const AVAILABLE_WIDGETS: WidgetDefinition[] = [
     icon: 'graduation-cap',
     availableSizes: ['small', 'medium', 'large'],
     defaultSize: 'medium',
+    color: 'career',
   },
 ];

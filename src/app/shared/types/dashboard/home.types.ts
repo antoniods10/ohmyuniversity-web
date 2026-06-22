@@ -14,6 +14,7 @@ export interface WidgetDefinition {
   icon: string;
   availableSizes: WidgetSize[];
   defaultSize: WidgetSize;
+  color: string;
 }
 
 export interface PlacedWidget {

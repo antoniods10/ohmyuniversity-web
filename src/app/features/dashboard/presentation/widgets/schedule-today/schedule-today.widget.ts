@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
-import { LucideDynamicIcon, LucideClock, LucideMapPin } from '@lucide/angular';
+import { LucideDynamicIcon, LucideClock, LucideMapPin, LucideCalendarClock } from '@lucide/angular';
 import { WidgetSize } from '@shared/types';
+import { DashboardWidgetCardComponent } from '@ui/dashboard-widget-card/dashboard-widget-card.component';
 
 interface LessonItem {
   name: string;
@@ -20,7 +21,12 @@ const MOCK_SCHEDULE: LessonItem[] = [
 @Component({
   selector: 'app-schedule-today-widget',
   standalone: true,
-  imports: [CustomTextComponent, CustomBadgeComponent, LucideDynamicIcon],
+  imports: [
+    CustomTextComponent,
+    CustomBadgeComponent,
+    LucideDynamicIcon,
+    DashboardWidgetCardComponent,
+  ],
   templateUrl: './schedule-today.widget.html',
 })
 export class ScheduleTodayWidgetComponent {
@@ -28,6 +34,7 @@ export class ScheduleTodayWidgetComponent {
   readonly lessons = MOCK_SCHEDULE;
   readonly lucideClock = LucideClock;
   readonly lucideMapPin = LucideMapPin;
+  readonly lucideSchedule = LucideCalendarClock;
 
   get nextLesson(): LessonItem | undefined {
     return this.lessons.find(l => l.ongoing) ?? this.lessons[0];
