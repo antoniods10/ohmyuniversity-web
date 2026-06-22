@@ -1,6 +1,14 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { AuthRepository } from './features/auth/domain/repositories/auth.repository';
+import { AuthApiRepository } from './features/auth/infrastructure/api/auth-api.repository';
+import { AuthFacade } from './features/auth/application/facades/auth.facade';
+import { LoginUseCase } from './features/auth/application/usecases/login.usecase';
+import { LogoutUseCase } from './features/auth/application/usecases/logout.usecase';
+import { RefreshTokenUseCase } from './features/auth/application/usecases/refresh-token.usecase';
 import {
   provideLucideIcons,
   LucideLayoutDashboard,
@@ -85,6 +93,15 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes, withComponentInputBinding()),
+    provideHttpClient(withInterceptors([authInterceptor])),
+
+    // Auth
+    { provide: AuthRepository, useClass: AuthApiRepository },
+    AuthFacade,
+    LoginUseCase,
+    LogoutUseCase,
+    RefreshTokenUseCase,
+
     provideLucideIcons(
       LucideLayoutDashboard,
       LucideGraduationCap,
