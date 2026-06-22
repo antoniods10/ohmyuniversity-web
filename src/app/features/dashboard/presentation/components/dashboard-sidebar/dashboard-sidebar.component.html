@@ -1,21 +1,21 @@
 <aside
+  class="flex flex-col h-full transition-all duration-200 ease-in-out"
   [class]="
-    'flex flex-col h-full transition-all duration-200 ease-in-out z-50 ' +
-    (open() ? 'w-60 min-w-60' : 'w-15 min-w-15')
+    isMobileOpen()
+      ? 'fixed top-0 left-0 h-full z-50 w-60 min-w-60'
+      : open()
+        ? 'w-60 min-w-60'
+        : 'w-15 min-w-15'
   "
   style="background: var(--color-neutral-100); border-right: 1px solid var(--color-neutral-200)">
   <!-- Brand -->
   <div
-    class="flex items-center gap-2.5 px-4 py-4.5 overflow-hidden shrink-0"
+    class="flex items-center gap-2.5 px-4 py-2.5 overflow-hidden shrink-0"
     style="border-bottom: 1px solid var(--color-neutral-200)">
-    <span
-      class="flex items-center justify-center shrink-0"
-      style="color: var(--color-primary-dark)">
-      <img [src]="APP_LOGO" [alt]="APP_NAME" class="h-8 w-8" />
-    </span>
+    <img [src]="APP_LOGO" [alt]="APP_NAME" class="h-8 w-8 shrink-0" />
     @if (open()) {
       <span
-        class="whitespace-nowrap font-bold text-[0.9rem] tracking-tight"
+        class="whitespace-nowrap font-bold text-sm tracking-tight truncate"
         style="font-family: var(--font-heading); color: var(--color-neutral-900)">
         {{ APP_NAME }}
       </span>
@@ -23,16 +23,15 @@
   </div>
 
   <!-- Toggle -->
-  <div class="flex flex-col items-center" style="border-bottom: 1px solid var(--color-neutral-200)">
+  <div style="border-bottom: 1px solid var(--color-neutral-200)">
     <app-custom-button
       variant="flat"
       size="sm"
       [iconOnly]="true"
       [fullWidth]="true"
       [icon]="open() ? iconPanelClose : iconPanelOpen"
-      [attr.aria-label]="open() ? 'Chiudi menu' : 'Apri menu'"
-      (click)="toggleSidebar.emit()"
-      class="w-full rounded-none" />
+      [ariaLabel]="open() ? 'Chiudi menu' : 'Apri menu'"
+      (clicked)="toggleSidebar.emit()" />
   </div>
 
   <!-- Main nav -->
@@ -42,23 +41,39 @@
     <ul class="list-none m-0 p-0">
       @for (item of sidebarItems; track item.id) {
         <li>
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="sidebar-item-active"
+            #rla="routerLinkActive"
+            [routerLinkActiveOptions]="{ exact: item.id === 'dashboard' }"
+            [attr.title]="!open() ? item.label : null"
+            class="flex items-center gap-2.5 py-1.5 mx-2 rounded-xl no-underline text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-150 group"
+            [class]="open() ? 'px-2' : 'justify-center px-0'"
+            [style]="rla.isActive ? linkActiveBgStyle(item) : ''"
+            (click)="linkClicked.emit()">
+            <!-- Icon wrapper -->
+            <span
+              class="flex items-center justify-center w-7 h-7 rounded-lg shrink-0 transition-all duration-150"
+              [style]="rla.isActive ? iconActiveStyle(item) : iconColorStyle(item)">
+              <ng-container *ngComponentOutlet="item.icon; inputs: { size: 18 }" />
+            </span>
+
+            @if (open()) {
+              <span
+                class="flex-1 overflow-hidden text-ellipsis text-sm transition-colors duration-150"
+                [style]="
+                  rla.isActive
+                    ? 'color: var(--color-neutral-900); font-weight: 600;'
+                    : 'color: var(--color-neutral-500)'
+                ">
+                {{ item.label }}
+              </span>
+            }
+          </a>
+
           @if (item.dividerAfter) {
             <div class="h-px mx-3 my-1.5" style="background: var(--color-neutral-200)"></div>
           }
-          <a
-            [routerLink]="item.route"
-            routerLinkActive="sidebar-link-active"
-            [routerLinkActiveOptions]="{ exact: item.id === 'dashboard' }"
-            [attr.title]="!open() ? item.label : null"
-            class="sidebar-link flex items-center gap-2.5 py-2.25 mx-2 rounded-md no-underline text-[0.85rem] font-medium whitespace-nowrap overflow-hidden transition-colors duration-150"
-            [class]="open() ? 'px-3.5' : 'justify-center px-0'">
-            <span class="flex items-center justify-center shrink-0">
-              <ng-container *ngComponentOutlet="item.icon; inputs: { size: 18 }" />
-            </span>
-            @if (open()) {
-              <span class="flex-1 overflow-hidden text-ellipsis">{{ item.label }}</span>
-            }
-          </a>
         </li>
       }
     </ul>
@@ -71,16 +86,30 @@
         <li>
           <a
             [routerLink]="item.route"
-            routerLinkActive="sidebar-link-active"
+            routerLinkActive="sidebar-item-active"
+            #rla="routerLinkActive"
             [routerLinkActiveOptions]="{ exact: false }"
             [attr.title]="!open() ? item.label : null"
-            class="sidebar-link flex items-center gap-2.5 py-2.25 mx-2 rounded-md no-underline text-[0.85rem] font-medium whitespace-nowrap overflow-hidden transition-colors duration-150"
-            [class]="open() ? 'px-3.5' : 'justify-center px-0'">
-            <span class="flex items-center justify-center shrink-0">
+            class="flex items-center gap-2.5 py-1.5 mx-2 rounded-xl no-underline text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-150"
+            [class]="open() ? 'px-2' : 'justify-center px-0'"
+            [style]="rla.isActive ? linkActiveBgStyle(item) : ''"
+            (click)="linkClicked.emit()">
+            <span
+              class="flex items-center justify-center w-7 h-7 rounded-lg shrink-0 transition-all duration-150"
+              [style]="rla.isActive ? iconActiveStyle(item) : iconColorStyle(item)">
               <ng-container *ngComponentOutlet="item.icon; inputs: { size: 18 }" />
             </span>
+
             @if (open()) {
-              <span class="flex-1 overflow-hidden text-ellipsis">{{ item.label }}</span>
+              <span
+                class="flex-1 overflow-hidden text-ellipsis text-sm transition-colors duration-150"
+                [style]="
+                  rla.isActive
+                    ? 'color: var(--color-neutral-900); font-weight: 600;'
+                    : 'color: var(--color-neutral-500)'
+                ">
+                {{ item.label }}
+              </span>
             }
           </a>
         </li>
@@ -91,17 +120,14 @@
   <!-- User Profile -->
   <div class="shrink-0" style="border-top: 1px solid var(--color-neutral-200)">
     @if (open()) {
-      <!-- Sidebar Open -->
       <div class="flex items-stretch">
-        <!-- Left: avatar panel + info -->
         <div
-          class="flex items-center gap-2.5 flex-1 min-w-0 px-3 py-2.5 transition-colors duration-150 cursor-pointer profile-zone"
+          class="flex items-center gap-2.5 flex-1 min-w-0 px-3 py-2.5 transition-colors duration-150 cursor-pointer hover:bg-neutral-100"
           (click)="goToProfile()"
           role="button"
           tabindex="0"
           (keydown.enter)="goToProfile()"
           [attr.aria-label]="'Apri profilo di ' + currentAccount.name">
-          <!-- Avatar -->
           <app-custom-avatar
             [src]="currentAccount.avatarSrc ?? ''"
             [name]="currentAccount.name"
@@ -113,12 +139,8 @@
             size="sm"
             shape="circle"
             [clickable]="false" />
-
-          <!-- Info Text -->
           <div class="flex-1 min-w-0 flex flex-col gap-0">
-            <span
-              class="text-[0.82rem] font-semibold truncate"
-              style="color: var(--color-neutral-900)">
+            <span class="text-xs font-semibold truncate" style="color: var(--color-neutral-900)">
               {{ currentAccount.name }}
             </span>
             <span class="text-[0.7rem] truncate" style="color: var(--color-neutral-400)">
@@ -127,10 +149,8 @@
           </div>
         </div>
 
-        <!-- Divider -->
         <div class="w-px self-stretch my-2" style="background: var(--color-neutral-200)"></div>
 
-        <!-- Logout -->
         <app-custom-button
           variant="error"
           size="md"
@@ -139,10 +159,9 @@
           [icon]="iconLogout"
           ariaLabel="Esci dall'account"
           (clicked)="onLogout()"
-          class="shrink-0 flex items-center justify-center w-12 rounded-none logout-zone" />
+          class="shrink-0 w-12" />
       </div>
 
-      <!-- Panel -->
       <div class="relative">
         <div class="absolute bottom-0 left-0 z-50">
           <app-avatar-profile-panel
@@ -158,7 +177,6 @@
         </div>
       </div>
     } @else {
-      <!-- Sidebar Closed-->
       <div class="flex flex-col items-center py-2 gap-2">
         <app-avatar-profile-panel
           [openDirection]="'up'"
@@ -170,7 +188,6 @@
           [showLogout]="false"
           (accountSwitch)="onAccountSwitch($event)" />
 
-        <!-- Logout -->
         <app-custom-button
           variant="error"
           size="lg"
@@ -178,8 +195,7 @@
           [iconOnly]="true"
           [icon]="iconLogout"
           ariaLabel="Esci dall'account"
-          (clicked)="onLogout()"
-          class="rounded-none logout-zone" />
+          (clicked)="onLogout()" />
       </div>
     }
   </div>

@@ -12,6 +12,7 @@ import {
   RING_COLORS,
   STATUS_VARIANT,
 } from '@ui/avatar-profile-panel/avatar-profile-panel.component';
+import { SidebarItem } from '@constants';
 
 @Component({
   selector: 'app-dashboard-sidebar',
@@ -25,41 +26,6 @@ import {
     AvatarProfilePanelComponent,
   ],
   templateUrl: './dashboard-sidebar.component.html',
-  styles: [
-    `
-      .sidebar-link {
-        color: var(--color-neutral-500);
-      }
-      .sidebar-link svg {
-        color: var(--color-neutral-400);
-        transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
-      }
-      .sidebar-link:hover {
-        background: var(--color-neutral-200);
-        color: var(--color-neutral-900);
-      }
-      .sidebar-link:hover svg {
-        color: var(--color-neutral-600);
-      }
-      .sidebar-link-active {
-        background: var(--color-primary-light) !important;
-        color: var(--color-primary-text) !important;
-      }
-      .sidebar-link-active svg {
-        color: var(--color-primary-dark) !important;
-      }
-      .profile-zone:hover {
-        background: var(--color-neutral-200);
-      }
-      .logout-zone {
-        color: var(--color-error-dark);
-      }
-      .logout-zone:hover {
-        background: var(--color-error-light);
-        color: var(--color-error-text);
-      }
-    `,
-  ],
 })
 export class DashboardSidebarComponent {
   readonly APP_NAME = APP_NAME;
@@ -69,17 +35,19 @@ export class DashboardSidebarComponent {
 
   readonly open = input.required<boolean>();
   readonly toggleSidebar = output<void>();
+  readonly linkClicked = output<void>();
 
   readonly iconPanelClose = LucidePanelLeftClose;
   readonly iconPanelOpen = LucidePanelLeftOpen;
   readonly iconLogout = LucideLogOut;
+
+  readonly isMobileOpen = input<boolean>(false);
 
   readonly sidebarItems = SIDEBAR_ITEMS;
   readonly sidebarBottomItems = SIDEBAR_BOTTOM_ITEMS;
 
   @ViewChild('profilePanelRef') profilePanelRef!: AvatarProfilePanelComponent;
 
-  // @TODO
   readonly accounts: AccountEntry[] = [
     {
       id: 'acc-1',
@@ -123,13 +91,27 @@ export class DashboardSidebarComponent {
     return RING_COLORS[status];
   }
 
+  iconColorStyle(item: SidebarItem): string {
+    return `color: var(--color-${item.color}-dark);`;
+  }
+
+  iconBgStyle(item: SidebarItem): string {
+    return `background: var(--color-${item.color}-light); color: var(--color-${item.color}-text);`;
+  }
+
+  iconActiveStyle(item: SidebarItem): string {
+    return `background: var(--color-${item.color}-dark); color: var(--color-${item.color}-text);`;
+  }
+
+  linkActiveBgStyle(item: SidebarItem): string {
+    return `background: var(--color-${item.color}-light);`;
+  }
+
   onAccountSwitch(account: AccountEntry): void {
-    // @TODO
     console.log('Account selezionato:', account.id);
   }
 
   onLogout(): void {
-    // @TODO
     console.log('Logout');
   }
 

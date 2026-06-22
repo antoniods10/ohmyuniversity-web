@@ -97,6 +97,63 @@ h6 {
   --color-neutral-600: #3a404e;
   --color-neutral-900: #1a2030;
 
+  /* Sidebar section colors */
+  --color-dashboard-light: #a8d8f0;
+  --color-dashboard-dark: #5ba8d4;
+  --color-dashboard-text: #1a3a4a;
+
+  --color-career-light: #f0dca8;
+  --color-career-dark: #d4a830;
+  --color-career-text: #4a2e00;
+
+  --color-exams-light: #b8c0f0;
+  --color-exams-dark: #5060d4;
+  --color-exams-text: #1a1a4a;
+
+  --color-agenda-light: #d8b8f0;
+  --color-agenda-dark: #9848d4;
+  --color-agenda-text: #2a0a4a;
+
+  --color-schedules-light: #a8e8f0;
+  --color-schedules-dark: #2ab0c8;
+  --color-schedules-text: #0a2a30;
+
+  --color-messages-light: #b8f0d0;
+  --color-messages-dark: #30c478;
+  --color-messages-text: #0a3020;
+
+  --color-transport-light: #f0d0a8;
+  --color-transport-dark: #d47830;
+  --color-transport-text: #4a2000;
+
+  --color-classrooms-light: #f0b8c8;
+  --color-classrooms-dark: #d44870;
+  --color-classrooms-text: #4a0a20;
+
+  --color-portals-light: #d0d8e8;
+  --color-portals-dark: #6878a0;
+  --color-portals-text: #1a2030;
+
+  --color-future-light: #c5b8f0;
+  --color-future-dark: #7c5fd4;
+  --color-future-text: #2a1a4a;
+
+  --color-partner-light: #a8f0e0;
+  --color-partner-dark: #28c4a0;
+  --color-partner-text: #0a3028;
+
+  --color-contacts-light: #a8d8f0;
+  --color-contacts-dark: #2898d4;
+  --color-contacts-text: #0a2040;
+
+  --color-secretariat-light: #f0a8a8;
+  --color-secretariat-dark: #d43030;
+  --color-secretariat-text: #4a0a0a;
+
+  --color-settings-light: #d8dce8;
+  --color-settings-dark: #7880a0;
+  --color-settings-text: #1a2030;
+
   /* Typography & Spacing */
   --radius-sm: 6px;
   --radius-md: 10px;
