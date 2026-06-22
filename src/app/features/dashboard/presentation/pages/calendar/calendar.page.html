@@ -27,7 +27,12 @@
       </div>
     }
     @case ('year') {
-      <p appText variant="body" color="subtle" align="center" class="mt-8"></p>
+      <div class="mt-4">
+        <app-calendar-year-view
+          [focusedDate]="focusedDate()"
+          [events]="events()"
+          (monthSelected)="onYearMonthSelected($event)" />
+      </div>
     }
   }
 </app-dashboard-container>

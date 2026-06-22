@@ -9,6 +9,7 @@ import {
 import { CalendarDayStripComponent } from './components/calendar-day-strip/calendar-day-strip.component';
 import { CalendarTimelineComponent } from './components/calendar-timeline/calendar-timeline.component';
 import { CalendarMonthViewComponent } from './components/calendar-month-view/calendar-month-view.component';
+import { CalendarYearViewComponent } from './components/calendar-year-view/calendar-year-view.component';
 import { MOCK_CALENDAR_EVENTS } from '@shared/data/mock/calendar.mock';
 import type { CalendarEvent, CalendarEventLayout } from '@shared/types/dashboard/calendar.types';
 import { calculateEventLayouts, calendarIsSameDay } from '@shared/utils/calendar.utils';
@@ -24,13 +25,14 @@ import { calculateEventLayouts, calendarIsSameDay } from '@shared/utils/calendar
     CalendarDayStripComponent,
     CalendarTimelineComponent,
     CalendarMonthViewComponent,
+    CalendarYearViewComponent,
   ],
   templateUrl: './calendar.page.html',
 })
 export class CalendarPage {
   readonly events = signal<CalendarEvent[]>(MOCK_CALENDAR_EVENTS);
 
-  /** The date currently "in focus", the selected day, or the month/year being browsed */
+  /** The date currently "in focus" — the selected day, or the month/year being browsed */
   readonly focusedDate = signal<Date>(new Date());
 
   /** Which of the 3 nested views (year / month / day) is currently shown */
@@ -59,6 +61,10 @@ export class CalendarPage {
 
   onMonthDaySelected(date: Date): void {
     this.goToView('day', date);
+  }
+
+  onYearMonthSelected(date: Date): void {
+    this.goToView('month', date);
   }
 
   /** Goes up one level: day -> month -> year. No-op at the year view (the root). */
