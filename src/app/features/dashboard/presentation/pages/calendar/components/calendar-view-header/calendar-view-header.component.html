@@ -1,0 +1,9 @@
+@if (hasBackButton()) {
+  <app-custom-button
+    [label]="label()"
+    [icon]="iconBack"
+    iconPosition="left"
+    variant="ghost"
+    size="lg"
+    (clicked)="onBackClick()" />
+}

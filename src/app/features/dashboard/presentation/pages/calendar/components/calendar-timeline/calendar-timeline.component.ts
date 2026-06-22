@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { CalendarEventCardComponent } from '../calendar-event-card/calendar-event-card.component';
+import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import type { CalendarEvent, CalendarEventLayout } from '@shared/types/dashboard/calendar.types';
 import {
   CALENDAR_TIMELINE,
@@ -25,7 +26,7 @@ const LANE_GAP_PX = 8;
 @Component({
   selector: 'app-calendar-timeline',
   standalone: true,
-  imports: [CalendarEventCardComponent],
+  imports: [CalendarEventCardComponent, CustomTextComponent],
   templateUrl: './calendar-timeline.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -49,10 +50,8 @@ export class CalendarTimelineComponent {
 
       const totalGapPx = LANE_GAP_PX * (laneCount - 1);
       const widthExpr = `calc((100% - ${totalGapPx}px) / ${laneCount})`;
-      const leftExpr =
-        lane === 0
-          ? '0px'
-          : `calc(${lane} * ((100% - ${totalGapPx}px) / ${laneCount} + ${LANE_GAP_PX}px))`;
+      const laneOffset = `(100% - ${totalGapPx}px) / ${laneCount} + ${LANE_GAP_PX}px`;
+      const leftExpr = lane === 0 ? '0px' : `calc(${lane} * (${laneOffset}))`;
 
       return {
         layout,

@@ -31,7 +31,7 @@ export function calendarEventTypeIcon(type: CalendarEventType): any {
 }
 
 /**
- * The 3 variant values actually used to color an event by type — a subset shared by both
+ * The 3 variant values actually used to color an event by type, a subset shared by both
  * custom-card's CardVariant and custom-badge's BadgeVariant, so it's safely assignable to
  * either [variant] input without a type mismatch (BadgeVariant has members like 'ghost'
  * that don't exist on CardVariant, so the full BadgeVariant type isn't assignable to it).
@@ -62,7 +62,9 @@ export function calendarHourLabel(hour: number): string {
 
 /** Precise 24h time (e.g. "09:30"), used on individual event cards */
 export function calendarPreciseTime(date: Date): string {
-  return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  return `${hours}:${minutes}`;
 }
 
 /** Time range label for an event (e.g. "09:30-11:00"), falls back to a single time if no endDate */
@@ -82,11 +84,32 @@ export function calendarEventDurationLabel(event: CalendarEvent): string {
   return `${remainingMinutes}m`;
 }
 
-const WEEKDAY_LABELS = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
+/** Italian 3-letter weekday labels, Monday to Sunday, in calendar column order */
+export const WEEKDAY_LABELS = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
 
 /** Italian 3-letter weekday label for a date (e.g. "Lun"), used by the day strip */
 export function calendarWeekdayLabel(date: Date): string {
   return WEEKDAY_LABELS[(date.getDay() + 6) % 7];
+}
+
+const MONTH_LABELS = [
+  'Gennaio',
+  'Febbraio',
+  'Marzo',
+  'Aprile',
+  'Maggio',
+  'Giugno',
+  'Luglio',
+  'Agosto',
+  'Settembre',
+  'Ottobre',
+  'Novembre',
+  'Dicembre',
+];
+
+/** Full Italian month name for a date (e.g. "Aprile"), used by the month/year view headers */
+export function calendarMonthLabel(date: Date): string {
+  return MONTH_LABELS[date.getMonth()];
 }
 
 /** Whether two dates fall on the same calendar day (ignores time of day) */
@@ -111,6 +134,37 @@ export function calendarWeekDays(date: Date): Date[] {
   );
 }
 
+export interface CalendarMonthGridDay {
+  date: Date;
+  /** Whether this date falls within the focused month (false for prev/next month spillover) */
+  isInMonth: boolean;
+}
+
+/**
+ * Returns the full grid of dates to display for a month view, including the leading and
+ * trailing days from the previous/next month needed to fill complete weeks (Monday to Sunday).
+ * Always a multiple of 7 (35 or 42 cells, matching what a 5- or 6-row month grid needs).
+ */
+export function calendarMonthGridDays(monthDate: Date): CalendarMonthGridDay[] {
+  const year = monthDate.getFullYear();
+  const month = monthDate.getMonth();
+
+  const firstOfMonth = new Date(year, month, 1);
+  const lastOfMonth = new Date(year, month + 1, 0);
+
+  const leadingOffset = (firstOfMonth.getDay() + 6) % 7; // days before the 1st, back to Monday
+  const gridStart = new Date(year, month, 1 - leadingOffset);
+
+  const daysFromStartToLastOfMonth =
+    Math.round((lastOfMonth.getTime() - gridStart.getTime()) / 86400000) + 1;
+  const totalCells = Math.ceil(daysFromStartToLastOfMonth / 7) * 7;
+
+  return Array.from({ length: totalCells }, (_, i) => {
+    const date = new Date(gridStart.getFullYear(), gridStart.getMonth(), gridStart.getDate() + i);
+    return { date, isInMonth: date.getMonth() === month };
+  });
+}
+
 interface ActiveLane {
   index: number;
   lane: number;
@@ -122,12 +176,12 @@ interface ActiveLane {
  *
  * Events must be sorted by startDate ascending before calling this function. Each event gets
  * a 0-based lane index; `laneCount` is the max number of simultaneous lanes seen across the
- * whole overlap group the event belongs to, not just at the moment it starts — an event
+ * whole overlap group the event belongs to, not just at the moment it starts, an event
  * that begins alone but is later joined by two others must still report the resulting lane
  * count of 3, so all three render at one-third width.
  *
  * Events are tracked by their position in `sortedEvents`, not by object identity or `id`
- * (which can be `null` for an unsaved event) — safe even if the caller clones events between
+ * (which can be `null` for an unsaved event), safe even if the caller clones events between
  * calls, as long as the array order matches the events passed in.
  */
 export function calculateEventLayouts(sortedEvents: CalendarEvent[]): CalendarEventLayout[] {
