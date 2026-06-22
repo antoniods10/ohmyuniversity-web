@@ -1,0 +1,11 @@
+<app-dashboard-container>
+  <app-dashboard-header title="Agenda" description="I tuoi impegni, esami e promemoria" />
+
+  <app-calendar-day-strip [selectedDate]="selectedDate()" (dateSelected)="selectDate($event)" />
+
+  <div class="mt-2">
+    <app-calendar-timeline
+      [eventLayouts]="eventLayouts()"
+      (eventSelected)="onEventSelected($event)" />
+  </div>
+</app-dashboard-container>

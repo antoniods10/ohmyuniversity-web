@@ -1,4 +1,5 @@
 // Dashboard
+export * from './dashboard/calendar.types';
 export * from './dashboard/career.types';
 export * from './dashboard/chat.types';
 export * from './dashboard/classrooms.types';

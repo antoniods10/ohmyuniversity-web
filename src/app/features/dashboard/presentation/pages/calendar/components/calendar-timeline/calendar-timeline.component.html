@@ -1,0 +1,33 @@
+<div class="relative" [style.height.px]="totalHeight">
+  @for (hour of hours; track hour) {
+    <div class="absolute left-0 right-0 border-t border-gray-100" [style.top.px]="hourTop(hour)">
+      <div
+        class="absolute shrink-0 pl-1 text-center"
+        [style.width.px]="leftGutter"
+        [style.top.px]="-7">
+        <p class="text-xs font-semibold text-gray-400">{{ hourLabel(hour) }}</p>
+      </div>
+    </div>
+  }
+
+  @for (positioned of positionedEvents(); track $index) {
+    <div
+      class="absolute"
+      [style.top.px]="positioned.top"
+      [style.height.px]="positioned.height"
+      [style.left.px]="leftGutter"
+      [style.right.px]="22">
+      <div
+        class="absolute"
+        [style.top.px]="0"
+        [style.bottom.px]="0"
+        [style.left]="positioned.leftExpr"
+        [style.width]="positioned.widthExpr">
+        <app-calendar-event-card
+          [event]="positioned.layout.event"
+          [compact]="positioned.compact"
+          (cardClick)="onEventClick(positioned.layout.event)" />
+      </div>
+    </div>
+  }
+</div>
