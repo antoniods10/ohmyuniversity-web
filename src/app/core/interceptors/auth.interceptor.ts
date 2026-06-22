@@ -8,6 +8,8 @@ const addBearer = (req: HttpRequest<unknown>, token: string) =>
   req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
+  const auth = inject(AuthFacade);
+
   if (req.url.includes('/v1/auth/')) return next(req);
 
   const token = localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -17,13 +19,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((error: HttpErrorResponse) => {
       if (error.status !== 401) return throwError(() => error);
 
-      const auth = inject(AuthFacade);
       const universityId = localStorage.getItem('omu_university_id') ?? '';
 
       return auth.refresh(universityId).pipe(
-        switchMap(newToken => {
-          return next(addBearer(req, newToken));
-        }),
+        switchMap(newToken => next(addBearer(req, newToken))),
         catchError(refreshError => {
           auth.logout().subscribe();
           return throwError(() => refreshError);

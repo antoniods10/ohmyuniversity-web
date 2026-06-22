@@ -88,6 +88,10 @@ import {
   LucideCalculator,
   LucideHourglass,
 } from '@lucide/angular';
+import { CarrieraFacade } from './features/dashboard/application/facades/carriera.facade';
+import { GetTasseUseCase } from './features/dashboard/application/usecases/get-tasse.usecase';
+import { CarrieraRepository } from './features/dashboard/domain/repositories/carriera.repository';
+import { CarrieraApiRepository } from './features/dashboard/infrastructure/api/carriera-api.repository';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -97,10 +101,13 @@ export const appConfig: ApplicationConfig = {
 
     // Auth
     { provide: AuthRepository, useClass: AuthApiRepository },
+    { provide: CarrieraRepository, useClass: CarrieraApiRepository },
     AuthFacade,
     LoginUseCase,
     LogoutUseCase,
     RefreshTokenUseCase,
+    CarrieraFacade,
+    GetTasseUseCase,
 
     provideLucideIcons(
       LucideLayoutDashboard,
