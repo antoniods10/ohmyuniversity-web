@@ -1,0 +1,65 @@
+<app-custom-modal [type]="'center'" size="md" title="Dettagli" (closed)="onClose()">
+  @if (!isConfirmingDelete()) {
+    <div class="flex flex-col items-center text-center">
+      @if (icon()) {
+        <svg [lucideIcon]="icon()" [size]="40" class="mb-3" [class]="iconColorClass()"></svg>
+      }
+
+      <p appText variant="h4" weight="extrabold">{{ event()?.title }}</p>
+      <p appText variant="body-sm" color="muted" class="mt-2">{{ descriptionLabel() }}</p>
+
+      <div class="mt-5 grid w-full grid-cols-2 gap-3 text-left">
+        <div class="rounded-xl bg-gray-50 p-3">
+          <p appText variant="caption" color="subtle" weight="bold">Data</p>
+          <p appText variant="body-sm" weight="bold">{{ dateLabel() }}</p>
+        </div>
+        <div class="rounded-xl bg-gray-50 p-3">
+          <p appText variant="caption" color="subtle" weight="bold">Orario</p>
+          <p appText variant="body-sm" weight="bold">{{ timeRangeLabel() }}</p>
+        </div>
+        <div class="rounded-xl bg-gray-50 p-3">
+          <p appText variant="caption" color="subtle" weight="bold">Durata</p>
+          <p appText variant="body-sm" weight="bold">{{ durationLabel() }}</p>
+        </div>
+        <div class="rounded-xl bg-gray-50 p-3">
+          <p appText variant="caption" color="subtle" weight="bold">Luogo</p>
+          <p appText variant="body-sm" weight="bold">{{ locationLabel() }}</p>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <div class="flex flex-col items-center gap-2 text-center">
+      <p appText variant="h5" weight="extrabold">Eliminare questo evento?</p>
+      <p appText variant="body-sm" color="muted">L'azione non può essere annullata.</p>
+    </div>
+  }
+
+  <div footer class="flex w-full gap-3">
+    @if (!isConfirmingDelete()) {
+      <app-custom-button
+        label="Elimina"
+        [icon]="iconDelete"
+        variant="error"
+        [fullWidth]="true"
+        (clicked)="onDeleteClick()" />
+      <app-custom-button
+        label="Modifica"
+        [icon]="iconEdit"
+        variant="primary"
+        [fullWidth]="true"
+        (clicked)="onEditClick()" />
+    } @else {
+      <app-custom-button
+        label="Annulla"
+        variant="ghost"
+        [fullWidth]="true"
+        (clicked)="onCancelDelete()" />
+      <app-custom-button
+        label="Elimina"
+        [icon]="iconDelete"
+        variant="error"
+        [fullWidth]="true"
+        (clicked)="onConfirmDelete()" />
+    }
+  </div>
+</app-custom-modal>

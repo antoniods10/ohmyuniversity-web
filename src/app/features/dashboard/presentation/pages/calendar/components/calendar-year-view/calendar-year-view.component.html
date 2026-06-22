@@ -22,10 +22,14 @@
 
 <div class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
   @for (month of months(); track month.date.getTime()) {
-    <button
-      type="button"
-      class="rounded-xl p-2 text-left transition-colors hover:bg-gray-50"
-      (click)="onMonthClick(month.date)">
+    <app-custom-card
+      variant="default"
+      padding="md"
+      shadow="none"
+      radius="lg"
+      [bordered]="false"
+      [clickable]="true"
+      (cardClick)="onMonthClick(month.date)">
       <p appText variant="h6" weight="extrabold" color="primary" class="mb-2 uppercase">
         {{ month.label }}
       </p>
@@ -53,6 +57,6 @@
           }
         }
       </div>
-    </button>
+    </app-custom-card>
   }
 </div>

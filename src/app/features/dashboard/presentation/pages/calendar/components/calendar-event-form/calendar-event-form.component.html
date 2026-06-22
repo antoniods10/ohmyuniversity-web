@@ -1,0 +1,77 @@
+<app-custom-modal
+  [type]="modalType"
+  size="md"
+  [title]="isEditing() ? 'Modifica voce' : 'Nuova voce'"
+  (closed)="onCancel()">
+  <div class="space-y-3">
+    <div class="grid grid-cols-2 gap-3">
+      <app-custom-input
+        type="select"
+        label="Tipo"
+        [options]="typeOptions"
+        [ngModel]="activeFormType()"
+        (ngModelChange)="onTypeChange($event)" />
+
+      <app-custom-input
+        label="Giorno"
+        placeholder="22/06/2026"
+        [required]="true"
+        [errorMessage]="dateErrorMessage()"
+        [ngModel]="eventDate()"
+        (ngModelChange)="onDateInput($event)" />
+    </div>
+
+    <app-custom-input
+      label="Titolo"
+      placeholder="Es. Esame Basi di Dati"
+      [required]="true"
+      [ngModel]="title()"
+      (ngModelChange)="title.set($event)" />
+
+    <app-custom-input
+      type="textarea"
+      label="Descrizione"
+      placeholder="Aggiungi una nota"
+      [rows]="3"
+      [ngModel]="description()"
+      (ngModelChange)="description.set($event)" />
+
+    <div class="grid grid-cols-2 gap-3">
+      <app-custom-input
+        label="Ora"
+        placeholder="09:00"
+        [required]="true"
+        [errorMessage]="timeErrorMessage()"
+        [ngModel]="startTime()"
+        (ngModelChange)="onTimeInput($event)" />
+
+      <app-custom-input
+        type="number"
+        label="Durata (min)"
+        placeholder="60"
+        [required]="true"
+        [ngModel]="durationMinutes()"
+        (ngModelChange)="durationMinutes.set($event)" />
+    </div>
+
+    <app-custom-input
+      label="Luogo"
+      placeholder="Es. Aula 5"
+      [ngModel]="location()"
+      (ngModelChange)="location.set($event)" />
+
+    @if (errorMessage()) {
+      <p appText variant="body-sm" color="error">{{ errorMessage() }}</p>
+    }
+  </div>
+
+  <div footer class="flex w-full gap-3">
+    <app-custom-button label="Annulla" variant="ghost" [fullWidth]="true" (clicked)="onCancel()" />
+    <app-custom-button
+      label="Salva"
+      [icon]="iconSave"
+      variant="primary"
+      [fullWidth]="true"
+      (clicked)="onSave()" />
+  </div>
+</app-custom-modal>

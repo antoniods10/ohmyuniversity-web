@@ -42,4 +42,30 @@
       </div>
     }
   }
+
+  <div class="fixed bottom-20 right-6 z-50">
+    <app-custom-button
+      [icon]="iconAdd"
+      [iconOnly]="true"
+      ariaLabel="Nuovo elemento"
+      variant="primary"
+      size="lg"
+      rounded="full"
+      (clicked)="openCreateForm()" />
+  </div>
+
+  <app-calendar-event-form
+    [isOpen]="isFormOpen()"
+    [event]="eventBeingEdited()"
+    [defaultDate]="focusedDate()"
+    (created)="onEventCreated($event)"
+    (updated)="onEventUpdated($event)"
+    (cancelled)="closeForm()" />
+
+  <app-calendar-event-detail
+    [isOpen]="isDetailOpen()"
+    [event]="eventBeingViewed()"
+    (edit)="onDetailEditRequested($event)"
+    (deleted)="onDetailDeleteConfirmed($event)"
+    (closed)="closeDetail()" />
 </app-dashboard-container>

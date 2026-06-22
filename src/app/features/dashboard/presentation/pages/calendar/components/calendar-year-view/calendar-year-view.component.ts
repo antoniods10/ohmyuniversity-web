@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { LucideChevronLeft, LucideChevronRight } from '@lucide/angular';
@@ -27,7 +28,7 @@ interface CalendarYearMonth {
 @Component({
   selector: 'app-calendar-year-view',
   standalone: true,
-  imports: [CustomTextComponent, CustomButtonComponent],
+  imports: [CustomCardComponent, CustomTextComponent, CustomButtonComponent],
   templateUrl: './calendar-year-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

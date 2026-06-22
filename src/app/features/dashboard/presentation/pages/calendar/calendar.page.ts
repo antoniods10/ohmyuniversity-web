@@ -2,6 +2,8 @@ import { Component, computed, signal } from '@angular/core';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
+import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
+import { LucidePlus } from '@lucide/angular';
 import {
   CalendarViewHeaderComponent,
   type CalendarViewMode,
@@ -10,6 +12,8 @@ import { CalendarDayStripComponent } from './components/calendar-day-strip/calen
 import { CalendarTimelineComponent } from './components/calendar-timeline/calendar-timeline.component';
 import { CalendarMonthViewComponent } from './components/calendar-month-view/calendar-month-view.component';
 import { CalendarYearViewComponent } from './components/calendar-year-view/calendar-year-view.component';
+import { CalendarEventFormComponent } from './components/calendar-event-form/calendar-event-form.component';
+import { CalendarEventDetailComponent } from './components/calendar-event-detail/calendar-event-detail.component';
 import { MOCK_CALENDAR_EVENTS } from '@shared/data/mock/calendar.mock';
 import type { CalendarEvent, CalendarEventLayout } from '@shared/types/dashboard/calendar.types';
 import { calculateEventLayouts, calendarIsSameDay } from '@shared/utils/calendar.utils';
@@ -21,22 +25,39 @@ import { calculateEventLayouts, calendarIsSameDay } from '@shared/utils/calendar
     DashboardContainerComponent,
     DashboardHeaderComponent,
     CustomTextComponent,
+    CustomButtonComponent,
     CalendarViewHeaderComponent,
     CalendarDayStripComponent,
     CalendarTimelineComponent,
     CalendarMonthViewComponent,
     CalendarYearViewComponent,
+    CalendarEventFormComponent,
+    CalendarEventDetailComponent,
   ],
   templateUrl: './calendar.page.html',
 })
 export class CalendarPage {
   readonly events = signal<CalendarEvent[]>(MOCK_CALENDAR_EVENTS);
 
-  /** The date currently "in focus" - the selected day, or the month/year being browsed */
+  /** The date currently "in focus" — the selected day, or the month/year being browsed */
   readonly focusedDate = signal<Date>(new Date());
 
   /** Which of the 3 nested views (year / month / day) is currently shown */
   readonly currentView = signal<CalendarViewMode>('day');
+
+  /** Whether the create/edit event form is open */
+  readonly isFormOpen = signal(false);
+
+  /** The event currently being edited, or null when creating a new one */
+  readonly eventBeingEdited = signal<CalendarEvent | null>(null);
+
+  /** Whether the read-only event detail sheet is open */
+  readonly isDetailOpen = signal(false);
+
+  /** The event currently shown in the detail sheet */
+  readonly eventBeingViewed = signal<CalendarEvent | null>(null);
+
+  readonly iconAdd = LucidePlus;
 
   readonly eventsForFocusedDay = computed<CalendarEvent[]>(() => {
     const day = this.focusedDate();
@@ -76,9 +97,54 @@ export class CalendarPage {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- event param kept for the future detail sheet handler
   onEventSelected(event: CalendarEvent): void {
-    // TODO: open the detail bottom sheet once it exists
+    this.openDetail(event);
+  }
+
+  openDetail(event: CalendarEvent): void {
+    this.eventBeingViewed.set(event);
+    this.isDetailOpen.set(true);
+  }
+
+  closeDetail(): void {
+    this.isDetailOpen.set(false);
+    this.eventBeingViewed.set(null);
+  }
+
+  /** Closes the detail sheet and opens the edit form for the same event */
+  onDetailEditRequested(event: CalendarEvent): void {
+    this.closeDetail();
+    this.openEditForm(event);
+  }
+
+  async onDetailDeleteConfirmed(id: string): Promise<void> {
+    await this.deleteEvent(id);
+    this.closeDetail();
+  }
+
+  openCreateForm(): void {
+    this.eventBeingEdited.set(null);
+    this.isFormOpen.set(true);
+  }
+
+  openEditForm(event: CalendarEvent): void {
+    this.eventBeingEdited.set(event);
+    this.isFormOpen.set(true);
+  }
+
+  closeForm(): void {
+    this.isFormOpen.set(false);
+    this.eventBeingEdited.set(null);
+  }
+
+  async onEventCreated(data: Omit<CalendarEvent, 'id' | 'createdAt' | 'updatedAt'>): Promise<void> {
+    await this.createEvent(data);
+    this.closeForm();
+  }
+
+  async onEventUpdated(payload: { id: string; partial: Partial<CalendarEvent> }): Promise<void> {
+    await this.updateEvent(payload.id, payload.partial);
+    this.closeForm();
   }
 
   async createEvent(
