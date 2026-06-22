@@ -4,7 +4,6 @@ import { TopicBudgetComponent } from './topic-budget.component';
 import { OrientationStateService } from '@orientation/application/state/orientation.state';
 import { ToastService } from '@ui/custom-toast/toast.service';
 
-// jsdom does not implement scrollIntoView at all — define it once so spying on it works
 if (!Element.prototype.scrollIntoView) {
   Element.prototype.scrollIntoView = function (): void {};
 }

@@ -56,18 +56,25 @@ export class OrientationSummaryComponent {
   // Expanded question accordion
   readonly expandedQuestion = signal<string | null>(null);
 
-  // Full list of all questions with their saved answers
+  /**
+   * Only the questions currently reachable given the saved answers, a
+   * conditional follow-up question (e.g. "which TOLC?") is hidden entirely
+   * when its dependency condition isn't met, instead of showing a question
+   * that wouldn't even appear in its own topic.
+   */
   readonly summaryQuestions = computed<SummaryQuestion[]>(() => {
     const answers = this.state.answers();
     return ORIENTATION_TOPICS.flatMap(topic =>
-      topic.questions.map(q => ({
-        questionId: q.id,
-        topicId: topic.id,
-        topicTitle: topic.title,
-        questionText: q.text,
-        options: q.options ?? [],
-        savedAnswer: answers.find(a => a.questionId === q.id) ?? null,
-      })),
+      topic.questions
+        .filter(q => this.state.isQuestionReachable(q))
+        .map(q => ({
+          questionId: q.id,
+          topicId: topic.id,
+          topicTitle: topic.title,
+          questionText: q.text,
+          options: q.options ?? [],
+          savedAnswer: answers.find(a => a.questionId === q.id) ?? null,
+        })),
     );
   });
 

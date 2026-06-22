@@ -1,6 +1,6 @@
 import { TopicModel } from '@types';
 
-/** All 8 orientation topics with their inline questions (20 total) */
+/** All 8 orientation topics with their inline questions (19 total, 18 when the conditional TOLC-type question isn't reachable) */
 export const ORIENTATION_TOPICS: TopicModel[] = [
   {
     id: 'corso',
@@ -59,6 +59,7 @@ export const ORIENTATION_TOPICS: TopicModel[] = [
         text: 'Quale TOLC hai sostenuto o stai pianificando?',
         type: 'single-select',
         required: false,
+        dependsOn: { questionId: 'quiz-tolc-done', values: ['yes', 'no-planning'] },
         options: [
           { value: 'tolc-med', label: 'TOLC-MED - Medicina e professioni sanitarie' },
           { value: 'tolc-i', label: 'TOLC-I - Ingegneria' },
