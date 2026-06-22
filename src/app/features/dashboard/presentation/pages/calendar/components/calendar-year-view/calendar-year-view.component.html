@@ -1,4 +1,26 @@
-<div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
+<div class="flex items-center justify-between">
+  <app-custom-button
+    [icon]="iconPrevious"
+    [iconOnly]="true"
+    ariaLabel="Anno precedente"
+    variant="ghost"
+    size="md"
+    rounded="full"
+    (clicked)="goToPreviousYear()" />
+
+  <p appText variant="h5" weight="extrabold">{{ yearLabel() }}</p>
+
+  <app-custom-button
+    [icon]="iconNext"
+    [iconOnly]="true"
+    ariaLabel="Anno successivo"
+    variant="ghost"
+    size="md"
+    rounded="full"
+    (clicked)="goToNextYear()" />
+</div>
+
+<div class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
   @for (month of months(); track month.date.getTime()) {
     <button
       type="button"

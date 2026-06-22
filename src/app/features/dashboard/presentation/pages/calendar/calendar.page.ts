@@ -32,7 +32,7 @@ import { calculateEventLayouts, calendarIsSameDay } from '@shared/utils/calendar
 export class CalendarPage {
   readonly events = signal<CalendarEvent[]>(MOCK_CALENDAR_EVENTS);
 
-  /** The date currently "in focus" — the selected day, or the month/year being browsed */
+  /** The date currently "in focus" - the selected day, or the month/year being browsed */
   readonly focusedDate = signal<Date>(new Date());
 
   /** Which of the 3 nested views (year / month / day) is currently shown */

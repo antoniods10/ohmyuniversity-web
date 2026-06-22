@@ -1,4 +1,26 @@
-<div class="grid grid-cols-7 gap-0 text-center">
+<div class="flex items-center justify-between">
+  <app-custom-button
+    [icon]="iconPrevious"
+    [iconOnly]="true"
+    ariaLabel="Mese precedente"
+    variant="ghost"
+    size="md"
+    rounded="full"
+    (clicked)="goToPreviousMonth()" />
+
+  <p appText variant="h5" weight="extrabold" class="uppercase">{{ monthLabel() }}</p>
+
+  <app-custom-button
+    [icon]="iconNext"
+    [iconOnly]="true"
+    ariaLabel="Mese successivo"
+    variant="ghost"
+    size="md"
+    rounded="full"
+    (clicked)="goToNextMonth()" />
+</div>
+
+<div class="mt-4 grid grid-cols-7 gap-0 text-center">
   @for (label of weekdayLabels; track label) {
     <p appText variant="caption" color="subtle" weight="bold">{{ label }}</p>
   }

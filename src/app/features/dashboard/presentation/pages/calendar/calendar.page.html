@@ -1,16 +1,21 @@
 <app-dashboard-container>
   <app-dashboard-header title="Agenda" description="I tuoi impegni, esami e promemoria" />
 
-  <div class="mt-4 flex items-center justify-between">
-    <app-calendar-view-header
-      [currentView]="currentView()"
-      [focusedDate]="focusedDate()"
-      (back)="goBack()" />
-  </div>
+  @if (currentView() !== 'year') {
+    <div class="mt-4 flex items-center justify-between">
+      <app-calendar-view-header
+        [currentView]="currentView()"
+        [focusedDate]="focusedDate()"
+        (back)="goBack()" />
+    </div>
+  }
 
   @switch (currentView()) {
     @case ('day') {
-      <app-calendar-day-strip [selectedDate]="focusedDate()" (dateSelected)="selectDate($event)" />
+      <app-calendar-day-strip
+        [selectedDate]="focusedDate()"
+        (dateSelected)="selectDate($event)"
+        (weekChanged)="selectDate($event)" />
 
       <div class="mt-2">
         <app-calendar-timeline
@@ -23,7 +28,8 @@
         <app-calendar-month-view
           [focusedDate]="focusedDate()"
           [events]="events()"
-          (daySelected)="onMonthDaySelected($event)" />
+          (daySelected)="onMonthDaySelected($event)"
+          (monthChanged)="selectDate($event)" />
       </div>
     }
     @case ('year') {
@@ -31,7 +37,8 @@
         <app-calendar-year-view
           [focusedDate]="focusedDate()"
           [events]="events()"
-          (monthSelected)="onYearMonthSelected($event)" />
+          (monthSelected)="onYearMonthSelected($event)"
+          (yearChanged)="selectDate($event)" />
       </div>
     }
   }

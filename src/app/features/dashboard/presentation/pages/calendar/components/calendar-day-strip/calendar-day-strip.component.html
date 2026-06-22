@@ -1,4 +1,13 @@
-<div class="flex gap-1 px-1 py-2">
+<div class="flex items-center gap-1 px-1 py-2">
+  <app-custom-button
+    [icon]="iconPrevious"
+    [iconOnly]="true"
+    ariaLabel="Settimana precedente"
+    variant="ghost"
+    size="md"
+    rounded="full"
+    (clicked)="goToPreviousWeek()" />
+
   @for (day of days(); track day.date.getTime()) {
     <div class="flex-1">
       <app-custom-card
@@ -20,4 +29,13 @@
       </app-custom-card>
     </div>
   }
+
+  <app-custom-button
+    [icon]="iconNext"
+    [iconOnly]="true"
+    ariaLabel="Settimana successiva"
+    variant="ghost"
+    size="md"
+    rounded="full"
+    (clicked)="goToNextWeek()" />
 </div>

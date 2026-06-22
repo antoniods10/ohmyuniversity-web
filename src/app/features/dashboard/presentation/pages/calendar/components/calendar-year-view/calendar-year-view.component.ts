@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
+import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
+import { LucideChevronLeft, LucideChevronRight } from '@lucide/angular';
 import type { CalendarEvent } from '@shared/types/dashboard/calendar.types';
 import {
   calendarEventTypeVariant,
@@ -25,7 +27,7 @@ interface CalendarYearMonth {
 @Component({
   selector: 'app-calendar-year-view',
   standalone: true,
-  imports: [CustomTextComponent],
+  imports: [CustomTextComponent, CustomButtonComponent],
   templateUrl: './calendar-year-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -34,6 +36,12 @@ export class CalendarYearViewComponent {
   readonly events = input.required<CalendarEvent[]>();
 
   readonly monthSelected = output<Date>();
+  readonly yearChanged = output<Date>();
+
+  readonly iconPrevious = LucideChevronLeft;
+  readonly iconNext = LucideChevronRight;
+
+  readonly yearLabel = computed(() => String(this.focusedDate().getFullYear()));
 
   readonly months = computed<CalendarYearMonth[]>(() => {
     const year = this.focusedDate().getFullYear();
@@ -63,5 +71,19 @@ export class CalendarYearViewComponent {
 
   onMonthClick(date: Date): void {
     this.monthSelected.emit(date);
+  }
+
+  goToPreviousYear(): void {
+    this.shiftYear(-1);
+  }
+
+  goToNextYear(): void {
+    this.shiftYear(1);
+  }
+
+  private shiftYear(deltaYears: number): void {
+    const current = this.focusedDate();
+    const shifted = new Date(current.getFullYear() + deltaYears, current.getMonth(), 1);
+    this.yearChanged.emit(shifted);
   }
 }

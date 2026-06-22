@@ -2,11 +2,14 @@ import { ChangeDetectionStrategy, Component, computed, input, output } from '@an
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
+import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
+import { LucideChevronLeft, LucideChevronRight } from '@lucide/angular';
 import type { CalendarEvent } from '@shared/types/dashboard/calendar.types';
 import {
   calendarEventTypeVariant,
   calendarIsSameDay,
   calendarMonthGridDays,
+  calendarMonthLabel,
   WEEKDAY_LABELS,
   type CalendarMonthGridDay,
 } from '@shared/utils/calendar.utils';
@@ -39,7 +42,7 @@ function truncateLabel(label: string, maxLength: number): string {
 @Component({
   selector: 'app-calendar-month-view',
   standalone: true,
-  imports: [CustomCardComponent, CustomBadgeComponent, CustomTextComponent],
+  imports: [CustomCardComponent, CustomBadgeComponent, CustomTextComponent, CustomButtonComponent],
   templateUrl: './calendar-month-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -48,10 +51,15 @@ export class CalendarMonthViewComponent {
   readonly events = input.required<CalendarEvent[]>();
 
   readonly daySelected = output<Date>();
+  readonly monthChanged = output<Date>();
 
   readonly weekdayLabels = WEEKDAY_LABELS;
+  readonly iconPrevious = LucideChevronLeft;
+  readonly iconNext = LucideChevronRight;
 
   readonly calendarEventTypeVariant = calendarEventTypeVariant;
+
+  readonly monthLabel = computed(() => calendarMonthLabel(this.focusedDate()));
 
   readonly cells = computed<CalendarMonthCell[]>(() => {
     const today = new Date();
@@ -78,5 +86,19 @@ export class CalendarMonthViewComponent {
 
   onDayClick(date: Date): void {
     this.daySelected.emit(date);
+  }
+
+  goToPreviousMonth(): void {
+    this.shiftMonth(-1);
+  }
+
+  goToNextMonth(): void {
+    this.shiftMonth(1);
+  }
+
+  private shiftMonth(deltaMonths: number): void {
+    const current = this.focusedDate();
+    const shifted = new Date(current.getFullYear(), current.getMonth() + deltaMonths, 1);
+    this.monthChanged.emit(shifted);
   }
 }
