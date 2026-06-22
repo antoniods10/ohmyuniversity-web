@@ -23,6 +23,7 @@ import {
   LucideInfo,
   LucideEuro,
   LucideChevronRight,
+  LucideTriangleAlert,
 } from '@lucide/angular';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 
@@ -43,6 +44,7 @@ import {
 } from '@shared/data/mock/secretariat.mock';
 import { APP_NAME } from '@shared/constants';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
+import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 
 @Component({
   selector: 'app-secretariat',
@@ -58,10 +60,13 @@ import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-c
     CustomTabsComponent,
     CustomInputComponent,
     LucideDynamicIcon,
+    CardStatusComponent,
   ],
   templateUrl: './secretariat.page.html',
 })
 export class SecretariatPage {
+  readonly lucideAlertTriangle = LucideTriangleAlert;
+
   readonly APP_NAME = APP_NAME;
 
   private readonly toast = inject(ToastService);

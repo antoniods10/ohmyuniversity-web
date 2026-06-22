@@ -19,6 +19,7 @@ import {
   LucideClock,
   LucideInfo,
   LucideWifi,
+  LucideTriangleAlert,
 } from '@lucide/angular';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 
@@ -26,6 +27,7 @@ import { TransportCompany, TransportRoute } from '@shared/types/dashboard/transp
 import { MOCK_TRANSPORT_ROUTES, MOCK_TRANSPORT_COMPANIES } from '@shared/data/mock/transport.mock';
 import { APP_NAME } from '@shared/constants';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
+import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 
 @Component({
   selector: 'app-transport',
@@ -41,10 +43,13 @@ import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-c
     CustomTextComponent,
     CustomTabsComponent,
     LucideDynamicIcon,
+    CardStatusComponent,
   ],
   templateUrl: './transport.page.html',
 })
 export class TransportPage {
+  readonly lucideAlertTriangle = LucideTriangleAlert;
+
   readonly APP_NAME = APP_NAME;
 
   private readonly sanitizer = inject(DomSanitizer);

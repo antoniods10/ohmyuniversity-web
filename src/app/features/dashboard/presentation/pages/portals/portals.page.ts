@@ -19,10 +19,12 @@ import {
   LucideUsers,
   LucideShield,
   LucideStar,
+  LucideTriangleAlert,
 } from '@lucide/angular';
 import { PortalCategory, Portal, PortalCategoryDef } from '@shared/types/features/portals.types';
 import { MOCK_PORTALS } from '@shared/data/mock/portals.mock';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
+import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 
 @Component({
   selector: 'app-portals',
@@ -37,10 +39,13 @@ import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-c
     CustomInputComponent,
     CustomTextComponent,
     LucideDynamicIcon,
+    CardStatusComponent,
   ],
   templateUrl: './portals.page.html',
 })
 export class PortalsPage {
+  readonly lucideAlertTriangle = LucideTriangleAlert;
+
   readonly iconSearch = LucideSearch;
   readonly iconExternalLink = LucideExternalLink;
   readonly iconStar = LucideStar;

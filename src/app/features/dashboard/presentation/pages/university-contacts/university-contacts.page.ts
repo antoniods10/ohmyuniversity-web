@@ -22,6 +22,7 @@ import {
   LucideExternalLink,
   LucideBookOpen,
   LucideUsers,
+  LucideTriangleAlert,
 } from '@lucide/angular';
 
 import {
@@ -36,6 +37,7 @@ import {
   MOCK_INSTITUTIONAL_CONTACTS,
 } from '@shared/data/mock/university-contacts.mock';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
+import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 
 @Component({
   selector: 'app-university-contacts',
@@ -52,10 +54,13 @@ import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-c
     CustomTabsComponent,
     CustomAvatarComponent,
     LucideDynamicIcon,
+    CardStatusComponent,
   ],
   templateUrl: './university-contacts.page.html',
 })
 export class UniversityContactsPage {
+  readonly lucideAlertTriangle = LucideTriangleAlert;
+
   readonly iconSearch = LucideSearch;
   readonly iconMail = LucideMail;
   readonly iconPhone = LucidePhone;

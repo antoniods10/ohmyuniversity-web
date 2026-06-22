@@ -19,12 +19,14 @@ import {
   LucideBuilding2,
   LucideLayers,
   LucideSearch,
+  LucideTriangleAlert,
 } from '@lucide/angular';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 
 import { Classroom, Building, Campus } from '@shared/types/dashboard/classrooms.types';
 import { MOCK_CAMPUSES } from '@shared/data/mock/classrooms.mock';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
+import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 
 @Component({
   selector: 'app-classrooms',
@@ -39,10 +41,13 @@ import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-c
     CustomTabsComponent,
     CustomInputComponent,
     LucideDynamicIcon,
+    CardStatusComponent,
   ],
   templateUrl: './classrooms.page.html',
 })
 export class ClassroomsPage {
+  readonly lucideAlertTriangle = LucideTriangleAlert;
+
   private readonly toast = inject(ToastService);
 
   readonly iconMapPin = LucideMapPin;

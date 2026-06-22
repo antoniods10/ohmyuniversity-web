@@ -9,7 +9,7 @@ import {
   GRID_COLS,
 } from '@shared/constants';
 import { PlacedWidget, WidgetDefinition, WidgetSize } from '@shared/types';
-import { LucidePlus, LucideX, LucidePencil, LucideAlertTriangle } from '@lucide/angular';
+import { LucidePlus, LucideX, LucidePencil, LucideTriangleAlert } from '@lucide/angular';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { HomeGreetingComponent } from '../components/home-greeting/home-greeting.component';
 import { HomeWidgetPanelComponent } from '../components/home-widget-panel/home-widget-panel.component';
@@ -35,7 +35,7 @@ export type DashboardStep = 'idle' | 'selecting-size' | 'placing';
   templateUrl: './home.page.html',
 })
 export class DashboardHomePage {
-  readonly lucideAlertTriangle = LucideAlertTriangle;
+  readonly lucideAlertTriangle = LucideTriangleAlert;
 
   readonly mockUserName = 'Luca';
   readonly layoutService = inject(DashboardLayoutService);
