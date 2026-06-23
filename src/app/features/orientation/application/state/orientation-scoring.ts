@@ -2,12 +2,6 @@ import { AreaId, CostTier, University, UniversityCourse } from '@types';
 import { SavedAnswer } from './orientation.state';
 import { UNIVERSITY_ORIENTATION_INFO, UNIVERSITIES } from '@constants';
 
-// ============================================================================
-// Deterministic shuffle - same answers always produce the same order, but
-// different answer sets produce different orderings, avoiding the same
-// fixed top-5 universities being shown to everyone with a similar profile.
-// ============================================================================
-
 /** Simple deterministic string hash (djb2 variant), used as a PRNG seed */
 function hashAnswers(answers: SavedAnswer[]): number {
   const key = answers
@@ -43,10 +37,6 @@ function seededShuffle<T>(items: T[], random: () => number): T[] {
   }
   return result;
 }
-
-// ============================================================================
-// Weight tables - how much each answer pushes towards each study area
-// ============================================================================
 
 /**
  * Per-question weight tables. Each key is "questionId:value" and maps to a
@@ -90,10 +80,6 @@ const AREA_WEIGHTS: Record<string, Partial<Record<AreaId, number>>> = {
   'sbocchi-work-context:freelance': { artistica: 2, umanistica: 1 },
 };
 
-// ============================================================================
-// Awareness scoring - for the topic-errori questions
-// ============================================================================
-
 /** Maps each answer of the 4 awareness questions to a +1/0/-1 awareness point */
 const AWARENESS_POINTS: Record<string, number> = {
   'errori-confidence:very-sure': 2,
@@ -114,10 +100,6 @@ const AWARENESS_POINTS: Record<string, number> = {
   'errori-study-plan-check:briefly': 0,
   'errori-study-plan-check:no': -1,
 };
-
-// ============================================================================
-// Result types
-// ============================================================================
 
 export interface AreaScoreResult {
   areaId: AreaId;
@@ -171,10 +153,6 @@ const ALL_AREAS: AreaId[] = [
   'sanitaria',
   'artistica',
 ];
-
-// ============================================================================
-// Geographic + budget helpers
-// ============================================================================
 
 const NORTH_CITIES = new Set([
   'Milano',
@@ -252,10 +230,6 @@ function findAnswerLabel(answers: SavedAnswer[], questionId: string): string | n
   return answers.find(a => a.questionId === questionId)?.label ?? null;
 }
 
-// ============================================================================
-// Step 1 - Area scoring
-// ============================================================================
-
 /** Computes raw area scores from the weight table, then converts to percentages */
 function computeAreaScores(answers: SavedAnswer[]): AreaScoreResult[] {
   const scores: Record<AreaId, number> = {
@@ -290,10 +264,6 @@ function computeAreaScores(answers: SavedAnswer[]): AreaScoreResult[] {
     percentage: percentages[areaId],
   })).sort((a, b) => b.percentage - a.percentage);
 }
-
-// ============================================================================
-// Step 2 - University suggestions
-// ============================================================================
 
 interface UniversityCandidate {
   university: University;
@@ -341,6 +311,30 @@ function orderCandidatesByGeoPreference(
   return [...geoMatched, ...others];
 }
 
+/**
+ * Splits candidates into two groups - those strong in the dominant area and
+ * the rest - so the dominant area can be given priority in the final order.
+ * A candidate counts as "dominant" if its strongAreas includes the student's
+ * #1 area, regardless of whether it also covers secondary areas.
+ */
+function partitionByDominantArea(
+  candidates: UniversityCandidate[],
+  dominantAreaId: AreaId,
+): { dominant: UniversityCandidate[]; secondary: UniversityCandidate[] } {
+  const dominant: UniversityCandidate[] = [];
+  const secondary: UniversityCandidate[] = [];
+
+  for (const candidate of candidates) {
+    if (candidate.info.strongAreas.includes(dominantAreaId)) {
+      dominant.push(candidate);
+    } else {
+      secondary.push(candidate);
+    }
+  }
+
+  return { dominant, secondary };
+}
+
 /** Filters a university's courses down to only those matching the student's top areas */
 function filterRelevantCourses(courses: UniversityCourse[], targetAreaIds: Set<AreaId>): string[] {
   return courses.filter(course => targetAreaIds.has(course.area)).map(course => course.name);
@@ -362,7 +356,16 @@ function buildUniversitySuggestions(
   const random = createSeededRandom(seed);
   const shuffled = seededShuffle(candidates, random);
 
-  const ordered = orderCandidatesByGeoPreference(shuffled, preferredGeoArea);
+  // Give priority to the student's #1 area: universities strong in the
+  // dominant area come first, universities matching only secondary areas
+  // come after. Geo preference is then applied *within* each group, so it
+  // can reorder candidates of the same area-priority tier but never lets a
+  // secondary-area university (even if geo-matched) outrank a dominant-area one.
+  const { dominant, secondary } = partitionByDominantArea(shuffled, topAreas[0].areaId);
+  const orderedDominant = orderCandidatesByGeoPreference(dominant, preferredGeoArea);
+  const orderedSecondary = orderCandidatesByGeoPreference(secondary, preferredGeoArea);
+  const ordered = [...orderedDominant, ...orderedSecondary];
+
   const dominantLabel = AREA_LABELS[topAreas[0].areaId];
 
   return ordered.slice(0, 5).map(({ university, info }) => {
@@ -375,10 +378,6 @@ function buildUniversitySuggestions(
     };
   });
 }
-
-// ============================================================================
-// Step 3 - Awareness tips
-// ============================================================================
 
 function computeAwarenessScore(answers: SavedAnswer[]): number {
   let score = 0;
@@ -439,10 +438,6 @@ function buildAwarenessTips(answers: SavedAnswer[]): AwarenessTip[] {
 
   return tips;
 }
-
-// ============================================================================
-// Step 4 - Budget tips (real disposable budget vs cost of living + tuition)
-// ============================================================================
 
 /**
  * Compares the student's stated monthly budget bracket against the real cost
@@ -507,10 +502,6 @@ function buildBudgetTips(
 
   return tips;
 }
-
-// ============================================================================
-// Main scoring function
-// ============================================================================
 
 /**
  * Computes the full orientation result from the list of saved answers.

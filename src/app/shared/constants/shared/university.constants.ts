@@ -20,7 +20,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['casd.difesa.it'],
     city: 'Roma',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'casd-roma',
+        name: 'Palazzo Salviati',
+        city: 'Roma',
+        address: 'Piazza della Rovere 83, 00153 Roma',
+      },
+    ],
   },
   {
     id: 'iusspavia',
@@ -29,7 +36,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['iusspavia.it'],
     city: 'Pavia',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'iusspavia-broletto',
+        name: 'Palazzo del Broletto',
+        city: 'Pavia',
+        address: 'Piazza della Vittoria 15, 27100 Pavia',
+      },
+    ],
   },
   {
     id: 'poliba',
@@ -130,7 +144,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['imtlucca.it'],
     city: 'Lucca',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'imtlucca-boccherini',
+        name: 'Sede di Piazza San Ponziano (ex Boccherini)',
+        city: 'Lucca',
+        address: 'Piazza San Ponziano 6, 55100 Lucca',
+      },
+    ],
   },
   {
     id: 'sissa',
@@ -139,7 +160,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['sissa.it'],
     city: 'Trieste',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'sissa-trieste',
+        name: 'Sede di Trieste - Via Bonomea',
+        city: 'Trieste',
+        address: 'Via Bonomea 265, 34136 Trieste',
+      },
+    ],
   },
   {
     id: 'sns',
@@ -148,7 +176,16 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['sns.it'],
     city: 'Pisa',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'sns-pisa',
+        name: 'Palazzo della Carovana - Pisa',
+        city: 'Pisa',
+        address: 'Piazza dei Cavalieri 7, 56126 Pisa',
+      },
+      { id: 'sns-cortona', name: 'Sede di Cortona', city: 'Cortona' },
+      { id: 'sns-firenze', name: 'Sede di Firenze - Palazzo Vegni', city: 'Firenze' },
+    ],
   },
   {
     id: 'ssm',
@@ -157,7 +194,9 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['ssm.unina.it'],
     city: 'Napoli',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      { id: 'ssm-napoli', name: 'Complesso dei Santi Marcellino e Festo', city: 'Napoli' },
+    ],
   },
   {
     id: 'sssup',
@@ -166,7 +205,20 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['santannapisa.it'],
     city: 'Pisa',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'sssup-pisa',
+        name: 'Sede centrale - Piazza Martiri della Libertà',
+        city: 'Pisa',
+        address: 'Piazza Martiri della Libertà 33, 56127 Pisa',
+      },
+      {
+        id: 'sssup-pontedera',
+        name: 'Polo di Pontedera (Istituto di BioRobotica)',
+        city: 'Pontedera',
+        address: 'Via Piaggio 34, 56025 Pontedera',
+      },
+    ],
   },
   {
     id: 'unive',
@@ -184,7 +236,16 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['uniurb.it'],
     city: 'Urbino',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'uniurb-urbino',
+        name: 'Sede di Urbino - Palazzo Bonaventura',
+        city: 'Urbino',
+        address: 'Via Aurelio Saffi 2, 61029 Urbino',
+      },
+      { id: 'uniurb-fano', name: 'Polo di Fano (Biotecnologie)', city: 'Fano' },
+      { id: 'uniurb-pesaro', name: 'Polo di Pesaro', city: 'Pesaro' },
+    ],
   },
   {
     id: 'univpm',
@@ -193,7 +254,24 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['univpm.it'],
     city: 'Ancona',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'univpm-centro',
+        name: 'Sede centrale - Piazza Roma',
+        city: 'Ancona',
+        address: 'Piazza Roma 22, 60121 Ancona',
+      },
+      {
+        id: 'univpm-montedago',
+        name: 'Polo di Monte Dago (Ingegneria, Agraria, Scienze)',
+        city: 'Ancona',
+        address: 'Via Brecce Bianche, 60131 Ancona',
+      },
+      { id: 'univpm-torrette', name: 'Polo di Torrette (Medicina)', city: 'Ancona' },
+      { id: 'univpm-pesaro', name: 'Sede di Pesaro', city: 'Pesaro' },
+      { id: 'univpm-fermo', name: 'Sede di Fermo', city: 'Fermo' },
+      { id: 'univpm-ascolipiceno', name: 'Sede di Ascoli Piceno', city: 'Ascoli Piceno' },
+    ],
   },
   {
     id: 'uniba',
@@ -220,7 +298,26 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unibg.it'],
     city: 'Bergamo',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unibg-umanistico',
+        name: 'Campus Umanistico - Città Alta',
+        city: 'Bergamo',
+        address: 'Via Salvecchio 19, 24129 Bergamo',
+      },
+      {
+        id: 'unibg-economico',
+        name: 'Campus Economico-Giuridico - Città Bassa',
+        city: 'Bergamo',
+        address: 'Via dei Caniana 2, 24127 Bergamo',
+      },
+      {
+        id: 'unibg-dalmine',
+        name: 'Campus di Ingegneria - Dalmine',
+        city: 'Dalmine',
+        address: 'Viale Guglielmo Marconi 5, 24044 Dalmine',
+      },
+    ],
   },
   {
     id: 'unibo',
@@ -320,7 +417,31 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unicam.it'],
     city: 'Camerino',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unicam-camerino',
+        name: 'Sede di Camerino',
+        city: 'Camerino',
+        address: 'Piazza Cavour 19/F, 62032 Camerino',
+      },
+      {
+        id: 'unicam-ascolipiceno',
+        name: 'Scuola di Architettura e Design - Ascoli Piceno',
+        city: 'Ascoli Piceno',
+        address: 'Viale della Rimembranza 9, 63100 Ascoli Piceno',
+      },
+      {
+        id: 'unicam-matelica',
+        name: 'Sezione di Medicina Veterinaria - Matelica',
+        city: 'Matelica',
+        address: 'Via Circonvallazione 93/95, 62024 Matelica',
+      },
+      {
+        id: 'unicam-sanbenedetto',
+        name: 'Sede di San Benedetto del Tronto',
+        city: 'San Benedetto del Tronto',
+      },
+    ],
   },
   {
     id: 'unicas',
@@ -329,7 +450,21 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unicas.it'],
     city: 'Cassino',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unicas-folcara',
+        name: 'Campus Folcara',
+        city: 'Cassino',
+        address: "Viale dell'Università, 03043 Cassino",
+      },
+      {
+        id: 'unicas-terracina',
+        name: 'Sede di Terracina',
+        city: 'Terracina',
+        address: 'Viale Circe 46, 04019 Terracina',
+      },
+      { id: 'unicas-frosinone', name: 'Sede di Frosinone', city: 'Frosinone' },
+    ],
   },
   {
     id: 'unict',
@@ -360,7 +495,15 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unicz.it'],
     city: 'Catanzaro',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unicz-germaneto',
+        name: 'Campus Salvatore Venuta - Germaneto',
+        city: 'Catanzaro',
+        address: 'Viale Europa, 88100 Catanzaro',
+      },
+      { id: 'unicz-roccelletta', name: 'Polo di Farmacia - Roccelletta di Borgia', city: 'Borgia' },
+    ],
   },
   {
     id: 'unife',
@@ -369,7 +512,20 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unife.it'],
     city: 'Ferrara',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unife-centro',
+        name: 'Sede centrale - Via Savonarola',
+        city: 'Ferrara',
+        address: 'Via Savonarola 9, 44121 Ferrara',
+      },
+      {
+        id: 'unife-saragat',
+        name: 'Polo Scientifico-Tecnologico - Via Saragat',
+        city: 'Ferrara',
+        address: 'Via Saragat 1, 44122 Ferrara',
+      },
+    ],
   },
   {
     id: 'unifi',
@@ -407,7 +563,26 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unifg.it'],
     city: 'Foggia',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unifg-centro',
+        name: 'Sede centrale - Palazzo Ateneo',
+        city: 'Foggia',
+        address: 'Via Antonio Gramsci 89/91, 71121 Foggia',
+      },
+      {
+        id: 'unifg-umanistico',
+        name: 'Polo Umanistico - Via Arpi',
+        city: 'Foggia',
+        address: 'Via Arpi 155, 71121 Foggia',
+      },
+      {
+        id: 'unifg-scientifico',
+        name: 'Polo Scientifico - Via Napoli',
+        city: 'Foggia',
+        address: 'Via Napoli 25, 71122 Foggia',
+      },
+    ],
   },
   {
     id: 'unige',
@@ -435,7 +610,20 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['univaq.it', 'student.univaq.it'],
     city: "L'Aquila",
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'univaq-centro',
+        name: 'Rettorato - Palazzo Camponeschi',
+        city: "L'Aquila",
+        address: "Piazza Santa Margherita 2, 67100 L'Aquila",
+      },
+      {
+        id: 'univaq-coppito',
+        name: 'Polo di Coppito (Scienze, Ingegneria, Medicina)',
+        city: "L'Aquila",
+        address: "Via Vetoio, 67100 Coppito, L'Aquila",
+      },
+    ],
   },
   {
     id: 'unimc',
@@ -444,7 +632,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unimc.it'],
     city: 'Macerata',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unimc-centro',
+        name: 'Campus nel centro storico di Macerata',
+        city: 'Macerata',
+        address: 'Piaggia della Torre 8, 62100 Macerata',
+      },
+    ],
   },
   {
     id: 'unime',
@@ -510,7 +705,15 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unimib.it', 'campus.unimib.it'],
     city: 'Milano',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unimib-bicocca',
+        name: 'Campus di Milano - Quartiere Bicocca',
+        city: 'Milano',
+        address: "Piazza dell'Ateneo Nuovo 1, 20126 Milano",
+      },
+      { id: 'unimib-monza', name: 'Polo di Medicina e Chirurgia - Monza', city: 'Monza' },
+    ],
   },
   {
     id: 'unimore',
@@ -541,7 +744,26 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['uniparthenope.it'],
     city: 'Napoli',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'uniparthenope-acton',
+        name: 'Sede Centrale - Via Acton',
+        city: 'Napoli',
+        address: 'Via Ammiraglio Ferdinando Acton 38, 80133 Napoli',
+      },
+      {
+        id: 'uniparthenope-pacanowski',
+        name: 'Palazzo Pacanowski (Polo Giuridico-Economico)',
+        city: 'Napoli',
+        address: 'Via Generale Parisi 13, 80132 Napoli',
+      },
+      {
+        id: 'uniparthenope-centrodirezionale',
+        name: 'Centro Direzionale (Ingegneria, Scienze e Tecnologie)',
+        city: 'Napoli',
+      },
+      { id: 'uniparthenope-nola', name: 'Sede di Nola', city: 'Nola' },
+    ],
   },
   {
     id: 'unina',
@@ -654,7 +876,19 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unipr.it'],
     city: 'Parma',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unipr-centro',
+        name: 'Sede centrale - Via Università',
+        city: 'Parma',
+        address: 'Via Università 12, 43121 Parma',
+      },
+      {
+        id: 'unipr-campus',
+        name: 'Campus delle Scienze - Parco Area delle Scienze',
+        city: 'Parma',
+      },
+    ],
   },
   {
     id: 'unipv',
@@ -663,7 +897,22 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unipv.it'],
     city: 'Pavia',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unipv-centro',
+        name: 'Sede centrale - Corso Strada Nuova',
+        city: 'Pavia',
+        address: 'Corso Strada Nuova 65, 27100 Pavia',
+      },
+      {
+        id: 'unipv-ferrata',
+        name: 'Polo Scientifico - Viale Ferrata',
+        city: 'Pavia',
+        address: 'Viale Ambrogio Ferrata 1, 27100 Pavia',
+      },
+      { id: 'unipv-mantova', name: 'Sede di Mantova', city: 'Mantova' },
+      { id: 'unipv-cremona', name: 'Sede di Cremona', city: 'Cremona' },
+    ],
   },
   {
     id: 'unipg',
@@ -694,7 +943,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['uniroma4.it'],
     city: 'Roma',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'iusm-foroitalico',
+        name: 'Sede del Foro Italico',
+        city: 'Roma',
+        address: 'Piazza Lauro De Bosis 15, 00135 Roma',
+      },
+    ],
   },
   {
     id: 'uniroma1',
@@ -721,7 +977,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['uniroma2.it', 'students.uniroma2.eu'],
     city: 'Roma',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'uniroma2-torvergata',
+        name: 'Campus di Tor Vergata',
+        city: 'Roma',
+        address: 'Via Cracovia, 00133 Roma',
+      },
+    ],
   },
   {
     id: 'unisa',
@@ -752,7 +1015,18 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['uniss.it'],
     city: 'Sassari',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'uniss-sassari',
+        name: "Sede di Sassari - Palazzo dell'Università",
+        city: 'Sassari',
+        address: 'Piazza Università 21, 07100 Sassari',
+      },
+      { id: 'uniss-alghero', name: 'Sede di Alghero', city: 'Alghero' },
+      { id: 'uniss-nuoro', name: 'Sede di Nuoro', city: 'Nuoro' },
+      { id: 'uniss-olbia', name: 'Sede di Olbia', city: 'Olbia' },
+      { id: 'uniss-oristano', name: 'Sede di Oristano', city: 'Oristano' },
+    ],
   },
   {
     id: 'unite',
@@ -761,7 +1035,15 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unite.it'],
     city: 'Teramo',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unite-teramo',
+        name: "Campus Coste Sant'Agostino",
+        city: 'Teramo',
+        address: 'Via Renato Balzarini 1, 64100 Teramo',
+      },
+      { id: 'unite-avezzano', name: 'Sede di Avezzano (Giurisprudenza)', city: 'Avezzano' },
+    ],
   },
   {
     id: 'unito',
@@ -826,7 +1108,17 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['units.it'],
     city: 'Trieste',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'units-trieste',
+        name: 'Campus di Piazzale Europa',
+        city: 'Trieste',
+        address: 'Piazzale Europa 1, 34127 Trieste',
+      },
+      { id: 'units-gorizia', name: 'Sede di Gorizia', city: 'Gorizia' },
+      { id: 'units-pordenone', name: 'Sede di Pordenone', city: 'Pordenone' },
+      { id: 'units-portogruaro', name: 'Sede di Portogruaro', city: 'Portogruaro' },
+    ],
   },
   {
     id: 'uniud',
@@ -835,7 +1127,27 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['uniud.it'],
     city: 'Udine',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'uniud-udine',
+        name: 'Sede di Udine - Palazzo Florio',
+        city: 'Udine',
+        address: 'Via Palladio 8, 33100 Udine',
+      },
+      {
+        id: 'uniud-pordenone',
+        name: 'Centro Polifunzionale di Pordenone',
+        city: 'Pordenone',
+        address: 'Via Prasecco 3/A, 33170 Pordenone',
+      },
+      {
+        id: 'uniud-gorizia',
+        name: 'Polo Santa Chiara - Gorizia',
+        city: 'Gorizia',
+        address: 'Via Santa Chiara 1, Gorizia',
+      },
+      { id: 'uniud-gemona', name: 'Sede di Gemona del Friuli', city: 'Gemona del Friuli' },
+    ],
   },
   {
     id: 'univr',
@@ -867,7 +1179,21 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['uninsubria.it'],
     city: 'Varese',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'uninsubria-varese',
+        name: 'Sede di Varese',
+        city: 'Varese',
+        address: 'Via Ravasi 2, 21100 Varese',
+      },
+      {
+        id: 'uninsubria-como',
+        name: 'Sede di Como',
+        city: 'Como',
+        address: 'Via Masia 27, 22100 Como',
+      },
+      { id: 'uninsubria-bustoarsizio', name: 'Sede di Busto Arsizio', city: 'Busto Arsizio' },
+    ],
   },
   {
     id: 'unimol',
@@ -876,7 +1202,27 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unimol.it', 'studenti.unimol.it'],
     city: 'Campobasso',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unimol-campobasso',
+        name: 'Campus di Vazzieri - Campobasso',
+        city: 'Campobasso',
+        address: 'Via Francesco De Sanctis, 86100 Campobasso',
+      },
+      {
+        id: 'unimol-termoli',
+        name: 'Sede di Termoli (Ingegneria)',
+        city: 'Termoli',
+        address: 'Via Duca degli Abruzzi 221, 86039 Termoli',
+      },
+      {
+        id: 'unimol-isernia',
+        name: 'Sede di Isernia',
+        city: 'Isernia',
+        address: 'Via Mazzini 8, 86170 Isernia',
+      },
+      { id: 'unimol-pesche', name: 'Sede di Pesche', city: 'Pesche' },
+    ],
   },
   {
     id: 'unipmn',
@@ -885,7 +1231,26 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['uniupo.it'],
     city: 'Alessandria',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unipmn-alessandria',
+        name: 'Sede di Alessandria',
+        city: 'Alessandria',
+        address: 'Viale Teresa Michel 11, 15121 Alessandria',
+      },
+      {
+        id: 'unipmn-novara',
+        name: 'Sede di Novara',
+        city: 'Novara',
+        address: 'Via Ettore Perrone 18, 28100 Novara',
+      },
+      {
+        id: 'unipmn-vercelli',
+        name: 'Sede di Vercelli',
+        city: 'Vercelli',
+        address: 'Via Duomo 6, 13100 Vercelli',
+      },
+    ],
   },
   {
     id: 'unisannio',
@@ -894,7 +1259,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unisannio.it'],
     city: 'Benevento',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unisannio-benevento',
+        name: 'Sede di Palazzo San Domenico',
+        city: 'Benevento',
+        address: 'Piazza Guerrazzi 1, 82100 Benevento',
+      },
+    ],
   },
   {
     id: 'unicampania',
@@ -903,7 +1275,20 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unicampania.it'],
     city: 'Caserta',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unicampania-caserta',
+        name: 'Sede di Caserta (sede legale)',
+        city: 'Caserta',
+        address: 'Viale Abramo Lincoln 5, 81100 Caserta',
+      },
+      {
+        id: 'unicampania-napoli',
+        name: 'Sede di Napoli (Medicina e area sanitaria)',
+        city: 'Napoli',
+        address: 'Piazza Luigi Miraglia 2, 80138 Napoli',
+      },
+    ],
   },
   {
     id: 'unibas',
@@ -912,7 +1297,26 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unibas.it'],
     city: 'Potenza',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unibas-macchiaromana',
+        name: 'Campus di Macchia Romana (Polo Scientifico)',
+        city: 'Potenza',
+        address: "Via dell'Ateneo Lucano 10, 85100 Potenza",
+      },
+      {
+        id: 'unibas-francioso',
+        name: 'Polo del Francioso (Polo Letterario)',
+        city: 'Potenza',
+        address: 'Via Nazario Sauro 85, 85100 Potenza',
+      },
+      {
+        id: 'unibas-matera',
+        name: 'Campus di Matera',
+        city: 'Matera',
+        address: 'Via Lanera 20, 75100 Matera',
+      },
+    ],
   },
   {
     id: 'unitus',
@@ -921,7 +1325,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unitus.it'],
     city: 'Viterbo',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unitus-viterbo',
+        name: 'Campus di Viterbo',
+        city: 'Viterbo',
+        address: 'Via Santa Maria in Gradi 4, 01100 Viterbo',
+      },
+    ],
   },
   {
     id: 'unich',
@@ -930,7 +1341,20 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unich.it'],
     city: 'Chieti',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unich-chieti',
+        name: 'Campus di Chieti',
+        city: 'Chieti',
+        address: 'Via dei Vestini 31, 66100 Chieti',
+      },
+      {
+        id: 'unich-pescara',
+        name: 'Sede di Pescara',
+        city: 'Pescara',
+        address: 'Viale Pindaro 42, 65127 Pescara',
+      },
+    ],
   },
   {
     id: 'unior',
@@ -948,7 +1372,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unirc.it'],
     city: 'Reggio Calabria',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unirc-feodivito',
+        name: 'Campus di Feo di Vito',
+        city: 'Reggio Calabria',
+        address: "Via dell'Università 25, 89124 Reggio Calabria",
+      },
+    ],
   },
   {
     id: 'uniroma3',
@@ -957,7 +1388,20 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['uniroma3.it'],
     city: 'Roma',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'uniroma3-ostiense',
+        name: 'Polo di Ostiense (sede principale)',
+        city: 'Roma',
+        address: 'Via Ostiense 159, 00154 Roma',
+      },
+      {
+        id: 'uniroma3-ostia',
+        name: 'Polo Universitario di Ostia',
+        city: 'Roma',
+        address: 'Via Leopoldo Ori, 00122 Roma',
+      },
+    ],
   },
   {
     id: 'unisalento',
@@ -1033,7 +1477,16 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unisi.it', 'student.unisi.it'],
     city: 'Siena',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unisi-siena',
+        name: 'Sede di Siena',
+        city: 'Siena',
+        address: 'Via Banchi di Sotto 55, 53100 Siena',
+      },
+      { id: 'unisi-arezzo', name: 'Campus di Arezzo (Polo del Pionta)', city: 'Arezzo' },
+      { id: 'unisi-grosseto', name: 'Polo Universitario Grossetano', city: 'Grosseto' },
+    ],
   },
   {
     id: 'iuav',
@@ -1042,7 +1495,20 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['iuav.it'],
     city: 'Venezia',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'iuav-tolentini',
+        name: 'Sede di Santa Croce - Tolentini',
+        city: 'Venezia',
+        address: 'Santa Croce 191, 30135 Venezia',
+      },
+      {
+        id: 'iuav-vicenza',
+        name: 'Sede di Vicenza (Design)',
+        city: 'Vicenza',
+        address: 'Piazza San Biagio 1, Vicenza',
+      },
+    ],
   },
   {
     id: 'unistrapg',
@@ -1051,7 +1517,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unistrapg.it'],
     city: 'Perugia',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unistrapg-gallenga',
+        name: 'Sede di Palazzo Gallenga',
+        city: 'Perugia',
+        address: 'Piazza Fortebraccio 4, 06123 Perugia',
+      },
+    ],
   },
   {
     id: 'unistrasi',
@@ -1060,7 +1533,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unistrasi.it'],
     city: 'Siena',
     type: 'statale',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unistrasi-siena',
+        name: 'Sede di Piazzale Carlo Rosselli',
+        city: 'Siena',
+        address: 'Piazzale Carlo Rosselli 27-28, 53100 Siena',
+      },
+    ],
   },
   {
     id: 'isuf',
@@ -1069,7 +1549,17 @@ export const UNIVERSITIES: University[] = [
     emailDomains: [],
     city: 'Firenze',
     type: 'statale',
-    campuses: [],
+    // NOTE: l'istituto (SUM) è stato disattivato nel 2013 e incorporato nella Scuola Normale
+    // Superiore di Pisa, diventando il suo "Istituto di Scienze Umane e Sociali". Non esiste più
+    // come ente autonomo — valutare se rimuovere questa entry dal dataset.
+    campuses: [
+      {
+        id: 'isuf-strozzi',
+        name: 'Palazzo Strozzi (ora Istituto di Scienze Umane e Sociali - SNS)',
+        city: 'Firenze',
+        address: 'Piazza degli Strozzi, 50123 Firenze',
+      },
+    ],
   },
   {
     id: 'unibo-proprietary',
@@ -1089,7 +1579,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['gssi.it'],
     city: "L'Aquila",
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'gssi-aquila',
+        name: "Sede dell'Aquila - ex GIL",
+        city: "L'Aquila",
+        address: "Viale Francesco Crispi, 67100 L'Aquila",
+      },
+    ],
   },
   {
     id: 'humanitas',
@@ -1098,7 +1595,9 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['humanitas-u.it'],
     city: 'Milano',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      { id: 'humanitas-pieveemanuele', name: 'Campus di Pieve Emanuele', city: 'Pieve Emanuele' },
+    ],
   },
   {
     id: 'unibz',
@@ -1107,7 +1606,21 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unibz.it'],
     city: 'Bolzano',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unibz-bolzano',
+        name: 'Sede di Bolzano (Economia, Scienze e Tecnologie, Informatica, Design)',
+        city: 'Bolzano',
+        address: 'Piazza Università 1, 39100 Bolzano',
+      },
+      {
+        id: 'unibz-bressanone',
+        name: 'Sede di Bressanone (Scienze della Formazione)',
+        city: 'Bressanone',
+        address: 'Viale Ratisbona 16, 39042 Bressanone',
+      },
+      { id: 'unibz-brunico', name: 'Sede di Brunico (Management del Turismo)', city: 'Brunico' },
+    ],
   },
   {
     id: 'iulm',
@@ -1116,7 +1629,15 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['iulm.it'],
     city: 'Milano',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'iulm-milano',
+        name: 'Campus di Milano - Via Carlo Bo',
+        city: 'Milano',
+        address: 'Via Carlo Bo 1, 20143 Milano',
+      },
+      { id: 'iulm-roma', name: 'Sede di Roma', city: 'Roma' },
+    ],
   },
   {
     id: 'lumsa',
@@ -1125,7 +1646,21 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['lumsa.it'],
     city: 'Roma',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'lumsa-roma',
+        name: 'Sede di Roma - Palazzo della Traspontina',
+        city: 'Roma',
+        address: 'Via della Traspontina 21, 00193 Roma',
+      },
+      {
+        id: 'lumsa-palermo',
+        name: 'Sede di Palermo',
+        city: 'Palermo',
+        address: 'Via Filippo Parlatore 65, 90145 Palermo',
+      },
+      { id: 'lumsa-taranto', name: 'Polo didattico di Taranto', city: 'Taranto' },
+    ],
   },
   {
     id: 'lum',
@@ -1134,7 +1669,19 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['lum.it'],
     city: 'Casamassima',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'lum-casamassima',
+        name: 'Campus Baricentro - Casamassima',
+        city: 'Casamassima',
+        address: 'S.S. 100 Km 18, 70010 Casamassima',
+      },
+      {
+        id: 'lum-acquaviva',
+        name: 'Sede di Acquaviva delle Fonti (Infermieristica)',
+        city: 'Acquaviva delle Fonti',
+      },
+    ],
   },
   {
     id: 'unikore',
@@ -1143,7 +1690,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unikore.it'],
     city: 'Enna',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unikore-enna',
+        name: 'Cittadella Universitaria - Enna Bassa',
+        city: 'Enna',
+        address: 'Cittadella Universitaria, 94100 Enna',
+      },
+    ],
   },
   {
     id: 'unisr',
@@ -1152,7 +1706,15 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unisr.it'],
     city: 'Milano',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unisr-olgettina',
+        name: 'Campus Olgettina (Ospedale San Raffaele)',
+        city: 'Milano',
+        address: 'Via Olgettina 58, 20132 Milano',
+      },
+      { id: 'unisr-mi2', name: 'Sede Mi2 - Centro Direzionale Milano 2', city: 'Segrate' },
+    ],
   },
   {
     id: 'unilink',
@@ -1161,7 +1723,20 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unilink.it'],
     city: 'Roma',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unilink-roma',
+        name: 'Sede di Roma - Casale di San Pio V',
+        city: 'Roma',
+        address: 'Via del Casale di San Pio V 44, 00165 Roma',
+      },
+      {
+        id: 'unilink-cittadicastello',
+        name: 'Sede di Città di Castello',
+        city: 'Città di Castello',
+      },
+      { id: 'unilink-napoli', name: 'Sede di Napoli', city: 'Napoli' },
+    ],
   },
   {
     id: 'luiss',
@@ -1170,7 +1745,26 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['luiss.it'],
     city: 'Roma',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'luiss-pola',
+        name: 'Sede di Viale Pola (Economia, Scienze Politiche)',
+        city: 'Roma',
+        address: 'Viale Pola 12, 00198 Roma',
+      },
+      {
+        id: 'luiss-romania',
+        name: 'Sede di Viale Romania (Impresa e Management)',
+        city: 'Roma',
+        address: 'Viale Romania 32, 00197 Roma',
+      },
+      {
+        id: 'luiss-parenzo',
+        name: 'Sede di Via Parenzo (Giurisprudenza)',
+        city: 'Roma',
+        address: 'Via Parenzo 11, 00198 Roma',
+      },
+    ],
   },
   {
     id: 'unicamillus',
@@ -1179,7 +1773,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unicamillus.org'],
     city: 'Roma',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unicamillus-roma',
+        name: "Campus di Via di Sant'Alessandro",
+        city: 'Roma',
+        address: "Via di Sant'Alessandro 8, 00131 Roma",
+      },
+    ],
   },
   {
     id: 'liuc',
@@ -1188,7 +1789,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['liuc.it'],
     city: 'Castellanza',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'liuc-castellanza',
+        name: 'Campus di Castellanza',
+        city: 'Castellanza',
+        address: 'Corso Matteotti 22, 21053 Castellanza',
+      },
+    ],
   },
   {
     id: 'unicampus',
@@ -1197,7 +1805,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unicampus.it'],
     city: 'Roma',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unicampus-trigoria',
+        name: 'Campus di Trigoria',
+        city: 'Roma',
+        address: 'Via Alvaro del Portillo 21, 00128 Roma',
+      },
+    ],
   },
   {
     id: 'unicatt',
@@ -1252,7 +1867,16 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unisob.na.it'],
     city: 'Napoli',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unisob-napoli',
+        name: 'Sede di Napoli',
+        city: 'Napoli',
+        address: 'Corso Vittorio Emanuele 292, 80135 Napoli',
+      },
+      { id: 'unisob-pomigliano', name: "Sede di Pomigliano d'Arco", city: "Pomigliano d'Arco" },
+      { id: 'unisob-salerno', name: 'Sede di Salerno', city: 'Salerno' },
+    ],
   },
   {
     id: 'univda',
@@ -1261,7 +1885,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['univda.it'],
     city: 'Aosta',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'univda-aosta',
+        name: 'Campus universitario - Strada Cappuccini',
+        city: 'Aosta',
+        address: 'Strada Cappuccini 2A, 11100 Aosta',
+      },
+    ],
   },
   {
     id: 'unint',
@@ -1270,7 +1901,20 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unint.eu'],
     city: 'Roma',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unint-colombo',
+        name: 'Sede di Via Cristoforo Colombo',
+        city: 'Roma',
+        address: 'Via Cristoforo Colombo 200, 00147 Roma',
+      },
+      {
+        id: 'unint-contirossini',
+        name: 'Scuola di Alta Formazione - Via Conti Rossini',
+        city: 'Roma',
+        address: 'Via Carlo Conti Rossini 38, 00147 Roma',
+      },
+    ],
   },
   {
     id: 'unisg',
@@ -1279,7 +1923,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unisg.it'],
     city: 'Pollenzo',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unisg-pollenzo',
+        name: 'Agenzia di Pollenzo',
+        city: 'Bra',
+        address: 'Piazza Vittorio Emanuele 9, 12042 Pollenzo, Bra',
+      },
+    ],
   },
   {
     id: 'unier',
@@ -1288,7 +1939,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unier.it'],
     city: 'Roma',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unier-aldobrandeschi',
+        name: 'Campus di Via degli Aldobrandeschi',
+        city: 'Roma',
+        address: 'Via degli Aldobrandeschi 190, 00163 Roma',
+      },
+    ],
   },
   {
     id: 'unidante',
@@ -1297,7 +1955,14 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unistrada.it'],
     city: 'Reggio Calabria',
     type: 'privata',
-    campuses: [],
+    campuses: [
+      {
+        id: 'unidante-reggio',
+        name: 'Sede di Via del Torrione',
+        city: 'Reggio Calabria',
+        address: 'Via del Torrione 95, 89125 Reggio Calabria',
+      },
+    ],
   },
   {
     id: 'isef-lombardia',
@@ -1306,6 +1971,10 @@ export const UNIVERSITIES: University[] = [
     emailDomains: [],
     city: 'Milano',
     type: 'privata',
+    // NOTE: l'ISEF è stato soppresso dal D.Lgs. 178/1998, che ha trasformato gli Istituti
+    // Superiori di Educazione Fisica nelle facoltà/corsi di laurea in Scienze Motorie delle
+    // università ospitanti. Non esiste più come ente autonomo dal 1998-1999 — nessun campus
+    // attuale da indicare.
     campuses: [],
   },
   {
@@ -1315,6 +1984,10 @@ export const UNIVERSITIES: University[] = [
     emailDomains: [],
     city: 'Bologna',
     type: 'privata',
+    // NOTE: l'ISEF è stato soppresso dal D.Lgs. 178/1998, che ha trasformato gli Istituti
+    // Superiori di Educazione Fisica nelle facoltà/corsi di laurea in Scienze Motorie delle
+    // università ospitanti. Non esiste più come ente autonomo dal 1998-1999 — nessun campus
+    // attuale da indicare.
     campuses: [],
   },
   {
@@ -1324,6 +1997,10 @@ export const UNIVERSITIES: University[] = [
     emailDomains: [],
     city: 'Firenze',
     type: 'privata',
+    // NOTE: l'ISEF è stato soppresso dal D.Lgs. 178/1998, che ha trasformato gli Istituti
+    // Superiori di Educazione Fisica nelle facoltà/corsi di laurea in Scienze Motorie delle
+    // università ospitanti. Non esiste più come ente autonomo dal 1998-1999 — nessun campus
+    // attuale da indicare.
     campuses: [],
   },
   {
@@ -1333,6 +2010,10 @@ export const UNIVERSITIES: University[] = [
     emailDomains: [],
     city: "L'Aquila",
     type: 'privata',
+    // NOTE: l'ISEF è stato soppresso dal D.Lgs. 178/1998, che ha trasformato gli Istituti
+    // Superiori di Educazione Fisica nelle facoltà/corsi di laurea in Scienze Motorie delle
+    // università ospitanti. Non esiste più come ente autonomo dal 1998-1999 — nessun campus
+    // attuale da indicare.
     campuses: [],
   },
   {
@@ -1342,6 +2023,10 @@ export const UNIVERSITIES: University[] = [
     emailDomains: [],
     city: 'Milano',
     type: 'privata',
+    // NOTE: l'ISEF è stato soppresso dal D.Lgs. 178/1998, che ha trasformato gli Istituti
+    // Superiori di Educazione Fisica nelle facoltà/corsi di laurea in Scienze Motorie delle
+    // università ospitanti. Non esiste più come ente autonomo dal 1998-1999 — nessun campus
+    // attuale da indicare.
     campuses: [],
   },
   {
@@ -1351,6 +2036,10 @@ export const UNIVERSITIES: University[] = [
     emailDomains: [],
     city: 'Napoli',
     type: 'privata',
+    // NOTE: l'ISEF è stato soppresso dal D.Lgs. 178/1998, che ha trasformato gli Istituti
+    // Superiori di Educazione Fisica nelle facoltà/corsi di laurea in Scienze Motorie delle
+    // università ospitanti. Non esiste più come ente autonomo dal 1998-1999 — nessun campus
+    // attuale da indicare.
     campuses: [],
   },
   {
@@ -1360,6 +2049,10 @@ export const UNIVERSITIES: University[] = [
     emailDomains: [],
     city: 'Palermo',
     type: 'privata',
+    // NOTE: l'ISEF è stato soppresso dal D.Lgs. 178/1998, che ha trasformato gli Istituti
+    // Superiori di Educazione Fisica nelle facoltà/corsi di laurea in Scienze Motorie delle
+    // università ospitanti. Non esiste più come ente autonomo dal 1998-1999 — nessun campus
+    // attuale da indicare.
     campuses: [],
   },
   {
@@ -1369,6 +2062,10 @@ export const UNIVERSITIES: University[] = [
     emailDomains: [],
     city: 'Perugia',
     type: 'privata',
+    // NOTE: l'ISEF è stato soppresso dal D.Lgs. 178/1998, che ha trasformato gli Istituti
+    // Superiori di Educazione Fisica nelle facoltà/corsi di laurea in Scienze Motorie delle
+    // università ospitanti. Non esiste più come ente autonomo dal 1998-1999 — nessun campus
+    // attuale da indicare.
     campuses: [],
   },
   {
@@ -1378,6 +2075,10 @@ export const UNIVERSITIES: University[] = [
     emailDomains: [],
     city: 'Torino',
     type: 'privata',
+    // NOTE: l'ISEF è stato soppresso dal D.Lgs. 178/1998, che ha trasformato gli Istituti
+    // Superiori di Educazione Fisica nelle facoltà/corsi di laurea in Scienze Motorie delle
+    // università ospitanti. Non esiste più come ente autonomo dal 1998-1999 — nessun campus
+    // attuale da indicare.
     campuses: [],
   },
   {
@@ -1387,6 +2088,10 @@ export const UNIVERSITIES: University[] = [
     emailDomains: [],
     city: 'Urbino',
     type: 'privata',
+    // NOTE: l'ISEF è stato soppresso dal D.Lgs. 178/1998, che ha trasformato gli Istituti
+    // Superiori di Educazione Fisica nelle facoltà/corsi di laurea in Scienze Motorie delle
+    // università ospitanti. Non esiste più come ente autonomo dal 1998-1999 — nessun campus
+    // attuale da indicare.
     campuses: [],
   },
 
@@ -1398,7 +2103,17 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['uniecampus.it'],
     city: 'Novedrate',
     type: 'telematica',
-    campuses: [],
+    // NOTE: ateneo telematico - la didattica è online; questa è la sede legale/amministrativa,
+    // non un campus per la frequenza ordinaria. Esistono inoltre decine di "sedi d'esame" sparse
+    // sul territorio nazionale, non elencate qui in quanto non sono campus didattici.
+    campuses: [
+      {
+        id: 'uniecampus-novedrate',
+        name: 'Sede legale - Novedrate',
+        city: 'Novedrate',
+        address: 'Via Isimbardi 10, 22060 Novedrate',
+      },
+    ],
   },
   {
     id: 'unifortunato',
@@ -1407,7 +2122,16 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unifortunato.eu'],
     city: 'Benevento',
     type: 'telematica',
-    campuses: [],
+    // NOTE: ateneo telematico - didattica online; sede istituzionale per esami e attività in
+    // presenza. Sedi territoriali aggiuntive a Milano, Roma, Napoli, Padova, Palermo non elencate.
+    campuses: [
+      {
+        id: 'unifortunato-benevento',
+        name: 'Sede istituzionale - Benevento',
+        city: 'Benevento',
+        address: 'Viale Raffaele Delcogliano 12, 82100 Benevento',
+      },
+    ],
   },
   {
     id: 'iul',
@@ -1416,7 +2140,17 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['iuline.it'],
     city: 'Firenze',
     type: 'telematica',
-    campuses: [],
+    // NOTE: ateneo telematico - didattica online; questa è la sede legale/amministrativa
+    // (presso Indire). Le discussioni di laurea avvengono solo qui, gli esami in una rete di
+    // ~49 sedi convenzionate su tutto il territorio nazionale, non elencate.
+    campuses: [
+      {
+        id: 'iul-firenze',
+        name: 'Sede legale - presso Indire',
+        city: 'Firenze',
+        address: 'Via Michelangelo Buonarroti 10, 50122 Firenze',
+      },
+    ],
   },
   {
     id: 'unipegaso',
@@ -1425,7 +2159,9 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unipegaso.it'],
     city: 'Napoli',
     type: 'telematica',
-    campuses: [],
+    // NOTE: ateneo telematico - didattica online; questa è la sede legale, non un campus
+    // ordinario. Pegaso ha oltre 90 sedi d'esame in Italia, non elencate qui.
+    campuses: [{ id: 'unipegaso-napoli', name: 'Sede legale - Napoli', city: 'Napoli' }],
   },
   {
     id: 'unisanraffaele',
@@ -1434,7 +2170,16 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unisanraffaele.gnomon.it'],
     city: 'Roma',
     type: 'telematica',
-    campuses: [],
+    // NOTE: ateneo telematico - didattica online; sede istituzionale per esami e segreteria.
+    // Decine di sedi d'esame decentrate non elencate.
+    campuses: [
+      {
+        id: 'unisanraffaele-roma',
+        name: 'Sede di Val Cannuta',
+        city: 'Roma',
+        address: 'Via di Val Cannuta 247, 00166 Roma',
+      },
+    ],
   },
   {
     id: 'unimarconi',
@@ -1443,7 +2188,16 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unimarconi.it'],
     city: 'Roma',
     type: 'telematica',
-    campuses: [],
+    // NOTE: ateneo telematico - didattica online; questa è la sede legale/delle lezioni in
+    // presenza, non un campus ordinario. Esistono inoltre sedi d'esame decentrate.
+    campuses: [
+      {
+        id: 'unimarconi-roma',
+        name: 'Sede di Via Paolo Emilio',
+        city: 'Roma',
+        address: 'Via Paolo Emilio 29, 00192 Roma',
+      },
+    ],
   },
   {
     id: 'uninettuno',
@@ -1452,7 +2206,16 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['uninettunouniversity.net'],
     city: 'Roma',
     type: 'telematica',
-    campuses: [],
+    // NOTE: ateneo telematico - didattica online; sede centrale per esami e segreteria.
+    // Sedi d'esame decentrate anche all'estero non elencate.
+    campuses: [
+      {
+        id: 'uninettuno-roma',
+        name: 'Sede centrale - Corso Vittorio Emanuele II',
+        city: 'Roma',
+        address: 'Corso Vittorio Emanuele II 39, 00186 Roma',
+      },
+    ],
   },
   {
     id: 'unicusano',
@@ -1461,7 +2224,9 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unicusano.it'],
     city: 'Roma',
     type: 'telematica',
-    campuses: [],
+    // NOTE: ateneo telematico, ma con campus reale a Roma dove è possibile seguire lezioni in
+    // presenza, oltre a numerose sedi d'esame decentrate non elencate qui.
+    campuses: [{ id: 'unicusano-roma', name: 'Campus di Roma', city: 'Roma' }],
   },
   {
     id: 'unidav',
@@ -1470,7 +2235,15 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unidav.it'],
     city: 'Torrevecchia Teatina',
     type: 'telematica',
-    campuses: [],
+    // NOTE: ateneo telematico - didattica online; sede legale e principale sede d'esame.
+    campuses: [
+      {
+        id: 'unidav-torrevecchia',
+        name: 'Sede legale - Torrevecchia Teatina',
+        city: 'Torrevecchia Teatina',
+        address: 'Piazza San Rocco 2, 66010 Torrevecchia Teatina',
+      },
+    ],
   },
   {
     id: 'unitelma',
@@ -1479,7 +2252,16 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unitelma.it'],
     city: 'Roma',
     type: 'telematica',
-    campuses: [],
+    // NOTE: ateneo telematico - didattica online; sede legale per eventi istituzionali e
+    // sedute di laurea (trasferita nel 2021 da Viale Regina Elena a Piazza Sassari).
+    campuses: [
+      {
+        id: 'unitelma-roma',
+        name: 'Sede centrale - Piazza Sassari',
+        city: 'Roma',
+        address: 'Piazza Sassari 4, 00161 Roma',
+      },
+    ],
   },
   {
     id: 'unimercatorum',
@@ -1488,6 +2270,9 @@ export const UNIVERSITIES: University[] = [
     emailDomains: ['unimercatorum.it'],
     city: 'Roma',
     type: 'telematica',
-    campuses: [],
+    // NOTE: ateneo telematico - didattica online; sede legale presso Palazzo Costaguti, nel
+    // centro storico di Roma. Gli esami scritti si tengono nell'Hub Didattico "Spazio
+    // Mercatorum"; numerose altre sedi d'esame decentrate non elencate.
+    campuses: [{ id: 'unimercatorum-roma', name: 'Sede legale - Palazzo Costaguti', city: 'Roma' }],
   },
 ];
