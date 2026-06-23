@@ -10,7 +10,8 @@ const addBearer = (req: HttpRequest<unknown>, token: string) =>
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthFacade);
 
-  if (req.url.includes('/v1/auth/')) return next(req);
+  const publicAuthRoutes = ['/v1/auth/login', '/v1/auth/refresh', '/v1/auth/logout'];
+  if (publicAuthRoutes.some(route => req.url.includes(route))) return next(req);
 
   const token = localStorage.getItem(ACCESS_TOKEN_KEY);
   const outReq = token ? addBearer(req, token) : req;

@@ -105,6 +105,7 @@ import { GetQuestionariUseCase } from './features/dashboard/application/usecases
 import { GetProfiloUseCase } from './features/dashboard/application/usecases/get-profilo.usecase';
 import { GetCarrieraInfoUseCase } from './features/dashboard/application/usecases/get-carriera-info.usecase';
 import { GetFotoUseCase } from './features/dashboard/application/usecases/get-foto.usecase';
+import { SwitchCarrieraUseCase } from './features/dashboard/application/usecases/switch-carriera.usecase';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -134,6 +135,7 @@ export const appConfig: ApplicationConfig = {
     GetProfiloUseCase,
     GetCarrieraInfoUseCase,
     GetFotoUseCase,
+    SwitchCarrieraUseCase,
 
     provideLucideIcons(
       LucideLayoutDashboard,

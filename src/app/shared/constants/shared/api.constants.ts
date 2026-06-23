@@ -7,6 +7,7 @@ export const API = {
     login: `${BASE}/v1/auth/login`,
     refresh: `${BASE}/v1/auth/refresh`,
     logout: `${BASE}/v1/auth/logout`,
+    switchCarriera: `${BASE}/v1/auth/switch-carriera`,
   },
   carriera: {
     tasse: `${BASE}/v1/carriera/tasse`,

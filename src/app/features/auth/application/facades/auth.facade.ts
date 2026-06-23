@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthTokens } from '../../domain/models/auth-tokens.model';
+import { AuthTokens, ProfiloCarriera } from '../../domain/models/auth-tokens.model';
 import { LoginRequest } from '../../domain/models/login-request.model';
 import {
   LoginUseCase,
@@ -9,15 +9,18 @@ import {
   UNIVERSITY_ID_KEY,
   USER_COGNOME_KEY,
   USER_NOME_KEY,
+  PROFILI_KEY,
 } from '../usecases/login.usecase';
 import { LogoutUseCase } from '../usecases/logout.usecase';
 import { RefreshTokenUseCase } from '../usecases/refresh-token.usecase';
+import { SwitchCarrieraUseCase } from 'src/app/features/dashboard/application/usecases/switch-carriera.usecase';
 
 @Injectable()
 export class AuthFacade {
   private readonly loginUseCase = inject(LoginUseCase);
   private readonly logoutUseCase = inject(LogoutUseCase);
   private readonly refreshTokenUseCase = inject(RefreshTokenUseCase);
+  private readonly switchCarrieraUseCase = inject(SwitchCarrieraUseCase);
 
   login(request: LoginRequest): Observable<AuthTokens> {
     return this.loginUseCase.execute(request);
@@ -71,5 +74,19 @@ export class AuthFacade {
       )
       .join(' ')
       .trim();
+  }
+
+  getProfili(): ProfiloCarriera[] {
+    const raw = localStorage.getItem(PROFILI_KEY);
+    if (!raw) return [];
+    try {
+      return JSON.parse(raw) as ProfiloCarriera[];
+    } catch {
+      return [];
+    }
+  }
+
+  switchCarriera(profilo: ProfiloCarriera): Observable<{ accessToken: string }> {
+    return this.switchCarrieraUseCase.execute(profilo);
   }
 }

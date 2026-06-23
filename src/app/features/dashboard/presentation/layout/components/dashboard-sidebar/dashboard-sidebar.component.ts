@@ -69,6 +69,21 @@ export class DashboardSidebarComponent implements OnInit {
   readonly fotoUrl = signal<string>('');
 
   ngOnInit(): void {
+    const profili = this.auth.getProfili();
+    const tuttiAccounts: AccountEntry[] = profili.map(p => ({
+      id: String(p.stuId),
+      name: this.auth.getNomeCompleto(),
+      email: '',
+      courseLabel: p.corsoNome ?? '',
+      courseAcronym: this.tipoCorsoAcronym(p.tipoCorsoCod),
+      universityLabel: this.universityLabel(p.universityId),
+      status: p.attivo ? 'active' : ('withdrawn' as AccountStatus),
+      isCurrent: p.attivo,
+    }));
+    this.accounts.set(tuttiAccounts);
+    const attivo = tuttiAccounts.find(a => a.isCurrent) ?? tuttiAccounts[0];
+    this.currentAccount.set(attivo);
+
     forkJoin({
       badge: this.carriera.getBadge(),
       profilo: this.carriera.getProfilo(),
@@ -76,21 +91,17 @@ export class DashboardSidebarComponent implements OnInit {
       foto: this.carriera.getFoto(),
     }).subscribe({
       next: ({ badge, profilo, info, foto }) => {
-        this.fotoUrl.set(URL.createObjectURL(foto));
+        const fotoUrl = URL.createObjectURL(foto);
+        this.fotoUrl.set(fotoUrl);
 
-        const updated: AccountEntry = {
-          id: 'current',
-          name: this.auth.getNomeCompleto(),
-          email: profilo.emailAte ?? '',
-          courseLabel: info.cdsDes ?? badge.desCds ?? '',
-          courseAcronym: this.tipoCorsoAcronym(info.tipoCorsoCod),
-          universityLabel: this.universityLabel(this.auth.getUniversityId()),
-          avatarSrc: URL.createObjectURL(foto),
-          status: 'active',
-          isCurrent: true,
-        };
-        this.currentAccount.set(updated);
-        this.accounts.set([updated]);
+        const updated = this.accounts().map(a => ({
+          ...a,
+          avatarSrc: fotoUrl,
+          email: a.isCurrent ? (profilo.emailAte ?? '') : '',
+        }));
+        this.accounts.set(updated);
+        const current = updated.find(a => a.isCurrent);
+        if (current) this.currentAccount.set(current);
       },
       error: () => {},
     });
@@ -125,8 +136,19 @@ export class DashboardSidebarComponent implements OnInit {
     return `background: var(--color-${item.color}-light);`;
   }
 
-  onAccountSwitch(_account: AccountEntry): void {
-    // @TODO
+  onAccountSwitch(account: AccountEntry): void {
+    const profili = this.auth.getProfili();
+    const profilo = profili.find(p => String(p.stuId) === account.id);
+    if (!profilo) return;
+
+    this.auth.switchCarriera(profilo).subscribe({
+      next: () => {
+        const aggiornati = profili.map(p => ({ ...p, attivo: p.stuId === profilo.stuId }));
+        localStorage.setItem('omu_profili', JSON.stringify(aggiornati));
+        window.location.reload();
+      },
+      error: () => {},
+    });
   }
 
   onLogout(): void {

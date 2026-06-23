@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthRepository } from '../../domain/repositories/auth.repository';
 import {
   ACCESS_TOKEN_KEY,
+  PROFILI_KEY,
   REFRESH_TOKEN_KEY,
   UNIVERSITY_ID_KEY,
   USER_COGNOME_KEY,
@@ -34,6 +35,7 @@ export class LogoutUseCase {
     localStorage.removeItem(UNIVERSITY_ID_KEY);
     localStorage.removeItem(USER_NOME_KEY);
     localStorage.removeItem(USER_COGNOME_KEY);
+    localStorage.removeItem(PROFILI_KEY);
     this.router.navigate(['/login']);
   }
 }
