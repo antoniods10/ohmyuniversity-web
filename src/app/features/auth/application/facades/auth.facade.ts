@@ -5,6 +5,8 @@ import { LoginRequest } from '../../domain/models/login-request.model';
 import {
   LoginUseCase,
   ACCESS_TOKEN_KEY,
+  REFRESH_TOKEN_KEY,
+  UNIVERSITY_ID_KEY,
   USER_COGNOME_KEY,
   USER_NOME_KEY,
 } from '../usecases/login.usecase';
@@ -37,6 +39,10 @@ export class AuthFacade {
     return localStorage.getItem(ACCESS_TOKEN_KEY);
   }
 
+  getUniversityId(): string | null {
+    return localStorage.getItem(UNIVERSITY_ID_KEY);
+  }
+
   getUserName(): string {
     const nome = localStorage.getItem(USER_NOME_KEY) ?? '';
     const cognome = localStorage.getItem(USER_COGNOME_KEY) ?? '';
@@ -50,5 +56,20 @@ export class AuthFacade {
       .split(' ')
       .map(w => w.charAt(0).toUpperCase() + w.slice(1))
       .join(' ');
+  }
+
+  getNomeCompleto(): string {
+    const nome = localStorage.getItem(USER_NOME_KEY) ?? '';
+    const cognome = localStorage.getItem(USER_COGNOME_KEY) ?? '';
+    return [nome, cognome]
+      .map(s =>
+        s
+          .toLowerCase()
+          .split(' ')
+          .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(' '),
+      )
+      .join(' ')
+      .trim();
   }
 }

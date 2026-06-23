@@ -127,24 +127,24 @@
           role="button"
           tabindex="0"
           (keydown.enter)="goToProfile()"
-          [attr.aria-label]="'Apri profilo di ' + currentAccount.name">
+          [attr.aria-label]="'Apri profilo di ' + currentAccount().name">
           <app-custom-avatar
-            [src]="currentAccount.avatarSrc ?? ''"
-            [name]="currentAccount.name"
-            [variant]="variantFor(currentAccount.status)"
+            [src]="currentAccount().avatarSrc ?? ''"
+            [name]="currentAccount().name"
+            [variant]="variantFor(currentAccount().status)"
             [showRing]="true"
             ringSize="sm"
             [ringGap]="true"
-            [ringColor]="ringColorFor(currentAccount.status)"
+            [ringColor]="ringColorFor(currentAccount().status)"
             size="sm"
             shape="circle"
             [clickable]="false" />
           <div class="flex-1 min-w-0 flex flex-col gap-0">
             <span class="text-xs font-semibold truncate" style="color: var(--color-neutral-900)">
-              {{ currentAccount.name }}
+              {{ currentAccount().name }}
             </span>
             <span class="text-[0.7rem] truncate" style="color: var(--color-neutral-400)">
-              {{ currentAccount.courseAcronym }} · {{ currentAccount.universityLabel }}
+              {{ currentAccount().courseAcronym }} · {{ currentAccount().universityLabel }}
             </span>
           </div>
         </div>
@@ -167,26 +167,28 @@
           <app-avatar-profile-panel
             #profilePanelRef
             [openDirection]="'up'"
-            [accounts]="accounts"
+            [accounts]="accounts()"
             [darkTheme]="false"
             [position]="'right'"
             [showAddAccount]="false"
             [showSettings]="false"
             [showLogout]="false"
-            (accountSwitch)="onAccountSwitch($event)" />
+            (accountSwitch)="onAccountSwitch($event)"
+            (currentAccountClick)="goToProfile()" />
         </div>
       </div>
     } @else {
       <div class="flex flex-col items-center py-2 gap-2">
         <app-avatar-profile-panel
           [openDirection]="'up'"
-          [accounts]="accounts"
+          [accounts]="accounts()"
           [darkTheme]="false"
           [position]="'right'"
           [showAddAccount]="false"
           [showSettings]="false"
           [showLogout]="false"
-          (accountSwitch)="onAccountSwitch($event)" />
+          (accountSwitch)="onAccountSwitch($event)"
+          (currentAccountClick)="goToProfile()" />
 
         <app-custom-button
           variant="error"
