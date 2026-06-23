@@ -1,0 +1,82 @@
+@if (loading()) {
+  <div class="flex justify-center py-16">
+    <span class="text-sm" style="color: var(--color-neutral-400)">Caricamento appelli...</span>
+  </div>
+} @else if (error()) {
+  <app-card-status
+    statusVariant="error"
+    [icon]="lucideAlertTriangle"
+    title="Errore nel caricamento"
+    description="Impossibile recuperare gli appelli. Riprova più tardi." />
+} @else {
+  <div class="flex flex-col gap-4">
+    <!-- Toolbar -->
+    <div class="flex flex-col sm:flex-row gap-3">
+      <div class="flex-1">
+        <app-custom-input
+          placeholder="Cerca per corso o docente..."
+          [iconLeft]="iconSearch"
+          size="sm"
+          [fullWidth]="true"
+          [clearable]="true"
+          (inputChange)="onSearchChange($event)" />
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <app-custom-button
+          [variant]="activeFilter() === 'all' ? 'primary' : 'ghost'"
+          size="sm"
+          label="Tutti"
+          (clicked)="setFilter('all')" />
+        <app-custom-button
+          [variant]="activeFilter() === 'open' ? 'success' : 'ghost'"
+          size="sm"
+          label="Disponibili"
+          (clicked)="setFilter('open')" />
+        <app-custom-button
+          [variant]="activeFilter() === 'booked' ? 'secondary' : 'ghost'"
+          size="sm"
+          label="Prenotati"
+          (clicked)="setFilter('booked')" />
+      </div>
+    </div>
+
+    <!-- Counter -->
+    <span class="text-[0.75rem]" style="color: var(--color-neutral-400)">
+      {{ filteredExams().length }} appelli trovati
+    </span>
+
+    <!-- Empty state -->
+    @if (filteredExams().length === 0) {
+      <div
+        class="flex flex-col items-center justify-center gap-3 py-16"
+        style="border: 1px dashed var(--color-neutral-300); border-radius: 16px">
+        <svg
+          [lucideIcon]="iconCalendarX"
+          [size]="32"
+          style="color: var(--color-neutral-300)"
+          aria-hidden="true"></svg>
+        <p appText variant="body-sm" color="subtle" class="m-0">
+          Nessun appello trovato con i filtri selezionati.
+        </p>
+      </div>
+    }
+
+    <!-- List -->
+    @for (exam of filteredExams(); track exam.id) {
+      <app-exam-card [exam]="exam" (bookClicked)="bookClicked.emit($event)" />
+    }
+
+    <!-- Disclaimer -->
+    <div class="flex items-start gap-2 px-1">
+      <svg
+        [lucideIcon]="iconInfo"
+        [size]="13"
+        style="color: var(--color-neutral-400); margin-top: 1px"
+        aria-hidden="true"></svg>
+      <p appText variant="caption" color="subtle" class="m-0">
+        Le prenotazioni sono definitive salvo cancellazione entro la scadenza. Per informazioni
+        contatta la segreteria studenti.
+      </p>
+    </div>
+  </div>
+}
