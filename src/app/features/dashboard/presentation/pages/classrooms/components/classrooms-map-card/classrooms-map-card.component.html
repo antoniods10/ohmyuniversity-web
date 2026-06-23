@@ -1,0 +1,37 @@
+<app-custom-card
+  variant="primary"
+  padding="md"
+  shadow="sm"
+  [bordered]="true"
+  radius="lg"
+  [accentBar]="true">
+  <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem">
+    <div style="display: flex; align-items: flex-start; gap: 0.75rem">
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          border-radius: 12px;
+          flex-shrink: 0;
+          background: var(--color-primary-light);
+        ">
+        <svg
+          [lucideIcon]="iconMap"
+          [size]="20"
+          style="color: var(--color-primary-dark)"
+          aria-hidden="true"></svg>
+      </div>
+      <div>
+        <h2 appText variant="h6" class="m-0">Mappa interattiva degli edifici</h2>
+        <p appText variant="body-sm" color="muted" class="m-0" style="margin-top: 2px">
+          La visualizzazione 3D degli edifici e delle aule è in fase di sviluppo. Sarà disponibile
+          nelle prossime versioni della piattaforma.
+        </p>
+      </div>
+    </div>
+    <app-custom-badge label="In arrivo" variant="primary" size="sm" shape="pill" [dot]="true" />
+  </div>
+</app-custom-card>

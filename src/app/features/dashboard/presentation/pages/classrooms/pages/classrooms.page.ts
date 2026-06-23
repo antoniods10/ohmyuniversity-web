@@ -1,32 +1,17 @@
 import { Component, signal, inject } from '@angular/core';
 import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
-import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
-import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
-import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
-import { CustomInputComponent, SelectOption } from '@ui/custom-input/custom-input.component';
+import { TabItem } from '@ui/custom-tab/custom-tab.component';
+import { SelectOption } from '@ui/custom-input/custom-input.component';
 import { ToastService } from '@ui/custom-toast/toast.service';
-import {
-  LucideDynamicIcon,
-  LucideMapPin,
-  LucideUsers,
-  LucideMonitor,
-  LucideWifi,
-  LucideZap,
-  LucideMap,
-  LucideCalendarPlus,
-  LucideInfo,
-  LucideBuilding2,
-  LucideLayers,
-  LucideSearch,
-  LucideTriangleAlert,
-} from '@lucide/angular';
-import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
-
-import { Classroom, Building, Campus } from '@shared/types/dashboard/classrooms.types';
-import { MOCK_CAMPUSES } from '@shared/data/mock/classrooms.mock';
+import { LucideDynamicIcon, LucideInfo, LucideTriangleAlert } from '@lucide/angular';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
+import { Building, Campus } from '@shared/types/dashboard/classrooms.types';
+import { MOCK_CAMPUSES } from '@shared/data/mock/classrooms.mock';
+import { ClassroomsBuildingListComponent } from '../components/classrooms-building-list/classrooms-building-list.component';
+import { ClassroomsFiltersComponent } from '../components/classrooms-filters/classrooms-filters.component';
+import { ClassroomsMapCardComponent } from '../components/classrooms-map-card/classrooms-map-card.component';
 
 @Component({
   selector: 'app-classrooms',
@@ -34,33 +19,20 @@ import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
   imports: [
     DashboardContainerComponent,
     DashboardHeaderComponent,
-    CustomCardComponent,
-    CustomBadgeComponent,
-    CustomButtonComponent,
     CustomTextComponent,
-    CustomTabsComponent,
-    CustomInputComponent,
     LucideDynamicIcon,
     CardStatusComponent,
+    ClassroomsMapCardComponent,
+    ClassroomsFiltersComponent,
+    ClassroomsBuildingListComponent,
   ],
   templateUrl: './classrooms.page.html',
 })
 export class ClassroomsPage {
   readonly lucideAlertTriangle = LucideTriangleAlert;
+  readonly iconInfo = LucideInfo;
 
   private readonly toast = inject(ToastService);
-
-  readonly iconMapPin = LucideMapPin;
-  readonly iconUsers = LucideUsers;
-  readonly iconMonitor = LucideMonitor;
-  readonly iconWifi = LucideWifi;
-  readonly iconZap = LucideZap;
-  readonly iconMap = LucideMap;
-  readonly iconCalendarPlus = LucideCalendarPlus;
-  readonly iconInfo = LucideInfo;
-  readonly iconBuilding = LucideBuilding2;
-  readonly iconLayers = LucideLayers;
-  readonly iconSearch = LucideSearch;
 
   activeCampusId = signal<string>('campobasso');
   activeBuilding = signal<string>('all');
@@ -136,47 +108,5 @@ export class ClassroomsPage {
     this.toast.show('Funzione disponibile a breve — riservata a docenti e tecnici.', 'info', {
       duration: 4000,
     });
-  }
-
-  typeLabel(type: Classroom['type']): string {
-    const map: Record<Classroom['type'], string> = {
-      lecture: 'Aula lezione',
-      lab: 'Laboratorio',
-      seminar: 'Sala seminari',
-      exam: 'Aula esami',
-    };
-    return map[type];
-  }
-
-  typeVariant(type: Classroom['type']): 'primary' | 'secondary' | 'success' | 'warning' {
-    const map: Record<Classroom['type'], 'primary' | 'secondary' | 'success' | 'warning'> = {
-      lecture: 'primary',
-      lab: 'secondary',
-      seminar: 'success',
-      exam: 'warning',
-    };
-    return map[type];
-  }
-
-  featureLabel(f: string): string {
-    const map: Record<string, string> = {
-      projector: 'Proiettore',
-      lim: 'LIM',
-      wifi: 'WiFi',
-      power: 'Prese',
-      ac: 'A/C',
-    };
-    return map[f] ?? f;
-  }
-
-  featureIcon(f: string): any {
-    const map: Record<string, any> = {
-      projector: LucideMonitor,
-      lim: LucideMonitor,
-      wifi: LucideWifi,
-      power: LucideZap,
-      ac: LucideZap,
-    };
-    return map[f] ?? LucideInfo;
   }
 }

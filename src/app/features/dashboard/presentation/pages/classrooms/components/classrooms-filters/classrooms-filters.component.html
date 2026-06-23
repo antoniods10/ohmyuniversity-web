@@ -1,0 +1,68 @@
+<div style="display: flex; flex-direction: column; gap: 1rem">
+  <!-- Campus tabs -->
+  <div style="padding: 1rem 0 0; display: flex">
+    <app-custom-tabs
+      [tabs]="campusTabs()"
+      [activeTab]="activeCampusId()"
+      tabStyle="pill"
+      size="md"
+      (tabChange)="campusChange.emit($event)" />
+  </div>
+
+  <!-- Search + filters -->
+  <div style="display: flex; gap: 0.75rem; flex-wrap: wrap">
+    <div style="flex: 1; min-width: 200px">
+      <app-custom-input
+        placeholder="Cerca aula per nome, piano..."
+        [iconLeft]="iconSearch"
+        size="sm"
+        [fullWidth]="true"
+        [clearable]="true"
+        (inputChange)="searchChange.emit($event)" />
+    </div>
+    <div style="width: 240px">
+      <app-custom-input
+        type="select"
+        [options]="buildingOptions()"
+        size="sm"
+        [fullWidth]="true"
+        (inputChange)="buildingChange.emit($event)" />
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap">
+    <div style="display: flex; align-items: center; gap: 0.375rem">
+      <svg
+        [lucideIcon]="iconBuilding"
+        [size]="13"
+        style="color: var(--color-neutral-400)"
+        aria-hidden="true"></svg>
+      <span style="font-size: 0.75rem; color: var(--color-neutral-500)"
+        >{{ buildingCount() }} edifici</span
+      >
+    </div>
+    <div style="display: flex; align-items: center; gap: 0.375rem">
+      <svg
+        [lucideIcon]="iconLayers"
+        [size]="13"
+        style="color: var(--color-neutral-400)"
+        aria-hidden="true"></svg>
+      <span style="font-size: 0.75rem; color: var(--color-neutral-500)"
+        >{{ totalClassrooms() }} aule</span
+      >
+    </div>
+    <app-custom-badge
+      [label]="availableCount() + ' disponibili'"
+      variant="success"
+      size="xs"
+      shape="pill"
+      [dot]="true" />
+    <app-custom-badge
+      [label]="totalClassrooms() - availableCount() + ' occupate'"
+      variant="neutral"
+      size="xs"
+      shape="pill"
+      [dot]="true" />
+  </div>
+</div>

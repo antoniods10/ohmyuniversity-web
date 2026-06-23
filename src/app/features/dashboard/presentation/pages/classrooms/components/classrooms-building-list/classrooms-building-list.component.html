@@ -1,0 +1,176 @@
+<div style="display: flex; flex-direction: column; gap: 1.5rem">
+  @for (building of buildings(); track building.id) {
+    <div style="display: flex; flex-direction: column; gap: 0.75rem">
+      <!-- Header building -->
+      <div style="display: flex; align-items: flex-start; gap: 0.75rem">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            background: var(--color-neutral-200);
+          ">
+          <svg
+            [lucideIcon]="iconBuilding"
+            [size]="14"
+            style="color: var(--color-neutral-500)"
+            aria-hidden="true"></svg>
+        </div>
+        <div>
+          <h3 appText variant="h6" class="m-0">{{ building.name }}</h3>
+          <div style="display: flex; align-items: center; gap: 0.375rem; margin-top: 2px">
+            <svg
+              [lucideIcon]="iconMapPin"
+              [size]="11"
+              style="color: var(--color-neutral-400)"
+              aria-hidden="true"></svg>
+            <span style="font-size: 0.72rem; color: var(--color-neutral-400)">{{
+              building.address
+            }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid classrooms -->
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 0.75rem;
+        ">
+        @for (classroom of building.classrooms; track classroom.id) {
+          <app-custom-card variant="default" padding="md" shadow="sm" [bordered]="true" radius="lg">
+            <!-- Name + Plan -->
+            <div
+              style="
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 0.5rem;
+                margin-bottom: 0.75rem;
+              ">
+              <div style="flex: 1; min-width: 0">
+                <h4
+                  appText
+                  variant="h6"
+                  class="m-0"
+                  style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
+                  {{ classroom.name }}
+                </h4>
+                <div style="display: flex; align-items: center; gap: 0.375rem; margin-top: 2px">
+                  <svg
+                    [lucideIcon]="iconLayers"
+                    [size]="11"
+                    style="color: var(--color-neutral-400)"
+                    aria-hidden="true"></svg>
+                  <span style="font-size: 0.7rem; color: var(--color-neutral-400)">{{
+                    classroom.floor
+                  }}</span>
+                </div>
+              </div>
+              @if (classroom.available) {
+                <app-custom-badge
+                  label="Libera"
+                  variant="success"
+                  size="xs"
+                  shape="pill"
+                  [dot]="true" />
+              } @else {
+                <app-custom-badge
+                  label="Occupata"
+                  variant="neutral"
+                  size="xs"
+                  shape="pill"
+                  [dot]="true" />
+              }
+            </div>
+
+            <!-- Capacity + Types -->
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                flex-wrap: wrap;
+                margin-bottom: 0.75rem;
+              ">
+              <div style="display: flex; align-items: center; gap: 0.375rem">
+                <svg
+                  [lucideIcon]="iconUsers"
+                  [size]="12"
+                  style="color: var(--color-neutral-400)"
+                  aria-hidden="true"></svg>
+                <span style="font-size: 0.75rem; font-weight: 600; color: var(--color-neutral-700)"
+                  >{{ classroom.capacity }} posti</span
+                >
+              </div>
+              <app-custom-badge
+                [label]="typeLabel(classroom.type)"
+                [variant]="typeVariant(classroom.type)"
+                size="xs"
+                shape="rounded" />
+            </div>
+
+            <!-- Features -->
+            <div style="display: flex; flex-wrap: wrap; gap: 0.375rem; margin-bottom: 0.75rem">
+              @for (feature of classroom.features; track feature) {
+                <span
+                  style="
+                    font-size: 0.65rem;
+                    font-weight: 600;
+                    padding: 2px 8px;
+                    border-radius: 6px;
+                    background: var(--color-neutral-100);
+                    color: var(--color-neutral-500);
+                    border: 1px solid var(--color-neutral-200);
+                  ">
+                  {{ featureLabel(feature) }}
+                </span>
+              }
+            </div>
+
+            <!-- Reservation  -->
+            <div style="padding-top: 0.5rem; border-top: 1px solid var(--color-neutral-200)">
+              <app-custom-button
+                variant="ghost"
+                size="sm"
+                label="Prenota"
+                [icon]="iconCalendarPlus"
+                [fullWidth]="true"
+                (clicked)="booking.emit()" />
+            </div>
+          </app-custom-card>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Empty state -->
+  @if (buildings().length === 0) {
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        padding: 4rem 1rem;
+        border: 1px dashed var(--color-neutral-300);
+        border-radius: 16px;
+      ">
+      <svg
+        [lucideIcon]="iconSearch"
+        [size]="32"
+        style="color: var(--color-neutral-300)"
+        aria-hidden="true"></svg>
+      <p appText variant="body-sm" color="subtle" class="m-0">
+        Nessuna aula trovata con i filtri selezionati.
+      </p>
+    </div>
+  }
+</div>

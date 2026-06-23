@@ -1,0 +1,41 @@
+<app-card-status
+  statusVariant="warning"
+  [icon]="lucideAlertTriangle"
+  title="Pagina in sviluppo"
+  description="Questa pagina è visibile a scopo dimostrativo ma non fa parte della release corrente dello sprint." />
+
+<app-dashboard-container>
+  <app-dashboard-header
+    title="Aule"
+    description="Esplora le aule disponibili in ogni sede e edificio dell'ateneo." />
+
+  <app-classrooms-map-card />
+
+  <div class="py-4">
+    <app-classrooms-filters
+      [campusTabs]="campusTabs"
+      [activeCampusId]="activeCampusId()"
+      [buildingOptions]="buildingOptions"
+      [buildingCount]="activeCampus.buildings.length"
+      [totalClassrooms]="totalClassrooms"
+      [availableCount]="availableCount"
+      (campusChange)="onCampusChange($event)"
+      (searchChange)="onSearchChange($event)"
+      (buildingChange)="onBuildingChange($event)" />
+  </div>
+
+  <app-classrooms-building-list [buildings]="filteredBuildings" (booking)="onBooking()" />
+
+  <!-- Disclaimer -->
+  <div class="flex items-start gap-2 p-4">
+    <svg
+      [lucideIcon]="iconInfo"
+      [size]="13"
+      style="color: var(--color-neutral-400); margin-top: 1px; flex-shrink: 0"
+      aria-hidden="true"></svg>
+    <p appText variant="caption" color="subtle" class="m-0">
+      La disponibilità delle aule è aggiornata in tempo reale. La prenotazione è riservata a docenti
+      e personale tecnico dell'ateneo.
+    </p>
+  </div>
+</app-dashboard-container>
