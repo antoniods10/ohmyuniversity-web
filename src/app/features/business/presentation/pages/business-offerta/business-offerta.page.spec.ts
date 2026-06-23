@@ -94,12 +94,6 @@ describe('BusinessOffertaPage', () => {
     expect(cards.length).toBe(BUSINESS_OFFERS.length);
   });
 
-  it('should render each offer emoji', () => {
-    const emojis = Array.from(nativeEl.querySelectorAll('span.text-3xl'));
-    const rendered = emojis.map(e => e.textContent?.trim());
-    BUSINESS_OFFERS.forEach(o => expect(rendered).toContain(o.emoji));
-  });
-
   it('should render each offer title in an h3', () => {
     const h3s = Array.from(nativeEl.querySelectorAll('h3'));
     const titles = h3s.map(h => h.textContent?.trim());

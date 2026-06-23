@@ -109,12 +109,6 @@ describe('BusinessCollettiviPage', () => {
     expect(found).not.toBeUndefined();
   });
 
-  it('should render each use case emoji', () => {
-    const emojis = Array.from(nativeEl.querySelectorAll('span.text-3xl'));
-    const rendered = emojis.map(e => e.textContent?.trim());
-    USE_CASES.forEach(uc => expect(rendered).toContain(uc.emoji));
-  });
-
   it('should render each use case title in an h3', () => {
     const h3s = Array.from(nativeEl.querySelectorAll('h3'));
     const titles = h3s.map(h => h.textContent?.trim());

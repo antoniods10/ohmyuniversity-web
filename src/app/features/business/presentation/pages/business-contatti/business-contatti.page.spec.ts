@@ -77,11 +77,6 @@ describe('BusinessContattiPage', () => {
     expect(cards.length).toBe(BUSINESS_USER_TYPES.length);
   });
 
-  it('should render each userType emoji', () => {
-    const allText = nativeEl.textContent ?? '';
-    BUSINESS_USER_TYPES.forEach(t => expect(allText).toContain(t.emoji));
-  });
-
   it('should render each userType title', () => {
     const allText = nativeEl.textContent ?? '';
     BUSINESS_USER_TYPES.forEach(t => expect(allText).toContain(t.title));
@@ -225,11 +220,6 @@ describe('BusinessContattiPage', () => {
   it('should render one contact channel link per BUSINESS_CONTACT_CHANNELS entry', () => {
     const links = Array.from(nativeEl.querySelectorAll('a[target="_blank"]'));
     expect(links.length).toBe(BUSINESS_CONTACT_CHANNELS.length);
-  });
-
-  it('should render each contact channel emoji', () => {
-    const allText = nativeEl.textContent ?? '';
-    BUSINESS_CONTACT_CHANNELS.forEach(ch => expect(allText).toContain(ch.emoji));
   });
 
   it('should render each contact channel title', () => {

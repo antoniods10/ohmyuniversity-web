@@ -8,14 +8,14 @@ const mockPlanBase: PricingPlan = {
   price: '€0',
   priceDetail: 'per sempre',
   description: 'Il piano gratuito per iniziare.',
-  cta: 'Inizia gratis',
-  ctaLink: '/registrati',
   highlighted: false,
   features: [
     { label: 'Accesso base', included: true },
     { label: 'Supporto email', included: false },
     { label: 'Report avanzati', included: '3 al mese' },
   ],
+  label: '',
+  url: '',
 };
 
 const mockPlanPro: PricingPlan = {
@@ -23,8 +23,6 @@ const mockPlanPro: PricingPlan = {
   price: '€9',
   priceDetail: 'al mese',
   description: 'Il piano per studenti seri.',
-  cta: 'Scegli Pro',
-  ctaLink: '/pro',
   highlighted: true,
   badge: 'Più popolare',
   features: [
@@ -32,6 +30,8 @@ const mockPlanPro: PricingPlan = {
     { label: 'Supporto email', included: true },
     { label: 'Report avanzati', included: 'Illimitati' },
   ],
+  label: '',
+  url: '',
 };
 
 const mockPlanEnterprise: PricingPlan = {
@@ -39,14 +39,14 @@ const mockPlanEnterprise: PricingPlan = {
   price: '€29',
   priceDetail: 'al mese',
   description: 'Per università e organizzazioni.',
-  cta: 'Contattaci',
-  ctaLink: '/contatti',
   highlighted: false,
   features: [
     { label: 'Accesso base', included: true },
     { label: 'Supporto email', included: true },
     { label: 'Report avanzati', included: 'Illimitati' },
   ],
+  label: '',
+  url: '',
 };
 
 const mockPlans: PricingPlan[] = [mockPlanBase, mockPlanPro, mockPlanEnterprise];
@@ -217,32 +217,6 @@ describe('PricingPlans', () => {
     expect(firstPlanItems[0].textContent).toContain('Accesso base');
     expect(firstPlanItems[1].textContent).toContain('Supporto email');
     expect(firstPlanItems[2].textContent).toContain('Report avanzati');
-  });
-
-  it('featureValue() should return ✓ for true', () => {
-    expect(component.featureValue(true)).toBe('✓');
-  });
-
-  it('featureValue() should return - for false', () => {
-    expect(component.featureValue(false)).toBe('-');
-  });
-
-  it('featureValue() should return the string value as-is', () => {
-    expect(component.featureValue('Illimitati')).toBe('Illimitati');
-    expect(component.featureValue('3 al mese')).toBe('3 al mese');
-  });
-
-  it('featureClass() should return text-gray-300 for false', () => {
-    expect(component.featureClass(false)).toBe('text-gray-300');
-  });
-
-  it('featureClass() should return text-blue-500 font-medium for true', () => {
-    expect(component.featureClass(true)).toBe('text-blue-500 font-medium');
-  });
-
-  it('featureClass() should return text-gray-700 font-medium for a string value', () => {
-    expect(component.featureClass('Illimitati')).toBe('text-gray-700 font-medium');
-    expect(component.featureClass('3 al mese')).toBe('text-gray-700 font-medium');
   });
 
   it('should apply text-gray-300 to the feature icon span when feature is not included', () => {

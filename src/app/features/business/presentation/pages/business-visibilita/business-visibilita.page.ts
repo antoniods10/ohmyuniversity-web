@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { LucideListChecks } from '@lucide/angular';
 import { BusinessCtaComponent } from '../../components/business-cta/business-cta.component';
 import { BusinessHeroComponent } from '../../components/business-hero/business-hero.component';
-import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
+import { CustomBadgeComponent, BadgeVariant } from '@ui/custom-badge/custom-badge.component';
 import { CardSimpleComponent, CardStatusComponent } from '@ui/custom-card/card-variants.component';
 import {
   BUSINESS_TARGETING_OPTIONS,
@@ -11,7 +11,6 @@ import {
   PLAN_LABELS,
   APP,
 } from '@shared/constants';
-import { BadgeVariant } from '@ui/custom-badge/custom-badge.component';
 
 @Component({
   selector: 'app-business-visibilita-page',
@@ -26,6 +25,9 @@ import { BadgeVariant } from '@ui/custom-badge/custom-badge.component';
   templateUrl: './business-visibilita.page.html',
 })
 export class BusinessVisibilitaPage {
+  planColor(planColor: any) {
+    throw new Error('Method not implemented.');
+  }
   readonly APP = APP;
 
   readonly iconStep = LucideListChecks;
