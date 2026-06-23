@@ -1,0 +1,193 @@
+<div class="flex flex-col gap-4">
+  <!-- Corso principale -->
+  <app-custom-card variant="default" padding="md" shadow="sm" [bordered]="true" radius="lg">
+    <div class="flex items-center gap-3 mb-4">
+      <div
+        class="flex items-center justify-center w-9 h-9 rounded-lg shrink-0"
+        style="background: var(--color-primary-light)">
+        <svg
+          [lucideIcon]="iconGraduationCap"
+          [size]="16"
+          style="color: var(--color-primary-dark)"
+          aria-hidden="true"></svg>
+      </div>
+      <div class="flex-1">
+        <h2 appText variant="h6" class="m-0">Corso di studi</h2>
+      </div>
+      <app-custom-badge
+        [label]="val(info().statiStuDes)"
+        [variant]="statoVariant(info().staStuCod)"
+        size="sm"
+        shape="pill"
+        [dot]="true" />
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="flex flex-col gap-0.5 sm:col-span-2">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Nome corso</span
+        >
+        <span class="text-[0.9rem] font-semibold" style="color: var(--color-neutral-900)">
+          {{ val(info().cdsDes) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Codice corso</span
+        >
+        <span class="text-[0.9rem] font-mono" style="color: var(--color-neutral-900)">
+          {{ val(info().cdsCod) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Tipo corso</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(info().tipoCorsoDes) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Anno di corso</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(info().annoCorso) }}°
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Anno accademico</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(info().aaIscrId) }}/{{ info().aaIscrId + 1 }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Matricola</span
+        >
+        <span class="text-[0.9rem] font-mono" style="color: var(--color-neutral-900)">
+          {{ val(info().matricola) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Profilo studente</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(info().profstuDes) }}
+        </span>
+      </div>
+      @if (info().ptFlg === 1) {
+        <div class="flex flex-col gap-0.5">
+          <span
+            class="text-[0.72rem] font-semibold uppercase tracking-wide"
+            style="color: var(--color-neutral-400)"
+            >Regime</span
+          >
+          <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">Part-time</span>
+        </div>
+      }
+    </div>
+  </app-custom-card>
+
+  <!-- Dipartimento e sede -->
+  <app-custom-card variant="default" padding="md" shadow="sm" [bordered]="true" radius="lg">
+    <div class="flex items-center gap-3 mb-4">
+      <div
+        class="flex items-center justify-center w-9 h-9 rounded-lg shrink-0"
+        style="background: var(--color-primary-light)">
+        <svg
+          [lucideIcon]="iconBuilding"
+          [size]="16"
+          style="color: var(--color-primary-dark)"
+          aria-hidden="true"></svg>
+      </div>
+      <h2 appText variant="h6" class="m-0">Struttura</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="flex flex-col gap-0.5 sm:col-span-2">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Dipartimento</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(info().facDes) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5 sm:col-span-2">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Sede</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(info().sediDes) }}
+        </span>
+      </div>
+    </div>
+  </app-custom-card>
+
+  <!-- Date -->
+  <app-custom-card variant="default" padding="md" shadow="sm" [bordered]="true" radius="lg">
+    <div class="flex items-center gap-3 mb-4">
+      <div
+        class="flex items-center justify-center w-9 h-9 rounded-lg shrink-0"
+        style="background: var(--color-primary-light)">
+        <svg
+          [lucideIcon]="iconCalendar"
+          [size]="16"
+          style="color: var(--color-primary-dark)"
+          aria-hidden="true"></svg>
+      </div>
+      <h2 appText variant="h6" class="m-0">Date carriera</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Data immatricolazione</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ formatData(info().dataImm) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Data iscrizione anno corrente</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ formatData(info().dataIscr) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Fine carriera prevista</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ formatData(info().dataFineCarriera) }}
+        </span>
+      </div>
+    </div>
+  </app-custom-card>
+</div>

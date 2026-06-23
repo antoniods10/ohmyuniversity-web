@@ -1,0 +1,24 @@
+<app-dashboard-container>
+  <app-dashboard-header
+    title="Appelli & Questionari"
+    description="Prenota i tuoi esami e compila i questionari di valutazione della didattica." />
+
+  <app-custom-tabs
+    [tabs]="tabs"
+    [activeTab]="activeTab()"
+    tabStyle="pill"
+    size="md"
+    (tabChange)="onTabChange($event)" />
+
+  @if (activeTab() === 'exams') {
+    <app-exam-list
+      [exams]="exams()"
+      [loading]="examsLoading()"
+      [error]="examsError()"
+      (bookClicked)="onBookExam($event)" />
+  }
+
+  @if (activeTab() === 'questionnaires') {
+    <app-questionnaire-list />
+  }
+</app-dashboard-container>

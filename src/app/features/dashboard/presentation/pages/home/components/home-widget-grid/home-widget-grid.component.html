@@ -1,0 +1,90 @@
+<div
+  class="grid gap-3"
+  [style.grid-template-columns]="'repeat(' + GRID_COLS + ', minmax(0, 1fr))'"
+  [style.grid-auto-rows]="'120px'">
+  @for (widget of placedWidgets; track widget.instanceId) {
+    <div
+      class="relative transition-all"
+      [class.animate-wiggle]="isEditMode"
+      [style.grid-column]="getGridColumn(widget)"
+      [style.grid-row]="getGridRow(widget)"
+      (contextmenu)="$event.preventDefault(); editModeToggled.emit()">
+      @switch (widget.widgetId) {
+        @case ('career-arithmetic-avg') {
+          <app-career-arithmetic-avg-widget [size]="widget.size" />
+        }
+        @case ('career-base') {
+          <app-career-base-widget [size]="widget.size" />
+        }
+        @case ('career-cfu') {
+          <app-career-cfu-widget [size]="widget.size" />
+        }
+        @case ('career-overview') {
+          <app-career-overview-widget [size]="widget.size" />
+        }
+        @case ('career-weighted-avg') {
+          <app-career-weighted-avg-widget [size]="widget.size" />
+        }
+        @case ('portals-esse3') {
+          <app-portals-esse3-widget [size]="widget.size" />
+        }
+        @case ('portals-moodle') {
+          <app-portals-moodle-widget [size]="widget.size" />
+        }
+        @case ('portals-mail') {
+          <app-portals-mail-widget [size]="widget.size" />
+        }
+        @case ('portals-website') {
+          <app-portals-website-widget [size]="widget.size" />
+        }
+        @case ('portals-overview') {
+          <app-portals-overview-widget [size]="widget.size" />
+        }
+        @case ('schedules-overview') {
+          <app-schedules-overview-widget [size]="widget.size" />
+        }
+        @case ('contacts-teachers') {
+          <app-contacts-teachers-widget [size]="widget.size" />
+        }
+        @case ('contacts-useful') {
+          <app-contacts-useful-widget [size]="widget.size" />
+        }
+        @case ('secretariat-grants') {
+          <app-secretariat-grants-widget [size]="widget.size" />
+        }
+        @case ('secretariat-forms') {
+          <app-secretariat-forms-widget [size]="widget.size" />
+        }
+        @case ('secretariat-calls') {
+          <app-secretariat-calls-widget [size]="widget.size" />
+        }
+        @case ('secretariat-taxes') {
+          <app-secretariat-taxes-widget [size]="widget.size" />
+        }
+        @case ('secretariat-overview') {
+          <app-secretariat-overview-widget [size]="widget.size" />
+        }
+        @case ('agenda-today') {
+          <app-agenda-today-widget [size]="widget.size" />
+        }
+        @case ('agenda-monthly') {
+          <app-agenda-monthly-widget [size]="widget.size" />
+        }
+        @default {
+          <div
+            class="flex items-center justify-center h-full rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50">
+            <p class="text-xs text-gray-400">Widget in arrivo</p>
+          </div>
+        }
+      }
+
+      @if (isEditMode) {
+        <button
+          class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center shadow-md hover:bg-red-600 transition-colors z-10"
+          (click)="widgetRemoved.emit(widget.instanceId)">
+          <svg [lucideIcon]="lucideX" [size]="12"></svg>
+        </button>
+      }
+    </div>
+  }
+</div>

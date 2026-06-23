@@ -1,460 +1,154 @@
 <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
   <!-- Header -->
   <div class="mb-10">
-    <p class="text-xs font-medium uppercase tracking-wide text-gray-400">Documento legale</p>
-    <h1 class="mt-2 text-3xl font-bold text-gray-900">Cookie Policy</h1>
-    <p class="mt-2 text-sm text-gray-500">
+    <p appText class="text-xs font-medium uppercase tracking-wide text-gray-400">
+      Documento legale
+    </p>
+    <h1 appText class="mt-2 text-3xl font-bold text-gray-900">Cookie Policy</h1>
+    <p appText class="mt-2 text-sm text-gray-500">
       Ultimo aggiornamento: <span class="font-medium">{{ lastUpdated }}</span>
     </p>
-    <div class="mt-4 rounded-lg border border-blue-100 bg-blue-50 p-4 text-sm text-blue-800">
-      Questa policy è redatta ai sensi dell'art. 122 del D.Lgs. 196/2003, del Provvedimento del
-      Garante dell'8 maggio 2014 e delle Linee Guida cookie del 10 giugno 2021, nonché del GDPR UE
-      2016/679.
-    </div>
+    <app-card-status
+      [icon]="iconScale"
+      statusVariant="info"
+      [description]="intro.legalBasis"
+      padding="md"
+      shadow="none"
+      class="mt-4 block" />
   </div>
 
-  <div class="space-y-10 text-sm leading-relaxed text-gray-600">
+  <div class="space-y-12 text-sm leading-relaxed text-gray-600">
     <!-- 1 -->
     <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">1. Cosa sono i cookie</h2>
-      <p>
-        I cookie sono piccoli file di testo che un sito web invia al browser dell'utente durante la
-        navigazione. Vengono memorizzati sul dispositivo e restituiti al sito nelle visite
-        successive, permettendo di riconoscere il browser e ricordare determinate informazioni.
-      </p>
-      <p class="mt-3">
-        OhMyUniversity utilizza un numero limitato di cookie, selezionati in base al principio di
-        minimizzazione dei dati. Non utilizziamo cookie di profilazione commerciale né cedere dati a
-        reti pubblicitarie di terze parti.
-      </p>
+      <h2 appText class="mb-3 text-base font-bold text-gray-900">1. Cosa sono i cookie</h2>
+      <p appText>{{ intro.whatAreCookies }}</p>
+      <p appText class="mt-3">{{ intro.minimization }}</p>
     </section>
 
     <!-- 2 -->
     <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">2. Tipologie di cookie utilizzati</h2>
+      <h2 appText class="mb-3 text-base font-bold text-gray-900">
+        2. Tipologie di cookie utilizzati
+      </h2>
 
-      <!-- Tecnici -->
-      <div class="mb-6">
-        <h3 class="mb-2 font-semibold text-gray-800">
+      <!-- Technical -->
+      <div class="mb-8">
+        <h3 appText class="mb-2 font-semibold text-gray-800">
           2.1 Cookie tecnici - strettamente necessari
         </h3>
-        <p class="mb-4 text-gray-500">
-          Questi cookie sono indispensabili per il funzionamento della piattaforma. Non richiedono
-          il consenso dell'utente ai sensi dell'art. 122 comma 1 D.Lgs. 196/2003.
-        </p>
+        <p appText class="mb-4 text-gray-500">{{ technicalIntro }}</p>
         <div class="overflow-hidden rounded-xl border border-gray-200">
           <table class="w-full text-sm">
             <thead class="bg-gray-50">
               <tr>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">Nome</th>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">Scopo</th>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">Durata</th>
+                <th appText class="px-4 py-3 text-left text-xs font-semibold text-gray-500">
+                  Nome
+                </th>
+                <th appText class="px-4 py-3 text-left text-xs font-semibold text-gray-500">
+                  Scopo
+                </th>
+                <th appText class="px-4 py-3 text-left text-xs font-semibold text-gray-500">
+                  Durata
+                </th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
-              <tr>
-                <td class="px-4 py-3 font-mono text-xs text-gray-700">omu_session</td>
-                <td class="px-4 py-3 text-gray-600">
-                  Mantiene la sessione autenticata dell'utente dopo il login SSO, evitando di
-                  richiedere nuovamente le credenziali ad ogni pagina
-                </td>
-                <td class="px-4 py-3 text-gray-500">
-                  Sessione (eliminato alla chiusura del browser o al logout)
-                </td>
-              </tr>
-              <tr>
-                <td class="px-4 py-3 font-mono text-xs text-gray-700">omu_csrf</td>
-                <td class="px-4 py-3 text-gray-600">
-                  Token di sicurezza per la protezione contro attacchi Cross-Site Request Forgery
-                  (CSRF)
-                </td>
-                <td class="px-4 py-3 text-gray-500">Sessione</td>
-              </tr>
-              <tr>
-                <td class="px-4 py-3 font-mono text-xs text-gray-700">omu_prefs</td>
-                <td class="px-4 py-3 text-gray-600">
-                  Memorizza le preferenze dell'interfaccia selezionate dall'utente (tema
-                  chiaro/scuro, lingua)
-                </td>
-                <td class="px-4 py-3 text-gray-500">12 mesi</td>
-              </tr>
+              @for (cookie of technicalCookies; track cookie.name) {
+                <tr>
+                  <td appText class="px-4 py-3 font-mono text-xs text-gray-700">
+                    {{ cookie.name }}
+                  </td>
+                  <td appText class="px-4 py-3 text-gray-600">{{ cookie.purpose }}</td>
+                  <td appText class="px-4 py-3 text-gray-500">{{ cookie.duration }}</td>
+                </tr>
+              }
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Analitici -->
-      <div class="mb-6">
-        <h3 class="mb-2 font-semibold text-gray-800">2.2 Cookie analitici - anonimizzati</h3>
-        <p class="mb-4 text-gray-500">
-          Utilizziamo cookie analitici in forma aggregata e anonimizzata per capire come gli utenti
-          interagiscono con la piattaforma e migliorarne l'usabilità. L'indirizzo IP viene
-          anonimizzato prima di qualsiasi elaborazione. Questi cookie non consentono
-          l'identificazione del singolo utente.
-        </p>
+      <!-- Analitics -->
+      <div class="mb-8">
+        <h3 appText class="mb-2 font-semibold text-gray-800">
+          2.2 Cookie analitici - anonimizzati
+        </h3>
+        <p appText class="mb-4 text-gray-500">{{ analyticsIntro }}</p>
         <div class="overflow-hidden rounded-xl border border-gray-200">
           <table class="w-full text-sm">
             <thead class="bg-gray-50">
               <tr>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">Nome</th>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">Scopo</th>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">Durata</th>
+                <th appText class="px-4 py-3 text-left text-xs font-semibold text-gray-500">
+                  Nome
+                </th>
+                <th appText class="px-4 py-3 text-left text-xs font-semibold text-gray-500">
+                  Scopo
+                </th>
+                <th appText class="px-4 py-3 text-left text-xs font-semibold text-gray-500">
+                  Durata
+                </th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
-              <tr>
-                <td class="px-4 py-3 font-mono text-xs text-gray-700">omu_analytics</td>
-                <td class="px-4 py-3 text-gray-600">
-                  Raccoglie dati anonimi su pagine visitate, durata della sessione e percorsi di
-                  navigazione per analisi aggregate interne
-                </td>
-                <td class="px-4 py-3 text-gray-500">6 mesi</td>
-              </tr>
+              @for (cookie of analyticsCookies; track cookie.name) {
+                <tr>
+                  <td appText class="px-4 py-3 font-mono text-xs text-gray-700">
+                    {{ cookie.name }}
+                  </td>
+                  <td appText class="px-4 py-3 text-gray-600">{{ cookie.purpose }}</td>
+                  <td appText class="px-4 py-3 text-gray-500">{{ cookie.duration }}</td>
+                </tr>
+              }
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Non utilizzati -->
-      <div class="rounded-xl border border-gray-100 bg-gray-50 p-5">
-        <p class="font-semibold text-gray-800">Cookie che NON utilizziamo</p>
-        <ul class="mt-3 space-y-1.5 pl-4">
-          <li class="flex items-start gap-2">
-            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-400"></span>
-            Cookie di profilazione o targeting pubblicitario
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-400"></span>
-            Cookie di social network (Facebook Pixel, LinkedIn Insight Tag, ecc.)
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-400"></span>
-            Cookie di terze parti per remarketing o retargeting
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-400"></span>
-            Fingerprinting del dispositivo o tecniche di tracciamento alternative
-          </li>
-        </ul>
-      </div>
+      <!-- Not used -->
+      <app-custom-card variant="error" padding="lg" shadow="none" [accentBar]="true">
+        <p appText class="font-semibold text-gray-800">Cookie che NON utilizziamo</p>
+        <div class="mt-3 flex flex-col gap-2">
+          @for (item of notUsed; track item) {
+            <div class="flex items-start gap-2.5">
+              <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-400"></span>
+              <p appText class="text-sm text-gray-600">{{ item }}</p>
+            </div>
+          }
+        </div>
+      </app-custom-card>
     </section>
 
     <!-- 3 -->
     <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">3. Gestione e consenso</h2>
-      <p>
-        I cookie tecnici strettamente necessari (sessione, CSRF, preferenze) non richiedono consenso
-        e non possono essere disabilitati senza compromettere il funzionamento della piattaforma. I
-        cookie analitici anonimizzati sono attivi per impostazione predefinita, ma puoi disattivarli
-        in qualsiasi momento dalle impostazioni del tuo account.
-      </p>
-      <p class="mt-3">
-        Puoi inoltre gestire o eliminare i cookie direttamente dalle impostazioni del tuo browser.
-        Di seguito i link alle istruzioni per i browser più comuni:
-      </p>
-      <ul class="mt-3 space-y-1.5 pl-4">
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span
-          ><a
-            href="https://support.google.com/chrome/answer/95647"
-            target="_blank"
-            rel="noopener"
-            class="text-blue-600 hover:underline"
-            >Google Chrome</a
-          >
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span
-          ><a
-            href="https://support.mozilla.org/it/kb/protezione-antitracciamento-avanzata-firefox"
-            target="_blank"
-            rel="noopener"
-            class="text-blue-600 hover:underline"
-            >Mozilla Firefox</a
-          >
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span
-          ><a
-            href="https://support.apple.com/it-it/guide/safari/sfri11471/mac"
-            target="_blank"
-            rel="noopener"
-            class="text-blue-600 hover:underline"
-            >Apple Safari</a
-          >
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span
-          ><a
-            href="https://support.microsoft.com/it-it/microsoft-edge/eliminare-i-cookie-in-microsoft-edge"
-            target="_blank"
-            rel="noopener"
-            class="text-blue-600 hover:underline"
-            >Microsoft Edge</a
-          >
-        </li>
-      </ul>
-      <p class="mt-3 text-xs text-gray-400">
-        Nota: disabilitare i cookie tecnici di sessione impedirà l'accesso alle funzionalità
-        autenticate della piattaforma.
-      </p>
+      <h2 appText class="mb-3 text-base font-bold text-gray-900">3. Gestione e consenso</h2>
+      <p appText>{{ management.consentExplanation }}</p>
+      <p appText class="mt-3">{{ management.browserIntro }}</p>
+      <div class="mt-3 flex flex-col gap-2">
+        @for (browser of browserLinks; track browser.label) {
+          <app-custom-link mode="external" [href]="browser.url" [label]="browser.label" size="sm" />
+        }
+      </div>
+      <p appText class="mt-3 text-xs text-gray-400">{{ management.sessionWarning }}</p>
     </section>
 
     <!-- 4 -->
     <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">4. Contatti</h2>
-      <p>
+      <h2 appText class="mb-3 text-base font-bold text-gray-900">4. Contatti</h2>
+      <p appText>
         Per qualsiasi domanda relativa all'uso dei cookie puoi scriverci a
-        <a href="mailto:{{ contactEmail }}" class="text-blue-600 hover:underline">{{
-          contactEmail
-        }}</a
-        >.
+        <app-custom-email [email]="contactEmail" size="sm" />.
       </p>
     </section>
 
-    <!-- Link correlati -->
-    <div class="rounded-xl border border-gray-100 bg-gray-50 p-5">
-      <p class="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-400">
+    <!-- Related links -->
+    <app-custom-card variant="default" padding="lg" shadow="none">
+      <p appText class="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-400">
         Documenti correlati
       </p>
-      <div class="flex flex-wrap gap-4">
-        <a routerLink="/privacy-policy" class="text-sm text-blue-600 hover:underline"
-          >Privacy Policy</a
-        >
-        <a routerLink="/termini-condizioni" class="text-sm text-blue-600 hover:underline"
-          >Termini & Condizioni</a
-        >
+      <div class="flex flex-wrap gap-5">
+        @for (doc of relatedDocs; track doc.label) {
+          <app-custom-link mode="internal" [href]="doc.url" [label]="doc.label" size="sm" />
+        }
       </div>
-    </div>
-  </div>
-</div>
-<div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
-  <!-- Header -->
-  <div class="mb-10">
-    <p class="text-xs font-medium uppercase tracking-wide text-gray-400">Documento legale</p>
-    <h1 class="mt-2 text-3xl font-bold text-gray-900">Cookie Policy</h1>
-    <p class="mt-2 text-sm text-gray-500">
-      Ultimo aggiornamento: <span class="font-medium">{{ lastUpdated }}</span>
-    </p>
-    <div class="mt-4 rounded-lg border border-blue-100 bg-blue-50 p-4 text-sm text-blue-800">
-      Questa policy è redatta ai sensi dell'art. 122 del D.Lgs. 196/2003, del Provvedimento del
-      Garante dell'8 maggio 2014 e delle Linee Guida cookie del 10 giugno 2021, nonché del GDPR UE
-      2016/679.
-    </div>
-  </div>
-
-  <div class="space-y-10 text-sm leading-relaxed text-gray-600">
-    <!-- 1 -->
-    <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">1. Cosa sono i cookie</h2>
-      <p>
-        I cookie sono piccoli file di testo che un sito web invia al browser dell'utente durante la
-        navigazione. Vengono memorizzati sul dispositivo e restituiti al sito nelle visite
-        successive, permettendo di riconoscere il browser e ricordare determinate informazioni.
-      </p>
-      <p class="mt-3">
-        OhMyUniversity utilizza un numero limitato di cookie, selezionati in base al principio di
-        minimizzazione dei dati. Non utilizziamo cookie di profilazione commerciale né cedere dati a
-        reti pubblicitarie di terze parti.
-      </p>
-    </section>
-
-    <!-- 2 -->
-    <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">2. Tipologie di cookie utilizzati</h2>
-
-      <!-- Tecnici -->
-      <div class="mb-6">
-        <h3 class="mb-2 font-semibold text-gray-800">
-          2.1 Cookie tecnici - strettamente necessari
-        </h3>
-        <p class="mb-4 text-gray-500">
-          Questi cookie sono indispensabili per il funzionamento della piattaforma. Non richiedono
-          il consenso dell'utente ai sensi dell'art. 122 comma 1 D.Lgs. 196/2003.
-        </p>
-        <div class="overflow-hidden rounded-xl border border-gray-200">
-          <table class="w-full text-sm">
-            <thead class="bg-gray-50">
-              <tr>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">Nome</th>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">Scopo</th>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">Durata</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-              <tr>
-                <td class="px-4 py-3 font-mono text-xs text-gray-700">omu_session</td>
-                <td class="px-4 py-3 text-gray-600">
-                  Mantiene la sessione autenticata dell'utente dopo il login SSO, evitando di
-                  richiedere nuovamente le credenziali ad ogni pagina
-                </td>
-                <td class="px-4 py-3 text-gray-500">
-                  Sessione (eliminato alla chiusura del browser o al logout)
-                </td>
-              </tr>
-              <tr>
-                <td class="px-4 py-3 font-mono text-xs text-gray-700">omu_csrf</td>
-                <td class="px-4 py-3 text-gray-600">
-                  Token di sicurezza per la protezione contro attacchi Cross-Site Request Forgery
-                  (CSRF)
-                </td>
-                <td class="px-4 py-3 text-gray-500">Sessione</td>
-              </tr>
-              <tr>
-                <td class="px-4 py-3 font-mono text-xs text-gray-700">omu_prefs</td>
-                <td class="px-4 py-3 text-gray-600">
-                  Memorizza le preferenze dell'interfaccia selezionate dall'utente (tema
-                  chiaro/scuro, lingua)
-                </td>
-                <td class="px-4 py-3 text-gray-500">12 mesi</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Analitici -->
-      <div class="mb-6">
-        <h3 class="mb-2 font-semibold text-gray-800">2.2 Cookie analitici - anonimizzati</h3>
-        <p class="mb-4 text-gray-500">
-          Utilizziamo cookie analitici in forma aggregata e anonimizzata per capire come gli utenti
-          interagiscono con la piattaforma e migliorarne l'usabilità. L'indirizzo IP viene
-          anonimizzato prima di qualsiasi elaborazione. Questi cookie non consentono
-          l'identificazione del singolo utente.
-        </p>
-        <div class="overflow-hidden rounded-xl border border-gray-200">
-          <table class="w-full text-sm">
-            <thead class="bg-gray-50">
-              <tr>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">Nome</th>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">Scopo</th>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500">Durata</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-              <tr>
-                <td class="px-4 py-3 font-mono text-xs text-gray-700">omu_analytics</td>
-                <td class="px-4 py-3 text-gray-600">
-                  Raccoglie dati anonimi su pagine visitate, durata della sessione e percorsi di
-                  navigazione per analisi aggregate interne
-                </td>
-                <td class="px-4 py-3 text-gray-500">6 mesi</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Non utilizzati -->
-      <div class="rounded-xl border border-gray-100 bg-gray-50 p-5">
-        <p class="font-semibold text-gray-800">Cookie che NON utilizziamo</p>
-        <ul class="mt-3 space-y-1.5 pl-4">
-          <li class="flex items-start gap-2">
-            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-400"></span>
-            Cookie di profilazione o targeting pubblicitario
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-400"></span>
-            Cookie di social network (Facebook Pixel, LinkedIn Insight Tag, ecc.)
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-400"></span>
-            Cookie di terze parti per remarketing o retargeting
-          </li>
-          <li class="flex items-start gap-2">
-            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-400"></span>
-            Fingerprinting del dispositivo o tecniche di tracciamento alternative
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- 3 -->
-    <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">3. Gestione e consenso</h2>
-      <p>
-        I cookie tecnici strettamente necessari (sessione, CSRF, preferenze) non richiedono consenso
-        e non possono essere disabilitati senza compromettere il funzionamento della piattaforma. I
-        cookie analitici anonimizzati sono attivi per impostazione predefinita, ma puoi disattivarli
-        in qualsiasi momento dalle impostazioni del tuo account.
-      </p>
-      <p class="mt-3">
-        Puoi inoltre gestire o eliminare i cookie direttamente dalle impostazioni del tuo browser.
-        Di seguito i link alle istruzioni per i browser più comuni:
-      </p>
-      <ul class="mt-3 space-y-1.5 pl-4">
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span
-          ><a
-            href="https://support.google.com/chrome/answer/95647"
-            target="_blank"
-            rel="noopener"
-            class="text-blue-600 hover:underline"
-            >Google Chrome</a
-          >
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span
-          ><a
-            href="https://support.mozilla.org/it/kb/protezione-antitracciamento-avanzata-firefox"
-            target="_blank"
-            rel="noopener"
-            class="text-blue-600 hover:underline"
-            >Mozilla Firefox</a
-          >
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span
-          ><a
-            href="https://support.apple.com/it-it/guide/safari/sfri11471/mac"
-            target="_blank"
-            rel="noopener"
-            class="text-blue-600 hover:underline"
-            >Apple Safari</a
-          >
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span
-          ><a
-            href="https://support.microsoft.com/it-it/microsoft-edge/eliminare-i-cookie-in-microsoft-edge"
-            target="_blank"
-            rel="noopener"
-            class="text-blue-600 hover:underline"
-            >Microsoft Edge</a
-          >
-        </li>
-      </ul>
-      <p class="mt-3 text-xs text-gray-400">
-        Nota: disabilitare i cookie tecnici di sessione impedirà l'accesso alle funzionalità
-        autenticate della piattaforma.
-      </p>
-    </section>
-
-    <!-- 4 -->
-    <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">4. Contatti</h2>
-      <p>
-        Per qualsiasi domanda relativa all'uso dei cookie puoi scriverci a
-        <a href="mailto:{{ contactEmail }}" class="text-blue-600 hover:underline">{{
-          contactEmail
-        }}</a
-        >.
-      </p>
-    </section>
-
-    <!-- Link correlati -->
-    <div class="rounded-xl border border-gray-100 bg-gray-50 p-5">
-      <p class="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-400">
-        Documenti correlati
-      </p>
-      <div class="flex flex-wrap gap-4">
-        <a routerLink="/privacy-policy" class="text-sm text-blue-600 hover:underline"
-          >Privacy Policy</a
-        >
-        <a routerLink="/termini-condizioni" class="text-sm text-blue-600 hover:underline"
-          >Termini & Condizioni</a
-        >
-      </div>
-    </div>
+    </app-custom-card>
   </div>
 </div>

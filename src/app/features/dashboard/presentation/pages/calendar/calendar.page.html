@@ -1,0 +1,72 @@
+<app-dashboard-container>
+  <app-dashboard-header title="Agenda" description="I tuoi impegni, esami e promemoria" />
+
+  @if (currentView() !== 'year') {
+    <div class="mt-4 flex items-center justify-between">
+      <app-calendar-view-header
+        [currentView]="currentView()"
+        [focusedDate]="focusedDate()"
+        (back)="goBack()" />
+    </div>
+  }
+
+  @switch (currentView()) {
+    @case ('day') {
+      <app-calendar-day-strip
+        [selectedDate]="focusedDate()"
+        [events]="events()"
+        (dateSelected)="selectDate($event)"
+        (weekChanged)="selectDate($event)" />
+
+      <div class="mt-2">
+        <app-calendar-timeline
+          [eventLayouts]="eventLayouts()"
+          (eventSelected)="onEventSelected($event)" />
+      </div>
+    }
+    @case ('month') {
+      <div class="mt-4">
+        <app-calendar-month-view
+          [focusedDate]="focusedDate()"
+          [events]="events()"
+          (daySelected)="onMonthDaySelected($event)"
+          (monthChanged)="selectDate($event)" />
+      </div>
+    }
+    @case ('year') {
+      <div class="mt-4">
+        <app-calendar-year-view
+          [focusedDate]="focusedDate()"
+          [events]="events()"
+          (monthSelected)="onYearMonthSelected($event)"
+          (yearChanged)="selectDate($event)" />
+      </div>
+    }
+  }
+
+  <div class="fixed bottom-20 right-6 z-50">
+    <app-custom-button
+      [icon]="iconAdd"
+      [iconOnly]="true"
+      ariaLabel="Nuovo elemento"
+      variant="primary"
+      size="lg"
+      rounded="full"
+      (clicked)="openCreateForm()" />
+  </div>
+
+  <app-calendar-event-form
+    [isOpen]="isFormOpen()"
+    [event]="eventBeingEdited()"
+    [defaultDate]="focusedDate()"
+    (created)="onEventCreated($event)"
+    (updated)="onEventUpdated($event)"
+    (cancelled)="closeForm()" />
+
+  <app-calendar-event-detail
+    [isOpen]="isDetailOpen()"
+    [event]="eventBeingViewed()"
+    (edit)="onDetailEditRequested($event)"
+    (deleted)="onDetailDeleteConfirmed($event)"
+    (closed)="closeDetail()" />
+</app-dashboard-container>

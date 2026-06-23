@@ -1,10 +1,7 @@
+import { RichOption } from '@shared/types';
+
 export type UserType = 'academic' | 'staff' | 'organization' | null;
 export type LoginStep = 1 | 2;
 
-export interface UserTypeOption {
-  id: UserType;
-  label: string;
-  sublabel: string;
-  description: string;
-  icon: string;
-}
+/** Selectable user type option in the login wizard */
+export type UserTypeOption = RichOption<UserType>;

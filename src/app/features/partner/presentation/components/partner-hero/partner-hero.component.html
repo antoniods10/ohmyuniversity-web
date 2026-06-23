@@ -1,0 +1,39 @@
+<section class="bg-white px-4 pt-20 pb-16 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-4xl text-center">
+    <app-custom-badge
+      label="Per aziende, collettivi e istituzioni"
+      variant="info"
+      shape="pill"
+      size="sm" />
+
+    <h1 appText class="mt-5 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+      Raggiungi 120.000 studenti<br class="hidden sm:block" />
+      <span class="text-blue-600">nel contesto giusto</span>
+    </h1>
+    <p appText class="mx-auto mt-6 max-w-2xl text-lg text-gray-500">
+      {{ APP.name }} connette la tua organizzazione con studenti universitari italiani mentre
+      gestiscono attivamente la loro carriera. Targeting reale, audience verificata, zero rumore.
+    </p>
+
+    <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+      <app-custom-button
+        label="Inizia la prova gratuita"
+        mode="link-internal"
+        href="/contatti?tab=organization"
+        variant="primary"
+        size="lg" />
+      <app-custom-button
+        label="Vedi i piani"
+        [icon]="iconArrowRight"
+        iconPosition="right"
+        mode="link-internal"
+        href="/business/prezzi"
+        variant="outline"
+        size="lg" />
+    </div>
+
+    <p appText class="mt-4 text-xs text-gray-400">
+      14 giorni di prova gratuita · Nessuna carta di credito · Disdici quando vuoi
+    </p>
+  </div>
+</section>

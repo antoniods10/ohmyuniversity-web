@@ -1,6 +1,15 @@
+import { OptionBase } from '@shared/types';
+
+/** Represents whether a student has passed an exam or still needs to take it. */
 export type ExamStatus = 'PASSED' | 'TO_TAKE';
-export type CourseType = 'MANDATORY' | 'ELECTIVE';
-export type ExamFilter = 'ALL' | 'PASSED' | 'TO_TAKE' | 'ELECTIVE';
+
+/** Distinguishes between mandatory curriculum exams and freely chosen electives. */
+export type ExamCategory = 'MANDATORY' | 'ELECTIVE';
+
+/** Filter values available in the exam list view. */
+export type ExamFilter = 'ALL' | 'PASSED' | 'TO_TAKE';
+
+/** Direction of a statistical trend over time. */
 export type TrendDirection = 'up' | 'down' | 'flat';
 
 /** Exam modality: written test or oral interview. */
@@ -18,21 +27,48 @@ export type SessionFilter = 'ALL' | AcademicSession;
 /** Filter applied to the exam modality column. */
 export type TypeFilter = 'ALL' | SessionType;
 
+/**
+ * Teaching period, stored in English internally for scalability/i18n.
+ * Mapped to Italian labels in the UI via TEACHING_PERIOD_LABELS.
+ */
+export type TeachingPeriod = 'FIRST_SEMESTER' | 'SECOND_SEMESTER' | 'ANNUAL';
+
+/**
+ * Attendance requirement, stored in English internally.
+ * Mapped to Italian labels in the UI via ATTENDANCE_LABELS.
+ */
+export type AttendanceType = 'MANDATORY' | 'NOT_MANDATORY';
+
+/** A single CFU-by-CFU program breakdown entry. */
+export interface CfuBreakdownItem {
+  cfuNumber: number;
+  description: string;
+}
+
+/** A single exam entry in the student's academic record. */
 export interface Exam {
   courseCode: string;
   courseName: string;
-  cfu: number;
-  grade: string;
-  status: ExamStatus;
-  type: CourseType;
   academicYear: number;
+  cfu: number;
+  status: ExamStatus;
+  grade: string;
+  simulatedGrade?: number;
+  category: ExamCategory;
+  language: string;
+  period: TeachingPeriod;
+  durationHours: number;
+  attendance: AttendanceType;
+  scientificSector: string;
+  location: string;
+  cfuBreakdown: CfuBreakdownItem[];
+  prerequisites: string[];
 }
 
-export interface FilterOption {
-  id: ExamFilter;
-  label: string;
-}
+/** Descriptor for a selectable exam list filter option. */
+export type FilterOption = OptionBase<ExamFilter>;
 
+/** A group of exams belonging to the same academic year, with aggregated stats. */
 export interface ExamGroup {
   year: number;
   yearLabel: string;
@@ -40,6 +76,7 @@ export interface ExamGroup {
   passedCount: number;
 }
 
+/** A single data point rendered in a trend or progress chart. */
 export interface ChartPoint {
   value: number;
   isLast: boolean;
@@ -62,13 +99,9 @@ export interface ExamSlot {
 }
 
 /** Descriptor for session filter tabs. */
-export interface SessionFilterOption {
-  id: SessionFilter;
-  label: string;
-}
+export type SessionFilterOption = OptionBase<SessionFilter>;
 
 /** Descriptor for exam-type filter tabs. */
-export interface TypeFilterOption {
-  id: TypeFilter;
-  label: string;
-}
+export type TypeFilterOption = OptionBase<TypeFilter>;
+
+export type GradeValue = number | 'L';

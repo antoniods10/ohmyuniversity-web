@@ -1,28 +1,49 @@
-import { vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { TopicVitaComponent } from './topic-vita.component';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
-import { By } from '@angular/platform-browser';
-import { ComponentRef } from '@angular/core';
-import { VITA_CONSIGLI_ORARI, VITA_CONSIGLI_STUDIO, VITA_FUORISEDE, VITA_TEMPO_SLICES } from '@constants';
+import { OrientationStateService } from '@orientation/application/state/orientation.state';
+import { ToastService } from '@ui/custom-toast/toast.service';
+import { VITA_TIMETABLE_TIPS, VITA_STUDY_TIPS } from '@constants';
+
+if (!Element.prototype.scrollIntoView) {
+  Element.prototype.scrollIntoView = function (): void {};
+}
 
 describe('TopicVitaComponent', () => {
   let component: TopicVitaComponent;
   let fixture: ComponentFixture<TopicVitaComponent>;
-  let componentRef: ComponentRef<TopicVitaComponent>;
+  let stateServiceMock: { getAnswer: ReturnType<typeof vi.fn>; saveAnswer: ReturnType<typeof vi.fn> };
+  let toastServiceMock: { success: ReturnType<typeof vi.fn> };
 
-  beforeEach(async () => {
+  async function setupComponent(answers: Record<string, string | null> = {}): Promise<void> {
+    TestBed.resetTestingModule();
+
+    stateServiceMock = {
+      getAnswer: vi.fn((id: string) => answers[id] ?? null),
+      saveAnswer: vi.fn(),
+    };
+    toastServiceMock = { success: vi.fn() };
+
     await TestBed.configureTestingModule({
       imports: [TopicVitaComponent],
+      providers: [
+        { provide: OrientationStateService, useValue: stateServiceMock },
+        { provide: ToastService, useValue: toastServiceMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(TopicVitaComponent);
     component = fixture.componentInstance;
-    componentRef = fixture.componentRef;
-    componentRef.setInput('hasPrev', true);
-    componentRef.setInput('hasNext', true);
+    fixture.componentRef.setInput('hasPrev', true);
+    fixture.componentRef.setInput('hasNext', true);
     fixture.detectChanges();
+  }
+
+  beforeEach(async () => {
+    await setupComponent();
   });
 
   it('should create the component', () => {
@@ -31,26 +52,13 @@ describe('TopicVitaComponent', () => {
 
   it('should render the main h2 heading', () => {
     const h2 = fixture.nativeElement.querySelector('h2');
-    expect(h2.textContent).toContain('Vita universitaria concreta');
+    expect(h2.textContent).toContain('Orari e impegno');
   });
 
-  it('should render the canvas for the pie chart', () => {
-    const canvas = fixture.nativeElement.querySelector('canvas');
-    expect(canvas).not.toBeNull();
-  });
-
-  it('should render the time distribution section heading', () => {
-    expect(fixture.nativeElement.textContent).toContain('Come si distribuisce il tempo');
-  });
-
-  it('should render one legend row per tempoSlice', () => {
-    const legendRows = fixture.nativeElement.querySelectorAll('.flex.items-center.gap-3');
-    expect(legendRows.length).toBeGreaterThanOrEqual(VITA_TEMPO_SLICES.length);
-  });
-
-  it('should render each slice label', () => {
-    VITA_TEMPO_SLICES.forEach(slice => {
-      expect(fixture.nativeElement.textContent).toContain(slice.label);
+  it('should render the 4 week blocks', () => {
+    expect(component.weekBlocks).toHaveLength(4);
+    component.weekBlocks.forEach(block => {
+      expect(fixture.nativeElement.textContent).toContain(block.label);
     });
   });
 
@@ -58,31 +66,19 @@ describe('TopicVitaComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('Gli orari delle lezioni');
   });
 
-  it('should render one orari card per consiglio', () => {
-    const cards = fixture.nativeElement.querySelectorAll('.rounded-xl.border.border-gray-100.p-4');
-    expect(cards.length).toBeGreaterThanOrEqual(VITA_CONSIGLI_ORARI.length);
+  it('should render one timeline entry per tip from VITA_TIMETABLE_TIPS', () => {
+    VITA_TIMETABLE_TIPS.forEach(tip => {
+      expect(fixture.nativeElement.textContent).toContain(tip.titolo);
+    });
   });
 
   it('should render the studio individuale section heading', () => {
     expect(fixture.nativeElement.textContent).toContain('Studio individuale');
   });
 
-  it('should render CardStatus cards for studio consigli', () => {
+  it('should render CardStatus cards for studio tips', () => {
     const cards = fixture.debugElement.queryAll(By.directive(CardStatusComponent));
-    expect(cards.length).toBeGreaterThanOrEqual(VITA_CONSIGLI_STUDIO.length);
-  });
-
-  it('should render the vita fuori sede section heading', () => {
-    expect(fixture.nativeElement.textContent).toContain('Vita fuori sede');
-  });
-
-  it('should render one table row per voce fuorisede', () => {
-    const rows = fixture.nativeElement.querySelectorAll('tbody tr');
-    expect(rows.length).toBe(VITA_FUORISEDE.length);
-  });
-
-  it('should render the DSU borse di studio note', () => {
-    expect(fixture.nativeElement.textContent).toContain('borse di studio DSU');
+    expect(cards.length).toBeGreaterThanOrEqual(VITA_STUDY_TIPS.length);
   });
 
   it('should render the app-orientation-nav component', () => {
@@ -90,24 +86,93 @@ describe('TopicVitaComponent', () => {
     expect(nav).not.toBeNull();
   });
 
-  it('should emit prev when orientation-nav emits prev', () => {
-    const spy = vi.fn();
-    component.prev.subscribe(spy);
-    fixture.debugElement.query(By.directive(OrientationNavComponent)).componentInstance.prev.emit();
-    expect(spy).toHaveBeenCalledTimes(1);
+  it('should emit prev/next/backToList when orientation-nav emits them', () => {
+    const nav = fixture.debugElement.query(By.directive(OrientationNavComponent));
+
+    const prevSpy = vi.fn();
+    const nextSpy = vi.fn();
+    const backSpy = vi.fn();
+    component.prev.subscribe(prevSpy);
+    component.next.subscribe(nextSpy);
+    component.backToList.subscribe(backSpy);
+
+    nav.componentInstance.prev.emit();
+    nav.componentInstance.next.emit();
+    nav.componentInstance.backToList.emit();
+
+    expect(prevSpy).toHaveBeenCalledTimes(1);
+    expect(nextSpy).toHaveBeenCalledTimes(1);
+    expect(backSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('should emit next when orientation-nav emits next', () => {
-    const spy = vi.fn();
-    component.next.subscribe(spy);
-    fixture.debugElement.query(By.directive(OrientationNavComponent)).componentInstance.next.emit();
-    expect(spy).toHaveBeenCalledTimes(1);
+  describe('signals reflect saved answers', () => {
+    it('return null when no answer has been saved', () => {
+      expect(component.selectedStudyHours()).toBeNull();
+      expect(component.selectedWork()).toBeNull();
+    });
+
+    it('reflect the value already saved at creation time', async () => {
+      await setupComponent({ [component.questionStudyHours.id]: '2-4' });
+      expect(component.selectedStudyHours()).toBe('2-4');
+    });
   });
 
-  it('should emit backToList when orientation-nav emits backToList', () => {
-    const spy = vi.fn();
-    component.backToList.subscribe(spy);
-    fixture.debugElement.query(By.directive(OrientationNavComponent)).componentInstance.backToList.emit();
-    expect(spy).toHaveBeenCalledTimes(1);
+  describe('isSelected', () => {
+    it('returns true only when current matches value', () => {
+      expect(component.isSelected('2-4', '2-4')).toBe(true);
+      expect(component.isSelected('2-4', 'less-2')).toBe(false);
+    });
+  });
+
+  describe('onSelectStudyHours / onSelectWork', () => {
+    it('saves the study hours answer with the correct topicId', () => {
+      const option = component.questionStudyHours.options![0];
+      component.onSelectStudyHours(option.value);
+
+      expect(stateServiceMock.saveAnswer).toHaveBeenCalledWith(
+        component.questionStudyHours.id,
+        'vita',
+        option.value,
+        option.label,
+      );
+    });
+
+    it('saves the work answer with the correct topicId', () => {
+      const option = component.questionWork.options![0];
+      component.onSelectWork(option.value);
+
+      expect(stateServiceMock.saveAnswer).toHaveBeenCalledWith(
+        component.questionWork.id,
+        'vita',
+        option.value,
+        option.label,
+      );
+    });
+
+    it('does nothing when re-selecting an already-saved value', async () => {
+      const option = component.questionStudyHours.options![0];
+      await setupComponent({ [component.questionStudyHours.id]: option.value });
+
+      component.onSelectStudyHours(option.value);
+
+      expect(stateServiceMock.saveAnswer).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('scrollToQuestion', () => {
+    it('does not throw when called', () => {
+      expect(() => component.scrollToQuestion()).not.toThrow();
+    });
+
+    it('calls scrollIntoView on the question element rendered by the template', () => {
+      const el = document.getElementById('domanda-vita');
+      expect(el).not.toBeNull();
+
+      const scrollSpy = vi.spyOn(el!, 'scrollIntoView').mockImplementation(() => {});
+
+      component.scrollToQuestion();
+
+      expect(scrollSpy).toHaveBeenCalledWith({ behavior: 'smooth', block: 'start' });
+    });
   });
 });

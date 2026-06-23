@@ -1,24 +1,18 @@
 import { Component, input } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { LucideDynamicIcon, LucideCheck, LucideMinus } from '@lucide/angular';
 import { PricingPlan } from '@types';
+import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
+import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
+import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 
 @Component({
   selector: 'app-pricing-plans',
-  imports: [RouterLink],
+  imports: [CustomCardComponent, CustomBadgeComponent, CustomButtonComponent, LucideDynamicIcon],
   templateUrl: './pricing-plans.component.html',
 })
 export class PricingPlans {
   readonly plans = input.required<PricingPlan[]>();
 
-  featureValue(value: boolean | string): string {
-    if (value === true) return '✓';
-    if (value === false) return '-';
-    return value;
-  }
-
-  featureClass(value: boolean | string): string {
-    if (value === false) return 'text-gray-300';
-    if (value === true) return 'text-blue-500 font-medium';
-    return 'text-gray-700 font-medium';
-  }
+  readonly iconCheck = LucideCheck;
+  readonly iconMinus = LucideMinus;
 }

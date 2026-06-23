@@ -1,0 +1,42 @@
+<!-- Overlay -->
+<div class="fixed inset-0 z-40" (click)="close.emit()"></div>
+
+<!-- Popup -->
+<div
+  class="fixed z-50 rounded-2xl border border-purple-200 bg-white p-4 shadow-2xl"
+  [ngStyle]="popupStyle()"
+  (click)="$event.stopPropagation()">
+  <div class="mb-3 flex items-center justify-between">
+    <p class="text-xs font-semibold text-purple-700">Simula voto</p>
+    <button
+      type="button"
+      (click)="close.emit()"
+      class="rounded-lg p-0.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600">
+      <svg [lucideIcon]="iconX" [size]="14"></svg>
+    </button>
+  </div>
+
+  <div class="flex flex-col items-center gap-3">
+    <input
+      #inputEl
+      type="number"
+      min="18"
+      max="30"
+      [(ngModel)]="inputValue"
+      name="simulated-grade"
+      (ngModelChange)="onValueChange($event)"
+      (blur)="onBlur()"
+      placeholder="18 – 30"
+      inputmode="numeric"
+      class="w-32 rounded-xl border border-purple-300 bg-purple-50 px-3 py-3 text-center text-2xl font-bold text-purple-700 focus:border-purple-500 focus:outline-none focus:ring-2 focus:ring-purple-500" />
+    <p class="text-center text-xs text-gray-400">La media si aggiorna in tempo reale</p>
+    @if (currentValue() !== undefined) {
+      <button
+        type="button"
+        (click)="gradeChange.emit(null); close.emit()"
+        class="w-full rounded-lg py-2 text-sm text-gray-400 transition hover:bg-gray-100">
+        Rimuovi simulazione
+      </button>
+    }
+  </div>
+</div>

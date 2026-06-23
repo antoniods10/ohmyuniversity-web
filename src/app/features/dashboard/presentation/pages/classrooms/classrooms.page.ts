@@ -1,5 +1,5 @@
 import { Component, signal, inject } from '@angular/core';
-import { PageHeaderComponent } from '@ui/page-header/page-header.component';
+import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
@@ -19,17 +19,21 @@ import {
   LucideBuilding2,
   LucideLayers,
   LucideSearch,
+  LucideTriangleAlert,
 } from '@lucide/angular';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 
 import { Classroom, Building, Campus } from '@shared/types/dashboard/classrooms.types';
 import { MOCK_CAMPUSES } from '@shared/data/mock/classrooms.mock';
+import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
+import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 
 @Component({
   selector: 'app-classrooms',
   standalone: true,
   imports: [
-    PageHeaderComponent,
+    DashboardContainerComponent,
+    DashboardHeaderComponent,
     CustomCardComponent,
     CustomBadgeComponent,
     CustomButtonComponent,
@@ -37,10 +41,13 @@ import { MOCK_CAMPUSES } from '@shared/data/mock/classrooms.mock';
     CustomTabsComponent,
     CustomInputComponent,
     LucideDynamicIcon,
+    CardStatusComponent,
   ],
   templateUrl: './classrooms.page.html',
 })
 export class ClassroomsPage {
+  readonly lucideAlertTriangle = LucideTriangleAlert;
+
   private readonly toast = inject(ToastService);
 
   readonly iconMapPin = LucideMapPin;

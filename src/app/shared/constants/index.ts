@@ -1,13 +1,32 @@
-export * from './common.constants';
-export * from './dashboard-sidebar.constants';
-export * from './pricing-plans.constants';
-export * from './team.constants';
-export * from './legal.constants';
-export * from './partner.constants';
-export * from './orientation.constants';
-export * from './home.constants';
-export * from './faq.constants';
-export * from './contact.constants';
-export * from './business.constants';
-export * from './user.constants';
-export * from './university.constants';
+// Dashboard
+export * from './dashboard/dashboard-career.constants';
+export * from './dashboard/dashboard-home.constants';
+export * from './dashboard/dashboard-sidebar.constants';
+
+// Features
+export * from './features/business.constants';
+export * from './features/contact.constants';
+export * from './features/faq.constants';
+export * from './features/home.constants';
+export * from './features/legal.constants';
+export * from './features/login.constants';
+export * from './features/orientation/orientation-topics.constants';
+export * from './features/orientation/orientation-corso.constants';
+export * from './features/orientation/orientation-quiz.constants';
+export * from './features/orientation/orientation-come-funziona.constants';
+export * from './features/orientation/orientation-vita.constants';
+export * from './features/orientation/orientation-sbocchi.constants';
+export * from './features/orientation/orientation-budget.constants';
+export * from './features/orientation/orientation-errori.constants';
+export * from './features/orientation/orientation-geografia.constants';
+export * from './features/orientation/university-orientation.constants';
+export * from './features/partner.constants';
+export * from './features/pricing-plans.constants';
+export * from './features/team.constants';
+export * from './features/user.constants';
+
+// Shared
+export * from './shared/api.constants';
+export * from './shared/common.constants';
+export * from './shared/footer.constants';
+export * from './shared/university.constants';

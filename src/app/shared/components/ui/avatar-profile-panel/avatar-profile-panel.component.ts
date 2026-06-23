@@ -109,8 +109,8 @@ export const RING_COLORS: Record<AccountStatus, string> = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AvatarProfilePanelComponent {
-  private elRef = inject(ElementRef);
-  private cdr = inject(ChangeDetectorRef);
+  private readonly elRef = inject(ElementRef);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   readonly iconLogout = LucideLogOut;
   readonly iconSettings = LucideSettings;
@@ -145,6 +145,9 @@ export class AvatarProfilePanelComponent {
 
   /** Emitted when account is switched. */
   @Output() accountSwitch = new EventEmitter<AccountEntry>();
+
+  /** Emitted when main account is clicked. */
+  @Output() currentAccountClick = new EventEmitter<void>();
 
   /** Emitted on settings click. */
   @Output() settingsClick = new EventEmitter<void>();
@@ -404,5 +407,14 @@ export class AvatarProfilePanelComponent {
   @HostListener('document:keydown.escape')
   onEscape(): void {
     if (this.isOpen) this.close();
+  }
+
+  /**
+   * Handles click on the current account header.
+   * Emits currentAccountClick event and closes the panel.
+   */
+  onCurrentAccountClick(): void {
+    this.currentAccountClick.emit();
+    this.close();
   }
 }

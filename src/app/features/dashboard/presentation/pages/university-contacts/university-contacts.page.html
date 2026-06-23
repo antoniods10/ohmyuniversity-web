@@ -1,6 +1,12 @@
-<div class="flex flex-col gap-6 max-w-4xl mx-auto pb-8">
+<app-card-status
+  statusVariant="warning"
+  [icon]="lucideAlertTriangle"
+  title="Pagina in sviluppo"
+  description="Questa pagina è visibile a scopo dimostrativo ma non fa parte della release corrente dello sprint." />
+
+<app-dashboard-container>
   <!-- Page Header -->
-  <app-page-header
+  <app-dashboard-header
     title="Contatti Universitari"
     description="Segreteria, docenti e numeri utili della tua università, sempre a portata di mano." />
 
@@ -363,7 +369,7 @@
       }
     </div>
   }
-</div>
+</app-dashboard-container>
 
 <!-- Template Empty State -->
 <ng-template #emptyState>

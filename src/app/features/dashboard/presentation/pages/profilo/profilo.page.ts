@@ -1,153 +1,73 @@
-import { Component, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
-import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
-import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
-import { CustomInputComponent } from '@ui/custom-input/custom-input.component';
-import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
-import { CustomAvatarComponent, AvatarVariant } from '@ui/custom-avatar/custom-avatar.component';
-import { CustomModalComponent } from '@ui/custom-modal/custom-modal.component';
-import {
-  LucideDynamicIcon,
-  LucideUser,
-  LucideMail,
-  LucidePhone,
-  LucideMapPin,
-  LucideCalendar,
-  LucidePencil,
-  LucideShield,
-  LucideGraduationCap,
-  LucideBookOpen,
-  LucideAward,
-  LucideKey,
-  LucideLogOut,
-  LucideTriangleAlert,
-  LucideCheck,
-  LucideCamera,
-  LucideExternalLink,
-} from '@lucide/angular';
-import {
-  AccountEntry,
-  AccountStatus,
-  RING_COLORS,
-  STATUS_VARIANT,
-} from '@ui/avatar-profile-panel/avatar-profile-panel.component';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
+import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
-
-import { CourseEntry } from '@shared/types/dashboard/profilo.types';
-import { MOCK_ACCOUNT, MOCK_COURSES, MOCK_PROFILE_EDIT } from '@shared/data/mock/profilo.mock';
-import { acronymVariant, cfuPercent } from '@shared/utils/ui.utils';
+import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
+import {
+  LucideUser,
+  LucideShield,
+  LucideTriangleAlert,
+  LucideGraduationCap,
+} from '@lucide/angular';
+import { CarrieraFacade } from '../../../application/facades/carriera.facade';
+import { ProfiloResponse } from '../../../domain/models/profilo.model';
+import { ProfileHeroComponent } from './components/profile-hero/profile-hero.component';
+import { ProfileInformationComponent } from './components/profile-information/profile-information.component';
+import { ProfileSecurityComponent } from './components/profile-security/profile-security.component';
+import { CarrieraInfoResponse } from '../../../domain/models/carriera-info.model';
+import { forkJoin } from 'rxjs';
+import { ProfileCourseComponent } from './profile-course/profile-course.component';
 
 @Component({
   selector: 'app-profilo',
   standalone: true,
   imports: [
-    FormsModule,
-    CustomCardComponent,
-    CustomBadgeComponent,
-    CustomButtonComponent,
-    CustomInputComponent,
+    DashboardContainerComponent,
+    DashboardHeaderComponent,
     CustomTabsComponent,
-    CustomTextComponent,
-    CustomAvatarComponent,
-    CustomModalComponent,
-    LucideDynamicIcon,
+    CardStatusComponent,
+    ProfileHeroComponent,
+    ProfileInformationComponent,
+    ProfileSecurityComponent,
+    ProfileCourseComponent,
   ],
   templateUrl: './profilo.page.html',
 })
-export class ProfiloPage {
-  readonly iconUser = LucideUser;
-  readonly iconMail = LucideMail;
-  readonly iconPhone = LucidePhone;
-  readonly iconMapPin = LucideMapPin;
-  readonly iconCalendar = LucideCalendar;
-  readonly iconPencil = LucidePencil;
-  readonly iconShield = LucideShield;
-  readonly iconGraduationCap = LucideGraduationCap;
-  readonly iconBookOpen = LucideBookOpen;
-  readonly iconAward = LucideAward;
-  readonly iconKey = LucideKey;
-  readonly iconLogOut = LucideLogOut;
-  readonly iconAlertTriangle = LucideTriangleAlert;
-  readonly iconCheck = LucideCheck;
-  readonly iconCamera = LucideCamera;
-  readonly iconExternalLink = LucideExternalLink;
+export class ProfiloPage implements OnInit {
+  private readonly carriera = inject(CarrieraFacade);
 
-  readonly acronymVariant = acronymVariant;
-  readonly cfuPercent = cfuPercent;
-
-  activeTab = signal<string>('informazioni');
-  editingInfo = signal<boolean>(false);
-  savingInfo = signal<boolean>(false);
-  savedInfo = signal<boolean>(false);
+  readonly lucideAlertTriangle = LucideTriangleAlert;
 
   readonly tabs: TabItem[] = [
     { id: 'informazioni', label: 'Informazioni', icon: LucideUser },
-    { id: 'corsi', label: 'Corsi', icon: LucideGraduationCap },
+    { id: 'corso', label: 'Corso di studi', icon: LucideGraduationCap },
     { id: 'sicurezza', label: 'Sicurezza', icon: LucideShield },
   ];
 
-  readonly account: AccountEntry = MOCK_ACCOUNT;
-  readonly courses: CourseEntry[] = MOCK_COURSES;
+  readonly activeTab = signal<string>('informazioni');
+  readonly loading = signal(true);
+  readonly error = signal(false);
+  readonly profilo = signal<ProfiloResponse | null>(null);
+  readonly carrieraInfo = signal<CarrieraInfoResponse | null>(null);
 
-  editNameModel: string = MOCK_ACCOUNT.name;
-  editPhoneModel: string = MOCK_PROFILE_EDIT.phone;
-  editCityModel: string = MOCK_PROFILE_EDIT.city;
-  editBioModel: string = MOCK_PROFILE_EDIT.bio;
-  emailModel: string = MOCK_ACCOUNT.email;
+  ngOnInit(): void {
+    forkJoin({
+      profilo: this.carriera.getProfilo(),
+      info: this.carriera.getCarrieraInfo(),
+    }).subscribe({
+      next: ({ profilo, info }) => {
+        this.profilo.set(profilo);
+        this.carrieraInfo.set(info);
+        this.loading.set(false);
+      },
+      error: () => {
+        this.error.set(true);
+        this.loading.set(false);
+      },
+    });
+  }
 
   onTabChange(id: string): void {
     this.activeTab.set(id);
-  }
-
-  toggleEdit(): void {
-    if (this.editingInfo()) {
-      this.editingInfo.set(false);
-    } else {
-      this.editingInfo.set(true);
-      this.savedInfo.set(false);
-    }
-  }
-
-  saveInfo(): void {
-    this.savingInfo.set(true);
-    // @TODO
-    setTimeout(() => {
-      this.savingInfo.set(false);
-      this.savedInfo.set(true);
-      this.editingInfo.set(false);
-    }, 1200);
-  }
-
-  onFieldChange(_field: string, _val: string | number): void {}
-
-  variantFor(status: AccountStatus): AvatarVariant {
-    return STATUS_VARIANT[status];
-  }
-
-  ringColorFor(status: AccountStatus): string {
-    return RING_COLORS[status];
-  }
-
-  statusLabel(status: AccountStatus): string {
-    const map: Record<AccountStatus, string> = {
-      active: 'Iscritto',
-      warning: 'Attenzione',
-      suspended: 'Sospeso',
-      withdrawn: 'Ritirato',
-      graduated: 'Laureato',
-    };
-    return map[status];
-  }
-
-  statusVariant(status: AccountStatus): 'success' | 'warning' | 'error' | 'neutral' | 'primary' {
-    const map: Record<AccountStatus, 'success' | 'warning' | 'error' | 'neutral' | 'primary'> = {
-      active: 'success',
-      warning: 'warning',
-      suspended: 'error',
-      withdrawn: 'neutral',
-      graduated: 'primary',
-    };
-    return map[status];
   }
 }

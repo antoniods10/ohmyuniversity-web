@@ -7,53 +7,38 @@
       ">
       <div class="lg:col-span-1">
         <a routerLink="/" class="inline-flex items-center gap-2">
-          <img [src]="APP_LOGO" [alt]="APP_NAME" class="h-8 w-8" />
-          <span class="text-base font-bold text-gray-900">{{ APP_NAME }}</span>
+          <img [src]="APP.logo" [alt]="APP.name" class="h-8 w-8" />
+          <span appText class="text-base font-bold text-gray-900">{{ APP.name }}</span>
         </a>
 
         <div class="mt-4 space-y-1 text-xs text-gray-400">
-          <p class="flex items-center gap-1.5">
-            <svg
-              class="h-3.5 w-3.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-            </svg>
+          <p appText class="flex items-center gap-1.5">
+            <svg [lucideIcon]="iconMapPin" [size]="14"></svg>
             Italia
           </p>
         </div>
-
-        <p class="mt-4 text-xs leading-relaxed text-gray-400">
+        <p appText class="mt-4 text-xs leading-relaxed text-gray-400">
           Another open source project from
-          <a
-            href="https://github.com/ohmyopensource"
-            target="_blank"
-            rel="noopener"
-            class="font-medium text-blue-500 hover:underline">
-            {{ ORGANIZATION_NAME }}
-          </a>
+          <app-custom-link
+            [href]="ORGANIZATION.social.github"
+            mode="external"
+            [label]="ORGANIZATION.name"
+            variant="primary"
+            size="sm" />
         </p>
       </div>
+
       @if (!isDashboard()) {
         <div class="lg:col-span-1">
-          <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+          <p appText class="mb-4 text-xs font-bold uppercase tracking-wider text-gray-700">
             Navigazione
           </p>
           <ul class="space-y-2.5">
-            @for (link of navLinks; track link.path) {
+            @for (link of navLinks; track link.url) {
               <li>
                 <a
-                  [routerLink]="link.path"
-                  class="text-sm text-gray-500 transition hover:text-blue-600">
+                  [routerLink]="link.url"
+                  class="text-sm font-medium text-gray-700 transition hover:text-blue-600">
                   {{ link.label }}
                 </a>
               </li>
@@ -62,15 +47,15 @@
         </div>
 
         <div class="lg:col-span-1">
-          <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+          <p appText class="mb-4 text-xs font-bold uppercase tracking-wider text-gray-700">
             Per le organizzazioni
           </p>
           <ul class="space-y-2.5">
-            @for (link of businessLinks; track link.path) {
+            @for (link of businessLinks; track link.url) {
               <li>
                 <a
-                  [routerLink]="link.path"
-                  class="text-sm text-gray-500 transition hover:text-blue-600">
+                  [routerLink]="link.url"
+                  class="text-sm font-medium text-gray-700 transition hover:text-blue-600">
                   {{ link.label }}
                 </a>
               </li>
@@ -80,13 +65,13 @@
       }
 
       <div class="lg:col-span-1">
-        <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Legale</p>
+        <p appText class="mb-4 text-xs font-bold uppercase tracking-wider text-gray-700">Legale</p>
         <ul class="space-y-2.5">
-          @for (link of legalLinks; track link.path) {
+          @for (link of legalLinks; track link.url) {
             <li>
               <a
-                [routerLink]="link.path"
-                class="text-sm text-gray-500 transition hover:text-blue-600">
+                [routerLink]="link.url"
+                class="text-sm font-medium text-gray-700 transition hover:text-blue-600">
                 {{ link.label }}
               </a>
             </li>
@@ -96,16 +81,16 @@
 
       @if (isDashboard()) {
         <div class="lg:col-span-1">
-          <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+          <p appText class="mb-4 text-xs font-bold uppercase tracking-wider text-gray-700">
             FAQ Studenti
           </p>
           <ul class="space-y-2.5">
             @for (link of faqLinks; track link.label) {
               <li>
                 <a
-                  [routerLink]="link.path"
+                  [routerLink]="link.url"
                   [fragment]="link.fragment"
-                  class="text-sm text-gray-500 transition hover:text-blue-600">
+                  class="text-sm font-medium text-gray-700 transition hover:text-blue-600">
                   {{ link.label }}
                 </a>
               </li>
@@ -115,48 +100,64 @@
       }
 
       <div class="lg:col-span-1">
-        <p class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">Contatti</p>
-        <a href="mailto:hello@ohmyuniversity.it" class="text-sm text-blue-600 hover:underline">
-          hello@ohmyuniversity.it
-        </a>
+        <p appText class="mb-4 text-xs font-bold uppercase tracking-wider text-gray-700">
+          Contatti
+        </p>
+        <app-custom-email [email]="APP.email" variant="primary" size="md" [underline]="true" />
 
-        <p class="mb-3 mt-5 text-xs font-semibold uppercase tracking-wider text-gray-400">
+        <p appText class="mb-3 mt-5 text-xs font-semibold uppercase tracking-wider text-gray-400">
           Seguici
         </p>
-        <div class="grid grid-cols-2 gap-2">
+        <div class="flex flex-col gap-2">
           @for (social of socials; track social.label) {
-            <a
+            <app-custom-card
+              mode="link-external"
               [href]="social.url"
               target="_blank"
-              rel="noopener noreferrer"
-              class="flex items-center gap-1.5 rounded-lg border border-gray-200 px-2.5 py-2 text-xs text-gray-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-600">
-              <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="currentColor">
-                <path [attr.d]="social.icon" />
-              </svg>
-              {{ social.label }}
-            </a>
+              padding="sm"
+              shadow="none"
+              radius="md"
+              [bordered]="false"
+              [ariaLabel]="social.label"
+              [class]="social.colorForce">
+              <div class="grid grid-cols-[24px_1fr] items-center gap-2 text-xs font-medium">
+                <span class="justify-self-center flex items-center">
+                  <ng-container *ngComponentOutlet="social.iconComponent; inputs: { size: 16 }" />
+                </span>
+                <span>{{ social.label }}</span>
+              </div>
+            </app-custom-card>
           }
         </div>
       </div>
 
       <div class="lg:col-span-1">
-        <p class="mb-1 text-xs font-semibold uppercase tracking-wider text-gray-400">
+        <p appText class="mb-4 text-xs font-bold uppercase tracking-wider text-gray-700">
           Supporta il progetto
         </p>
-        <p class="mb-4 text-xs leading-relaxed text-gray-400">
-          OhMyUniversity è gratuito e open source. Se ti è utile, considera una donazione per
+        <p appText class="mb-4 text-xs leading-relaxed text-gray-400">
+          {{ APP.name }} è gratuito e open source. Se ti è utile, considera una donazione per
           aiutarci a mantenerlo e migliorarlo.
         </p>
         <div class="flex flex-col gap-2">
           @for (s of supportLinks; track s.label) {
-            <a
+            <app-custom-card
+              mode="link-external"
               [href]="s.url"
               target="_blank"
-              rel="noopener noreferrer"
-              class="flex items-center justify-center rounded-lg px-4 py-2.5 text-xs font-semibold text-white transition"
-              [class]="s.color">
-              {{ s.label }}
-            </a>
+              padding="sm"
+              shadow="none"
+              radius="md"
+              [bordered]="false"
+              [ariaLabel]="s.label"
+              [class]="s.colorForce">
+              <div class="grid grid-cols-[24px_1fr] items-center gap-2 text-xs font-medium">
+                <span class="justify-self-center flex items-center">
+                  <ng-container *ngComponentOutlet="s.iconComponent; inputs: { size: 16 }" />
+                </span>
+                <span>{{ s.label }}</span>
+              </div>
+            </app-custom-card>
           }
         </div>
       </div>
@@ -164,7 +165,9 @@
   </div>
 
   <div class="border-t border-gray-100 bg-gray-50 py-8">
-    <p class="mb-5 text-center text-xs font-semibold uppercase tracking-wider text-gray-400">
+    <p
+      appText
+      class="mb-5 text-center text-xs font-semibold uppercase tracking-wider text-gray-400">
       Atenei convenzionati
     </p>
 
@@ -190,7 +193,6 @@
             class="h-8 w-auto object-contain opacity-50 grayscale"
             loading="lazy" />
         }
-
         @for (uni of universities; track uni.name + '_dup') {
           <img
             [src]="uni.logo"
@@ -206,16 +208,15 @@
   <div class="border-t border-gray-200 bg-white py-5">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col items-center gap-1 text-center">
-        <p class="text-xs text-gray-400">P. IVA: {{ vatNumber }}</p>
-        <p class="text-xs text-gray-400">
-          © {{ currentYear }} OhMyUniversity - un prodotto open source di
-          <a
-            href="https://github.com/ohmyopensource"
-            target="_blank"
-            rel="noopener"
-            class="font-medium text-gray-500 hover:text-blue-600 hover:underline">
-            {{ ORGANIZATION_NAME }}
-          </a>
+        <p appText class="text-xs text-gray-400">P. IVA: {{ ORGANIZATION.piva }}</p>
+        <p appText class="text-xs text-gray-400">
+          © {{ currentYear }} {{ APP.name }} - un prodotto open source di
+          <app-custom-link
+            [href]="ORGANIZATION.social.github"
+            mode="external"
+            [label]="ORGANIZATION.name"
+            variant="primary"
+            size="sm" />
         </p>
       </div>
     </div>

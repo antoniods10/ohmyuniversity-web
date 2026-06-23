@@ -46,6 +46,11 @@ export type ButtonVariant =
 export type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 
 /**
+ * Available button rounded styles.
+ */
+export type ButtonRounded = 'none' | 'sm' | 'md' | 'lg' | 'full';
+
+/**
  * Supported operating modes.
  *
  * - button: standard HTML button
@@ -118,6 +123,11 @@ export class CustomButtonComponent {
    * Size of the button and its internal content.
    */
   @Input() size: ButtonSize = 'md';
+
+  /**
+   * Rounded style of the button.
+   */
+  @Input() rounded: ButtonRounded = 'md';
 
   /**
    * Expands the button to occupy the full width
@@ -285,6 +295,7 @@ export class CustomButtonComponent {
       'btn--succeeded-filled': this.succeeded && this.succeededStyle === 'filled',
       'btn--succeeded-ghost': this.succeeded && this.succeededStyle === 'ghost',
       [`btn--${this.size}`]: true,
+      [`btn--rounded-${this.rounded}`]: true,
       'btn--full-width': this.fullWidth,
       'btn--dark': this.darkTheme,
       'btn--disabled': this.disabled,
@@ -305,6 +316,34 @@ export class CustomButtonComponent {
    */
   get externalRel(): string {
     return this.target === '_blank' ? 'noopener noreferrer' : '';
+  }
+
+  /**
+   * Returns the path portion of `href`, stripped of any query string,
+   * for use with routerLink when mode is 'link-internal'.
+   *
+   * @returns Path without query parameters.
+   */
+  get routerPath(): string {
+    return (this.href ?? '').split('?')[0];
+  }
+
+  /**
+   * Parses the query string portion of `href` (if present) into an
+   * object suitable for routerLink's [queryParams] binding.
+   *
+   * @returns Object of query parameters, or null if href has no query string.
+   */
+  get routerQueryParams(): Record<string, string> | null {
+    const queryIndex = (this.href ?? '').indexOf('?');
+    if (queryIndex === -1) return null;
+
+    const queryString = this.href.slice(queryIndex + 1);
+    const params: Record<string, string> = {};
+    new URLSearchParams(queryString).forEach((value, key) => {
+      params[key] = value;
+    });
+    return params;
   }
 
   /**

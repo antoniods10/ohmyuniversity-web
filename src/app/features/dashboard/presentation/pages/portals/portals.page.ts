@@ -1,6 +1,6 @@
 import { Component, signal, computed } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
-import { PageHeaderComponent } from '@ui/page-header/page-header.component';
+import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
@@ -19,26 +19,33 @@ import {
   LucideUsers,
   LucideShield,
   LucideStar,
+  LucideTriangleAlert,
 } from '@lucide/angular';
 import { PortalCategory, Portal, PortalCategoryDef } from '@shared/types/features/portals.types';
 import { MOCK_PORTALS } from '@shared/data/mock/portals.mock';
+import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
+import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 
 @Component({
   selector: 'app-portals',
   standalone: true,
   imports: [
     NgTemplateOutlet,
-    PageHeaderComponent,
+    DashboardContainerComponent,
+    DashboardHeaderComponent,
     CustomCardComponent,
     CustomBadgeComponent,
     CustomButtonComponent,
     CustomInputComponent,
     CustomTextComponent,
     LucideDynamicIcon,
+    CardStatusComponent,
   ],
   templateUrl: './portals.page.html',
 })
 export class PortalsPage {
+  readonly lucideAlertTriangle = LucideTriangleAlert;
+
   readonly iconSearch = LucideSearch;
   readonly iconExternalLink = LucideExternalLink;
   readonly iconStar = LucideStar;

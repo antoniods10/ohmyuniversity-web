@@ -1,6 +1,6 @@
 import { Component, signal, computed } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
-import { PageHeaderComponent } from '@ui/page-header/page-header.component';
+import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
@@ -22,6 +22,7 @@ import {
   LucideExternalLink,
   LucideBookOpen,
   LucideUsers,
+  LucideTriangleAlert,
 } from '@lucide/angular';
 
 import {
@@ -35,13 +36,16 @@ import {
   MOCK_PROFESSOR_CONTACTS,
   MOCK_INSTITUTIONAL_CONTACTS,
 } from '@shared/data/mock/university-contacts.mock';
+import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
+import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 
 @Component({
   selector: 'app-university-contacts',
   standalone: true,
   imports: [
     NgTemplateOutlet,
-    PageHeaderComponent,
+    DashboardContainerComponent,
+    DashboardHeaderComponent,
     CustomCardComponent,
     CustomBadgeComponent,
     CustomButtonComponent,
@@ -50,10 +54,13 @@ import {
     CustomTabsComponent,
     CustomAvatarComponent,
     LucideDynamicIcon,
+    CardStatusComponent,
   ],
   templateUrl: './university-contacts.page.html',
 })
 export class UniversityContactsPage {
+  readonly lucideAlertTriangle = LucideTriangleAlert;
+
   readonly iconSearch = LucideSearch;
   readonly iconMail = LucideMail;
   readonly iconPhone = LucidePhone;

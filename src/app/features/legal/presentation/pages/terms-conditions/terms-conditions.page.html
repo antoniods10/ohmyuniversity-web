@@ -1,277 +1,153 @@
 <div class="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
   <!-- Header -->
   <div class="mb-10">
-    <p class="text-xs font-medium uppercase tracking-wide text-gray-400">Documento legale</p>
-    <h1 class="mt-2 text-3xl font-bold text-gray-900">Termini & Condizioni</h1>
-    <p class="mt-2 text-sm text-gray-500">
+    <p appText class="text-xs font-medium uppercase tracking-wide text-gray-400">
+      Documento legale
+    </p>
+    <h1 appText class="mt-2 text-3xl font-bold text-gray-900">Termini & Condizioni</h1>
+    <p appText class="mt-2 text-sm text-gray-500">
       Ultimo aggiornamento: <span class="font-medium">{{ lastUpdated }}</span>
     </p>
-    <div class="mt-4 rounded-lg border border-amber-100 bg-amber-50 p-4 text-sm text-amber-800">
-      Leggere attentamente prima di utilizzare la piattaforma. L'accesso e l'utilizzo di
-      OhMyUniversity implicano l'accettazione integrale dei presenti termini.
-    </div>
+    <app-card-status
+      [icon]="iconAlert"
+      statusVariant="warning"
+      [description]="introWarning"
+      padding="md"
+      shadow="none"
+      class="mt-4 block" />
   </div>
 
-  <div class="space-y-10 text-sm leading-relaxed text-gray-600">
+  <div class="space-y-12 text-sm leading-relaxed text-gray-600">
     <!-- 1 -->
     <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">1. Definizioni</h2>
-      <ul class="space-y-2 pl-4">
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span
-          ><span
-            ><strong class="text-gray-800">Piattaforma:</strong> il sito web e le applicazioni
-            mobili OhMyUniversity</span
-          >
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span
-          ><span
-            ><strong class="text-gray-800">Gestore:</strong> OhMyOpenSource!, organizzazione
-            no-profit che sviluppa e gestisce la Piattaforma</span
-          >
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span
-          ><span
-            ><strong class="text-gray-800">Utente accademico:</strong> studente, dottorando, docente
-            o personale tecnico-amministrativo che accede tramite SSO del proprio ateneo</span
-          >
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span
-          ><span
-            ><strong class="text-gray-800">Organizzazione:</strong> azienda o collettivo studentesco
-            titolare di un piano a pagamento</span
-          >
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span
-          ><span
-            ><strong class="text-gray-800">SSO:</strong> sistema di autenticazione Single Sign-On
-            gestito dall'ateneo di appartenenza</span
-          >
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span
-          ><span
-            ><strong class="text-gray-800">Contenuti:</strong> tutti i dati, testi, grafici,
-            interfacce e funzionalità disponibili sulla Piattaforma</span
-          >
-        </li>
-      </ul>
+      <h2 appText class="mb-3 text-base font-bold text-gray-900">1. Definizioni</h2>
+      <div class="flex flex-col gap-2.5">
+        @for (def of definitions; track def.label) {
+          <div class="flex items-start gap-2">
+            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span>
+            <p appText>
+              <strong class="text-gray-800">{{ def.label }}:</strong> {{ def.label }}
+            </p>
+          </div>
+        }
+      </div>
     </section>
 
     <!-- 2 -->
     <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">2. Descrizione del servizio</h2>
-      <p>
-        OhMyUniversity è una piattaforma open source che aggrega e visualizza i dati accademici
-        provenienti dai portali istituzionali degli atenei italiani convenzionati. Il servizio
-        consente agli utenti accademici di consultare in un'unica interfaccia informazioni su esami,
-        piano di studi, CFU, scadenze e statistiche personali.
-      </p>
-      <p class="mt-3">
-        Il servizio è gratuito per gli utenti accademici (studenti, dottorandi, docenti, staff). Le
-        Organizzazioni (aziende e collettivi studenteschi) accedono a funzionalità aggiuntive
-        tramite piani a pagamento disciplinati da un contratto separato.
-      </p>
-      <div class="mt-4 rounded-xl border border-gray-100 bg-gray-50 p-4">
-        <p class="font-semibold text-gray-800">Natura del servizio</p>
-        <p class="mt-2 text-gray-500">
-          OhMyUniversity è uno strumento di aggregazione e visualizzazione. Non è un portale
-          universitario ufficiale e non ha potere di modificare dati accademici, risultati di esami
-          o qualsiasi informazione presente nei sistemi degli atenei. In caso di discrepanze, fa
-          sempre fede il portale ufficiale del proprio ateneo.
-        </p>
-      </div>
+      <h2 appText class="mb-3 text-base font-bold text-gray-900">2. Descrizione del servizio</h2>
+      <p appText>{{ serviceDescription.paragraph1 }}</p>
+      <p appText class="mt-3">{{ serviceDescription.paragraph2 }}</p>
+      <app-custom-card variant="default" padding="md" shadow="none" class="mt-4 block">
+        <p appText class="font-semibold text-gray-800">{{ serviceDescription.natureTitle }}</p>
+        <p appText class="mt-2 text-gray-500">{{ serviceDescription.naturevalue }}</p>
+      </app-custom-card>
     </section>
 
     <!-- 3 -->
     <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">3. Accesso alla piattaforma</h2>
+      <h2 appText class="mb-3 text-base font-bold text-gray-900">3. Accesso alla piattaforma</h2>
 
-      <h3 class="mb-2 font-semibold text-gray-800">3.1 Utenti accademici</h3>
-      <p>
-        L'accesso avviene esclusivamente tramite il sistema SSO dell'ateneo di appartenenza.
-        L'utente è responsabile della sicurezza delle proprie credenziali istituzionali.
-        OhMyUniversity non ha accesso né memorizza tali credenziali.
-      </p>
-      <p class="mt-3">
-        Il diritto di accesso è subordinato al mantenimento di un rapporto attivo con l'ateneo
-        convenzionato. La cessazione del rapporto (ad es. conclusione degli studi, fine del
-        contratto di docenza) comporta la disattivazione automatica dell'accesso entro i termini
-        previsti dall'accordo con l'ateneo.
-      </p>
+      <h3 appText class="mb-2 font-semibold text-gray-800">3.1 Utenti accademici</h3>
+      <p appText>{{ access.academicvalue }}</p>
+      <p appText class="mt-3">{{ access.academicTermination }}</p>
 
-      <h3 class="mb-2 mt-6 font-semibold text-gray-800">3.2 Organizzazioni</h3>
-      <p>
-        Le Organizzazioni accedono tramite credenziali proprie create al momento della stipula del
-        contratto. Il referente designato è responsabile della corretta gestione degli accessi
-        all'interno della propria organizzazione. Ogni accesso non autorizzato deve essere segnalato
-        tempestivamente a
-        <a href="mailto:{{ contactEmail }}" class="text-blue-600 hover:underline">{{
-          contactEmail
-        }}</a
-        >.
+      <h3 appText class="mb-2 mt-6 font-semibold text-gray-800">3.2 Organizzazioni</h3>
+      <p appText>
+        {{ access.orgTextBeforeEmail }}
+        <app-custom-email [email]="contactEmail" size="sm" />.
       </p>
     </section>
 
     <!-- 4 -->
     <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">
+      <h2 appText class="mb-3 text-base font-bold text-gray-900">
         4. Obblighi e responsabilità dell'utente
       </h2>
-      <p>L'utente si impegna a:</p>
-      <ul class="mt-3 space-y-2 pl-4">
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span>Utilizzare la
-          Piattaforma esclusivamente per finalità lecite e conformi ai presenti Termini
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span>Non tentare di
-          accedere a dati o sezioni della Piattaforma per i quali non si dispone di autorizzazione
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span>Non utilizzare
-          strumenti automatizzati (bot, scraper) per estrarre dati dalla Piattaforma senza
-          autorizzazione scritta
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span>Non compiere
-          azioni che possano compromettere la sicurezza, l'integrità o la disponibilità della
-          Piattaforma
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span>Non condividere
-          le proprie credenziali di accesso con terzi
-        </li>
-        <li class="flex items-start gap-2">
-          <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span>Segnalare
-          tempestivamente eventuali vulnerabilità di sicurezza al team tramite responsible
-          disclosure
-        </li>
-      </ul>
+      <p appText>L'utente si impegna a:</p>
+      <div class="mt-3 flex flex-col gap-2">
+        @for (item of userObligations; track item) {
+          <div class="flex items-start gap-2">
+            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400"></span>
+            <p appText>{{ item }}</p>
+          </div>
+        }
+      </div>
     </section>
 
     <!-- 5 -->
     <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">
+      <h2 appText class="mb-3 text-base font-bold text-gray-900">
         5. Disponibilità del servizio e limitazioni
       </h2>
-      <p>
-        Il Gestore si impegna a garantire la massima disponibilità della Piattaforma,
-        compatibilmente con le esigenze di manutenzione ordinaria e straordinaria. Non viene
-        garantito un livello minimo di uptime contrattuale per gli utenti accademici gratuiti.
-      </p>
-      <p class="mt-3">
-        La disponibilità dei dati accademici dipende dall'integrazione con i sistemi degli atenei
-        convenzionati. Il Gestore non è responsabile per interruzioni, ritardi o inesattezze nei
-        dati derivanti da malfunzionamenti dei sistemi istituzionali terzi.
-      </p>
-      <div class="mt-4 rounded-xl border border-amber-100 bg-amber-50 p-4">
-        <p class="text-sm text-amber-800">
-          <strong>Importante:</strong> i dati visualizzati su OhMyUniversity hanno natura
-          informativa. In caso di discordanza con i sistemi ufficiali dell'ateneo, prevalgono sempre
-          i dati presenti nel portale istituzionale.
-        </p>
-      </div>
+      <p appText>{{ availability.paragraph1 }}</p>
+      <p appText class="mt-3">{{ availability.paragraph2 }}</p>
+      <app-card-status
+        [icon]="iconAlert"
+        statusVariant="warning"
+        [description]="availability.warning"
+        padding="md"
+        shadow="none"
+        class="mt-4 block" />
     </section>
 
     <!-- 6 -->
     <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">6. Proprietà intellettuale</h2>
-      <p>
-        Il codice sorgente di OhMyUniversity è rilasciato con licenza open source (MIT License) e
-        disponibile pubblicamente su GitHub. I contenuti dell'interfaccia, il design e i testi
-        originali sono di proprietà di OhMyOpenSource! e non possono essere riprodotti senza
-        autorizzazione scritta, salvo quanto consentito dalla licenza open source applicabile.
-      </p>
-      <p class="mt-3">
-        I dati accademici visualizzati sulla Piattaforma rimangono di proprietà degli atenei
-        convenzionati e degli utenti a cui si riferiscono. OhMyUniversity non rivendica alcun
-        diritto su tali dati.
-      </p>
+      <h2 appText class="mb-3 text-base font-bold text-gray-900">6. Proprietà intellettuale</h2>
+      <p appText>{{ ip.paragraph1 }}</p>
+      <p appText class="mt-3">{{ ip.paragraph2 }}</p>
     </section>
 
     <!-- 7 -->
     <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">
+      <h2 appText class="mb-3 text-base font-bold text-gray-900">
         7. Piani a pagamento per Organizzazioni
       </h2>
-      <p>
-        Le condizioni economiche, la durata e i livelli di servizio dei piani a pagamento per
-        Organizzazioni sono disciplinati dal contratto specifico stipulato tra il Gestore e
-        l'Organizzazione. In caso di conflitto tra i presenti Termini e il contratto specifico,
-        prevale quest'ultimo limitatamente alle materie da esso disciplinate.
-      </p>
-      <p class="mt-3">
-        Il mancato pagamento delle somme dovute può comportare la sospensione o la disattivazione
-        dell'accesso dell'Organizzazione, previa comunicazione con preavviso di 15 giorni.
-      </p>
+      <p appText>{{ paidPlans.paragraph1 }}</p>
+      <p appText class="mt-3">{{ paidPlans.paragraph2 }}</p>
     </section>
 
     <!-- 8 -->
     <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">8. Limitazione di responsabilità</h2>
-      <p>
-        Nei limiti consentiti dalla legge applicabile, il Gestore non è responsabile per danni
-        indiretti, incidentali o consequenziali derivanti dall'utilizzo o dall'impossibilità di
-        utilizzo della Piattaforma, inclusa la perdita di dati, interruzioni del servizio o errori
-        nei dati accademici visualizzati.
-      </p>
+      <h2 appText class="mb-3 text-base font-bold text-gray-900">
+        8. Limitazione di responsabilità
+      </h2>
+      <p appText>{{ liability }}</p>
     </section>
 
     <!-- 9 -->
     <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">9. Modifiche ai termini</h2>
-      <p>
-        Il Gestore si riserva il diritto di modificare i presenti Termini in qualsiasi momento. Le
-        modifiche sostanziali saranno comunicate agli utenti registrati con almeno 15 giorni di
-        preavviso tramite email o notifica in-app. Il proseguimento dell'utilizzo della Piattaforma
-        successivamente alla data di entrata in vigore delle modifiche costituisce accettazione dei
-        nuovi Termini.
-      </p>
+      <h2 appText class="mb-3 text-base font-bold text-gray-900">9. Modifiche ai termini</h2>
+      <p appText>{{ changes }}</p>
     </section>
 
     <!-- 10 -->
     <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">
+      <h2 appText class="mb-3 text-base font-bold text-gray-900">
         10. Legge applicabile e foro competente
       </h2>
-      <p>
-        I presenti Termini sono disciplinati dalla legge italiana. Per qualsiasi controversia
-        derivante dall'interpretazione o dall'esecuzione dei presenti Termini, le parti concordano
-        sulla competenza esclusiva del Foro di Roma, salvo diversa disposizione inderogabile di
-        legge a tutela dei consumatori.
-      </p>
+      <p appText>{{ jurisdiction }}</p>
     </section>
 
     <!-- 11 -->
     <section>
-      <h2 class="mb-3 text-base font-bold text-gray-900">11. Contatti</h2>
-      <p>
+      <h2 appText class="mb-3 text-base font-bold text-gray-900">11. Contatti</h2>
+      <p appText>
         Per qualsiasi domanda relativa ai presenti Termini puoi scriverci a
-        <a href="mailto:{{ contactEmail }}" class="text-blue-600 hover:underline">{{
-          contactEmail
-        }}</a
-        >.
+        <app-custom-email [email]="contactEmail" size="sm" />.
       </p>
     </section>
 
-    <!-- Link correlati -->
-    <div class="rounded-xl border border-gray-100 bg-gray-50 p-5">
-      <p class="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-400">
+    <!-- Related Links -->
+    <app-custom-card variant="default" padding="lg" shadow="none">
+      <p appText class="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-400">
         Documenti correlati
       </p>
-      <div class="flex flex-wrap gap-4">
-        <a routerLink="/privacy-policy" class="text-sm text-blue-600 hover:underline"
-          >Privacy Policy</a
-        >
-        <a routerLink="/cookie-policy" class="text-sm text-blue-600 hover:underline"
-          >Cookie Policy</a
-        >
+      <div class="flex flex-wrap gap-5">
+        @for (doc of relatedDocs; track doc.label) {
+          <app-custom-link mode="internal" [href]="doc.url" [label]="doc.label" size="sm" />
+        }
       </div>
-    </div>
+    </app-custom-card>
   </div>
 </div>

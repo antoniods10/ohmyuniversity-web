@@ -1,16 +1,15 @@
 import { CardVariant } from '@ui/custom-card/custom-card.component';
+import { PersonBase, ContentBase, Icon } from '@shared/types';
 
-export interface TeamMember {
-  name: string;
+/** Team member profile */
+export interface TeamMember extends PersonBase {
   initials: string;
   avatarSrc?: string;
-  role: string;
   bio: string;
 }
 
-export interface TeamValue {
-  icon: any;
+/** Value card displayed in the team section */
+export interface TeamValue extends ContentBase {
+  icon: Icon;
   variant: CardVariant;
-  title: string;
-  description: string;
 }

@@ -1,0 +1,204 @@
+<aside
+  class="flex flex-col h-full transition-all duration-200 ease-in-out"
+  [class]="
+    isMobileOpen()
+      ? 'fixed top-0 left-0 h-full z-50 w-60 min-w-60'
+      : open()
+        ? 'w-60 min-w-60'
+        : 'w-15 min-w-15'
+  "
+  style="background: var(--color-neutral-100); border-right: 1px solid var(--color-neutral-200)">
+  <!-- Brand -->
+  <div
+    class="flex items-center gap-2.5 px-4 py-2.5 overflow-hidden shrink-0"
+    style="border-bottom: 1px solid var(--color-neutral-200)">
+    <img [src]="APP.logo" [alt]="APP.name" class="h-8 w-8 shrink-0" />
+    @if (open()) {
+      <span
+        class="whitespace-nowrap font-bold text-sm tracking-tight truncate"
+        style="font-family: var(--font-heading); color: var(--color-neutral-900)">
+        {{ APP.name }}
+      </span>
+    }
+  </div>
+
+  <!-- Toggle -->
+  <div style="border-bottom: 1px solid var(--color-neutral-200)">
+    <app-custom-button
+      variant="flat"
+      size="sm"
+      [iconOnly]="true"
+      [fullWidth]="true"
+      [icon]="open() ? iconPanelClose : iconPanelOpen"
+      [ariaLabel]="open() ? 'Chiudi menu' : 'Apri menu'"
+      (clicked)="toggleSidebar.emit()" />
+  </div>
+
+  <!-- Main nav -->
+  <nav
+    class="flex-1 overflow-y-auto overflow-x-hidden py-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    aria-label="Menu principale">
+    <ul class="list-none m-0 p-0">
+      @for (item of sidebarItems; track item.id) {
+        <li>
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="sidebar-item-active"
+            #rla="routerLinkActive"
+            [routerLinkActiveOptions]="{ exact: item.id === 'dashboard' }"
+            [attr.title]="!open() ? item.label : null"
+            class="flex items-center gap-2.5 py-1.5 mx-2 rounded-xl no-underline text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-150 group"
+            [class]="open() ? 'px-2' : 'justify-center px-0'"
+            [style]="rla.isActive ? linkActiveBgStyle(item) : ''"
+            (click)="linkClicked.emit()">
+            <!-- Icon wrapper -->
+            <span
+              class="flex items-center justify-center w-7 h-7 rounded-lg shrink-0 transition-all duration-150"
+              [style]="rla.isActive ? iconActiveStyle(item) : iconColorStyle(item)">
+              <ng-container *ngComponentOutlet="item.icon; inputs: { size: 18 }" />
+            </span>
+
+            @if (open()) {
+              <span
+                class="flex-1 overflow-hidden text-ellipsis text-sm transition-colors duration-150"
+                [style]="
+                  rla.isActive
+                    ? 'color: var(--color-neutral-900); font-weight: 600;'
+                    : 'color: var(--color-neutral-500)'
+                ">
+                {{ item.label }}
+              </span>
+            }
+          </a>
+
+          @if (item.dividerAfter) {
+            <div class="h-px mx-3 my-1.5" style="background: var(--color-neutral-200)"></div>
+          }
+        </li>
+      }
+    </ul>
+  </nav>
+
+  <!-- Bottom nav -->
+  <div class="shrink-0 py-2" style="border-top: 1px solid var(--color-neutral-200)">
+    <ul class="list-none m-0 p-0">
+      @for (item of sidebarBottomItems; track item.id) {
+        <li>
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="sidebar-item-active"
+            #rla="routerLinkActive"
+            [routerLinkActiveOptions]="{ exact: false }"
+            [attr.title]="!open() ? item.label : null"
+            class="flex items-center gap-2.5 py-1.5 mx-2 rounded-xl no-underline text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-150"
+            [class]="open() ? 'px-2' : 'justify-center px-0'"
+            [style]="rla.isActive ? linkActiveBgStyle(item) : ''"
+            (click)="linkClicked.emit()">
+            <span
+              class="flex items-center justify-center w-7 h-7 rounded-lg shrink-0 transition-all duration-150"
+              [style]="rla.isActive ? iconActiveStyle(item) : iconColorStyle(item)">
+              <ng-container *ngComponentOutlet="item.icon; inputs: { size: 18 }" />
+            </span>
+
+            @if (open()) {
+              <span
+                class="flex-1 overflow-hidden text-ellipsis text-sm transition-colors duration-150"
+                [style]="
+                  rla.isActive
+                    ? 'color: var(--color-neutral-900); font-weight: 600;'
+                    : 'color: var(--color-neutral-500)'
+                ">
+                {{ item.label }}
+              </span>
+            }
+          </a>
+        </li>
+      }
+    </ul>
+  </div>
+
+  <!-- User Profile -->
+  <div class="shrink-0" style="border-top: 1px solid var(--color-neutral-200)">
+    @if (open()) {
+      <div class="flex items-stretch">
+        <div
+          class="flex items-center gap-2.5 flex-1 min-w-0 px-3 py-2.5 transition-colors duration-150 cursor-pointer hover:bg-neutral-100"
+          (click)="goToProfile()"
+          role="button"
+          tabindex="0"
+          (keydown.enter)="goToProfile()"
+          [attr.aria-label]="'Apri profilo di ' + currentAccount().name">
+          <app-custom-avatar
+            [src]="currentAccount().avatarSrc ?? ''"
+            [name]="currentAccount().name"
+            [variant]="variantFor(currentAccount().status)"
+            [showRing]="true"
+            ringSize="sm"
+            [ringGap]="true"
+            [ringColor]="ringColorFor(currentAccount().status)"
+            size="sm"
+            shape="circle"
+            [clickable]="false" />
+          <div class="flex-1 min-w-0 flex flex-col gap-0">
+            <span class="text-xs font-semibold truncate" style="color: var(--color-neutral-900)">
+              {{ currentAccount().name }}
+            </span>
+            <span class="text-[0.7rem] truncate" style="color: var(--color-neutral-400)">
+              {{ currentAccount().courseAcronym }} · {{ currentAccount().universityLabel }}
+            </span>
+          </div>
+        </div>
+
+        <div class="w-px self-stretch my-2" style="background: var(--color-neutral-200)"></div>
+
+        <app-custom-button
+          variant="error"
+          size="md"
+          rounded="none"
+          [iconOnly]="true"
+          [icon]="iconLogout"
+          ariaLabel="Esci dall'account"
+          (clicked)="onLogout()"
+          class="shrink-0 w-12" />
+      </div>
+
+      <div class="relative">
+        <div class="absolute bottom-0 left-0 z-50">
+          <app-avatar-profile-panel
+            #profilePanelRef
+            [openDirection]="'up'"
+            [accounts]="accounts()"
+            [darkTheme]="false"
+            [position]="'right'"
+            [showAddAccount]="false"
+            [showSettings]="false"
+            [showLogout]="false"
+            (accountSwitch)="onAccountSwitch($event)"
+            (currentAccountClick)="goToProfile()" />
+        </div>
+      </div>
+    } @else {
+      <div class="flex flex-col items-center py-2 gap-2">
+        <app-avatar-profile-panel
+          [openDirection]="'up'"
+          [accounts]="accounts()"
+          [darkTheme]="false"
+          [position]="'right'"
+          [showAddAccount]="false"
+          [showSettings]="false"
+          [showLogout]="false"
+          (accountSwitch)="onAccountSwitch($event)"
+          (currentAccountClick)="goToProfile()" />
+
+        <app-custom-button
+          variant="error"
+          size="lg"
+          rounded="sm"
+          [iconOnly]="true"
+          [icon]="iconLogout"
+          ariaLabel="Esci dall'account"
+          (clicked)="onLogout()" />
+      </div>
+    }
+  </div>
+</aside>

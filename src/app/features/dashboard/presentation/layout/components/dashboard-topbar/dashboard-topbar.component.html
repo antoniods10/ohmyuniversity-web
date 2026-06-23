@@ -1,0 +1,152 @@
+<header
+  class="flex items-center justify-between h-13 px-5 shrink-0 z-5"
+  style="background: white; border-bottom: 1px solid var(--color-neutral-200)">
+  <!-- Left — Breadcrumb -->
+  <nav aria-label="Breadcrumb">
+    <ol class="flex items-center gap-1 list-none m-0 p-0">
+      <!-- Root -->
+      <li class="flex items-center">
+        <a
+          routerLink="/dashboard"
+          class="flex items-center gap-1.5 text-[0.8rem] font-medium no-underline transition-colors duration-150"
+          style="color: var(--color-neutral-400)"
+          (mouseenter)="rootHovered = true"
+          (mouseleave)="rootHovered = false"
+          [style.color]="rootHovered ? 'var(--color-primary-dark)' : 'var(--color-neutral-400)'"
+          aria-label="Dashboard">
+          <svg [lucideIcon]="iconHome" [size]="14" aria-hidden="true"></svg>
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+      <!-- Dynamic Segment -->
+      @for (crumb of breadcrumbs(); track crumb.path; let last = $last) {
+        <!-- Divider -->
+        <li class="flex items-center" aria-hidden="true">
+          <svg [lucideIcon]="iconChevron" [size]="13" style="color: var(--color-neutral-300)"></svg>
+        </li>
+
+        <li class="flex items-center">
+          @if (last) {
+            <!-- Last Segment -->
+            <span
+              class="text-[0.8rem] font-semibold"
+              style="color: var(--color-neutral-700)"
+              aria-current="page">
+              {{ crumb.label }}
+            </span>
+          } @else {
+            <!-- Mid Segments -->
+            <a
+              [routerLink]="crumb.path"
+              class="text-[0.8rem] font-medium no-underline transition-colors duration-150"
+              style="color: var(--color-neutral-400)"
+              (mouseenter)="crumb.hovered = true"
+              (mouseleave)="crumb.hovered = false"
+              [style.color]="
+                crumb.hovered ? 'var(--color-primary-dark)' : 'var(--color-neutral-400)'
+              ">
+              {{ crumb.label }}
+            </a>
+          }
+        </li>
+      }
+    </ol>
+  </nav>
+
+  <!-- Right — actions -->
+  <div class="flex items-center gap-1">
+    <!-- Notifications -->
+    <div class="relative">
+      <app-custom-button
+        variant="ghost"
+        size="sm"
+        [iconOnly]="true"
+        [icon]="iconBell"
+        [attr.aria-label]="notificationCount + ' notifiche non lette'"
+        (click)="notifModal.open()"
+        (keydown.enter)="notifModal.open()" />
+
+      @if (notificationCount > 0) {
+        <span class="absolute top-0.5 right-0.5 pointer-events-none">
+          <app-custom-badge [count]="notificationCount" variant="error" size="xs" shape="pill" />
+        </span>
+      }
+    </div>
+  </div>
+</header>
+
+<!-- Drawer Notifications -->
+<app-custom-modal
+  #notifModal
+  type="drawer-right"
+  [showCloseButton]="true"
+  [closeOnBackdrop]="true"
+  [closeOnEsc]="true">
+  <!-- Header drawer -->
+  <div class="flex items-center justify-between mb-5">
+    <div class="flex items-center gap-2">
+      <svg
+        [lucideIcon]="iconBell"
+        [size]="18"
+        style="color: var(--color-primary-dark)"
+        aria-hidden="true"></svg>
+      <h2
+        appText
+        class="text-base font-bold m-0"
+        style="color: var(--color-neutral-900); font-family: var(--font-heading)">
+        Notifiche
+      </h2>
+    </div>
+    <app-custom-badge [count]="notificationCount" variant="error" size="sm" shape="pill" />
+  </div>
+
+  <!-- Mock Notifications -->
+  <ul class="list-none m-0 p-0 flex flex-col gap-2">
+    @for (notif of notifications; track notif.id) {
+      <li
+        class="flex gap-3 p-3 rounded-xl transition-colors duration-150 cursor-pointer"
+        style="background: var(--color-neutral-100); border: 1px solid var(--color-neutral-200)">
+        <!-- Dot - not read -->
+        <div class="shrink-0 pt-1.5">
+          @if (!notif.read) {
+            <span
+              class="block w-2 h-2 rounded-full"
+              style="background: var(--color-primary-dark)"></span>
+          } @else {
+            <span
+              class="block w-2 h-2 rounded-full"
+              style="background: var(--color-neutral-300)"></span>
+          }
+        </div>
+
+        <!-- Content -->
+        <div class="flex-1 min-w-0 flex flex-col gap-0.5">
+          <span class="text-[0.82rem] font-semibold" style="color: var(--color-neutral-900)">
+            {{ notif.title }}
+          </span>
+          <span class="text-[0.75rem]" style="color: var(--color-neutral-500)">
+            {{ notif.body }}
+          </span>
+          <span class="text-[0.68rem] mt-0.5" style="color: var(--color-neutral-400)">
+            {{ notif.time }}
+          </span>
+        </div>
+
+        <!-- Icon Category -->
+        <div class="shrink-0 flex items-start pt-0.5">
+          <svg
+            [lucideIcon]="notif.icon"
+            [size]="14"
+            [style.color]="notif.color"
+            aria-hidden="true"></svg>
+        </div>
+      </li>
+    }
+  </ul>
+
+  <!-- Footer -->
+  <div class="mt-4 pt-4" style="border-top: 1px solid var(--color-neutral-200)">
+    <app-custom-button variant="flat" size="sm" label="Segna tutte come lette" class="w-full" />
+  </div>
+</app-custom-modal>

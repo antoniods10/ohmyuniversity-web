@@ -1,5 +1,15 @@
+<!-- Summary View -->
+@if (showSummary()) {
+  <app-orientation-summary (backToList)="closeSummary()" (viewResult)="openResult()" />
+}
+
+<!-- Result View -->
+@if (showResult()) {
+  <app-orientation-result (backToSummary)="closeResult()" />
+}
+
 <!-- List View -->
-@if (!activeTopic()) {
+@if (!activeTopic() && !showSummary() && !showResult()) {
   <div class="mx-auto max-w-2xl px-4 py-12 sm:px-6 lg:px-8">
     <div class="mb-10 text-center">
       <app-custom-badge
@@ -18,7 +28,7 @@
       </div>
     </div>
 
-    <!-- Args List -->
+    <!-- Topic list -->
     <div class="space-y-2">
       @for (topic of topics; track topic.id) {
         <app-card-nav
@@ -28,6 +38,41 @@
           [clickable]="true"
           (cardClick)="open(topic.id)" />
       }
+    </div>
+
+    <!-- Summary card -->
+    <div class="mt-6">
+      <app-card-status
+        statusVariant="info"
+        [icon]="iconSummary"
+        [title]="
+          answeredCount() === 0 ? 'Inizia il tuo percorso di orientamento' : 'Le tue risposte'
+        "
+        [description]="
+          answeredCount() === 0
+            ? 'Rispondi alle domande nei vari argomenti per ricevere un profilo personalizzato.'
+            : answeredCount() + ' di ' + totalCount() + ' domande completate'
+        "
+        shadow="sm"
+        padding="md">
+        <div class="mt-4 flex flex-col gap-3">
+          @if (answeredCount() > 0) {
+            <!-- Progress bar - no custom component available for this -->
+            <div class="h-1.5 w-full overflow-hidden rounded-full bg-blue-100">
+              <div
+                class="h-full rounded-full bg-blue-500 transition-all duration-300"
+                [style.width.%]="(answeredCount() / totalCount()) * 100"></div>
+            </div>
+          }
+          <app-custom-button
+            [label]="answeredCount() === 0 ? 'Inizia la guida' : 'Vedi riepilogo'"
+            variant="primary"
+            rounded="lg"
+            size="sm"
+            [fullWidth]="true"
+            (clicked)="openSummaryOrStart()" />
+        </div>
+      </app-card-status>
     </div>
 
     <div class="mt-8 text-center">
@@ -44,9 +89,9 @@
   <div class="sticky top-0 z-10 border-b border-gray-100 bg-white px-4 py-3 sm:px-6 lg:px-8">
     <div class="mx-auto max-w-2xl">
       <div class="mb-1.5 flex items-center justify-between">
-        <span appText variant="caption" color="subtle"
-          >{{ activeIndex() + 1 }} di {{ topics.length }}</span
-        >
+        <span appText variant="caption" color="subtle">
+          {{ activeIndex() + 1 }} di {{ topics.length }}
+        </span>
         <span appText variant="caption" weight="semibold">{{ topics[activeIndex()].title }}</span>
       </div>
       <div class="h-1 w-full overflow-hidden rounded-full bg-gray-100">
@@ -58,7 +103,7 @@
   </div>
 }
 
-<!-- Args Details -->
+<!-- Topic Detail -->
 <div class="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:px-8">
   @if (activeTopic() === 'corso') {
     <app-topic-corso
@@ -102,6 +147,23 @@
   }
   @if (activeTopic() === 'errori') {
     <app-topic-errori
+      [hasPrev]="hasPrev()"
+      [hasNext]="hasNext()"
+      (prev)="prev()"
+      (next)="next()"
+      (backToList)="close()"
+      (goToSummary)="openSummary()" />
+  }
+  @if (activeTopic() === 'borse-studio') {
+    <app-topic-budget
+      [hasPrev]="hasPrev()"
+      [hasNext]="hasNext()"
+      (prev)="prev()"
+      (next)="next()"
+      (backToList)="close()" />
+  }
+  @if (activeTopic() === 'costi-geografici') {
+    <app-topic-costi-geografici
       [hasPrev]="hasPrev()"
       [hasNext]="hasNext()"
       (prev)="prev()"

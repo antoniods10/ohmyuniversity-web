@@ -1,0 +1,13 @@
+<!--
+@file custom-email.component.html
+@description Template for CustomEmailComponent rendering a mailto link
+with optional leading icon and accessible labeling.
+-->
+<a [href]="mailtoHref" [ngClass]="emailClasses" [attr.aria-label]="'Invia email a ' + email">
+  @if (showIcon) {
+    <span class="email-link__icon" aria-hidden="true">
+      <svg [lucideIcon]="mailIcon" [size]="iconSize"></svg>
+    </span>
+  }
+  <span class="email-link__text">{{ displayLabel }}</span>
+</a>

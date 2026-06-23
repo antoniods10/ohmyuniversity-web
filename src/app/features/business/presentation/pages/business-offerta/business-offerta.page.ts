@@ -1,15 +1,28 @@
 import { Component } from '@angular/core';
 import { BusinessCtaComponent } from '../../components/business-cta/business-cta.component';
 import { BusinessHeroComponent } from '../../components/business-hero/business-hero.component';
-import { BUSINESS_OFFERS, BUSINESS_DIFFERENTIATORS } from '@constants';
+import {
+  CardSimpleComponent,
+  CardStatusComponent,
+  CardStatComponent,
+} from '@ui/custom-card/card-variants.component';
+import { BUSINESS_OFFERS, BUSINESS_DIFFERENTIATORS, APP } from '@shared/constants';
 
 @Component({
   selector: 'app-business-offerta-page',
   standalone: true,
-  imports: [BusinessHeroComponent, BusinessCtaComponent],
+  imports: [
+    BusinessHeroComponent,
+    BusinessCtaComponent,
+    CardSimpleComponent,
+    CardStatusComponent,
+    CardStatComponent,
+  ],
   templateUrl: './business-offerta.page.html',
 })
 export class BusinessOffertaPage {
+  readonly APP = APP;
+
   readonly offers = BUSINESS_OFFERS;
   readonly differentiators = BUSINESS_DIFFERENTIATORS;
 }

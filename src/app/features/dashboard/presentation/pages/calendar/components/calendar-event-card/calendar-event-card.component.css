@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+:host ::ng-deep app-custom-card {
+  display: block;
+  height: 100%;
+}
+
+:host ::ng-deep app-custom-card .card {
+  height: 100%;
+  box-sizing: border-box;
+}

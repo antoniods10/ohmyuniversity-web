@@ -1,3 +1,6 @@
+import { LinkBase } from '@shared/types';
+
+/** Chat room */
 export interface ChatRoom {
   id: string;
   courseAcronym: string;
@@ -10,6 +13,7 @@ export interface ChatRoom {
   online: number;
 }
 
+/** Message in a chat room */
 export interface ChatMessage {
   id: string;
   sender: string;
@@ -20,12 +24,14 @@ export interface ChatMessage {
   attachment?: string;
 }
 
+/** Member of a chat room */
 export interface ChatMember {
   name: string;
   role: 'student' | 'professor';
   status: 'online' | 'offline';
 }
 
+/** Shared file in a chat room */
 export interface SharedFile {
   name: string;
   size: string;
@@ -33,9 +39,8 @@ export interface SharedFile {
   time: string;
 }
 
-export interface SharedLink {
-  title: string;
-  url: string;
+/** Shared link in a chat room */
+export interface SharedLink extends LinkBase {
   sender: string;
   time: string;
 }

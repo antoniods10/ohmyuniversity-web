@@ -1,0 +1,38 @@
+<div class="flex flex-col gap-4">
+  <app-card-status
+    statusVariant="info"
+    [icon]="iconShield"
+    title="Gestione sessioni in arrivo"
+    description="La visualizzazione e revoca delle sessioni attive sarà disponibile a breve." />
+
+  <app-custom-card variant="default" padding="md" shadow="sm" [bordered]="true" radius="lg">
+    <div class="flex items-center gap-3 mb-4">
+      <div
+        class="flex items-center justify-center w-9 h-9 rounded-lg shrink-0"
+        style="background: var(--color-primary-light)">
+        <svg
+          [lucideIcon]="iconShield"
+          [size]="16"
+          style="color: var(--color-primary-dark)"
+          aria-hidden="true"></svg>
+      </div>
+      <div>
+        <h3 appText variant="h6" class="m-0">Sessioni attive</h3>
+        <p appText variant="caption" color="muted" class="m-0">Dispositivi attualmente connessi</p>
+      </div>
+    </div>
+    <app-custom-card variant="success" padding="sm" shadow="none" [bordered]="true">
+      <div class="flex items-center justify-between gap-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="text-[0.82rem] font-semibold" style="color: var(--color-neutral-900)">
+              Sessione corrente
+            </span>
+            <app-custom-badge label="Attiva" variant="success" size="xs" shape="pill" />
+          </div>
+          <p class="text-[0.72rem] m-0" style="color: var(--color-neutral-400)">Accesso in corso</p>
+        </div>
+      </div>
+    </app-custom-card>
+  </app-custom-card>
+</div>

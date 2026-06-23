@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 // Public
 import { PublicLayoutComponent } from './core/layout/public-layout/public-layout.component';
@@ -34,10 +35,10 @@ import { TermsPage } from './features/legal/presentation/pages/terms-conditions/
 import { DashboardLayoutComponent } from './features/dashboard/presentation/layout/dashboard-layout.component';
 
 // Dashboard Pages
-import { DashboardHomePage } from './features/dashboard/presentation/pages/home/home.page';
-import { CareerPage } from './features/dashboard/presentation/pages/career/career.page';
-import { ExamsPage } from './features/dashboard/presentation/pages/exams/exams.page';
-import { AgendaPage } from './features/dashboard/presentation/pages/agenda/agenda.page';
+import { DashboardHomePage } from './features/dashboard/presentation/pages/home/pages/home.page';
+import { CareerPage } from './features/dashboard/presentation/pages/career/pages/career.page';
+import { ExamsPage } from './features/dashboard/presentation/pages/exams/pages/exams.page';
+import { CalendarPage } from './features/dashboard/presentation/pages/calendar/calendar.page';
 import { SchedulePage } from './features/dashboard/presentation/pages/schedule/schedule.page';
 
 // =============================================
@@ -159,7 +160,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardLayoutComponent,
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
     children: [
       {
         path: '',
@@ -175,7 +176,7 @@ export const routes: Routes = [
       },
       {
         path: 'agenda',
-        component: AgendaPage,
+        component: CalendarPage,
       },
       {
         path: 'orario-lezioni',

@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 import { AboutCtaComponent } from './about-cta.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { By } from '@angular/platform-browser';
+import { APP } from '@shared/constants';
 
 describe('AboutCtaComponent', () => {
   let component: AboutCtaComponent;
@@ -42,7 +43,8 @@ describe('AboutCtaComponent', () => {
   it('should render the body paragraph', () => {
     const p = fixture.nativeElement.querySelector('p');
     expect(p).not.toBeNull();
-    expect(p.textContent).toContain('OhMyUniversity è aperto a contributi');
+    expect(p.textContent).toContain(APP.name);
+    expect(p.textContent).toContain('è aperto a contributi');
   });
 
   it('should render exactly two app-custom-button elements', () => {

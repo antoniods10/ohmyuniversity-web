@@ -18,6 +18,7 @@ import {
   LucideDownload,
   LucideArrowLeft,
   LucideChevronRight,
+  LucideTriangleAlert,
 } from '@lucide/angular';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 
@@ -36,11 +37,14 @@ import {
   MOCK_SHARED_LINKS,
 } from '@shared/data/mock/chat.mock';
 import { acronymVariant } from '@shared/utils/ui.utils';
+import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
+import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
   imports: [
+    DashboardContainerComponent,
     NgTemplateOutlet,
     CustomCardComponent,
     CustomBadgeComponent,
@@ -51,10 +55,13 @@ import { acronymVariant } from '@shared/utils/ui.utils';
     CustomAvatarComponent,
     CustomModalComponent,
     LucideDynamicIcon,
+    CardStatusComponent,
   ],
   templateUrl: './chat.page.html',
 })
 export class ChatPage {
+  readonly lucideAlertTriangle = LucideTriangleAlert;
+
   readonly iconSearch = LucideSearch;
   readonly iconSend = LucideSend;
   readonly iconPaperclip = LucidePaperclip;

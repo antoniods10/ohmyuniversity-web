@@ -1,58 +1,50 @@
-export interface Step {
-  number: number;
-  title: string;
-  description: string;
+import { CardVariant } from '@ui/custom-card/custom-card.component';
+import { IconContentBase, StepBase, Icon } from '@shared/types';
+
+/** A generic numbered step */
+export type Step = StepBase;
+
+/** Onboarding step with estimated duration */
+export interface OnboardingStep extends StepBase {
+  duration: string;
 }
 
+/** Targeting option for campaign configuration */
 export interface TargetingOption {
   label: string;
   description: string;
   available: 'tutti' | 'professional' | 'enterprise';
 }
 
-export interface OnboardingStep {
-  number: number;
-  title: string;
-  description: string;
-  duration: string;
+/** Metric card displayed in the analytics section */
+export interface AnalyticsMetric {
+  icon: Icon;
+  label: string;
+  desc: string;
+  variant: CardVariant;
 }
 
+/** Requirement entry filtered by organization type */
 export interface Requirement {
   label: string;
   forType: 'azienda' | 'collettivo' | 'entrambi';
 }
 
-export interface OfferCard {
-  emoji: string;
-  title: string;
-  description: string;
-}
+/** Generic icon+content card — offer, differentiator, use case */
+export type OfferCard = IconContentBase;
+export type Differentiator = IconContentBase;
+export type UseCase = IconContentBase;
 
-export interface Differentiator {
-  title: string;
-  description: string;
-}
-
-export interface UserTypeBusiness {
-  emoji: string;
-  title: string;
-  description: string;
+/** Business user type card with CTA */
+export interface UserTypeBusiness extends IconContentBase {
   action: string;
   actionLink: string;
   isExternal: boolean;
   highlight: boolean;
 }
 
-export interface ContactChannel {
-  emoji: string;
-  title: string;
-  description: string;
+/** Contact channel with value and href */
+export interface ContactChannel extends IconContentBase {
   value: string;
   href: string;
-}
-
-export interface UseCase {
-  emoji: string;
-  title: string;
-  description: string;
 }
