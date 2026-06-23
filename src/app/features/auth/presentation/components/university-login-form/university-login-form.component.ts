@@ -11,6 +11,7 @@ import { ToastService } from '@ui/custom-toast/toast.service';
 import { AuthFacade } from '../../../application/facades/auth.facade';
 import { APP, UNIVERSITIES } from '@constants';
 import { University } from '@types';
+import { Router } from '@angular/router';
 
 type UniversityTab = 'ateneo' | 'spid' | 'cie';
 
@@ -32,6 +33,7 @@ export class UniversityLoginFormComponent {
   readonly APP = APP;
   private readonly auth = inject(AuthFacade);
   private readonly toast = inject(ToastService);
+  private readonly router = inject(Router);
 
   readonly iconShield = LucideShieldCheck;
   readonly iconCie = LucideIdCard;
@@ -105,12 +107,15 @@ export class UniversityLoginFormComponent {
 
     this.auth
       .login({
-        universityId: this.selectedUniversity!.id,
+        universityId: this.selectedUniversity!.id.toUpperCase(),
         username,
         password: this.password,
       })
       .subscribe({
-        next: () => {},
+        next: () => {
+          this.isLoading = false;
+          this.router.navigate(['/dashboard']);
+        },
         error: err => {
           this.isLoading = false;
           if (err.status === 401) {
