@@ -3,7 +3,12 @@ import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
-import { LucideChevronLeft, LucideChevronRight } from '@lucide/angular';
+import {
+  LucideBookmark,
+  LucideChevronLeft,
+  LucideChevronRight,
+  LucideDynamicIcon,
+} from '@lucide/angular';
 import type { CalendarEvent } from '@shared/types/dashboard/calendar.types';
 import {
   calendarEventTypeVariant,
@@ -16,7 +21,7 @@ import {
 
 const MAX_VISIBLE_EVENTS_PER_CELL = 2;
 
-/** Max badge label length per breakpoint, narrower screens get a shorter truncation */
+/** Max badge label length per breakpoint — narrower screens get a shorter truncation */
 const LABEL_LENGTH_MOBILE = 6;
 const LABEL_LENGTH_TABLET = 10;
 const LABEL_LENGTH_DESKTOP = 14;
@@ -42,7 +47,13 @@ function truncateLabel(label: string, maxLength: number): string {
 @Component({
   selector: 'app-calendar-month-view',
   standalone: true,
-  imports: [CustomCardComponent, CustomBadgeComponent, CustomTextComponent, CustomButtonComponent],
+  imports: [
+    CustomCardComponent,
+    CustomBadgeComponent,
+    CustomTextComponent,
+    CustomButtonComponent,
+    LucideDynamicIcon,
+  ],
   templateUrl: './calendar-month-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -56,6 +67,7 @@ export class CalendarMonthViewComponent {
   readonly weekdayLabels = WEEKDAY_LABELS;
   readonly iconPrevious = LucideChevronLeft;
   readonly iconNext = LucideChevronRight;
+  readonly iconToday = LucideBookmark;
 
   readonly calendarEventTypeVariant = calendarEventTypeVariant;
 
