@@ -1,7 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { TermsPage } from './terms-conditions.page';
 import { provideRouter } from '@angular/router';
 import { LEGAL_CONTACT_EMAIL, LEGAL_UPDATE } from '@constants';
+import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
+import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 
 describe('TermsPage', () => {
   let component: TermsPage;
@@ -45,9 +48,14 @@ describe('TermsPage', () => {
   });
 
   it('should render the warning banner about acceptance of terms', () => {
-    const banner = fixture.nativeElement.querySelector('.bg-amber-50');
-    expect(banner).not.toBeNull();
-    expect(banner.textContent).toContain('accettazione integrale');
+    const statusCards = fixture.debugElement.queryAll(By.directive(CardStatusComponent));
+    const introBanner = statusCards.find(
+      de => (de.componentInstance as CardStatusComponent).description === component.introWarning,
+    );
+
+    expect(introBanner).not.toBeUndefined();
+    expect((introBanner!.componentInstance as CardStatusComponent).statusVariant).toBe('warning');
+    expect(component.introWarning).toContain('accettazione integrale');
   });
 
   it('should render all 11 section headings', () => {
@@ -83,9 +91,13 @@ describe('TermsPage', () => {
     expect(fixture.nativeElement.textContent).toContain('Natura del servizio');
   });
 
-  it('should render the amber disclaimer banner in section 5', () => {
-    const banners = fixture.nativeElement.querySelectorAll('.bg-amber-50');
-    expect(banners.length).toBeGreaterThanOrEqual(1);
+  it('should render two warning status cards (intro and section 5 availability)', () => {
+    const statusCards = fixture.debugElement.queryAll(By.directive(CardStatusComponent));
+    const warningCards = statusCards.filter(
+      de => (de.componentInstance as CardStatusComponent).statusVariant === 'warning',
+    );
+
+    expect(warningCards.length).toBe(2);
   });
 
   it('should render the contact email as a mailto link', () => {
@@ -106,8 +118,12 @@ describe('TermsPage', () => {
     expect(fixture.nativeElement.textContent).toContain('Cookie Policy');
   });
 
-  it('should render the related documents section', () => {
-    const relatedSection = fixture.nativeElement.querySelector('.bg-gray-50');
-    expect(relatedSection).not.toBeNull();
+  it('should render the related documents section as an app-custom-card', () => {
+    const cards = fixture.debugElement.queryAll(By.directive(CustomCardComponent));
+    const relatedDocsCard = cards.find(de =>
+      (de.nativeElement as HTMLElement).textContent?.includes('Documenti correlati'),
+    );
+
+    expect(relatedDocsCard).not.toBeUndefined();
   });
 });

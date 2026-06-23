@@ -1,10 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { PricingGuarantees } from './pricing-guarantees.component';
+import { CardSimpleComponent } from '@ui/custom-card/card-variants.component';
 
 describe('PricingGuarantees', () => {
   let component: PricingGuarantees;
   let fixture: ComponentFixture<PricingGuarantees>;
   let nativeEl: HTMLElement;
+  let cards: CardSimpleComponent[];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -14,15 +17,19 @@ describe('PricingGuarantees', () => {
     fixture = TestBed.createComponent(PricingGuarantees);
     component = fixture.componentInstance;
     nativeEl = fixture.nativeElement;
+    fixture.detectChanges();
     await fixture.whenStable();
+
+    cards = fixture.debugElement
+      .queryAll(By.directive(CardSimpleComponent))
+      .map(de => de.componentInstance as CardSimpleComponent);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render exactly 3 guarantee cards', () => {
-    const cards = nativeEl.querySelectorAll('div.text-center');
+  it('should render exactly 3 app-card-simple cards', () => {
     expect(cards.length).toBe(3);
   });
 
@@ -31,140 +38,77 @@ describe('PricingGuarantees', () => {
     expect(grid).not.toBeNull();
   });
 
-  it('should render the "Pagamenti sicuri" emoji', () => {
-    const emojis = nativeEl.querySelectorAll('p.text-2xl');
-    expect(emojis[0].textContent?.trim()).toBe('🔒');
-  });
+  describe('"Pagamenti sicuri" card', () => {
+    it('should receive the shield icon and "success" variant', () => {
+      expect(cards[0].icon).toBe(component.iconShield);
+      expect(cards[0].variant).toBe('success');
+    });
 
-  it('should render the "Pagamenti sicuri" title', () => {
-    const titles = nativeEl.querySelectorAll('p.font-semibold');
-    expect(titles[0].textContent?.trim()).toBe('Pagamenti sicuri');
-  });
-
-  it('should render the "Pagamenti sicuri" description', () => {
-    const descs = nativeEl.querySelectorAll('p.text-xs');
-    expect(descs[0].textContent?.trim()).toContain('Stripe');
-  });
-
-  it('should render end-to-end encryption mention in first card', () => {
-    const descs = nativeEl.querySelectorAll('p.text-xs');
-    expect(descs[0].textContent?.trim()).toContain('crittografia end-to-end');
-  });
-
-  it('should render the "Disdetta facile" emoji', () => {
-    const emojis = nativeEl.querySelectorAll('p.text-2xl');
-    expect(emojis[1].textContent?.trim()).toBe('🔄');
-  });
-
-  it('should render the "Disdetta facile" title', () => {
-    const titles = nativeEl.querySelectorAll('p.font-semibold');
-    expect(titles[1].textContent?.trim()).toBe('Disdetta facile');
-  });
-
-  it('should render the "Disdetta facile" description', () => {
-    const descs = nativeEl.querySelectorAll('p.text-xs');
-    expect(descs[1].textContent?.trim()).toContain('Nessun vincolo');
-  });
-
-  it('should mention online cancellation in second card description', () => {
-    const descs = nativeEl.querySelectorAll('p.text-xs');
-    expect(descs[1].textContent?.trim()).toContain('online');
-  });
-
-  it('should render the "Supporto reale" emoji', () => {
-    const emojis = nativeEl.querySelectorAll('p.text-2xl');
-    expect(emojis[2].textContent?.trim()).toBe('💬');
-  });
-
-  it('should render the "Supporto reale" title', () => {
-    const titles = nativeEl.querySelectorAll('p.font-semibold');
-    expect(titles[2].textContent?.trim()).toBe('Supporto reale');
-  });
-
-  it('should render the "Supporto reale" description', () => {
-    const descs = nativeEl.querySelectorAll('p.text-xs');
-    expect(descs[2].textContent?.trim()).toContain('Non chatbot');
-  });
-
-  it('should mention real people in third card description', () => {
-    const descs = nativeEl.querySelectorAll('p.text-xs');
-    expect(descs[2].textContent?.trim()).toContain('persone vere');
-  });
-
-  it('should apply text-center class to all cards', () => {
-    const cards = nativeEl.querySelectorAll('div.text-center');
-    cards.forEach(card => {
-      expect(card.classList).toContain('text-center');
+    it('should receive the correct title and body', () => {
+      expect(cards[0].title).toBe('Pagamenti sicuri');
+      expect(cards[0].body).toContain('Stripe');
+      expect(cards[0].body).toContain('crittografia end-to-end');
+      expect(cards[0].body).toContain('server');
     });
   });
 
-  it('should apply text-2xl class to all emoji paragraphs', () => {
-    const emojis = nativeEl.querySelectorAll('p.text-2xl');
-    expect(emojis.length).toBe(3);
+  describe('"Disdetta facile" card', () => {
+    it('should receive the refresh icon and "info" variant', () => {
+      expect(cards[1].icon).toBe(component.iconRefresh);
+      expect(cards[1].variant).toBe('info');
+    });
+
+    it('should receive the correct title and body', () => {
+      expect(cards[1].title).toBe('Disdetta facile');
+      expect(cards[1].body).toContain('Nessun vincolo');
+      expect(cards[1].body).toContain('online');
+      expect(cards[1].body).toContain('chiamare');
+    });
   });
 
-  it('should apply font-semibold to all title paragraphs', () => {
-    const titles = nativeEl.querySelectorAll('p.font-semibold');
-    titles.forEach(t => expect(t.classList).toContain('font-semibold'));
+  describe('"Supporto reale" card', () => {
+    it('should receive the message icon and "tertiary" variant', () => {
+      expect(cards[2].icon).toBe(component.iconMessage);
+      expect(cards[2].variant).toBe('tertiary');
+    });
+
+    it('should receive the correct title and body', () => {
+      expect(cards[2].title).toBe('Supporto reale');
+      expect(cards[2].body).toContain('Non chatbot');
+      expect(cards[2].body).toContain('persone vere');
+      expect(cards[2].body).toContain('tempi');
+    });
   });
 
-  it('should apply text-gray-800 to all title paragraphs', () => {
-    const titles = nativeEl.querySelectorAll('p.font-semibold');
-    titles.forEach(t => expect(t.classList).toContain('text-gray-800'));
+  it('should pass padding="lg" and shadow="sm" to every card', () => {
+    cards.forEach(c => {
+      expect(c.padding).toBe('lg');
+      expect(c.shadow).toBe('sm');
+    });
   });
 
-  it('should apply text-xs to all description paragraphs', () => {
-    const descs = nativeEl.querySelectorAll('p.text-xs');
-    descs.forEach(d => expect(d.classList).toContain('text-xs'));
+  it('should pass stretchHeight=true to every card', () => {
+    cards.forEach(c => {
+      expect(c.stretchHeight).toBe(true);
+    });
   });
 
-  it('should apply text-gray-500 to all description paragraphs', () => {
-    const descs = nativeEl.querySelectorAll('p.text-xs');
-    descs.forEach(d => expect(d.classList).toContain('text-gray-500'));
-  });
-
-  it('should not render empty title paragraphs', () => {
-    const titles = nativeEl.querySelectorAll('p.font-semibold');
-    titles.forEach(t => expect(t.textContent?.trim().length).toBeGreaterThan(0));
-  });
-
-  it('should not render empty description paragraphs', () => {
-    const descs = nativeEl.querySelectorAll('p.text-xs');
-    descs.forEach(d => expect(d.textContent?.trim().length).toBeGreaterThan(0));
-  });
-
-  it('should not render empty emoji paragraphs', () => {
-    const emojis = nativeEl.querySelectorAll('p.text-2xl');
-    emojis.forEach(e => expect(e.textContent?.trim().length).toBeGreaterThan(0));
-  });
-
-  it('should render exactly 3 emoji paragraphs', () => {
-    const emojis = nativeEl.querySelectorAll('p.text-2xl');
-    expect(emojis.length).toBe(3);
-  });
-
-  it('should render exactly 3 title paragraphs', () => {
-    const titles = nativeEl.querySelectorAll('p.font-semibold');
+  it('should render the title of every card in the DOM', () => {
+    const titles = nativeEl.querySelectorAll('h3.card-simple__title');
     expect(titles.length).toBe(3);
+    expect(titles[0].textContent?.trim()).toBe('Pagamenti sicuri');
+    expect(titles[1].textContent?.trim()).toBe('Disdetta facile');
+    expect(titles[2].textContent?.trim()).toBe('Supporto reale');
   });
 
-  it('should render exactly 3 description paragraphs', () => {
-    const descs = nativeEl.querySelectorAll('p.text-xs');
-    expect(descs.length).toBe(3);
+  it('should render the body text of every card in the DOM', () => {
+    const bodies = nativeEl.querySelectorAll('p.card-simple__body');
+    expect(bodies.length).toBe(3);
+    bodies.forEach(b => expect(b.textContent?.trim().length).toBeGreaterThan(0));
   });
 
-  it('should mention no server data storage in first card', () => {
-    const descs = nativeEl.querySelectorAll('p.text-xs');
-    expect(descs[0].textContent?.trim()).toContain('server');
-  });
-
-  it('should mention no phone call needed in second card', () => {
-    const descs = nativeEl.querySelectorAll('p.text-xs');
-    expect(descs[1].textContent?.trim()).toContain('chiamare');
-  });
-
-  it('should mention response times in third card', () => {
-    const descs = nativeEl.querySelectorAll('p.text-xs');
-    expect(descs[2].textContent?.trim()).toContain('tempi');
+  it('should render an svg icon for every card', () => {
+    const icons = nativeEl.querySelectorAll('.card-simple__icon-wrap svg');
+    expect(icons.length).toBe(3);
   });
 });

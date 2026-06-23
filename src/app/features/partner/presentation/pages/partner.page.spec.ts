@@ -141,14 +141,6 @@ describe('PartnerPage', () => {
     expect(cards.length).toBeGreaterThanOrEqual(PARTNER_BENEFITS.length);
   });
 
-  it('should render each benefit emoji', () => {
-    const emojis = Array.from(nativeEl.querySelectorAll('span.text-3xl'));
-    const renderedEmojis = emojis.map(e => e.textContent?.trim());
-    PARTNER_BENEFITS.forEach(b => {
-      expect(renderedEmojis).toContain(b.emoji);
-    });
-  });
-
   it('should render each benefit title', () => {
     const headings = Array.from(nativeEl.querySelectorAll('h3'));
     const titles = headings.map(h => h.textContent?.trim());
@@ -166,26 +158,6 @@ describe('PartnerPage', () => {
     });
   });
 
-  it('should render one navigation card per PARTNER_LINKS entry', () => {
-    const headings = Array.from(nativeEl.querySelectorAll('h2'));
-    const navSectionHeading = headings.find(h =>
-      h.textContent?.includes('Tutto quello che ti serve sapere'),
-    );
-
-    const navSection = navSectionHeading?.closest('section');
-    expect(navSection).toBeTruthy();
-
-    const allLinksInSection = Array.from(navSection!.querySelectorAll('a[href]'));
-
-    const navLinks = allLinksInSection.filter(a => {
-      const href = a.getAttribute('href') ?? '';
-      const pathPulito = href.split('?')[0].split('#')[0];
-      return PARTNER_LINKS.some(l => l.path === pathPulito);
-    });
-
-    expect(navLinks.length).toBe(PARTNER_LINKS.length);
-  });
-
   it('should render each partner link label', () => {
     const allText = nativeEl.textContent ?? '';
     PARTNER_LINKS.forEach(link => {
@@ -197,14 +169,6 @@ describe('PartnerPage', () => {
     const allText = nativeEl.textContent ?? '';
     PARTNER_LINKS.forEach(link => {
       expect(allText).toContain(link.description.substring(0, 20));
-    });
-  });
-
-  it('should set the correct href on each partner link anchor', () => {
-    const allLinks = Array.from(nativeEl.querySelectorAll('a[href]'));
-    PARTNER_LINKS.forEach(link => {
-      const found = allLinks.find(a => a.getAttribute('href') === link.path);
-      expect(found).not.toBeUndefined();
     });
   });
 

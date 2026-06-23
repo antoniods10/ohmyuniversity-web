@@ -1,12 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { BusinessVisibilitaPage } from './business-visibilita.page';
+import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
+import { CardSimpleComponent, CardStatusComponent } from '@ui/custom-card/card-variants.component';
 import {
   BUSINESS_VISIBILITA_STEPS,
   BUSINESS_TARGETING_OPTIONS,
+  BUSINESS_ANALYTICS_METRICS,
   PLAN_LABELS,
-  PLAN_COLORS,
 } from '@constants';
 
 describe('BusinessVisibilitaPage', () => {
@@ -41,8 +44,10 @@ describe('BusinessVisibilitaPage', () => {
     expect(component.planLabel).toBe(PLAN_LABELS);
   });
 
-  it('should expose planColor from constants', () => {
-    expect(component.planColor).toBe(PLAN_COLORS);
+  it('should expose a planVariant map with entries for tutti, professional and enterprise', () => {
+    expect(component.planVariant['tutti']).toBe('success');
+    expect(component.planVariant['professional']).toBe('info');
+    expect(component.planVariant['enterprise']).toBe('secondary');
   });
 
   it('should render app-business-hero', () => {
@@ -67,19 +72,25 @@ describe('BusinessVisibilitaPage', () => {
     expect(stepRows.length).toBe(BUSINESS_VISIBILITA_STEPS.length);
   });
 
-  it('should render the step number for the first step', () => {
-    const firstNumber = fixture.nativeElement.querySelector('.rounded-full.bg-blue-600');
-    expect(firstNumber.textContent.trim()).toBe(String(BUSINESS_VISIBILITA_STEPS[0].number));
+  it('should render a numbered badge for each step, in order', () => {
+    const numberBadges = fixture.debugElement
+      .queryAll(By.directive(CustomBadgeComponent))
+      .map(de => de.componentInstance as CustomBadgeComponent)
+      .filter(instance => instance.shape === 'pill' && instance.size === 'lg');
+
+    expect(numberBadges.length).toBe(BUSINESS_VISIBILITA_STEPS.length);
+    numberBadges.forEach((badge, i) => {
+      expect(badge.label).toBe(BUSINESS_VISIBILITA_STEPS[i].number.toString());
+    });
   });
 
-  it('should render the step title for the first step', () => {
-    const titles = fixture.nativeElement.querySelectorAll('p.font-semibold.text-gray-900');
-    expect(titles[0].textContent.trim()).toBe(BUSINESS_VISIBILITA_STEPS[0].title);
-  });
+  it('should render the title and description for the first step via app-card-status', () => {
+    const statusCards = fixture.debugElement
+      .queryAll(By.directive(CardStatusComponent))
+      .map(de => de.componentInstance as CardStatusComponent);
 
-  it('should render the step description for the first step', () => {
-    const descs = fixture.nativeElement.querySelectorAll('p.mt-1.text-sm');
-    expect(descs[0].textContent.trim()).toBe(BUSINESS_VISIBILITA_STEPS[0].description);
+    expect(statusCards[0].title).toBe(BUSINESS_VISIBILITA_STEPS[0].title);
+    expect(statusCards[0].description).toBe(BUSINESS_VISIBILITA_STEPS[0].description);
   });
 
   it('should render the targeting section heading', () => {
@@ -114,25 +125,20 @@ describe('BusinessVisibilitaPage', () => {
     expect(headings[2].textContent.trim()).toBe('Misuri tutto, in tempo reale');
   });
 
-  it('should render 4 analytics metric cards', () => {
-    const cards = fixture.nativeElement.querySelectorAll(
-      '.rounded-xl.border.bg-gray-50.text-center',
-    );
-    expect(cards.length).toBe(4);
+  it('should render one app-card-simple per analytics metric', () => {
+    const metricCards = fixture.debugElement.queryAll(By.directive(CardSimpleComponent));
+    expect(metricCards.length).toBe(BUSINESS_ANALYTICS_METRICS.length);
   });
 
-  it('should render the Visualizzazioni metric card', () => {
-    const cards = fixture.nativeElement.querySelectorAll(
-      '.rounded-xl.border.bg-gray-50.text-center',
-    );
-    expect(cards[0].textContent).toContain('Visualizzazioni');
-  });
+  it('should pass the correct title and body to each analytics metric card', () => {
+    const metricCards = fixture.debugElement
+      .queryAll(By.directive(CardSimpleComponent))
+      .map(de => de.componentInstance as CardSimpleComponent);
 
-  it('should render the Candidature ricevute metric card', () => {
-    const cards = fixture.nativeElement.querySelectorAll(
-      '.rounded-xl.border.bg-gray-50.text-center',
-    );
-    expect(cards[2].textContent).toContain('Candidature ricevute');
+    BUSINESS_ANALYTICS_METRICS.forEach((metric, i) => {
+      expect(metricCards[i].title).toBe(metric.label);
+      expect(metricCards[i].body).toBe(metric.desc);
+    });
   });
 
   it('should pass correct title to app-business-hero', () => {

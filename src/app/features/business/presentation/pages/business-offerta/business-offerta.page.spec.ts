@@ -1,6 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { BusinessOffertaPage } from './business-offerta.page';
+import { BusinessHeroComponent } from '../../components/business-hero/business-hero.component';
+import { BusinessCtaComponent } from '../../components/business-cta/business-cta.component';
+import {
+  CardSimpleComponent,
+  CardStatusComponent,
+  CardStatComponent,
+} from '@ui/custom-card/card-variants.component';
 import { BUSINESS_OFFERS, BUSINESS_DIFFERENTIATORS } from '@constants';
 
 describe('BusinessOffertaPage', () => {
@@ -51,8 +59,10 @@ describe('BusinessOffertaPage', () => {
   });
 
   it('should pass correct subtitle to app-business-hero', () => {
-    const hero = nativeEl.querySelector('app-business-hero');
-    expect(hero?.getAttribute('subtitle')).toContain('connessioni reali');
+    const hero = fixture.debugElement.query(By.directive(BusinessHeroComponent));
+    expect((hero.componentInstance as BusinessHeroComponent).subtitle()).toContain(
+      'connessioni reali',
+    );
   });
 
   it('should render app-business-cta', () => {
@@ -60,8 +70,10 @@ describe('BusinessOffertaPage', () => {
   });
 
   it('should pass correct title to app-business-cta', () => {
-    const cta = nativeEl.querySelector('app-business-cta');
-    expect(cta?.getAttribute('title')).toContain('azienda su OhMyUniversity');
+    const cta = fixture.debugElement.query(By.directive(BusinessCtaComponent));
+    expect((cta.componentInstance as BusinessCtaComponent).title()).toContain(
+      'azienda su OhMyUniversity',
+    );
   });
 
   it('should pass correct subtitle to app-business-cta', () => {
@@ -89,35 +101,38 @@ describe('BusinessOffertaPage', () => {
     expect(cta?.getAttribute('secondaryLink')).toBe('/business/prezzi');
   });
 
-  it('should render one card per offer', () => {
-    const cards = nativeEl.querySelectorAll('div.rounded-xl.border.border-gray-100');
+  it('should render one app-card-simple per offer', () => {
+    const cards = fixture.debugElement.queryAll(By.directive(CardSimpleComponent));
     expect(cards.length).toBe(BUSINESS_OFFERS.length);
   });
 
-  it('should render each offer emoji', () => {
-    const emojis = Array.from(nativeEl.querySelectorAll('span.text-3xl'));
-    const rendered = emojis.map(e => e.textContent?.trim());
-    BUSINESS_OFFERS.forEach(o => expect(rendered).toContain(o.emoji));
+  it('should pass the correct title and body to each offer card', () => {
+    const cards = fixture.debugElement
+      .queryAll(By.directive(CardSimpleComponent))
+      .map(de => de.componentInstance as CardSimpleComponent);
+
+    BUSINESS_OFFERS.forEach((offer, i) => {
+      expect(cards[i].title).toBe(offer.title);
+      expect(cards[i].body).toBe(offer.description);
+    });
   });
 
   it('should render each offer title in an h3', () => {
-    const h3s = Array.from(nativeEl.querySelectorAll('h3'));
+    const h3s = Array.from(nativeEl.querySelectorAll('h3.card-simple__title'));
     const titles = h3s.map(h => h.textContent?.trim());
     BUSINESS_OFFERS.forEach(o => expect(titles).toContain(o.title));
   });
 
-  it('should render each offer description', () => {
-    const allText = nativeEl.textContent ?? '';
-    BUSINESS_OFFERS.forEach(o => expect(allText).toContain(o.description.substring(0, 30)));
-  });
-
   it('should render exactly as many h3 elements as offers', () => {
-    expect(nativeEl.querySelectorAll('h3').length).toBe(BUSINESS_OFFERS.length);
+    expect(nativeEl.querySelectorAll('h3.card-simple__title').length).toBe(BUSINESS_OFFERS.length);
   });
 
-  it('should render offer cards with shadow-sm', () => {
-    const cards = nativeEl.querySelectorAll('div.rounded-xl.shadow-sm');
-    expect(cards.length).toBeGreaterThanOrEqual(BUSINESS_OFFERS.length);
+  it('should pass shadow="sm" to every offer card', () => {
+    const cards = fixture.debugElement
+      .queryAll(By.directive(CardSimpleComponent))
+      .map(de => de.componentInstance as CardSimpleComponent);
+
+    cards.forEach(c => expect(c.shadow).toBe('sm'));
   });
 
   it('should render the "Perché OhMyUniversity è diverso" heading', () => {
@@ -129,35 +144,28 @@ describe('BusinessOffertaPage', () => {
     expect(nativeEl.textContent).toContain('portali per il recruiting');
   });
 
-  it('should render one card per differentiator', () => {
-    const cards = nativeEl.querySelectorAll('div.rounded-xl.border.border-gray-200');
+  it('should render one app-card-status per differentiator', () => {
+    const cards = fixture.debugElement.queryAll(By.directive(CardStatusComponent));
     expect(cards.length).toBe(BUSINESS_DIFFERENTIATORS.length);
   });
 
-  it('should render each differentiator title', () => {
-    const allText = nativeEl.textContent ?? '';
-    BUSINESS_DIFFERENTIATORS.forEach(d => expect(allText).toContain(d.title));
+  it('should pass the correct title and description to each differentiator card', () => {
+    const cards = fixture.debugElement
+      .queryAll(By.directive(CardStatusComponent))
+      .map(de => de.componentInstance as CardStatusComponent);
+
+    BUSINESS_DIFFERENTIATORS.forEach((d, i) => {
+      expect(cards[i].title).toBe(d.title);
+      expect(cards[i].description).toBe(d.description);
+    });
   });
 
-  it('should render each differentiator description', () => {
-    const allText = nativeEl.textContent ?? '';
-    BUSINESS_DIFFERENTIATORS.forEach(d =>
-      expect(allText).toContain(d.description.substring(0, 30)),
-    );
-  });
+  it('should pass statusVariant="info" to every differentiator card', () => {
+    const cards = fixture.debugElement
+      .queryAll(By.directive(CardStatusComponent))
+      .map(de => de.componentInstance as CardStatusComponent);
 
-  it('should render a checkmark badge for each differentiator', () => {
-    const badges = nativeEl.querySelectorAll(
-      'div.rounded-xl.border.border-gray-200 div.bg-blue-600',
-    );
-    expect(badges.length).toBe(BUSINESS_DIFFERENTIATORS.length);
-  });
-
-  it('should render "✓" inside each differentiator badge', () => {
-    const badges = Array.from(
-      nativeEl.querySelectorAll('div.rounded-xl.border.border-gray-200 div.bg-blue-600'),
-    );
-    badges.forEach(badge => expect(badge.textContent?.trim()).toBe('✓'));
+    cards.forEach(c => expect(c.statusVariant).toBe('info'));
   });
 
   it('should render the "La nostra audience in numeri" heading', () => {
@@ -165,29 +173,37 @@ describe('BusinessOffertaPage', () => {
     expect(headings.some(h => h.textContent?.includes('audience in numeri'))).toBe(true);
   });
 
-  it('should render 4 stat blocks', () => {
-    const stats = nativeEl.querySelectorAll('p.text-4xl');
+  it('should render 4 app-card-stat blocks', () => {
+    const stats = fixture.debugElement.queryAll(By.directive(CardStatComponent));
     expect(stats.length).toBe(4);
   });
 
-  it('should render the "120k+" stat value', () => {
-    const stats = Array.from(nativeEl.querySelectorAll('p.text-4xl'));
-    expect(stats.some(s => s.textContent?.trim() === '120k+')).toBe(true);
+  it('should render the "120k+" stat (value="120k+")', () => {
+    const stats = fixture.debugElement
+      .queryAll(By.directive(CardStatComponent))
+      .map(de => de.componentInstance as CardStatComponent);
+    expect(stats.some(s => s.value === '120k+')).toBe(true);
   });
 
-  it('should render the "50+" stat value', () => {
-    const stats = Array.from(nativeEl.querySelectorAll('p.text-4xl'));
-    expect(stats.some(s => s.textContent?.trim() === '50+')).toBe(true);
+  it('should render the "50+" stat (value="50+")', () => {
+    const stats = fixture.debugElement
+      .queryAll(By.directive(CardStatComponent))
+      .map(de => de.componentInstance as CardStatComponent);
+    expect(stats.some(s => s.value === '50+')).toBe(true);
   });
 
-  it('should render the "4.8★" stat value', () => {
-    const stats = Array.from(nativeEl.querySelectorAll('p.text-4xl'));
-    expect(stats.some(s => s.textContent?.trim() === '4.8★')).toBe(true);
+  it('should render the "4.8★" stat (value="4.8", suffix="★")', () => {
+    const stats = fixture.debugElement
+      .queryAll(By.directive(CardStatComponent))
+      .map(de => de.componentInstance as CardStatComponent);
+    expect(stats.some(s => s.value === '4.8' && s.suffix === '★')).toBe(true);
   });
 
-  it('should render the "78%" stat value', () => {
-    const stats = Array.from(nativeEl.querySelectorAll('p.text-4xl'));
-    expect(stats.some(s => s.textContent?.trim() === '78%')).toBe(true);
+  it('should render the "78%" stat (value="78", suffix="%")', () => {
+    const stats = fixture.debugElement
+      .queryAll(By.directive(CardStatComponent))
+      .map(de => de.componentInstance as CardStatComponent);
+    expect(stats.some(s => s.value === '78' && s.suffix === '%')).toBe(true);
   });
 
   it('should render "Studenti attivi" stat label', () => {
@@ -206,9 +222,15 @@ describe('BusinessOffertaPage', () => {
     expect(nativeEl.textContent).toContain('Utenti attivi settimanali');
   });
 
-  it('should apply text-blue-600 to all stat values', () => {
-    const stats = nativeEl.querySelectorAll('p.text-4xl.text-blue-600');
-    expect(stats.length).toBe(4);
+  it('should pass variant="default" and bordered=false to every stat card', () => {
+    const stats = fixture.debugElement
+      .queryAll(By.directive(CardStatComponent))
+      .map(de => de.componentInstance as CardStatComponent);
+
+    stats.forEach(s => {
+      expect(s.variant).toBe('default');
+      expect(s.bordered).toBe(false);
+    });
   });
 
   it('should render 5 sections', () => {

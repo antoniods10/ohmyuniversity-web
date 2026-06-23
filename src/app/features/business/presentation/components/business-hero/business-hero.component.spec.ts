@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { BusinessHeroComponent } from './business-hero.component';
+import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { ComponentRef } from '@angular/core';
 
 describe('BusinessHeroComponent', () => {
@@ -91,15 +93,17 @@ describe('BusinessHeroComponent', () => {
     expect(textCenter).not.toBeNull();
   });
 
-  it('should render the badge with rounded-full styling', () => {
-    const span = fixture.nativeElement.querySelector('span');
-    expect(span.classList).toContain('rounded-full');
+  it('should pass shape="pill" to the badge', () => {
+    const badge = fixture.debugElement.query(By.directive(CustomBadgeComponent))
+      .componentInstance as CustomBadgeComponent;
+    expect(badge.shape).toBe('pill');
   });
 
-  it('should render the badge with blue color classes', () => {
-    const span = fixture.nativeElement.querySelector('span');
-    expect(span.classList).toContain('bg-blue-50');
-    expect(span.classList).toContain('text-blue-700');
+  it('should pass variant="info" and size="sm" to the badge', () => {
+    const badge = fixture.debugElement.query(By.directive(CustomBadgeComponent))
+      .componentInstance as CustomBadgeComponent;
+    expect(badge.variant).toBe('info');
+    expect(badge.size).toBe('sm');
   });
 
   it('should render the subtitle with max-w-2xl constraint', () => {
