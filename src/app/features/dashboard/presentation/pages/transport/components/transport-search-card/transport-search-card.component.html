@@ -1,0 +1,115 @@
+<app-custom-card variant="default" padding="md" shadow="sm" [bordered]="true" radius="lg">
+  <!-- Header -->
+  <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem">
+    <div
+      style="
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        flex-shrink: 0;
+        background: var(--color-primary-light);
+      ">
+      <svg
+        [lucideIcon]="iconNavigation"
+        [size]="16"
+        style="color: var(--color-primary-dark)"
+        aria-hidden="true"></svg>
+    </div>
+    <div>
+      <h2 appText variant="h6" class="m-0">Pianifica il percorso</h2>
+      <p appText variant="caption" color="muted" class="m-0">Inserisci partenza e destinazione</p>
+    </div>
+  </div>
+
+  <!-- Inputs + Search -->
+  <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem">
+    <!-- Da -->
+    <div style="display: flex; align-items: center; gap: 0.5rem">
+      <div style="display: flex; flex-direction: column; align-items: center; flex-shrink: 0">
+        <div
+          style="
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--color-primary-dark);
+          "></div>
+        <div style="width: 1.5px; height: 16px; background: var(--color-neutral-300)"></div>
+      </div>
+      <div style="flex: 1">
+        <app-custom-input
+          #fromInput
+          [placeholder]="locationLoading() ? 'Rilevamento posizione...' : 'Da dove parti?'"
+          [iconLeft]="iconLocate"
+          size="md"
+          [fullWidth]="true"
+          [clearable]="true"
+          (inputChange)="onFromChange($event)" />
+      </div>
+      <app-custom-button
+        variant="outline"
+        size="md"
+        [icon]="iconLocate"
+        [iconOnly]="true"
+        ariaLabel="Usa la mia posizione"
+        [loading]="locationLoading()"
+        (clicked)="useMyLocation()" />
+    </div>
+
+    <!-- A -->
+    <div style="display: flex; align-items: center; gap: 0.5rem">
+      <div
+        style="
+          width: 10px;
+          height: 10px;
+          border-radius: 2px;
+          background: var(--color-error-dark);
+          flex-shrink: 0;
+        "></div>
+      <div style="flex: 1">
+        <app-custom-input
+          #toInput
+          placeholder="Dove vuoi andare?"
+          [iconLeft]="iconMapPin"
+          size="md"
+          [fullWidth]="true"
+          [clearable]="true"
+          (inputChange)="onToChange($event)" />
+      </div>
+      <div style="width: 42px; flex-shrink: 0"></div>
+    </div>
+
+    <!-- Search -->
+    <app-custom-button
+      variant="primary"
+      size="md"
+      label="Cerca percorso"
+      [icon]="iconSearch"
+      [fullWidth]="true"
+      [loading]="searching()"
+      [disabled]="!fromValue() || !toValue()"
+      (clicked)="onSearch()" />
+  </div>
+
+  <!-- Map -->
+  <div
+    style="
+      border-radius: 12px;
+      overflow: hidden;
+      height: 260px;
+      border: 1px solid var(--color-neutral-200);
+    ">
+    <iframe
+      [src]="mapUrl()"
+      width="100%"
+      height="100%"
+      style="border: 0; display: block"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Mappa percorso">
+    </iframe>
+  </div>
+</app-custom-card>

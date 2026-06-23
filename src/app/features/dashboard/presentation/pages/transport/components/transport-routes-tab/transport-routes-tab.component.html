@@ -1,0 +1,138 @@
+<div style="display: flex; flex-direction: column; gap: 0.75rem">
+  <div style="display: flex; align-items: center; justify-content: space-between">
+    <h3 appText variant="h6" class="m-0">Percorsi frequenti</h3>
+    <p appText variant="caption" color="subtle" class="m-0">Verso {{ universityAddress() }}</p>
+  </div>
+
+  @for (route of routes(); track route.id) {
+    <app-custom-card variant="default" padding="md" shadow="sm" [bordered]="true" radius="lg">
+      <!-- Icon + Text -->
+      <div style="display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 0.75rem">
+        <div
+          style="
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            background: var(--color-neutral-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          ">
+          <svg
+            [lucideIcon]="route.type === 'train' ? iconTrain : iconBus"
+            [size]="18"
+            style="color: var(--color-neutral-500)"
+            aria-hidden="true"></svg>
+        </div>
+        <div style="flex: 1; min-width: 0">
+          <!-- From / To -->
+          <p
+            style="
+              margin: 0 0 0.4rem;
+              font-size: 0.82rem;
+              font-weight: 600;
+              color: var(--color-neutral-900);
+              display: flex;
+              align-items: center;
+              gap: 0.4rem;
+              flex-wrap: wrap;
+            ">
+            <span>{{ route.from }}</span>
+            <svg
+              [lucideIcon]="iconNavigation"
+              [size]="11"
+              style="color: var(--color-neutral-400); flex-shrink: 0"
+              aria-hidden="true"></svg>
+            <span>{{ route.to }}</span>
+          </p>
+          <!-- Badge + Duration -->
+          <p
+            style="
+              margin: 0 0 0.5rem;
+              display: flex;
+              align-items: center;
+              gap: 0.4rem;
+              flex-wrap: wrap;
+            ">
+            <app-custom-badge
+              [label]="routeTypeLabel(route.type)"
+              [variant]="routeTypeVariant(route.type)"
+              size="xs"
+              shape="rounded" />
+            <app-custom-badge
+              [label]="route.changes === 0 ? 'Diretto' : route.changes + ' cambio'"
+              variant="neutral"
+              size="xs"
+              shape="rounded" />
+            <span style="display: flex; align-items: center; gap: 0.2rem">
+              <svg
+                [lucideIcon]="iconClock"
+                [size]="12"
+                style="color: var(--color-neutral-400)"
+                aria-hidden="true"></svg>
+              <span style="font-size: 0.75rem; color: var(--color-neutral-500)">{{
+                route.duration
+              }}</span>
+            </span>
+          </p>
+          <!-- Next departures -->
+          <p style="margin: 0; display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap">
+            <span
+              style="
+                font-size: 0.68rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: var(--color-neutral-400);
+              "
+              >Prossime:</span
+            >
+            @for (dep of route.departures; track dep) {
+              <span
+                style="
+                  font-size: 0.72rem;
+                  font-weight: 600;
+                  padding: 2px 6px;
+                  border-radius: 6px;
+                  background: var(--color-neutral-100);
+                  color: var(--color-neutral-700);
+                "
+                >{{ dep }}</span
+              >
+            }
+          </p>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div
+        style="
+          border-top: 1px solid var(--color-neutral-100);
+          padding-top: 0.6rem;
+          display: flex;
+          justify-content: flex-end;
+        ">
+        <app-custom-button
+          variant="ghost"
+          size="sm"
+          label="Apri in Maps"
+          [icon]="iconExternalLink"
+          [iconPosition]="'right'"
+          (clicked)="openMaps.emit()" />
+      </div>
+    </app-custom-card>
+  }
+
+  <div style="display: flex; align-items: flex-start; gap: 0.5rem; padding: 0 0.25rem">
+    <svg
+      [lucideIcon]="iconInfo"
+      [size]="13"
+      style="color: var(--color-neutral-400); margin-top: 1px; flex-shrink: 0"
+      aria-hidden="true"></svg>
+    <p appText variant="caption" color="subtle" class="m-0">
+      Gli orari mostrati sono indicativi. Per informazioni in tempo reale consulta le app ufficiali
+      delle aziende di trasporto.
+    </p>
+  </div>
+</div>

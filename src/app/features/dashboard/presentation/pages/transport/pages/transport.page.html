@@ -1,0 +1,36 @@
+<app-card-status
+  statusVariant="warning"
+  [icon]="lucideAlertTriangle"
+  title="Pagina in sviluppo"
+  description="Questa pagina è visibile a scopo dimostrativo ma non fa parte della release corrente dello sprint." />
+
+<app-dashboard-container>
+  <!-- Page Header -->
+  <app-dashboard-header
+    title="Trasporti"
+    description="Pianifica il tuo percorso verso l'università e consulta gli orari di tutte le aziende di trasporto." />
+
+  <app-transport-search-card
+    [universityName]="universityName"
+    [universityAddress]="universityAddress" />
+
+  <div class="p-4 flex">
+    <app-custom-tabs
+      [tabs]="tabs"
+      [activeTab]="activeTab()"
+      tabStyle="pill"
+      size="md"
+      (tabChange)="onTabChange($event)" />
+  </div>
+
+  @if (activeTab() === 'public') {
+    <app-transport-routes-tab
+      [universityAddress]="universityAddress"
+      [routes]="routes"
+      (openMaps)="openGoogleMaps()" />
+  }
+
+  @if (activeTab() === 'companies') {
+    <app-transport-companies-tab [companies]="companies" [appName]="APP.name" />
+  }
+</app-dashboard-container>

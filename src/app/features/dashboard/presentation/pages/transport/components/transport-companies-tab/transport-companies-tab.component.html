@@ -1,0 +1,94 @@
+<div class="flex flex-col gap-3">
+  <div class="flex items-center justify-between">
+    <h3 appText variant="h6" class="m-0">Aziende di trasporto</h3>
+    <p appText variant="caption" color="subtle" class="m-0">{{ companies().length }} disponibili</p>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    @for (company of companies(); track company.id) {
+      <app-custom-card variant="default" padding="md" shadow="sm" [bordered]="true" radius="lg">
+        <div class="flex flex-col gap-3 h-full">
+          <!-- Header -->
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center gap-3">
+              <div
+                class="flex items-center justify-center w-9 h-9 rounded-lg shrink-0"
+                style="background: var(--color-neutral-100)">
+                <svg
+                  [lucideIcon]="companyTypeIcon(company.type)"
+                  [size]="16"
+                  [style.color]="company.color"
+                  aria-hidden="true"></svg>
+              </div>
+              <div>
+                <h3 appText variant="h6" class="m-0">{{ company.name }}</h3>
+                <p appText variant="caption" color="muted" class="m-0">{{ company.coverage }}</p>
+              </div>
+            </div>
+            <app-custom-badge
+              [label]="
+                company.type === 'train' ? 'Treno' : company.type === 'mixed' ? 'Misto' : 'Bus'
+              "
+              variant="neutral"
+              size="xs"
+              shape="rounded" />
+          </div>
+
+          <!-- Description -->
+          <p appText variant="body-sm" color="muted" class="m-0 flex-1">
+            {{ company.description }}
+          </p>
+
+          <!-- Actions -->
+          <div
+            class="flex items-center gap-2 flex-wrap pt-2"
+            style="border-top: 1px solid var(--color-neutral-200)">
+            @if (company.scheduleUrl) {
+              <app-custom-button
+                variant="ghost"
+                size="xs"
+                label="Orari"
+                [icon]="iconDownload"
+                mode="link-external"
+                [href]="company.scheduleUrl"
+                target="_blank" />
+            }
+            @if (company.appUrl) {
+              <app-custom-button
+                variant="ghost"
+                size="xs"
+                label="App"
+                [icon]="iconWifi"
+                mode="link-external"
+                [href]="company.appUrl"
+                target="_blank" />
+            }
+            <app-custom-button
+              variant="flat"
+              size="xs"
+              label="Sito ufficiale"
+              [icon]="iconExternalLink"
+              [iconPosition]="'right'"
+              mode="link-external"
+              [href]="company.website"
+              target="_blank" />
+          </div>
+        </div>
+      </app-custom-card>
+    }
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="flex items-start gap-2 px-1 mt-1">
+    <svg
+      [lucideIcon]="iconInfo"
+      [size]="13"
+      style="color: var(--color-neutral-400); margin-top: 1px"
+      aria-hidden="true"></svg>
+    <p appText variant="caption" color="subtle" class="m-0">
+      Gli orari PDF sono forniti direttamente dalle aziende di trasporto. {{ APP.name }} non
+      garantisce l'aggiornamento in tempo reale. Per informazioni aggiornate visita il sito
+      ufficiale dell'azienda.
+    </p>
+  </div>
+</div>
