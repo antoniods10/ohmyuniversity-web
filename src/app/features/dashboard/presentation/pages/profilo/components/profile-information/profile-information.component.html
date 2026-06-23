@@ -1,0 +1,379 @@
+<div class="flex flex-col gap-4">
+  <!-- Dati personali -->
+  <app-custom-card variant="default" padding="md" shadow="sm" [bordered]="true" radius="lg">
+    <div class="flex items-center gap-3 mb-4">
+      <div
+        class="flex items-center justify-center w-9 h-9 rounded-lg shrink-0"
+        style="background: var(--color-primary-light)">
+        <svg
+          [lucideIcon]="iconUser"
+          [size]="16"
+          style="color: var(--color-primary-dark)"
+          aria-hidden="true"></svg>
+      </div>
+      <h2 appText variant="h6" class="m-0">Dati personali</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Nome</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(profilo().nome) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Cognome</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(profilo().cognome) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Codice fiscale</span
+        >
+        <span class="text-[0.9rem] font-mono" style="color: var(--color-neutral-900)">
+          {{ val(profilo().codFis) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Data di nascita</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ formatData(profilo().dataNascita) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Luogo di nascita</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(profilo().luogoNascita) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Provincia di nascita</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(profilo().provinciaNascita) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Sesso</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ sessoLabel(profilo().sesso) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Cittadinanza</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(profilo().cittadinanza) }}
+        </span>
+      </div>
+      @if (profilo().statoCivile) {
+        <div class="flex flex-col gap-0.5">
+          <span
+            class="text-[0.72rem] font-semibold uppercase tracking-wide"
+            style="color: var(--color-neutral-400)"
+            >Stato civile</span
+          >
+          <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+            {{ val(profilo().statoCivile) }}
+          </span>
+        </div>
+      }
+    </div>
+  </app-custom-card>
+
+  <!-- Contatti -->
+  <app-custom-card variant="default" padding="md" shadow="sm" [bordered]="true" radius="lg">
+    <div class="flex items-center gap-3 mb-4">
+      <div
+        class="flex items-center justify-center w-9 h-9 rounded-lg shrink-0"
+        style="background: var(--color-primary-light)">
+        <svg
+          [lucideIcon]="iconMail"
+          [size]="16"
+          style="color: var(--color-primary-dark)"
+          aria-hidden="true"></svg>
+      </div>
+      <h2 appText variant="h6" class="m-0">Contatti</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Email personale</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(profilo().email) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Email istituzionale</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(profilo().emailAte) }}
+        </span>
+      </div>
+      @if (profilo().emailCertificata) {
+        <div class="flex flex-col gap-0.5">
+          <span
+            class="text-[0.72rem] font-semibold uppercase tracking-wide"
+            style="color: var(--color-neutral-400)"
+            >Email certificata (PEC)</span
+          >
+          <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+            {{ val(profilo().emailCertificata) }}
+          </span>
+        </div>
+      }
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Cellulare</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(profilo().cellulare) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Telefono</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(profilo().telefono) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Username Cineca</span
+        >
+        <span class="text-[0.9rem] font-mono" style="color: var(--color-neutral-900)">
+          {{ val(profilo().userId) }}
+        </span>
+      </div>
+    </div>
+  </app-custom-card>
+
+  <!-- Residenza -->
+  <app-custom-card variant="default" padding="md" shadow="sm" [bordered]="true" radius="lg">
+    <div class="flex items-center gap-3 mb-4">
+      <div
+        class="flex items-center justify-center w-9 h-9 rounded-lg shrink-0"
+        style="background: var(--color-primary-light)">
+        <svg
+          [lucideIcon]="iconMapPin"
+          [size]="16"
+          style="color: var(--color-primary-dark)"
+          aria-hidden="true"></svg>
+      </div>
+      <h2 appText variant="h6" class="m-0">Residenza</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="flex flex-col gap-0.5 sm:col-span-2">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Indirizzo</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(profilo().indirizzoResidenza) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Comune</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(profilo().comuneResidenza) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >CAP</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(profilo().capResidenza) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Provincia</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(profilo().provinciaResidenza) }}
+        </span>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.72rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Nazione</span
+        >
+        <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+          {{ val(profilo().nazioneResidenza) }}
+        </span>
+      </div>
+    </div>
+  </app-custom-card>
+
+  <!-- Domicilio (solo se diverso da residenza) -->
+  @if (!profilo().domicilioComeResidenza) {
+    <app-custom-card variant="default" padding="md" shadow="sm" [bordered]="true" radius="lg">
+      <div class="flex items-center gap-3 mb-4">
+        <div
+          class="flex items-center justify-center w-9 h-9 rounded-lg shrink-0"
+          style="background: var(--color-primary-light)">
+          <svg
+            [lucideIcon]="iconMapPin"
+            [size]="16"
+            style="color: var(--color-primary-dark)"
+            aria-hidden="true"></svg>
+        </div>
+        <h2 appText variant="h6" class="m-0">Domicilio</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-0.5 sm:col-span-2">
+          <span
+            class="text-[0.72rem] font-semibold uppercase tracking-wide"
+            style="color: var(--color-neutral-400)"
+            >Indirizzo</span
+          >
+          <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+            {{ val(profilo().indirizzoDomicilio) }}
+          </span>
+        </div>
+        <div class="flex flex-col gap-0.5">
+          <span
+            class="text-[0.72rem] font-semibold uppercase tracking-wide"
+            style="color: var(--color-neutral-400)"
+            >Comune</span
+          >
+          <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+            {{ val(profilo().comuneDomicilio) }}
+          </span>
+        </div>
+        <div class="flex flex-col gap-0.5">
+          <span
+            class="text-[0.72rem] font-semibold uppercase tracking-wide"
+            style="color: var(--color-neutral-400)"
+            >CAP</span
+          >
+          <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+            {{ val(profilo().capDomicilio) }}
+          </span>
+        </div>
+        <div class="flex flex-col gap-0.5">
+          <span
+            class="text-[0.72rem] font-semibold uppercase tracking-wide"
+            style="color: var(--color-neutral-400)"
+            >Nazione</span
+          >
+          <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+            {{ val(profilo().nazioneDomicilio) }}
+          </span>
+        </div>
+      </div>
+    </app-custom-card>
+  }
+
+  <!-- Contatto emergenza -->
+  @if (profilo().emergenzaNome || profilo().emergenzaCognome || profilo().emergenzaTelefono) {
+    <app-custom-card variant="default" padding="md" shadow="sm" [bordered]="true" radius="lg">
+      <div class="flex items-center gap-3 mb-4">
+        <div
+          class="flex items-center justify-center w-9 h-9 rounded-lg shrink-0"
+          style="background: var(--color-warning-light)">
+          <svg
+            [lucideIcon]="iconPhone"
+            [size]="16"
+            style="color: var(--color-warning-dark)"
+            aria-hidden="true"></svg>
+        </div>
+        <h2 appText variant="h6" class="m-0">Contatto di emergenza</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="flex flex-col gap-0.5">
+          <span
+            class="text-[0.72rem] font-semibold uppercase tracking-wide"
+            style="color: var(--color-neutral-400)"
+            >Nome</span
+          >
+          <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+            {{ val(profilo().emergenzaNome + ' ' + profilo().emergenzaCognome) }}
+          </span>
+        </div>
+        <div class="flex flex-col gap-0.5">
+          <span
+            class="text-[0.72rem] font-semibold uppercase tracking-wide"
+            style="color: var(--color-neutral-400)"
+            >Rapporto</span
+          >
+          <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+            {{ val(profilo().emergenzaRapporto) }}
+          </span>
+        </div>
+        <div class="flex flex-col gap-0.5">
+          <span
+            class="text-[0.72rem] font-semibold uppercase tracking-wide"
+            style="color: var(--color-neutral-400)"
+            >Telefono</span
+          >
+          <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+            {{ val(profilo().emergenzaTelefono) }}
+          </span>
+        </div>
+        <div class="flex flex-col gap-0.5">
+          <span
+            class="text-[0.72rem] font-semibold uppercase tracking-wide"
+            style="color: var(--color-neutral-400)"
+            >Email</span
+          >
+          <span class="text-[0.9rem]" style="color: var(--color-neutral-900)">
+            {{ val(profilo().emergenzaEmail) }}
+          </span>
+        </div>
+      </div>
+    </app-custom-card>
+  }
+</div>

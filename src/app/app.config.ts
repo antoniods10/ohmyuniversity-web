@@ -92,6 +92,17 @@ import { CarrieraFacade } from './features/dashboard/application/facades/carrier
 import { GetTasseUseCase } from './features/dashboard/application/usecases/get-tasse.usecase';
 import { CarrieraRepository } from './features/dashboard/domain/repositories/carriera.repository';
 import { CarrieraApiRepository } from './features/dashboard/infrastructure/api/carriera-api.repository';
+import { GetBadgeUseCase } from './features/dashboard/application/usecases/get-badge.usecase';
+import { GetEsamiSuggeриtiUseCase } from './features/dashboard/application/usecases/get-esami-suggeriti.usecase';
+import { GetLibrettoUseCase } from './features/dashboard/application/usecases/get-libretto.usecase';
+import { GetMediaUseCase } from './features/dashboard/application/usecases/get-media.usecase';
+import { GetPianoUseCase } from './features/dashboard/application/usecases/get-piano.usecase';
+import { GetPrenotazioniUseCase } from './features/dashboard/application/usecases/get-prenotazioni.usecase';
+import { GetAppelliPrenotabiliUseCase } from './features/dashboard/application/usecases/get-appelli-prenotabili.usecase';
+import { GetPrenotazioniLibrettoUseCase } from './features/dashboard/application/usecases/get-prenotazioni-libretto.usecase';
+import { GetStoricoEsamiUseCase } from './features/dashboard/application/usecases/get-storico-esami.usecase';
+import { GetQuestionariUseCase } from './features/dashboard/application/usecases/get-questionari.usecase';
+import { GetProfiloUseCase } from './features/dashboard/application/usecases/get-profilo.usecase';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -108,6 +119,17 @@ export const appConfig: ApplicationConfig = {
     RefreshTokenUseCase,
     CarrieraFacade,
     GetTasseUseCase,
+    GetLibrettoUseCase,
+    GetMediaUseCase,
+    GetPianoUseCase,
+    GetPrenotazioniUseCase,
+    GetBadgeUseCase,
+    GetEsamiSuggeриtiUseCase,
+    GetAppelliPrenotabiliUseCase,
+    GetPrenotazioniLibrettoUseCase,
+    GetStoricoEsamiUseCase,
+    GetQuestionariUseCase,
+    GetProfiloUseCase,
 
     provideLucideIcons(
       LucideLayoutDashboard,
