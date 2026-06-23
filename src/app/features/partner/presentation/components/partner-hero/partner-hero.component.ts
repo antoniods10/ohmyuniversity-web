@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { APP_NAME } from '@shared/constants';
+import { APP } from '@shared/constants';
 import { LucideArrowRight } from '@lucide/angular';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
@@ -11,7 +11,7 @@ import { CustomButtonComponent } from '@ui/custom-button/custom-button.component
   templateUrl: './partner-hero.component.html',
 })
 export class PartnerHeroComponent {
-  readonly APP_NAME = APP_NAME;
+  readonly APP = APP;
 
   readonly iconArrowRight = LucideArrowRight;
 }

@@ -1,8 +1,34 @@
-export const APP_NAME = 'OhMyUniversity!';
-export const APP_LOGO = '/logo/ohmyuniversity-logo.svg';
+export const ORGANIZATION = {
+  name: 'OhMyOpenSource!',
+  logo: '/logo/ohmyuniversity-logo.svg',
+  email: 'info@ohmyopensource.org',
+  website: 'https://github.com/ohmyopensource',
+  piva: 'IT00000000000',
+  social: {
+    linkedin: '',
+    github: '',
+    instagram: '',
+    x: '',
+  },
+  support: {
+    paypal: '',
+    kofi: '',
+    ghsponsor: '',
+  },
+};
 
-export const ORGANIZATION_NAME = 'OhMyOpenSource!';
-export const ORGANIZATION_LINK = 'https://github.com/ohmyopensource';
+export const APP = {
+  name: 'OhMyUniversity!',
+  logo: '/logo/ohmyuniversity-logo.svg',
+  email: 'info@ohmyuniversity.org',
+  website: 'https://github.com/ohmyopensource',
+  social: {
+    linkedin: '',
+    github: '',
+    instagram: '',
+    x: '',
+  },
+} as const;
 
 export const TEAM_MEMBERS_INFO = {
   luca: {

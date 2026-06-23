@@ -42,7 +42,7 @@ import {
   MOCK_BANDI,
   MOCK_FEES,
 } from '@shared/data/mock/secretariat.mock';
-import { APP_NAME } from '@shared/constants';
+import { APP } from '@shared/constants';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 import { CarrieraFacade } from '../../../application/facades/carriera.facade';
@@ -69,7 +69,7 @@ import { Addebito, TasseResponse } from '../../../domain/models/tasse.model';
 export class SecretariatPage {
   readonly lucideAlertTriangle = LucideTriangleAlert;
 
-  readonly APP_NAME = APP_NAME;
+  readonly APP = APP;
 
   private readonly toast = inject(ToastService);
   private readonly carriera = inject(CarrieraFacade);

@@ -9,7 +9,7 @@ import { CustomModalComponent } from '@ui/custom-modal/custom-modal.component';
 import { UniversitySearchSelectComponent } from '../university-search-select/university-search-select.component';
 import { ToastService } from '@ui/custom-toast/toast.service';
 import { AuthFacade } from '../../../application/facades/auth.facade';
-import { APP_NAME, UNIVERSITIES } from '@constants';
+import { APP, UNIVERSITIES } from '@constants';
 import { University } from '@types';
 
 type UniversityTab = 'ateneo' | 'spid' | 'cie';
@@ -29,7 +29,7 @@ type UniversityTab = 'ateneo' | 'spid' | 'cie';
   templateUrl: './university-login-form.component.html',
 })
 export class UniversityLoginFormComponent {
-  readonly APP_NAME = APP_NAME;
+  readonly APP = APP;
   private readonly auth = inject(AuthFacade);
   private readonly toast = inject(ToastService);
 

@@ -2,7 +2,7 @@ import { Component, input, output, ViewChild, inject } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { LucidePanelLeftClose, LucidePanelLeftOpen, LucideLogOut } from '@lucide/angular';
-import { APP_LOGO, APP_NAME, SIDEBAR_ITEMS, SIDEBAR_BOTTOM_ITEMS } from '@constants';
+import { APP, SIDEBAR_ITEMS, SIDEBAR_BOTTOM_ITEMS } from '@constants';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomAvatarComponent, AvatarVariant } from '@ui/custom-avatar/custom-avatar.component';
 import {
@@ -29,8 +29,7 @@ import { AuthFacade } from 'src/app/features/auth/application/facades/auth.facad
   templateUrl: './dashboard-sidebar.component.html',
 })
 export class DashboardSidebarComponent {
-  readonly APP_NAME = APP_NAME;
-  readonly APP_LOGO = APP_LOGO;
+  readonly APP = APP;
 
   private readonly router = inject(Router);
   private readonly auth = inject(AuthFacade);

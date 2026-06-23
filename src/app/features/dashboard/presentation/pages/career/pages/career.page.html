@@ -1,35 +1,46 @@
 <app-dashboard-container>
-  <!-- Page Header -->
   <app-dashboard-header
     title="Carriera"
     description="Gestisci la tua carriera accademica e i tuoi esami." />
 
-  <div class="mt-6">
-    <app-career-stats
-      [arithmeticAverage]="arithmeticAverage()"
-      [weightedAverage]="weightedAverage()"
-      [graduationBase]="graduationBase()"
-      [earnedCfu]="earnedCfu()"
-      [totalCfu]="totalCfu"
-      [cfuProgress]="cfuProgress()"
-      [laudeCount]="laudeCount()"
-      [isSimulation]="hasSimulation()" />
-  </div>
+  @if (loading()) {
+    <div class="flex justify-center py-16">
+      <p class="text-sm text-gray-400">Caricamento carriera...</p>
+    </div>
+  } @else if (error()) {
+    <div class="py-8">
+      <p class="text-sm text-red-500">
+        Impossibile caricare i dati della carriera. Riprova più tardi.
+      </p>
+    </div>
+  } @else {
+    <div class="mt-6">
+      <app-career-stats
+        [arithmeticAverage]="arithmeticAverage()"
+        [weightedAverage]="weightedAverage()"
+        [graduationBase]="graduationBase()"
+        [earnedCfu]="earnedCfu()"
+        [totalCfu]="totalCfu()"
+        [cfuProgress]="cfuProgress()"
+        [laudeCount]="laudeCount()"
+        [isSimulation]="hasSimulation()" />
+    </div>
 
-  <div class="mt-6">
-    <app-career-charts [gradeHistory]="gradeHistory()" [averageHistory]="averageHistory()" />
-  </div>
+    <div class="mt-6">
+      <app-career-charts [gradeHistory]="gradeHistory()" [averageHistory]="averageHistory()" />
+    </div>
 
-  <div class="mt-6">
-    <app-career-exams
-      [mandatoryGroups]="mandatoryGroups()"
-      [electiveExams]="electiveExams()"
-      [filterOptions]="filterOptions"
-      [activeFilter]="activeFilter()"
-      [yearFilterOptions]="yearFilterOptions()"
-      [selectedYear]="yearFilter() === 'ALL' ? 'ALL' : yearFilter().toString()"
-      (filterChange)="applyFilter($event)"
-      (yearChange)="applyYearFilter($event)"
-      (simulatedGradeChange)="setSimulatedGrade($event.courseCode, $event.grade)" />
-  </div>
+    <div class="mt-6">
+      <app-career-exams
+        [mandatoryGroups]="mandatoryGroups()"
+        [electiveExams]="electiveExams()"
+        [filterOptions]="filterOptions"
+        [activeFilter]="activeFilter()"
+        [yearFilterOptions]="yearFilterOptions()"
+        [selectedYear]="yearFilter() === 'ALL' ? 'ALL' : yearFilter().toString()"
+        (filterChange)="applyFilter($event)"
+        (yearChange)="applyYearFilter($event)"
+        (simulatedGradeChange)="setSimulatedGrade($event.courseCode, $event.grade)" />
+    </div>
+  }
 </app-dashboard-container>

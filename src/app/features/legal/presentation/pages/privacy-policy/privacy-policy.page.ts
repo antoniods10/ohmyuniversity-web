@@ -22,7 +22,7 @@ import {
   PRIVACY_SECURITY_TEXT,
   PRIVACY_CHANGES_TEXT,
   PRIVACY_RELATED_DOCS,
-  APP_NAME,
+  APP,
 } from '@shared/constants';
 
 @Component({
@@ -32,7 +32,7 @@ import {
   templateUrl: './privacy-policy.page.html',
 })
 export class PrivacyPolicyPage {
-  readonly APP_NAME = APP_NAME;
+  readonly APP = APP;
 
   readonly iconScale = LucideScale;
 

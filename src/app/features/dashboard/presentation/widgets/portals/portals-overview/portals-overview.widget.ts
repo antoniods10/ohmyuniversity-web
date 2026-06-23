@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
-import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomLinkComponent } from '@ui/custom-link/custom-link.component';
 import { DashboardWidgetCardComponent } from '@ui/dashboard-widget-card/dashboard-widget-card.component';
 import { LucideDynamicIcon, LucideExternalLink } from '@lucide/angular';
@@ -12,7 +11,6 @@ import { ALL_PORTALS } from '@shared/data/mock/dashboard-portals.mock';
   standalone: true,
   imports: [
     CustomTextComponent,
-    CustomButtonComponent,
     CustomLinkComponent,
     DashboardWidgetCardComponent,
     LucideDynamicIcon,

@@ -2,7 +2,7 @@ import { Component, signal } from '@angular/core';
 import { PricingPlans } from '../components/pricing-plans/pricing-plans.component';
 import { PricingGuarantees } from '../components/pricing-guarantees/pricing-guarantees.component';
 import { PricingAudience, PricingPlan } from '@types';
-import { ORG_PLANS, INSTITUTION_PLANS, APP_NAME } from '@shared/constants';
+import { ORG_PLANS, INSTITUTION_PLANS, APP } from '@shared/constants';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
@@ -20,7 +20,7 @@ import { CustomButtonComponent } from '@ui/custom-button/custom-button.component
   templateUrl: './pricing.page.html',
 })
 export class PricingPage {
-  readonly APP_NAME = APP_NAME;
+  readonly APP = APP;
 
   readonly audience = signal<PricingAudience>('organizations');
 

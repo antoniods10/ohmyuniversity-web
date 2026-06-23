@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginPage } from './login.page';
 import { provideRouter } from '@angular/router';
-import { APP_NAME, ORGANIZATION_NAME } from '@constants';
+import { APP, ORGANIZATION } from '@constants';
 import { LoginMode } from '@types';
 
 describe('LoginPage', () => {
@@ -29,12 +29,12 @@ describe('LoginPage', () => {
     expect(component.mode()).toBe('university');
   });
 
-  it('should expose APP_NAME constant', () => {
-    expect(component.APP_NAME).toBe(APP_NAME);
+  it('should expose APP.name constant', () => {
+    expect(component.APP.name).toBe(APP.name);
   });
 
-  it('should expose ORGANIZATION_NAME constant', () => {
-    expect(component.ORGANIZATION_NAME).toBe(ORGANIZATION_NAME);
+  it('should expose ORGANIZATION.name constant', () => {
+    expect(component.ORGANIZATION.name).toBe(ORGANIZATION.name);
   });
 
   it('should define two modeTabs: university and partner', () => {
@@ -63,17 +63,17 @@ describe('LoginPage', () => {
 
   // Header rendering
   it('should render the app name', () => {
-    expect(fixture.nativeElement.textContent).toContain(APP_NAME);
+    expect(fixture.nativeElement.textContent).toContain(APP.name);
   });
 
   it('should render the organization name subtitle', () => {
-    expect(fixture.nativeElement.textContent).toContain(`by ${ORGANIZATION_NAME}`);
+    expect(fixture.nativeElement.textContent).toContain(`by ${ORGANIZATION.name}`);
   });
 
   it('should render the app logo with correct alt text', () => {
     const img = fixture.nativeElement.querySelector('img');
     expect(img).not.toBeNull();
-    expect(img.alt).toBe(APP_NAME);
+    expect(img.alt).toBe(APP.name);
   });
 
   // Tab component

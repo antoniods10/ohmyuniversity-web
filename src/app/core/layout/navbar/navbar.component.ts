@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { LucideMenu } from '@lucide/angular';
-import { APP_LOGO, APP_NAME } from '@constants';
+import { APP } from '@constants';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomModalComponent } from '@ui/custom-modal/custom-modal.component';
 
@@ -19,8 +19,7 @@ export interface NavLink {
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {
-  readonly APP_NAME = APP_NAME;
-  readonly APP_LOGO = APP_LOGO;
+  readonly APP = APP;
 
   readonly iconMenu = LucideMenu;
 

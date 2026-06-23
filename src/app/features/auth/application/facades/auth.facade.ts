@@ -2,7 +2,12 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthTokens } from '../../domain/models/auth-tokens.model';
 import { LoginRequest } from '../../domain/models/login-request.model';
-import { LoginUseCase, ACCESS_TOKEN_KEY } from '../usecases/login.usecase';
+import {
+  LoginUseCase,
+  ACCESS_TOKEN_KEY,
+  USER_COGNOME_KEY,
+  USER_NOME_KEY,
+} from '../usecases/login.usecase';
 import { LogoutUseCase } from '../usecases/logout.usecase';
 import { RefreshTokenUseCase } from '../usecases/refresh-token.usecase';
 
@@ -30,5 +35,20 @@ export class AuthFacade {
 
   getAccessToken(): string | null {
     return localStorage.getItem(ACCESS_TOKEN_KEY);
+  }
+
+  getUserName(): string {
+    const nome = localStorage.getItem(USER_NOME_KEY) ?? '';
+    const cognome = localStorage.getItem(USER_COGNOME_KEY) ?? '';
+    return `${nome} ${cognome}`.trim();
+  }
+
+  getNome(): string {
+    const nome = localStorage.getItem(USER_NOME_KEY) ?? '';
+    return nome
+      .toLowerCase()
+      .split(' ')
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ');
   }
 }

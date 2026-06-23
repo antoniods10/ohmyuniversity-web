@@ -1,20 +1,14 @@
 import { Component, Input, computed } from '@angular/core';
-import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CustomLinkComponent } from '@ui/custom-link/custom-link.component';
 import { DashboardWidgetCardComponent } from '@ui/dashboard-widget-card/dashboard-widget-card.component';
-import { LucideDynamicIcon, LucideCalendarDays } from '@lucide/angular';
+import { LucideCalendarDays } from '@lucide/angular';
 import { WidgetSize } from '@shared/types';
 import { MOCK_MONTHLY_EVENTS } from '@shared/data/mock/dashboard-agenda.mock';
 
 @Component({
   selector: 'app-agenda-monthly-widget',
   standalone: true,
-  imports: [
-    CustomTextComponent,
-    CustomLinkComponent,
-    DashboardWidgetCardComponent,
-    LucideDynamicIcon,
-  ],
+  imports: [CustomLinkComponent, DashboardWidgetCardComponent],
   templateUrl: './agenda-monthly.widget.html',
 })
 export class AgendaMonthlyWidgetComponent {

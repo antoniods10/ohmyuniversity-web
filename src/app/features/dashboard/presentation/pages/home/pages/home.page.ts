@@ -1,6 +1,5 @@
 import { Component, computed, inject, signal, viewChild } from '@angular/core';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
-import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
 import { DashboardLayoutService } from 'src/app/features/dashboard/services/dashboard-layout.service';
 import {
   AVAILABLE_WIDGETS,
@@ -16,6 +15,7 @@ import { HomeWidgetPanelComponent } from '../components/home-widget-panel/home-w
 import { HomePlacingGridComponent } from '../components/home-placing-grid/home-placing-grid.component';
 import { HomeWidgetGridComponent } from '../components/home-widget-grid/home-widget-grid.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
+import { AuthFacade } from 'src/app/features/auth/application/facades/auth.facade';
 
 export type DashboardStep = 'idle' | 'selecting-size' | 'placing';
 
@@ -24,7 +24,6 @@ export type DashboardStep = 'idle' | 'selecting-size' | 'placing';
   standalone: true,
   imports: [
     DashboardContainerComponent,
-    DashboardHeaderComponent,
     CustomButtonComponent,
     HomeGreetingComponent,
     HomeWidgetPanelComponent,
@@ -37,10 +36,12 @@ export type DashboardStep = 'idle' | 'selecting-size' | 'placing';
 export class DashboardHomePage {
   readonly lucideAlertTriangle = LucideTriangleAlert;
 
-  readonly mockUserName = 'Luca';
   readonly layoutService = inject(DashboardLayoutService);
   readonly placedWidgets = computed(() => this.layoutService.layout().widgets);
   readonly widgetPanel = viewChild<HomeWidgetPanelComponent>('widgetPanel');
+  private readonly auth = inject(AuthFacade);
+
+  readonly userName = this.auth.getNome();
 
   readonly lucidePlus = LucidePlus;
   readonly lucideX = LucideX;

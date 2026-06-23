@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UniversityLoginFormComponent } from './university-login-form.component';
 import { provideRouter, Router } from '@angular/router';
 import { ToastService } from '@ui/custom-toast/toast.service';
-import { UNIVERSITIES, APP_NAME } from '@constants';
+import { UNIVERSITIES, APP } from '@constants';
 import { vi } from 'vitest';
 
 const UNI_WITH_DOMAINS = UNIVERSITIES.find(u => u.emailDomains.length > 0)!;
@@ -35,8 +35,8 @@ describe('UniversityLoginFormComponent', () => {
     expect(component.activeTab()).toBe('ateneo');
   });
 
-  it('should expose APP_NAME constant', () => {
-    expect(component.APP_NAME).toBe(APP_NAME);
+  it('should expose APP.name constant', () => {
+    expect(component.APP.name).toBe(APP.name);
   });
 
   it('should initialize selectedUniversity as undefined', () => {
