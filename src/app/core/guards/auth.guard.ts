@@ -5,6 +5,7 @@ import { AuthFacade } from 'src/app/features/auth/application/facades/auth.facad
 export const authGuard: CanActivateFn = () => {
   const auth = inject(AuthFacade);
   const router = inject(Router);
+  console.log('TOKEN:', localStorage.getItem('omu_access_token'));
   if (auth.isLoggedIn()) return true;
   return router.createUrlTree(['/login']);
 };
