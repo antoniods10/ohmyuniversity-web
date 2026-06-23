@@ -25,9 +25,6 @@ import {
   templateUrl: './business-visibilita.page.html',
 })
 export class BusinessVisibilitaPage {
-  planColor(planColor: any) {
-    throw new Error('Method not implemented.');
-  }
   readonly APP = APP;
 
   readonly iconStep = LucideListChecks;

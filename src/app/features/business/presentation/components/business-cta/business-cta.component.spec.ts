@@ -97,19 +97,24 @@ describe('BusinessCtaComponent', () => {
     expect(links[1].textContent.trim()).toBe('Nuovo label secondario');
   });
 
-  it('should apply white background to the primary link', () => {
-    const links = fixture.nativeElement.querySelectorAll('a');
-    expect(links[0].classList).toContain('bg-white');
+  // The color-override classes (`[&_.btn]:bg-white!`, etc.) are written on the
+  // <app-custom-button> selector in the template, so Angular places them on
+  // that component's HOST element - they are never propagated onto the
+  // internal <a> the child component renders. Hence we query the host
+  // (app-custom-button), not the inner anchor, to verify these classes.
+  it('should apply the white background override class to the primary button host', () => {
+    const buttonHosts = fixture.nativeElement.querySelectorAll('app-custom-button');
+    expect(buttonHosts[0].classList).toContain('[&_.btn]:bg-white!');
   });
 
-  it('should apply blue text color to the primary link', () => {
-    const links = fixture.nativeElement.querySelectorAll('a');
-    expect(links[0].classList).toContain('text-blue-600');
+  it('should apply the blue text override class to the primary button host', () => {
+    const buttonHosts = fixture.nativeElement.querySelectorAll('app-custom-button');
+    expect(buttonHosts[0].classList).toContain('[&_.btn]:text-blue-600!');
   });
 
-  it('should apply white text color to the secondary link', () => {
-    const links = fixture.nativeElement.querySelectorAll('a');
-    expect(links[1].classList).toContain('text-white');
+  it('should apply the white text override class to the secondary button host', () => {
+    const buttonHosts = fixture.nativeElement.querySelectorAll('app-custom-button');
+    expect(buttonHosts[1].classList).toContain('[&_.btn]:text-white!');
   });
 
   it('should render both links inside a flex container', () => {

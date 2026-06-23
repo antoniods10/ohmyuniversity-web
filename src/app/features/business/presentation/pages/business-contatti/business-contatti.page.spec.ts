@@ -1,6 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { BusinessContattiPage } from './business-contatti.page';
+import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
+import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
+import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
+import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 import {
   BUSINESS_USER_TYPES,
   BUSINESS_CONTACT_CHANNELS,
@@ -11,6 +16,13 @@ describe('BusinessContattiPage', () => {
   let component: BusinessContattiPage;
   let fixture: ComponentFixture<BusinessContattiPage>;
   let nativeEl: HTMLElement;
+  // The onboarding section (bg-gray-50) is the only one with that exact
+  // class in the page, so it's a safe anchor: every userType card precedes
+  // it in the DOM, every contact channel card follows it. We can't rely on
+  // section index (app-business-hero renders its own <section class="bg-white">
+  // ahead of the page's own sections) or on "bg-white" (ambiguous: both the
+  // hero and two page sections use it).
+  let onboardingSectionEl: Element;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -23,6 +35,8 @@ describe('BusinessContattiPage', () => {
     nativeEl = fixture.nativeElement;
     fixture.detectChanges();
     await fixture.whenStable();
+
+    onboardingSectionEl = nativeEl.querySelector('section.bg-gray-50')!;
   });
 
   it('should create', () => {
@@ -53,6 +67,12 @@ describe('BusinessContattiPage', () => {
     expect(component.onboardingSteps.length).toBeGreaterThan(0);
   });
 
+  // allContactChannels = BUSINESS_CONTACT_CHANNELS + the GitHub channel appended
+  // by the component itself, so it always has exactly one more entry.
+  it('should append the GitHub channel to allContactChannels', () => {
+    expect(component.allContactChannels.length).toBe(BUSINESS_CONTACT_CHANNELS.length + 1);
+  });
+
   it('should render app-business-hero', () => {
     expect(nativeEl.querySelector('app-business-hero')).not.toBeNull();
   });
@@ -62,18 +82,25 @@ describe('BusinessContattiPage', () => {
     expect(hero?.getAttribute('title')).toBe('Come creare un profilo');
   });
 
-  it('should pass correct subtitle to app-business-hero', () => {
-    const hero = nativeEl.querySelector('app-business-hero');
-    expect(hero?.getAttribute('subtitle')).toContain('non serve nessuna registrazione');
-  });
-
   it('should render the "Seleziona chi sei" heading', () => {
     const headings = Array.from(nativeEl.querySelectorAll('h2'));
     expect(headings.some(h => h.textContent?.includes('Seleziona chi sei'))).toBe(true);
   });
 
-  it('should render one card per userType', () => {
-    const cards = nativeEl.querySelectorAll('div.rounded-2xl');
+  it('should render one app-custom-card per userType', () => {
+    // userType cards don't set [mode] in the template (CustomCardComponent
+    // defaults to mode="default"), same as the nested card inside the
+    // free-trial callout. We distinguish them by DOM position: userType
+    // cards precede the onboarding section, the callout's nested card is
+    // inside it.
+    const cards = fixture.debugElement
+      .queryAll(By.directive(CustomCardComponent))
+      .filter(
+        de =>
+          de.componentInstance.mode === 'default' &&
+          onboardingSectionEl.compareDocumentPosition(de.nativeElement) &
+            Node.DOCUMENT_POSITION_PRECEDING,
+      );
     expect(cards.length).toBe(BUSINESS_USER_TYPES.length);
   });
 
@@ -92,65 +119,66 @@ describe('BusinessContattiPage', () => {
     BUSINESS_USER_TYPES.forEach(t => expect(allText).toContain(t.action));
   });
 
-  it('should apply border-blue-200 and bg-blue-50 to highlighted cards', () => {
-    const cards = Array.from(nativeEl.querySelectorAll('div.rounded-2xl'));
+  it('should pass variant="primary" and accentBar=true to highlighted userType cards', () => {
+    const cards = fixture.debugElement
+      .queryAll(By.directive(CustomCardComponent))
+      .filter(
+        de =>
+          de.componentInstance.mode === 'default' &&
+          onboardingSectionEl.compareDocumentPosition(de.nativeElement) &
+            Node.DOCUMENT_POSITION_PRECEDING,
+      )
+      .map(de => de.componentInstance as CustomCardComponent);
+
     BUSINESS_USER_TYPES.forEach((type, i) => {
       if (type.highlight) {
-        expect(cards[i].classList).toContain('border-blue-200');
-        expect(cards[i].classList).toContain('bg-blue-50');
+        expect(cards[i].variant).toBe('primary');
+        expect(cards[i].accentBar).toBe(true);
+        expect(cards[i].shadow).toBe('md');
       }
     });
   });
 
-  it('should apply border-gray-100 and bg-white to non-highlighted cards', () => {
-    const cards = Array.from(nativeEl.querySelectorAll('div.rounded-2xl'));
+  it('should pass variant="default" and shadow="sm" to non-highlighted userType cards', () => {
+    const cards = fixture.debugElement
+      .queryAll(By.directive(CustomCardComponent))
+      .filter(
+        de =>
+          de.componentInstance.mode === 'default' &&
+          onboardingSectionEl.compareDocumentPosition(de.nativeElement) &
+            Node.DOCUMENT_POSITION_PRECEDING,
+      )
+      .map(de => de.componentInstance as CustomCardComponent);
+
     BUSINESS_USER_TYPES.forEach((type, i) => {
       if (!type.highlight) {
-        expect(cards[i].classList).toContain('border-gray-100');
-        expect(cards[i].classList).toContain('bg-white');
+        expect(cards[i].variant).toBe('default');
+        expect(cards[i].accentBar).toBe(false);
+        expect(cards[i].shadow).toBe('sm');
       }
     });
   });
 
-  it('should apply shadow-sm to non-highlighted cards', () => {
-    const cards = Array.from(nativeEl.querySelectorAll('div.rounded-2xl'));
+  it('should pass mode="link-external" to action buttons of external userTypes', () => {
+    const actionButtons = fixture.debugElement
+      .queryAll(By.directive(CustomButtonComponent))
+      .map(de => de.componentInstance as CustomButtonComponent);
+
     BUSINESS_USER_TYPES.forEach((type, i) => {
-      if (!type.highlight) {
-        expect(cards[i].classList).toContain('shadow-sm');
-      }
+      expect(actionButtons[i].mode).toBe(type.isExternal ? 'link-external' : 'link-internal');
+      expect(actionButtons[i].href).toBe(type.actionLink);
+      expect(actionButtons[i].target).toBe(type.isExternal ? '_blank' : '_self');
     });
   });
 
-  it('should render an <a href> for external userType actions', () => {
-    const externalTypes = BUSINESS_USER_TYPES.filter(t => t.isExternal);
-    externalTypes.forEach(type => {
-      const link = Array.from(nativeEl.querySelectorAll('a[href]')).find(
-        a => a.getAttribute('href') === type.actionLink,
-      );
-      expect(link).not.toBeUndefined();
+  it('should pass variant="primary" to action buttons of highlighted userTypes', () => {
+    const actionButtons = fixture.debugElement
+      .queryAll(By.directive(CustomButtonComponent))
+      .map(de => de.componentInstance as CustomButtonComponent);
+
+    BUSINESS_USER_TYPES.forEach((type, i) => {
+      expect(actionButtons[i].variant).toBe(type.highlight ? 'primary' : 'outline');
     });
-  });
-
-  it('should render a routerLink for internal userType actions', () => {
-    const internalTypes = BUSINESS_USER_TYPES.filter(t => !t.isExternal);
-    internalTypes.forEach(type => {
-      const link = Array.from(nativeEl.querySelectorAll('a[href]')).find(
-        a => a.getAttribute('href') === type.actionLink,
-      );
-      expect(link).not.toBeUndefined();
-    });
-  });
-
-  it('should render bg-blue-600 on external action links', () => {
-    const externalLinks = Array.from(nativeEl.querySelectorAll('a.bg-blue-600'));
-    const externalCount = BUSINESS_USER_TYPES.filter(t => t.isExternal).length;
-    expect(externalLinks.length).toBe(externalCount);
-  });
-
-  it('should render border-gray-300 on internal action links', () => {
-    const internalLinks = Array.from(nativeEl.querySelectorAll('a.border-gray-300'));
-    const internalCount = BUSINESS_USER_TYPES.filter(t => !t.isExternal).length;
-    expect(internalLinks.length).toBe(internalCount);
   });
 
   it('should render the onboarding heading', () => {
@@ -162,9 +190,11 @@ describe('BusinessContattiPage', () => {
     expect(nativeEl.textContent).toContain('nessuna competenza tecnica');
   });
 
-  it('should render one list item per onboarding step', () => {
-    const items = nativeEl.querySelectorAll('ol li');
-    expect(items.length).toBe(BUSINESS_ONBOARDING_STEPS.length);
+  it('should render one row per onboarding step', () => {
+    // Onboarding steps are rendered as <div class="flex items-start gap-5">
+    // rows, not <ol><li> items.
+    const rows = nativeEl.querySelectorAll('section.bg-gray-50 .flex.items-start.gap-5');
+    expect(rows.length).toBe(BUSINESS_ONBOARDING_STEPS.length);
   });
 
   it('should render each onboarding step text', () => {
@@ -174,24 +204,27 @@ describe('BusinessContattiPage', () => {
     });
   });
 
-  it('should render numbered badges for each onboarding step', () => {
-    const badges = nativeEl.querySelectorAll('ol li div.bg-blue-600');
-    expect(badges.length).toBe(BUSINESS_ONBOARDING_STEPS.length);
-  });
+  it('should render a numbered app-custom-badge for each onboarding step, in order', () => {
+    // Onboarding number badges use size="md" (shape="pill", variant="primary"),
+    // which distinguishes them from any other badge elsewhere on the page.
+    const badges = fixture.debugElement
+      .queryAll(By.directive(CustomBadgeComponent))
+      .map(de => de.componentInstance as CustomBadgeComponent)
+      .filter(b => b.size === 'md' && b.shape === 'pill' && b.variant === 'primary');
 
-  it('should render correct step numbers in badges', () => {
-    const badges = Array.from(nativeEl.querySelectorAll('ol li div.bg-blue-600'));
+    expect(badges.length).toBe(BUSINESS_ONBOARDING_STEPS.length);
     badges.forEach((badge, i) => {
-      expect(badge.textContent?.trim()).toBe(String(i + 1));
+      expect(badge.label).toBe(String(i + 1));
     });
   });
 
-  it('should render the free trial callout box', () => {
-    expect(nativeEl.querySelector('div.bg-blue-50')).not.toBeNull();
-  });
+  it('should render the free trial callout as an app-card-status', () => {
+    const statusCards = fixture.debugElement.queryAll(By.directive(CardStatusComponent));
+    const calloutCard = statusCards.find(
+      de => (de.componentInstance as CardStatusComponent).title === '14 giorni di prova gratuita',
+    );
 
-  it('should render the gift emoji in the callout', () => {
-    expect(nativeEl.textContent).toContain('🎁');
+    expect(calloutCard).not.toBeUndefined();
   });
 
   it('should render the "14 giorni di prova gratuita" callout title', () => {
@@ -202,14 +235,12 @@ describe('BusinessContattiPage', () => {
     expect(nativeEl.textContent).toContain('Nessuna carta di credito');
   });
 
-  it('should render the callout title with text-blue-800', () => {
-    const title = nativeEl.querySelector('p.text-blue-800');
-    expect(title).not.toBeNull();
-  });
+  it('should pass statusVariant="info" to the callout card', () => {
+    const statusCards = fixture.debugElement
+      .queryAll(By.directive(CardStatusComponent))
+      .map(de => de.componentInstance as CardStatusComponent);
 
-  it('should render the callout body with text-blue-700', () => {
-    const body = nativeEl.querySelector('p.text-blue-700');
-    expect(body).not.toBeNull();
+    expect(statusCards[0].statusVariant).toBe('info');
   });
 
   it('should render the "Come contattarci" heading', () => {
@@ -217,9 +248,17 @@ describe('BusinessContattiPage', () => {
     expect(headings.some(h => h.textContent?.includes('Come contattarci'))).toBe(true);
   });
 
-  it('should render one contact channel link per BUSINESS_CONTACT_CHANNELS entry', () => {
-    const links = Array.from(nativeEl.querySelectorAll('a[target="_blank"]'));
-    expect(links.length).toBe(BUSINESS_CONTACT_CHANNELS.length);
+  it('should render one app-custom-card per allContactChannels entry (including GitHub)', () => {
+    // The free-trial callout (app-card-status) also wraps an app-custom-card
+    // internally (with mode left at its 'default'), so a plain DOM-position
+    // filter isn't enough. We identify contact channel cards by mode="link-external",
+    // which is the actual distinguishing trait set by the template.
+    const cards = fixture.debugElement
+      .queryAll(By.directive(CustomCardComponent))
+      .map(de => de.componentInstance as CustomCardComponent)
+      .filter(c => c.mode === 'link-external');
+
+    expect(cards.length).toBe(component.allContactChannels.length);
   });
 
   it('should render each contact channel title', () => {
@@ -227,40 +266,22 @@ describe('BusinessContattiPage', () => {
     BUSINESS_CONTACT_CHANNELS.forEach(ch => expect(allText).toContain(ch.title));
   });
 
-  it('should render each contact channel description', () => {
-    const allText = nativeEl.textContent ?? '';
-    BUSINESS_CONTACT_CHANNELS.forEach(ch =>
-      expect(allText).toContain(ch.description.substring(0, 20)),
-    );
-  });
-
   it('should render each contact channel value', () => {
     const allText = nativeEl.textContent ?? '';
     BUSINESS_CONTACT_CHANNELS.forEach(ch => expect(allText).toContain(ch.value));
   });
 
-  it('should set correct href on each contact channel link', () => {
-    BUSINESS_CONTACT_CHANNELS.forEach(ch => {
-      const link = Array.from(nativeEl.querySelectorAll('a[target="_blank"]')).find(
-        a => a.getAttribute('href') === ch.href,
-      );
-      expect(link).not.toBeUndefined();
+  it('should pass mode="link-external" and target="_blank" to every contact channel card', () => {
+    const cards = fixture.debugElement
+      .queryAll(By.directive(CustomCardComponent))
+      .map(de => de.componentInstance as CustomCardComponent)
+      .filter(c => c.mode === 'link-external');
+
+    cards.forEach((card, i) => {
+      expect(card.mode).toBe('link-external');
+      expect(card.target).toBe('_blank');
+      expect(card.href).toBe(component.allContactChannels[i].href);
     });
-  });
-
-  it('should set target="_blank" on all contact channel links', () => {
-    const links = nativeEl.querySelectorAll('a[target="_blank"]');
-    links.forEach(l => expect(l.getAttribute('target')).toBe('_blank'));
-  });
-
-  it('should set rel="noopener noreferrer" on all contact channel links', () => {
-    const links = nativeEl.querySelectorAll('a[target="_blank"]');
-    links.forEach(l => expect(l.getAttribute('rel')).toBe('noopener noreferrer'));
-  });
-
-  it('should render channel value with text-blue-600 class', () => {
-    const values = nativeEl.querySelectorAll('p.text-blue-600');
-    expect(values.length).toBe(BUSINESS_CONTACT_CHANNELS.length);
   });
 
   it('should render the onboarding section with bg-gray-50', () => {

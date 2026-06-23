@@ -1,7 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { PrivacyPolicyPage } from './privacy-policy.page';
 import { provideRouter } from '@angular/router';
 import { LEGAL_CONTACT_EMAIL, LEGAL_UPDATE } from '@constants';
+import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
+import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 
 describe('PrivacyPolicyPage', () => {
   let component: PrivacyPolicyPage;
@@ -45,9 +48,13 @@ describe('PrivacyPolicyPage', () => {
   });
 
   it('should render the GDPR information banner', () => {
-    const banner = fixture.nativeElement.querySelector('.bg-blue-50');
-    expect(banner).not.toBeNull();
-    expect(banner.textContent).toContain('GDPR');
+    const statusCards = fixture.debugElement.queryAll(By.directive(CardStatusComponent));
+    expect(statusCards.length).toBe(1);
+
+    const banner = statusCards[0].componentInstance as CardStatusComponent;
+    expect(banner.statusVariant).toBe('info');
+    expect(banner.description).toBe(component.intro.legalBasis);
+    expect(component.intro.legalBasis).toContain('GDPR');
   });
 
   it('should render all 7 section headings', () => {
@@ -68,7 +75,7 @@ describe('PrivacyPolicyPage', () => {
   });
 
   it('should render section 5 about user rights (GDPR artt. 15–22)', () => {
-    expect(fixture.nativeElement.textContent).toContain('Diritti dell\'interessato');
+    expect(fixture.nativeElement.textContent).toContain("Diritti dell'interessato");
   });
 
   it('should render the GDPR legal basis table', () => {
@@ -94,8 +101,12 @@ describe('PrivacyPolicyPage', () => {
     expect(fixture.nativeElement.textContent).toContain('Termini & Condizioni');
   });
 
-  it('should render the related documents section', () => {
-    const relatedSection = fixture.nativeElement.querySelector('.bg-gray-50');
-    expect(relatedSection).not.toBeNull();
+  it('should render the related documents section as an app-custom-card', () => {
+    const cards = fixture.debugElement.queryAll(By.directive(CustomCardComponent));
+    const relatedDocsCard = cards.find(de =>
+      (de.nativeElement as HTMLElement).textContent?.includes('Documenti correlati'),
+    );
+
+    expect(relatedDocsCard).not.toBeUndefined();
   });
 });

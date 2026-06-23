@@ -1,8 +1,7 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { OrientationStateService } from './orientation.state';
 import { ORIENTATION_TOPICS } from '@constants';
-import * as scoringModule from './orientation-scoring';
 
 describe('OrientationStateService', () => {
   let service: OrientationStateService;
@@ -22,9 +21,14 @@ describe('OrientationStateService', () => {
       expect(service.answeredCount()).toBe(0);
     });
 
-    it('computes totalQuestions as the sum of all topic questions', () => {
-      const expectedTotal = ORIENTATION_TOPICS.reduce((sum, t) => sum + t.questions.length, 0);
-      expect(service.totalQuestions()).toBe(expectedTotal);
+    it('computes totalQuestions as the count of reachable questions at initial state', () => {
+      // At initial state (no answers saved yet), conditional questions
+      // (those with `dependsOn`) are not yet reachable - see isQuestionReachable.
+      const expectedReachableAtStart = ORIENTATION_TOPICS.reduce(
+        (sum, t) => sum + t.questions.filter(q => !q.dependsOn).length,
+        0,
+      );
+      expect(service.totalQuestions()).toBe(expectedReachableAtStart);
     });
 
     it('is not complete when no answers are saved', () => {
@@ -175,12 +179,9 @@ describe('OrientationStateService', () => {
       expect(service.isComplete()).toBe(true);
     });
 
-    it('calls computeOrientationResult only once all questions are answered', () => {
-      const computeSpy = vi.spyOn(scoringModule, 'computeOrientationResult');
-
+    it('keeps result null until every question is answered, then returns a real result', () => {
       service.saveAnswer('corso-area', 'corso', 'ingegneria', 'Ingegneria & Informatica');
       expect(service.result()).toBeNull();
-      expect(computeSpy).not.toHaveBeenCalled();
 
       // Complete every remaining question
       ORIENTATION_TOPICS.forEach(topic => {
@@ -193,9 +194,7 @@ describe('OrientationStateService', () => {
 
       expect(service.isComplete()).toBe(true);
       expect(service.result()).not.toBeNull();
-      expect(computeSpy).toHaveBeenCalledWith(service.answers());
-
-      computeSpy.mockRestore();
+      expect(service.result()!.dominantArea.areaId).toBe('ingegneria');
     });
 
     it('recomputes the result when an answer changes after completion', () => {

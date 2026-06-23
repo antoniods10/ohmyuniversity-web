@@ -8,6 +8,14 @@ import {
   SavedAnswer,
 } from '@orientation/application/state/orientation.state';
 import { ORIENTATION_TOPICS } from '@constants';
+import { InlineQuestion } from '@types';
+
+function isQuestionReachable(question: InlineQuestion, savedAnswers: SavedAnswer[]): boolean {
+  if (!question.dependsOn) return true;
+  const { questionId, values } = question.dependsOn;
+  const parentValue = savedAnswers.find(a => a.questionId === questionId)?.value;
+  return parentValue !== undefined && values.includes(parentValue);
+}
 
 describe('OrientationSummaryComponent', () => {
   let component: OrientationSummaryComponent;
@@ -18,6 +26,7 @@ describe('OrientationSummaryComponent', () => {
     totalQuestions: ReturnType<typeof vi.fn>;
     getAnswer: ReturnType<typeof vi.fn>;
     saveAnswer: ReturnType<typeof vi.fn>;
+    isQuestionReachable: ReturnType<typeof vi.fn>;
   };
 
   const totalQuestionsCount = ORIENTATION_TOPICS.reduce((sum, t) => sum + t.questions.length, 0);
@@ -31,6 +40,7 @@ describe('OrientationSummaryComponent', () => {
       totalQuestions: vi.fn().mockReturnValue(totalQuestionsCount),
       getAnswer: vi.fn((id: string) => savedAnswers.find(a => a.questionId === id)?.value ?? null),
       saveAnswer: vi.fn(),
+      isQuestionReachable: vi.fn((q: InlineQuestion) => isQuestionReachable(q, savedAnswers)),
     };
 
     await TestBed.configureTestingModule({
@@ -56,8 +66,14 @@ describe('OrientationSummaryComponent', () => {
     expect(h1.textContent).toContain('Le tue risposte');
   });
 
-  it('should build one summary question per question across all topics', () => {
-    expect(component.summaryQuestions()).toHaveLength(totalQuestionsCount);
+  it('should build one summary question for each reachable question at initial state', () => {
+    // At initial state (no answers saved yet), conditional questions
+    // (those with `dependsOn`) are not yet reachable - see isQuestionReachable.
+    const expectedReachableAtStart = ORIENTATION_TOPICS.reduce(
+      (sum, t) => sum + t.questions.filter(q => !q.dependsOn).length,
+      0,
+    );
+    expect(component.summaryQuestions()).toHaveLength(expectedReachableAtStart);
   });
 
   it('should render the warning completion banner when not all questions are answered', () => {

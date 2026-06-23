@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { CookiePolicyPage } from './cookie-policy.page';
 import { provideRouter } from '@angular/router';
 import { LEGAL_CONTACT_EMAIL, LEGAL_UPDATE } from '@constants';
+import { CustomLinkComponent } from '@ui/custom-link/custom-link.component';
 
 describe('CookiePolicyPage', () => {
   let component: CookiePolicyPage;
@@ -54,8 +56,35 @@ describe('CookiePolicyPage', () => {
     expect(link.textContent.trim()).toBe(LEGAL_CONTACT_EMAIL);
   });
 
-  it('should render related document links', () => {
-    const links = fixture.nativeElement.querySelectorAll('a[ng-reflect-router-link], a[routerLink]');
-    expect(links.length).toBeGreaterThan(0);
+  it('should render an app-custom-link with mode="internal" for each related document', () => {
+    const linkInstances = fixture.debugElement
+      .queryAll(By.directive(CustomLinkComponent))
+      .map(de => de.componentInstance as CustomLinkComponent)
+      .filter(instance => instance.mode === 'internal');
+
+    expect(linkInstances.length).toBe(component.relatedDocs.length);
+
+    component.relatedDocs.forEach(doc => {
+      const match = linkInstances.find(
+        instance => instance.href === doc.url && instance.label === doc.label,
+      );
+      expect(match).not.toBeUndefined();
+    });
+  });
+
+  it('should render an app-custom-link with mode="external" for each browser link', () => {
+    const linkInstances = fixture.debugElement
+      .queryAll(By.directive(CustomLinkComponent))
+      .map(de => de.componentInstance as CustomLinkComponent)
+      .filter(instance => instance.mode === 'external');
+
+    expect(linkInstances.length).toBe(component.browserLinks.length);
+
+    component.browserLinks.forEach(browser => {
+      const match = linkInstances.find(
+        instance => instance.href === browser.url && instance.label === browser.label,
+      );
+      expect(match).not.toBeUndefined();
+    });
   });
 });
