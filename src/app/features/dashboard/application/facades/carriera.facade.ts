@@ -26,6 +26,9 @@ import { QuestionariResponse } from '../../domain/models/questionari.model';
 import { GetQuestionariUseCase } from '../usecases/get-questionari.usecase';
 import { ProfiloResponse } from '../../domain/models/profilo.model';
 import { GetProfiloUseCase } from '../usecases/get-profilo.usecase';
+import { CarrieraInfoResponse } from '../../domain/models/carriera-info.model';
+import { GetCarrieraInfoUseCase } from '../usecases/get-carriera-info.usecase';
+import { GetFotoUseCase } from '../usecases/get-foto.usecase';
 
 @Injectable()
 export class CarrieraFacade {
@@ -41,6 +44,8 @@ export class CarrieraFacade {
   private readonly getStoricoEsamiUseCase = inject(GetStoricoEsamiUseCase);
   private readonly getQuestionariUseCase = inject(GetQuestionariUseCase);
   private readonly getProfiloUseCase = inject(GetProfiloUseCase);
+  private readonly getCarrieraInfoUseCase = inject(GetCarrieraInfoUseCase);
+  private readonly getFotoUseCase = inject(GetFotoUseCase);
 
   getTasse(): Observable<TasseResponse> {
     return this.getTasseUseCase.execute();
@@ -88,5 +93,13 @@ export class CarrieraFacade {
 
   getProfilo(): Observable<ProfiloResponse> {
     return this.getProfiloUseCase.execute();
+  }
+
+  getCarrieraInfo(): Observable<CarrieraInfoResponse> {
+    return this.getCarrieraInfoUseCase.execute();
+  }
+
+  getFoto(): Observable<Blob> {
+    return this.getFotoUseCase.execute();
   }
 }

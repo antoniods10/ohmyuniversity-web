@@ -103,6 +103,8 @@ import { GetPrenotazioniLibrettoUseCase } from './features/dashboard/application
 import { GetStoricoEsamiUseCase } from './features/dashboard/application/usecases/get-storico-esami.usecase';
 import { GetQuestionariUseCase } from './features/dashboard/application/usecases/get-questionari.usecase';
 import { GetProfiloUseCase } from './features/dashboard/application/usecases/get-profilo.usecase';
+import { GetCarrieraInfoUseCase } from './features/dashboard/application/usecases/get-carriera-info.usecase';
+import { GetFotoUseCase } from './features/dashboard/application/usecases/get-foto.usecase';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -130,6 +132,8 @@ export const appConfig: ApplicationConfig = {
     GetStoricoEsamiUseCase,
     GetQuestionariUseCase,
     GetProfiloUseCase,
+    GetCarrieraInfoUseCase,
+    GetFotoUseCase,
 
     provideLucideIcons(
       LucideLayoutDashboard,

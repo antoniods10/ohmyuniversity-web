@@ -21,5 +21,7 @@ export const API = {
     storicoEsami: `${BASE}/v1/carriera/storico-esami`,
     questionari: `${BASE}/v1/carriera/questionari`,
     profilo: `${BASE}/v1/carriera/profilo`,
+    info: `${BASE}/v1/carriera/info`,
+    foto: `${BASE}/v1/carriera/foto`,
   },
 } as const;

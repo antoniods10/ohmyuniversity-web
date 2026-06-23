@@ -1,14 +1,9 @@
-import { Component, input } from '@angular/core';
-import {
-  LucideDynamicIcon,
-  LucideCamera,
-  LucideMail,
-  LucidePhone,
-  LucideMapPin,
-} from '@lucide/angular';
+import { Component, input, inject, OnInit, signal } from '@angular/core';
+import { LucideDynamicIcon, LucideMail, LucidePhone, LucideMapPin } from '@lucide/angular';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomAvatarComponent } from '@ui/custom-avatar/custom-avatar.component';
 import { ProfiloResponse } from '../../../../../domain/models/profilo.model';
+import { CarrieraFacade } from '../../../../../application/facades/carriera.facade';
 
 @Component({
   selector: 'app-profile-hero',
@@ -16,13 +11,25 @@ import { ProfiloResponse } from '../../../../../domain/models/profilo.model';
   imports: [CustomCardComponent, CustomAvatarComponent, LucideDynamicIcon],
   templateUrl: './profile-hero.component.html',
 })
-export class ProfileHeroComponent {
+export class ProfileHeroComponent implements OnInit {
   readonly profilo = input.required<ProfiloResponse>();
 
-  readonly iconCamera = LucideCamera;
+  private readonly carriera = inject(CarrieraFacade);
+
   readonly iconMail = LucideMail;
   readonly iconPhone = LucidePhone;
   readonly iconMapPin = LucideMapPin;
+
+  readonly fotoUrl = signal<string>('');
+
+  ngOnInit(): void {
+    this.carriera.getFoto().subscribe({
+      next: blob => {
+        this.fotoUrl.set(URL.createObjectURL(blob));
+      },
+      error: () => {},
+    });
+  }
 
   get nomeCompleto(): string {
     const p = this.profilo();
