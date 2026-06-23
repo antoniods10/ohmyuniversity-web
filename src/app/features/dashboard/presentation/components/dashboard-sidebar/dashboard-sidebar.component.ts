@@ -2,7 +2,7 @@ import { Component, input, output, ViewChild, inject } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { LucidePanelLeftClose, LucidePanelLeftOpen, LucideLogOut } from '@lucide/angular';
-import { APP_LOGO, APP_NAME, SIDEBAR_ITEMS, SIDEBAR_BOTTOM_ITEMS } from '@constants';
+import { APP, SIDEBAR_ITEMS, SIDEBAR_BOTTOM_ITEMS } from '@constants';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomAvatarComponent, AvatarVariant } from '@ui/custom-avatar/custom-avatar.component';
 import {
@@ -13,6 +13,7 @@ import {
   STATUS_VARIANT,
 } from '@ui/avatar-profile-panel/avatar-profile-panel.component';
 import { SidebarItem } from '@constants';
+import { AuthFacade } from 'src/app/features/auth/application/facades/auth.facade';
 
 @Component({
   selector: 'app-dashboard-sidebar',
@@ -28,10 +29,10 @@ import { SidebarItem } from '@constants';
   templateUrl: './dashboard-sidebar.component.html',
 })
 export class DashboardSidebarComponent {
-  readonly APP_NAME = APP_NAME;
-  readonly APP_LOGO = APP_LOGO;
+  readonly APP = APP;
 
   private readonly router = inject(Router);
+  private readonly auth = inject(AuthFacade);
 
   readonly open = input.required<boolean>();
   readonly toggleSidebar = output<void>();
@@ -112,7 +113,7 @@ export class DashboardSidebarComponent {
   }
 
   onLogout(): void {
-    console.log('Logout');
+    this.auth.logout().subscribe();
   }
 
   goToProfile(): void {

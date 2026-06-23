@@ -42,9 +42,11 @@ import {
   MOCK_BANDI,
   MOCK_FEES,
 } from '@shared/data/mock/secretariat.mock';
-import { APP_NAME } from '@shared/constants';
+import { APP } from '@shared/constants';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
+import { CarrieraFacade } from '../../../application/facades/carriera.facade';
+import { Addebito, TasseResponse } from '../../../domain/models/tasse.model';
 
 @Component({
   selector: 'app-secretariat',
@@ -67,9 +69,14 @@ import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 export class SecretariatPage {
   readonly lucideAlertTriangle = LucideTriangleAlert;
 
-  readonly APP_NAME = APP_NAME;
+  readonly APP = APP;
 
   private readonly toast = inject(ToastService);
+  private readonly carriera = inject(CarrieraFacade);
+
+  tasse = signal<TasseResponse | null>(null);
+  tasseLoading = signal(true);
+  tasseError = signal(false);
 
   readonly iconSearch = LucideSearch;
   readonly iconWallet = LucideWallet;
@@ -139,13 +146,19 @@ export class SecretariatPage {
     return Array.from(cats);
   });
 
-  readonly totalPaid = computed(() =>
-    this.fees.filter(f => f.status === 'paid').reduce((acc, f) => acc + f.amount, 0),
-  );
+  readonly totalPaid = computed(() => {
+    const addebiti = this.tasse()?.addebiti ?? [];
+    return addebiti
+      .filter(a => a.pagatoFlg === 1 && a.annullataFlg !== 1)
+      .reduce((acc, a) => acc + (a.importoVoce ?? 0), 0);
+  });
 
-  readonly totalPending = computed(() =>
-    this.fees.filter(f => f.status !== 'paid').reduce((acc, f) => acc + f.amount, 0),
-  );
+  readonly totalPending = computed(() => {
+    const addebiti = this.tasse()?.addebiti ?? [];
+    return addebiti
+      .filter(a => a.pagatoFlg !== 1 && a.annullataFlg !== 1)
+      .reduce((acc, a) => acc + (a.importoVoce ?? 0), 0);
+  });
 
   onTabChange(id: string): void {
     this.activeTab.set(id);
@@ -252,5 +265,26 @@ export class SecretariatPage {
     if (status === 'paid') return 'var(--color-success-light)';
     if (status === 'overdue') return 'var(--color-error-light)';
     return 'var(--color-primary-light)';
+  }
+
+  ngOnInit(): void {
+    this.carriera.getTasse().subscribe({
+      next: data => {
+        console.log('Tasse OK:', data);
+        this.tasse.set(data);
+        this.tasseLoading.set(false);
+      },
+      error: err => {
+        console.error('Tasse ERROR:', err);
+        this.tasseError.set(true);
+        this.tasseLoading.set(false);
+      },
+    });
+  }
+
+  addebitoStatus(a: Addebito): FeeStatus {
+    if (a.pagatoFlg === 1) return 'paid';
+    if (a.scadutoFlg === 1 || a.fattScadutaFlg === 1) return 'overdue';
+    return 'pending';
   }
 }

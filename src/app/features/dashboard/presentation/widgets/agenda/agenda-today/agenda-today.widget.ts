@@ -2,19 +2,14 @@ import { Component, Input } from '@angular/core';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CustomLinkComponent } from '@ui/custom-link/custom-link.component';
 import { DashboardWidgetCardComponent } from '@ui/dashboard-widget-card/dashboard-widget-card.component';
-import { LucideDynamicIcon, LucideCalendarDays } from '@lucide/angular';
+import { LucideCalendarDays } from '@lucide/angular';
 import { WidgetSize } from '@shared/types';
 import { MOCK_TODAY_EVENTS, EVENT_TYPE_COLOR } from '@shared/data/mock/dashboard-agenda.mock';
 
 @Component({
   selector: 'app-agenda-today-widget',
   standalone: true,
-  imports: [
-    CustomTextComponent,
-    CustomLinkComponent,
-    DashboardWidgetCardComponent,
-    LucideDynamicIcon,
-  ],
+  imports: [CustomTextComponent, CustomLinkComponent, DashboardWidgetCardComponent],
   templateUrl: './agenda-today.widget.html',
 })
 export class AgendaTodayWidgetComponent {

@@ -1,7 +1,7 @@
 <app-business-hero
   title="Cosa offriamo alle aziende"
   [subtitle]="
-    APP_NAME +
+    APP.name +
     ' mette la tua organizzazione davanti agli studenti universitari italiani nel momento in cui sono più attenti e motivati. Niente scatter marketing - solo connessioni reali.'
   " />
 
@@ -27,7 +27,7 @@
 <section class="border-t border-gray-100 bg-gray-50 px-4 py-20 sm:px-6 lg:px-8">
   <div class="mx-auto max-w-4xl">
     <h2 appText class="text-center text-2xl font-bold text-gray-900">
-      Perché {{ APP_NAME }} è diverso dagli altri
+      Perché {{ APP.name }} è diverso dagli altri
     </h2>
     <p appText class="mx-auto mt-3 max-w-xl text-center text-sm text-gray-500">
       Esistono decine di portali per il recruiting universitario. Ecco cosa ci distingue.
@@ -88,7 +88,7 @@
 </section>
 
 <app-business-cta
-  [title]="'Porta la tua azienda su ' + APP_NAME"
+  [title]="'Porta la tua azienda su ' + APP.name"
   subtitle="Inizia con 14 giorni di prova gratuita. Nessuna carta di credito, nessun impegno."
   primaryLabel="Inizia la prova gratuita"
   primaryLink="/business/registrazione"

@@ -3,7 +3,7 @@ import { FaqHeroComponent } from '../../components/faq-hero/faq-hero.component';
 import { FaqListComponent } from '../../components/faq-list/faq-list.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
-import { APP_NAME, FAQ_BUSINESS_CATEGORIES } from '@shared/constants';
+import { APP, FAQ_BUSINESS_CATEGORIES } from '@shared/constants';
 
 @Component({
   selector: 'app-faq-business-page',
@@ -12,7 +12,7 @@ import { APP_NAME, FAQ_BUSINESS_CATEGORIES } from '@shared/constants';
   templateUrl: './faq-business.page.html',
 })
 export class FaqBusinessPage {
-  readonly APP_NAME = APP_NAME;
+  readonly APP = APP;
 
   readonly categories = FAQ_BUSINESS_CATEGORIES;
 }

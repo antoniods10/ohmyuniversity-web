@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { APP_NAME } from '@shared/constants';
+import { APP } from '@shared/constants';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 
@@ -10,5 +10,5 @@ import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
   templateUrl: './about-hero.component.html',
 })
 export class AboutHeroComponent {
-  readonly APP_NAME = APP_NAME;
+  readonly APP = APP;
 }

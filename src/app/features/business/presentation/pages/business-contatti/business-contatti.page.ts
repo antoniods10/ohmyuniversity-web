@@ -11,7 +11,7 @@ import {
   BUSINESS_CONTACT_CHANNELS,
   BUSINESS_GITHUB_CHANNEL,
   BUSINESS_ONBOARDING_STEPS,
-  APP_NAME,
+  APP,
 } from '@shared/constants';
 
 @Component({
@@ -36,7 +36,7 @@ export class BusinessContattiPage {
     { ...BUSINESS_GITHUB_CHANNEL, icon: null },
   ];
 
-  readonly APP_NAME = APP_NAME;
+  readonly APP = APP;
 
   readonly userTypes = BUSINESS_USER_TYPES;
   readonly contactChannels = BUSINESS_CONTACT_CHANNELS;

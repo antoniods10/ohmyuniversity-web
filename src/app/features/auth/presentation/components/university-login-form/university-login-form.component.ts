@@ -1,6 +1,5 @@
 import { Component, signal, inject, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 import { LucideShieldCheck, LucideIdCard } from '@lucide/angular';
 import { CustomTabsComponent } from '@ui/custom-tab/custom-tab.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
@@ -9,7 +8,8 @@ import { CustomLinkComponent } from '@ui/custom-link/custom-link.component';
 import { CustomModalComponent } from '@ui/custom-modal/custom-modal.component';
 import { UniversitySearchSelectComponent } from '../university-search-select/university-search-select.component';
 import { ToastService } from '@ui/custom-toast/toast.service';
-import { APP_NAME, UNIVERSITIES } from '@constants';
+import { AuthFacade } from '../../../application/facades/auth.facade';
+import { APP, UNIVERSITIES } from '@constants';
 import { University } from '@types';
 
 type UniversityTab = 'ateneo' | 'spid' | 'cie';
@@ -29,8 +29,8 @@ type UniversityTab = 'ateneo' | 'spid' | 'cie';
   templateUrl: './university-login-form.component.html',
 })
 export class UniversityLoginFormComponent {
-  readonly APP_NAME = APP_NAME;
-  private readonly router = inject(Router);
+  readonly APP = APP;
+  private readonly auth = inject(AuthFacade);
   private readonly toast = inject(ToastService);
 
   readonly iconShield = LucideShieldCheck;
@@ -50,6 +50,7 @@ export class UniversityLoginFormComponent {
   selectedUniversity: University | undefined = undefined;
   email = '';
   password = '';
+  isLoading = false;
 
   readonly cieInfoUrl = 'https://www.cartaidentita.interno.gov.it';
   readonly spidInfoUrl = 'https://www.spid.gov.it';
@@ -97,8 +98,33 @@ export class UniversityLoginFormComponent {
   }
 
   submit(): void {
-    if (!this.canSubmit) return;
-    this.router.navigate(['/dashboard']);
+    if (!this.canSubmit || this.isLoading) return;
+
+    const username = this.email.split('@')[0];
+    this.isLoading = true;
+
+    this.auth
+      .login({
+        universityId: this.selectedUniversity!.id,
+        username,
+        password: this.password,
+      })
+      .subscribe({
+        next: () => {},
+        error: err => {
+          this.isLoading = false;
+          if (err.status === 401) {
+            this.toast.show('Credenziali non valide. Controlla email e password.', 'error');
+          } else if (err.status === 503) {
+            this.toast.show(
+              'Il servizio universitario non è raggiungibile. Riprova più tardi.',
+              'error',
+            );
+          } else {
+            this.toast.show('Errore durante il login. Riprova più tardi.', 'error');
+          }
+        },
+      });
   }
 
   notifyUnavailable(provider: 'SPID' | 'CIE'): void {

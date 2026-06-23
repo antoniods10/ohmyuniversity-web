@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
 // Public
 import { PublicLayoutComponent } from './core/layout/public-layout/public-layout.component';
@@ -36,7 +37,7 @@ import { DashboardLayoutComponent } from './features/dashboard/presentation/layo
 // Dashboard Pages
 import { DashboardHomePage } from './features/dashboard/presentation/pages/home/pages/home.page';
 import { CareerPage } from './features/dashboard/presentation/pages/career/pages/career.page';
-import { ExamsPage } from './features/dashboard/presentation/pages/exams/exams.page';
+import { ExamsPage } from './features/dashboard/presentation/pages/exams/pages/exams.page';
 import { CalendarPage } from './features/dashboard/presentation/pages/calendar/calendar.page';
 import { SchedulePage } from './features/dashboard/presentation/pages/schedule/schedule.page';
 
@@ -159,7 +160,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardLayoutComponent,
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
     children: [
       {
         path: '',

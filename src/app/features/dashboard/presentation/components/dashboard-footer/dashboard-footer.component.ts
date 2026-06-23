@@ -2,7 +2,7 @@ import { Component, HostListener, ViewChild } from '@angular/core';
 import { CustomModalComponent } from '@ui/custom-modal/custom-modal.component';
 import { FooterComponent } from 'src/app/core/layout/footer/footer.component';
 import { LucideDynamicIcon, LucideChevronUp } from '@lucide/angular';
-import { APP_NAME } from '@shared/constants';
+import { APP } from '@shared/constants';
 
 @Component({
   selector: 'app-dashboard-footer',
@@ -11,7 +11,7 @@ import { APP_NAME } from '@shared/constants';
   templateUrl: './dashboard-footer.component.html',
 })
 export class DashboardFooterComponent {
-  readonly APP_NAME = APP_NAME;
+  readonly APP = APP;
 
   readonly iconChevronUp = LucideChevronUp;
   hovered = false;

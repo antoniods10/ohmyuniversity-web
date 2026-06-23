@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { APP_NAME } from '@shared/constants';
+import { APP } from '@shared/constants';
 import { PartnerBenefit } from '@types';
 import { CardSimpleComponent } from '@ui/custom-card/card-variants.component';
 
@@ -10,7 +10,7 @@ import { CardSimpleComponent } from '@ui/custom-card/card-variants.component';
   templateUrl: './partner-benefits.component.html',
 })
 export class PartnerBenefitsComponent {
-  readonly APP_NAME = APP_NAME;
+  readonly APP = APP;
 
   readonly benefits = input.required<PartnerBenefit[]>();
 }

@@ -22,7 +22,7 @@ import {
 import { CourseSchedule, ScheduleSearchResult } from '@shared/types/dashboard/schedule.types';
 import { MOCK_MY_SCHEDULES } from '@shared/data/mock/schedule.mock';
 import { acronymVariant } from '@shared/utils/ui.utils';
-import { APP_NAME } from '@shared/constants';
+import { APP } from '@shared/constants';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 
 @Component({
@@ -43,7 +43,7 @@ import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-c
   templateUrl: './schedule.page.html',
 })
 export class SchedulePage {
-  readonly APP_NAME = APP_NAME;
+  readonly APP = APP;
 
   readonly iconDownload = LucideDownload;
   readonly iconExternalLink = LucideExternalLink;

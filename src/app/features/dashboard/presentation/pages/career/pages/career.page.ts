@@ -1,8 +1,7 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CareerStatsComponent } from '../components/career-stats/career-stats.component';
 import { CareerChartsComponent } from '../components/career-charts/career-charts.component';
 import { CareerExamsComponent } from '../components/career-exams/career-exams.component';
-import { MOCK_EXAMS } from '@shared/data/mock/career.mock';
 import type {
   ChartPoint,
   Exam,
@@ -13,8 +12,9 @@ import type {
 import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { SelectOption } from '@ui/custom-input/custom-input.component';
+import { CarrieraFacade } from 'src/app/features/dashboard/application/facades/carriera.facade';
+import { MediaResponse } from 'src/app/features/dashboard/domain/models/media.model';
 
-const TOTAL_CFU = 180;
 const MAX_GRADE = 30;
 const GRADUATION_BASE_MAX = 110;
 const AVERAGE_DECIMALS = 2;
@@ -31,13 +31,16 @@ const AVERAGE_DECIMALS = 2;
   ],
   templateUrl: './career.page.html',
 })
-export class CareerPage {
-  readonly studentLabel = 'Studente: Luca - Software Technologies (UNIMOL)';
+export class CareerPage implements OnInit {
+  private readonly carriera = inject(CarrieraFacade);
 
   readonly activeFilter = signal<ExamFilter>('ALL');
-  readonly exams = signal<Exam[]>(MOCK_EXAMS);
+  readonly exams = signal<Exam[]>([]);
   readonly yearFilter = signal<number | 'ALL' | 'ELECTIVE'>('ALL');
-  readonly totalCfu = TOTAL_CFU;
+  readonly media = signal<MediaResponse | null>(null);
+
+  readonly loading = signal(true);
+  readonly error = signal(false);
 
   readonly filterOptions: FilterOption[] = [
     { id: 'ALL', label: 'Tutti' },
@@ -45,11 +48,27 @@ export class CareerPage {
     { id: 'TO_TAKE', label: 'Da sostenere' },
   ];
 
+  ngOnInit(): void {
+    this.carriera.getLibretto().subscribe({
+      next: exams => {
+        this.exams.set(exams);
+        this.loading.set(false);
+      },
+      error: () => {
+        this.error.set(true);
+        this.loading.set(false);
+      },
+    });
+
+    this.carriera.getMedia().subscribe({
+      next: media => this.media.set(media),
+      error: () => {},
+    });
+  }
+
   readonly filteredExams = computed<Exam[]>(() => {
     const all = this.exams();
     switch (this.activeFilter()) {
-      case 'ALL':
-        return all;
       case 'PASSED':
         return all.filter(e => e.status === 'PASSED');
       case 'TO_TAKE':
@@ -84,7 +103,6 @@ export class CareerPage {
 
   readonly mandatoryGroups = computed<ExamGroup[]>(() => {
     const yearFilter = this.yearFilter();
-
     if (yearFilter === 'ELECTIVE') return [];
 
     const mandatory = this.filteredExams().filter(e => e.category === 'MANDATORY');
@@ -100,7 +118,7 @@ export class CareerPage {
       byYear.set(exam.academicYear, list);
     }
     return Array.from(byYear.entries())
-      .sort(([yearA], [yearB]) => yearA - yearB)
+      .sort(([a], [b]) => a - b)
       .map(([year, exams]) => ({
         year,
         yearLabel: this.formatYearLabel(year),
@@ -113,15 +131,64 @@ export class CareerPage {
     this.yearFilter.set(year === 'ALL' ? 'ALL' : year === 'ELECTIVE' ? 'ELECTIVE' : Number(year));
   }
 
-  readonly earnedCfu = computed(() =>
-    this.exams()
-      .filter(e => e.status === 'PASSED')
-      .reduce((sum, e) => sum + e.cfu, 0),
+  // Stats — usa media da API se disponibile, altrimenti calcola dal libretto
+  readonly earnedCfu = computed(
+    () =>
+      this.media()?.cfu ??
+      this.exams()
+        .filter(e => e.status === 'PASSED')
+        .reduce((s, e) => s + e.cfu, 0),
   );
 
+  readonly totalCfu = computed(() => this.media()?.cfuTotali ?? 180);
+
   readonly cfuProgress = computed(() =>
-    Math.min(100, Math.round((this.earnedCfu() / this.totalCfu) * 100)),
+    Math.min(100, Math.round((this.earnedCfu() / this.totalCfu()) * 100)),
   );
+
+  readonly laudeCount = computed(
+    () =>
+      this.exams().filter(e => e.status === 'PASSED' && e.grade?.toUpperCase() === '30L').length,
+  );
+
+  readonly weightedAverage = computed(() => {
+    if (this.media()?.mediaPesata) return this.roundAverage(this.media()!.mediaPesata);
+    return this.computeWeightedAverage();
+  });
+
+  readonly arithmeticAverage = computed(() => {
+    if (this.media()?.mediaAritmetica) return this.roundAverage(this.media()!.mediaAritmetica);
+    return this.computeArithmeticAverage();
+  });
+
+  readonly graduationBase = computed(() =>
+    Math.round((this.weightedAverage() / MAX_GRADE) * GRADUATION_BASE_MAX),
+  );
+
+  readonly hasSimulation = computed(() =>
+    this.exams().some(e => e.status !== 'PASSED' && e.simulatedGrade !== undefined),
+  );
+
+  readonly gradeHistory = computed<ChartPoint[]>(() =>
+    this.passedWeightedGrades().map((g, i, arr) => ({
+      value: g.value,
+      isLast: i === arr.length - 1,
+    })),
+  );
+
+  readonly averageHistory = computed<ChartPoint[]>(() => {
+    const grades = this.passedWeightedGrades();
+    let cumulativeWeighted = 0;
+    let cumulativeCfu = 0;
+    return grades.map((g, i, arr) => {
+      cumulativeWeighted += g.value * g.cfu;
+      cumulativeCfu += g.cfu;
+      return {
+        value: this.roundAverage(cumulativeWeighted / cumulativeCfu),
+        isLast: i === arr.length - 1,
+      };
+    });
+  });
 
   setSimulatedGrade(courseCode: string, grade: number | null): void {
     this.exams.update(exams =>
@@ -131,14 +198,23 @@ export class CareerPage {
     );
   }
 
-  readonly hasSimulation = computed(() =>
-    this.exams().some(e => e.status !== 'PASSED' && e.simulatedGrade !== undefined),
-  );
+  applyFilter(filter: ExamFilter): void {
+    this.activeFilter.set(filter);
+  }
 
-  readonly laudeCount = computed(
-    () =>
-      this.exams().filter(e => e.status === 'PASSED' && e.grade?.toUpperCase() === '30L').length,
-  );
+  private computeWeightedAverage(): number {
+    const grades = this.allGradesForComputation();
+    if (grades.length === 0) return 0;
+    const weightedSum = grades.reduce((acc, g) => acc + g.value * g.cfu, 0);
+    const totalWeight = grades.reduce((acc, g) => acc + g.cfu, 0);
+    return this.roundAverage(weightedSum / totalWeight);
+  }
+
+  private computeArithmeticAverage(): number {
+    const grades = this.allGradesForComputation();
+    if (grades.length === 0) return 0;
+    return this.roundAverage(grades.reduce((acc, g) => acc + g.value, 0) / grades.length);
+  }
 
   private allGradesForComputation(): { value: number; cfu: number }[] {
     return this.exams()
@@ -153,51 +229,6 @@ export class CareerPage {
         return null;
       })
       .filter((g): g is { value: number; cfu: number } => g !== null);
-  }
-
-  readonly weightedAverage = computed(() => {
-    const grades = this.allGradesForComputation();
-    if (grades.length === 0) return 0;
-    const weightedSum = grades.reduce((acc, g) => acc + g.value * g.cfu, 0);
-    const totalWeight = grades.reduce((acc, g) => acc + g.cfu, 0);
-    return this.roundAverage(weightedSum / totalWeight);
-  });
-
-  readonly arithmeticAverage = computed(() => {
-    const grades = this.allGradesForComputation();
-    if (grades.length === 0) return 0;
-    const sum = grades.reduce((acc, g) => acc + g.value, 0);
-    return this.roundAverage(sum / grades.length);
-  });
-
-  readonly graduationBase = computed(() =>
-    Math.round((this.weightedAverage() / MAX_GRADE) * GRADUATION_BASE_MAX),
-  );
-
-  readonly gradeHistory = computed<ChartPoint[]>(() => {
-    const grades = this.passedWeightedGrades();
-    return grades.map((grade, index) => ({
-      value: grade.value,
-      isLast: index === grades.length - 1,
-    }));
-  });
-
-  readonly averageHistory = computed<ChartPoint[]>(() => {
-    const grades = this.passedWeightedGrades();
-    let cumulativeWeighted = 0;
-    let cumulativeCfu = 0;
-    return grades.map((grade, index) => {
-      cumulativeWeighted += grade.value * grade.cfu;
-      cumulativeCfu += grade.cfu;
-      return {
-        value: this.roundAverage(cumulativeWeighted / cumulativeCfu),
-        isLast: index === grades.length - 1,
-      };
-    });
-  });
-
-  applyFilter(filter: ExamFilter): void {
-    this.activeFilter.set(filter);
   }
 
   private passedWeightedGrades(): { value: number; cfu: number }[] {

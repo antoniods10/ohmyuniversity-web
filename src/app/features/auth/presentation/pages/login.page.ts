@@ -6,9 +6,8 @@ import { LoginMarqueeComponent } from '../components/login-marquee/login-marquee
 import { UniversityLoginFormComponent } from '../components/university-login-form/university-login-form.component';
 import { PartnerLoginFormComponent } from '../components/partner-login-form/partner-login-form.component';
 import {
-  ORGANIZATION_NAME,
-  APP_NAME,
-  APP_LOGO,
+  ORGANIZATION,
+  APP,
   UNIVERSITY_MARQUEE_IMAGES,
   UNIVERSITY_LOGIN_STATS,
   PARTNER_MARQUEE_IMAGES,
@@ -28,9 +27,8 @@ import {
   templateUrl: './login.page.html',
 })
 export class LoginPage {
-  readonly ORGANIZATION_NAME = ORGANIZATION_NAME;
-  readonly APP_NAME = APP_NAME;
-  readonly APP_LOGO = APP_LOGO;
+  readonly ORGANIZATION = ORGANIZATION;
+  readonly APP = APP;
 
   readonly mode = signal<LoginMode>('university');
 

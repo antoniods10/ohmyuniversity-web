@@ -1,0 +1,155 @@
+<app-custom-card
+  variant="default"
+  padding="md"
+  shadow="sm"
+  [bordered]="true"
+  radius="lg"
+  [accentBar]="exam().status === 'booked'">
+  <div class="flex flex-col gap-4">
+    <!-- Header -->
+    <div class="flex items-start justify-between gap-3 flex-wrap">
+      <div class="flex items-start gap-3 flex-1 min-w-0">
+        <div
+          class="flex items-center justify-center w-10 h-10 rounded-xl shrink-0"
+          style="background: var(--color-neutral-100)">
+          @if (exam().status === 'booked') {
+            <svg
+              [lucideIcon]="iconCalendarCheck"
+              [size]="18"
+              style="color: var(--color-primary-dark)"
+              aria-hidden="true"></svg>
+          } @else {
+            <svg
+              [lucideIcon]="iconCalendarDays"
+              [size]="18"
+              style="color: var(--color-neutral-500)"
+              aria-hidden="true"></svg>
+          }
+        </div>
+        <div class="flex-1 min-w-0">
+          <h3 appText variant="h6" class="m-0 truncate">{{ exam().courseName }}</h3>
+          <div class="flex items-center gap-1.5 mt-0.5 flex-wrap">
+            <app-custom-badge
+              [label]="exam().courseAcronym"
+              [variant]="acronymVariant(exam().courseAcronym)"
+              size="xs"
+              shape="rounded" />
+          </div>
+        </div>
+      </div>
+      <app-custom-badge
+        [label]="statusLabel(exam().status)"
+        [variant]="statusVariant(exam().status)"
+        size="sm"
+        shape="pill"
+        [dot]="true" />
+    </div>
+
+    <!-- Info grid -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.68rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Data esame</span
+        >
+        <div class="flex items-center gap-1.5">
+          <svg
+            [lucideIcon]="iconCalendarDays"
+            [size]="12"
+            style="color: var(--color-neutral-400)"
+            aria-hidden="true"></svg>
+          <span class="text-[0.82rem] font-semibold" style="color: var(--color-neutral-900)">{{
+            exam().date
+          }}</span>
+        </div>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.68rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Ora</span
+        >
+        <div class="flex items-center gap-1.5">
+          <svg
+            [lucideIcon]="iconClock"
+            [size]="12"
+            style="color: var(--color-neutral-400)"
+            aria-hidden="true"></svg>
+          <span class="text-[0.82rem] font-semibold" style="color: var(--color-neutral-900)">{{
+            exam().time
+          }}</span>
+        </div>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.68rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Iscritti</span
+        >
+        <div class="flex items-center gap-1.5">
+          <svg
+            [lucideIcon]="iconUsers"
+            [size]="12"
+            style="color: var(--color-neutral-400)"
+            aria-hidden="true"></svg>
+          <span class="text-[0.82rem] font-semibold" style="color: var(--color-neutral-900)">{{
+            exam().spotsLeft
+          }}</span>
+        </div>
+      </div>
+    </div>
+
+    @if (countdownDays() !== null && exam().status === 'closed') {
+      <div
+        class="flex items-center gap-2 px-3 py-2 rounded-lg"
+        style="background: var(--color-primary-light)">
+        <svg
+          [lucideIcon]="iconClock"
+          [size]="13"
+          style="color: var(--color-primary-dark)"
+          aria-hidden="true"></svg>
+        <span class="text-[0.78rem] font-semibold" style="color: var(--color-primary-dark)">
+          Le iscrizioni apriranno tra {{ countdownDays() }} giorni
+        </span>
+      </div>
+    }
+
+    <!-- Footer -->
+    <div
+      class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3"
+      style="border-top: 1px solid var(--color-neutral-200)">
+      <div class="flex flex-col gap-1.5">
+        <div class="flex items-center gap-1.5">
+          <svg
+            [lucideIcon]="iconUser"
+            [size]="12"
+            style="color: var(--color-neutral-400)"
+            aria-hidden="true"></svg>
+          <span class="text-[0.75rem]" style="color: var(--color-neutral-500)">
+            {{ exam().professor }}
+          </span>
+        </div>
+        <div
+          class="flex items-center gap-2 px-2 py-1 rounded-lg"
+          [style.background]="deadlineBackground(exam().status)">
+          <svg
+            [lucideIcon]="iconClock"
+            [size]="12"
+            [style.color]="deadlineColor(exam().status)"
+            aria-hidden="true"></svg>
+          <span class="text-[0.75rem] font-semibold" [style.color]="deadlineColor(exam().status)">
+            Iscrizioni: {{ exam().enrollDeadline }}
+          </span>
+        </div>
+      </div>
+      <app-custom-button
+        [variant]="bookVariant(exam().status)"
+        size="sm"
+        [label]="bookLabel(exam().status)"
+        [icon]="exam().status === 'booked' ? iconCalendarCheck : iconCalendarDays"
+        [disabled]="exam().status === 'closed'"
+        (clicked)="bookClicked.emit(exam())" />
+    </div>
+  </div>
+</app-custom-card>

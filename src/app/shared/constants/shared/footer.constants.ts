@@ -9,8 +9,6 @@ import {
 import { FooterLink, UniversityFooter, SocialLink, SupportLink } from '@shared/types';
 
 export const FOOTER_EMAIL = 'hello@ohmyuniversity.it';
-export const FOOTER_GITHUB_ORG_URL = 'https://github.com/ohmyopensource';
-export const FOOTER_VAT_NUMBER = 'IT00000000000';
 
 export const FOOTER_NAV_LINKS: FooterLink[] = [
   { label: 'Home', url: '/' },

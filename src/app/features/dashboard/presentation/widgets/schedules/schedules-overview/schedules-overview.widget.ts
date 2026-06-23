@@ -1,26 +1,14 @@
 import { Component, Input } from '@angular/core';
-import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomLinkComponent } from '@ui/custom-link/custom-link.component';
 import { DashboardWidgetCardComponent } from '@ui/dashboard-widget-card/dashboard-widget-card.component';
-import {
-  LucideDynamicIcon,
-  LucideCalendarClock,
-  LucideDownload,
-  LucideExternalLink,
-} from '@lucide/angular';
+import { LucideCalendarClock, LucideDownload, LucideExternalLink } from '@lucide/angular';
 import { WidgetSize } from '@shared/types';
 
 @Component({
   selector: 'app-schedules-overview-widget',
   standalone: true,
-  imports: [
-    CustomTextComponent,
-    CustomButtonComponent,
-    CustomLinkComponent,
-    DashboardWidgetCardComponent,
-    LucideDynamicIcon,
-  ],
+  imports: [CustomButtonComponent, CustomLinkComponent, DashboardWidgetCardComponent],
   templateUrl: './schedules-overview.widget.html',
 })
 export class SchedulesOverviewWidgetComponent {

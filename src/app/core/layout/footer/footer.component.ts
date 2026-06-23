@@ -3,11 +3,9 @@ import { NgComponentOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { LucideDynamicIcon, LucideMapPin } from '@lucide/angular';
 import { getCurrentYear } from '@shared/utils/date.utils';
-import { APP_LOGO, APP_NAME, ORGANIZATION_NAME } from '@shared/constants';
 import {
-  FOOTER_EMAIL,
-  FOOTER_GITHUB_ORG_URL,
-  FOOTER_VAT_NUMBER,
+  APP,
+  ORGANIZATION,
   FOOTER_NAV_LINKS,
   FOOTER_BUSINESS_LINKS,
   FOOTER_LEGAL_LINKS,
@@ -15,7 +13,7 @@ import {
   FOOTER_SOCIALS,
   FOOTER_SUPPORT_LINKS,
   FOOTER_UNIVERSITIES,
-} from '@constants';
+} from '@shared/constants';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomEmailComponent } from '@ui/custom-email/custom-email.component';
 import { CustomLinkComponent } from '@ui/custom-link/custom-link.component';
@@ -34,17 +32,13 @@ import { CustomLinkComponent } from '@ui/custom-link/custom-link.component';
   templateUrl: './footer.component.html',
 })
 export class FooterComponent {
-  readonly currentYear = getCurrentYear();
-  readonly vatNumber = FOOTER_VAT_NUMBER;
-  readonly isDashboard = input<boolean>(false);
-  readonly APP_NAME = APP_NAME;
-  readonly APP_LOGO = APP_LOGO;
-  readonly ORGANIZATION_NAME = ORGANIZATION_NAME;
-
-  readonly footerEmail = FOOTER_EMAIL;
-  readonly githubOrgUrl = FOOTER_GITHUB_ORG_URL;
-
   readonly iconMapPin = LucideMapPin;
+
+  readonly currentYear = getCurrentYear();
+  readonly isDashboard = input<boolean>(false);
+
+  readonly APP = APP;
+  readonly ORGANIZATION = ORGANIZATION;
 
   readonly universities = FOOTER_UNIVERSITIES;
   readonly navLinks = FOOTER_NAV_LINKS;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ACADEMIC_ROLES, ACADEMIC_SUBJECTS, APP_NAME } from '@constants';
+import { ACADEMIC_ROLES, ACADEMIC_SUBJECTS, APP } from '@constants';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 
@@ -11,7 +11,7 @@ import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
   templateUrl: './contatti-form-academic.component.html',
 })
 export class ContattiFormAcademic {
-  readonly APP_NAME = APP_NAME;
+  readonly APP = APP;
 
   readonly academicRoles = ACADEMIC_ROLES;
   readonly academicSubjects = ACADEMIC_SUBJECTS;

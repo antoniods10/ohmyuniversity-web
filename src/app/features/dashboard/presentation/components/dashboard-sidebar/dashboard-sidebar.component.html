@@ -12,12 +12,12 @@
   <div
     class="flex items-center gap-2.5 px-4 py-2.5 overflow-hidden shrink-0"
     style="border-bottom: 1px solid var(--color-neutral-200)">
-    <img [src]="APP_LOGO" [alt]="APP_NAME" class="h-8 w-8 shrink-0" />
+    <img [src]="APP.logo" [alt]="APP.name" class="h-8 w-8 shrink-0" />
     @if (open()) {
       <span
         class="whitespace-nowrap font-bold text-sm tracking-tight truncate"
         style="font-family: var(--font-heading); color: var(--color-neutral-900)">
-        {{ APP_NAME }}
+        {{ APP.name }}
       </span>
     }
   </div>

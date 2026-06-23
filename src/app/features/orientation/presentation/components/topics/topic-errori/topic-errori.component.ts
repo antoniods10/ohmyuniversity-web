@@ -18,7 +18,7 @@ import {
   LucideMapPin,
   LucideHourglass,
 } from '@lucide/angular';
-import { APP_NAME, COMMON_MISTAKES, ORIENTATION_TOPICS } from '@constants';
+import { APP, COMMON_MISTAKES, ORIENTATION_TOPICS } from '@constants';
 import { OrientationStateService } from '@orientation/application/state/orientation.state';
 
 const ERROR_ICON_MAP: Record<string, any> = {
@@ -45,7 +45,7 @@ const ERROR_ICON_MAP: Record<string, any> = {
   templateUrl: './topic-errori.component.html',
 })
 export class TopicErroriComponent {
-  readonly APP_NAME = APP_NAME;
+  readonly APP = APP;
 
   readonly hasPrev = input.required<boolean>();
   readonly hasNext = input.required<boolean>();

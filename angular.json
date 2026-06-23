@@ -29,6 +29,12 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -43,6 +49,17 @@
               ],
               "outputHashing": "all"
             },
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
             "development": {
               "optimization": false,
               "extractLicenses": false,
@@ -56,6 +73,9 @@
           "configurations": {
             "production": {
               "buildTarget": "ohmyuniversity-web:build:production"
+            },
+            "staging": {
+              "buildTarget": "ohmyuniversity-web:build:staging"
             },
             "development": {
               "buildTarget": "ohmyuniversity-web:build:development"
