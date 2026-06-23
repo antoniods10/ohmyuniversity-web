@@ -13,18 +13,24 @@
       [icon]="lucideAlertTriangle"
       title="Errore nel caricamento"
       description="Impossibile recuperare il profilo. Riprova più tardi." />
-  } @else if (profilo()) {
+  } @else if (profilo() && carrieraInfo()) {
     <app-profile-hero [profilo]="profilo()!" />
 
-    <app-custom-tabs
-      [tabs]="tabs"
-      [activeTab]="activeTab()"
-      tabStyle="pill"
-      size="md"
-      (tabChange)="onTabChange($event)" />
+    <div class="flex justify-start mt-2 mb-2">
+      <app-custom-tabs
+        [tabs]="tabs"
+        [activeTab]="activeTab()"
+        tabStyle="pill"
+        size="md"
+        (tabChange)="onTabChange($event)" />
+    </div>
 
     @if (activeTab() === 'informazioni') {
       <app-profile-information [profilo]="profilo()!" />
+    }
+
+    @if (activeTab() === 'corso') {
+      <app-profile-course [info]="carrieraInfo()!" />
     }
 
     @if (activeTab() === 'sicurezza') {

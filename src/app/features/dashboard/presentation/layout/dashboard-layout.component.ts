@@ -1,8 +1,8 @@
 import { Component, signal, computed, HostListener } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DashboardSidebarComponent } from '../components/dashboard-sidebar/dashboard-sidebar.component';
-import { DashboardTopbarComponent } from '../components/dashboard-topbar/dashboard-topbar.component';
-import { DashboardFooterComponent } from '../components/dashboard-footer/dashboard-footer.component';
+import { DashboardSidebarComponent } from './components/dashboard-sidebar/dashboard-sidebar.component';
+import { DashboardTopbarComponent } from './components/dashboard-topbar/dashboard-topbar.component';
+import { DashboardFooterComponent } from './components/dashboard-footer/dashboard-footer.component';
 
 @Component({
   selector: 'app-dashboard-layout',

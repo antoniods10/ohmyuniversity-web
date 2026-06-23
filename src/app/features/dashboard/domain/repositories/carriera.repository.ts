@@ -10,6 +10,7 @@ import { AppelliLibrettoResponse, PrenotazioniLibrettoResponse } from '../models
 import { StoricoEsamiResponse } from '../models/storico-esami.model';
 import { QuestionariResponse } from '../models/questionari.model';
 import { ProfiloResponse } from '../models/profilo.model';
+import { CarrieraInfoResponse } from '../models/carriera-info.model';
 
 export abstract class CarrieraRepository {
   abstract getTasse(): Observable<TasseResponse>;
@@ -24,4 +25,6 @@ export abstract class CarrieraRepository {
   abstract getStoricoEsami(): Observable<StoricoEsamiResponse>;
   abstract getQuestionari(): Observable<QuestionariResponse>;
   abstract getProfilo(): Observable<ProfiloResponse>;
+  abstract getCarrieraInfo(): Observable<CarrieraInfoResponse>;
+  abstract getFoto(): Observable<Blob>;
 }

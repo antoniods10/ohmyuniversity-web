@@ -1,0 +1,35 @@
+export interface CarrieraInfoResponse {
+  stuId: number;
+  matId: number;
+  matricola: string;
+  persId: number;
+  nome: string;
+  cognome: string;
+  codFis: string;
+  dataNascita: string;
+  sesso: string;
+  email: string;
+  emailAte: string;
+  emailCertificata: string;
+  tipoCorsoCod: string;
+  tipoCorsoDes: string;
+  cdsCod: string;
+  cdsDes: string;
+  facCod: string;
+  facDes: string;
+  annoCorso: number;
+  aaIscrId: number;
+  aaOrdId: number;
+  dataImm: string;
+  dataIscr: string;
+  dataFineCarriera: string;
+  staStuCod: string;
+  statiStuDes: string;
+  profstuDes: string;
+  ptFlg: number;
+  sospFlg: number;
+  attlauFlg: number;
+  sediDes: string;
+  sedeId: number;
+  userId: string;
+}

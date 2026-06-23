@@ -17,6 +17,7 @@ import {
 import { StoricoEsamiResponse } from '../../domain/models/storico-esami.model';
 import { QuestionariResponse } from '../../domain/models/questionari.model';
 import { ProfiloResponse } from '../../domain/models/profilo.model';
+import { CarrieraInfoResponse } from '../../domain/models/carriera-info.model';
 
 @Injectable()
 export class CarrieraApiRepository extends CarrieraRepository {
@@ -68,5 +69,13 @@ export class CarrieraApiRepository extends CarrieraRepository {
 
   getProfilo(): Observable<ProfiloResponse> {
     return this.http.get<ProfiloResponse>(API.carriera.profilo);
+  }
+
+  getCarrieraInfo(): Observable<CarrieraInfoResponse> {
+    return this.http.get<CarrieraInfoResponse>(API.carriera.info);
+  }
+
+  getFoto(): Observable<Blob> {
+    return this.http.get(API.carriera.foto, { responseType: 'blob' });
   }
 }
