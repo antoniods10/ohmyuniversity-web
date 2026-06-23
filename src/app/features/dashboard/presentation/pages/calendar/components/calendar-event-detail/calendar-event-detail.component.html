@@ -25,6 +25,19 @@
           <p appText variant="caption" color="subtle" weight="bold">Luogo</p>
           <p appText variant="body-sm" weight="bold">{{ locationLabel() }}</p>
         </div>
+        @if (event()?.url) {
+          <div class="rounded-xl bg-gray-50 p-3 col-span-2">
+            <p appText variant="caption" color="subtle" weight="bold">Link</p>
+            <a
+              [href]="event()?.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm font-bold break-all"
+              style="color: var(--color-primary-dark)">
+              {{ event()?.url }}
+            </a>
+          </div>
+        }
       </div>
     </div>
   } @else {

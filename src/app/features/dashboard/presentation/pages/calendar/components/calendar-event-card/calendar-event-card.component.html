@@ -30,6 +30,29 @@
       <p appText variant="caption" color="subtle" [truncate]="true">
         {{ timeRange() }}
       </p>
+      @if (!compact() && event().location) {
+        <div class="flex items-center gap-1 mt-0.5">
+          <svg
+            [lucideIcon]="iconMapPin"
+            [size]="11"
+            class="shrink-0"
+            style="color: var(--color-neutral-400)"
+            aria-hidden="true"></svg>
+          <p appText variant="caption" color="subtle" [truncate]="true">
+            {{ event().location }}
+          </p>
+        </div>
+      }
+      @if (!compact() && event().url) {
+        <div class="mt-0.5" (click)="$event.stopPropagation()">
+          <app-custom-link
+            [href]="event().url!"
+            [label]="event().url!"
+            mode="external"
+            size="sm"
+            variant="primary" />
+        </div>
+      }
     </div>
 
     @if (durationLabel()) {

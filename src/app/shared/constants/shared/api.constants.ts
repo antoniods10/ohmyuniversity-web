@@ -25,4 +25,10 @@ export const API = {
     info: `${BASE}/v1/carriera/info`,
     foto: `${BASE}/v1/carriera/foto`,
   },
+  calendar: {
+    events: `${BASE}/v1/calendar/events`,
+    universityEvents: `${BASE}/v1/calendar/university-events`,
+    importEvent: (id: string) => `${BASE}/v1/calendar/university-events/${id}/import`,
+    event: (id: string) => `${BASE}/v1/calendar/events/${id}`,
+  },
 } as const;

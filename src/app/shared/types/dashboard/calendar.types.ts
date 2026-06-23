@@ -13,7 +13,6 @@ export interface CalendarEvent {
   color: string | null;
   url: string | null;
   notes: string | null;
-  /** UI-only for now, not part of the backend DTO yet — TODO: confirm with backend before wiring real API */
   location: string | null;
   createdAt: Date | null;
   updatedAt: Date | null;
@@ -58,6 +57,8 @@ export interface UniversityEvent {
   endDate: Date | null;
   allDay: boolean;
   url: string | null;
+  sourceUrl: string | null;
+  publishedAt: Date | null;
   imported: boolean;
 }
 

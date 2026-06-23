@@ -38,7 +38,7 @@ import { DashboardLayoutComponent } from './features/dashboard/presentation/layo
 import { DashboardHomePage } from './features/dashboard/presentation/pages/home/pages/home.page';
 import { CareerPage } from './features/dashboard/presentation/pages/career/pages/career.page';
 import { ExamsPage } from './features/dashboard/presentation/pages/exams/pages/exams.page';
-import { CalendarPage } from './features/dashboard/presentation/pages/calendar/calendar.page';
+import { CalendarPage } from './features/dashboard/presentation/pages/calendar/pages/calendar.page';
 import { SchedulePage } from './features/dashboard/presentation/pages/schedule/schedule.page';
 
 // =============================================
@@ -48,8 +48,8 @@ import { SviluppiFuturiPage } from './features/dashboard/presentation/pages/svil
 import { ChatPage } from './features/dashboard/presentation/pages/chat/chat.page';
 
 // =============================================
-import { TransportPage } from './features/dashboard/presentation/pages/transport/transport.page';
-import { ClassroomsPage } from './features/dashboard/presentation/pages/classrooms/classrooms.page';
+import { TransportPage } from './features/dashboard/presentation/pages/transport/pages/transport.page';
+import { ClassroomsPage } from './features/dashboard/presentation/pages/classrooms/pages/classrooms.page';
 
 // =============================================
 import { PortalsPage } from './features/dashboard/presentation/pages/portals/portals.page';

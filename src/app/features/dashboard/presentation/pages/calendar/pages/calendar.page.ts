@@ -1,22 +1,21 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
-import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { LucidePlus } from '@lucide/angular';
 import {
   CalendarViewHeaderComponent,
   type CalendarViewMode,
-} from './components/calendar-view-header/calendar-view-header.component';
-import { CalendarDayStripComponent } from './components/calendar-day-strip/calendar-day-strip.component';
-import { CalendarTimelineComponent } from './components/calendar-timeline/calendar-timeline.component';
-import { CalendarMonthViewComponent } from './components/calendar-month-view/calendar-month-view.component';
-import { CalendarYearViewComponent } from './components/calendar-year-view/calendar-year-view.component';
-import { CalendarEventFormComponent } from './components/calendar-event-form/calendar-event-form.component';
-import { CalendarEventDetailComponent } from './components/calendar-event-detail/calendar-event-detail.component';
-import { MOCK_CALENDAR_EVENTS } from '@shared/data/mock/calendar.mock';
+} from '../components/calendar-view-header/calendar-view-header.component';
+import { CalendarDayStripComponent } from '../components/calendar-day-strip/calendar-day-strip.component';
+import { CalendarTimelineComponent } from '../components/calendar-timeline/calendar-timeline.component';
+import { CalendarMonthViewComponent } from '../components/calendar-month-view/calendar-month-view.component';
+import { CalendarYearViewComponent } from '../components/calendar-year-view/calendar-year-view.component';
+import { CalendarEventFormComponent } from '../components/calendar-event-form/calendar-event-form.component';
+import { CalendarEventDetailComponent } from '../components/calendar-event-detail/calendar-event-detail.component';
 import type { CalendarEvent, CalendarEventLayout } from '@shared/types/dashboard/calendar.types';
 import { calculateEventLayouts, calendarIsSameDay } from '@shared/utils/calendar.utils';
+import { CalendarFacade } from '../../../../application/facades/calendar.facade';
 
 @Component({
   selector: 'app-dashboard-calendar-page',
@@ -24,7 +23,6 @@ import { calculateEventLayouts, calendarIsSameDay } from '@shared/utils/calendar
   imports: [
     DashboardContainerComponent,
     DashboardHeaderComponent,
-    CustomTextComponent,
     CustomButtonComponent,
     CalendarViewHeaderComponent,
     CalendarDayStripComponent,
@@ -36,27 +34,16 @@ import { calculateEventLayouts, calendarIsSameDay } from '@shared/utils/calendar
   ],
   templateUrl: './calendar.page.html',
 })
-export class CalendarPage {
-  readonly events = signal<CalendarEvent[]>(MOCK_CALENDAR_EVENTS);
+export class CalendarPage implements OnInit {
+  private readonly calendar = inject(CalendarFacade);
 
-  /** The date currently "in focus" — the selected day, or the month/year being browsed */
+  readonly events = signal<CalendarEvent[]>([]);
   readonly focusedDate = signal<Date>(new Date());
-
-  /** Which of the 3 nested views (year / month / day) is currently shown */
   readonly currentView = signal<CalendarViewMode>('day');
-
-  /** Whether the create/edit event form is open */
   readonly isFormOpen = signal(false);
-
-  /** The event currently being edited, or null when creating a new one */
   readonly eventBeingEdited = signal<CalendarEvent | null>(null);
-
-  /** Whether the read-only event detail sheet is open */
   readonly isDetailOpen = signal(false);
-
-  /** The event currently shown in the detail sheet */
   readonly eventBeingViewed = signal<CalendarEvent | null>(null);
-
   readonly iconAdd = LucidePlus;
 
   readonly eventsForFocusedDay = computed<CalendarEvent[]>(() => {
@@ -70,11 +57,21 @@ export class CalendarPage {
     calculateEventLayouts(this.eventsForFocusedDay()),
   );
 
+  ngOnInit(): void {
+    this.loadEvents();
+  }
+
+  private loadEvents(): void {
+    this.calendar.getEvents().subscribe({
+      next: events => this.events.set(events),
+      error: () => {},
+    });
+  }
+
   selectDate(date: Date): void {
     this.focusedDate.set(date);
   }
 
-  /** Drills down into a more specific view (e.g. clicking a month in year view) */
   goToView(view: CalendarViewMode, date: Date): void {
     this.focusedDate.set(date);
     this.currentView.set(view);
@@ -88,7 +85,6 @@ export class CalendarPage {
     this.goToView('month', date);
   }
 
-  /** Goes up one level: day -> month -> year. No-op at the year view (the root). */
   goBack(): void {
     if (this.currentView() === 'day') {
       this.currentView.set('month');
@@ -111,15 +107,19 @@ export class CalendarPage {
     this.eventBeingViewed.set(null);
   }
 
-  /** Closes the detail sheet and opens the edit form for the same event */
   onDetailEditRequested(event: CalendarEvent): void {
     this.closeDetail();
     this.openEditForm(event);
   }
 
-  async onDetailDeleteConfirmed(id: string): Promise<void> {
-    await this.deleteEvent(id);
-    this.closeDetail();
+  onDetailDeleteConfirmed(id: string): void {
+    this.calendar.deleteEvent(id).subscribe({
+      next: () => {
+        this.events.update(events => events.filter(e => e.id !== id));
+        this.closeDetail();
+      },
+      error: () => {},
+    });
   }
 
   openCreateForm(): void {
@@ -137,43 +137,23 @@ export class CalendarPage {
     this.eventBeingEdited.set(null);
   }
 
-  async onEventCreated(data: Omit<CalendarEvent, 'id' | 'createdAt' | 'updatedAt'>): Promise<void> {
-    await this.createEvent(data);
-    this.closeForm();
+  onEventCreated(data: Omit<CalendarEvent, 'id' | 'createdAt' | 'updatedAt'>): void {
+    this.calendar.createEvent(data).subscribe({
+      next: created => {
+        this.events.update(events => [...events, created]);
+        this.closeForm();
+      },
+      error: () => {},
+    });
   }
 
-  async onEventUpdated(payload: { id: string; partial: Partial<CalendarEvent> }): Promise<void> {
-    await this.updateEvent(payload.id, payload.partial);
-    this.closeForm();
-  }
-
-  async createEvent(
-    data: Omit<CalendarEvent, 'id' | 'createdAt' | 'updatedAt'>,
-  ): Promise<CalendarEvent> {
-    const now = new Date();
-    const created: CalendarEvent = {
-      ...data,
-      id: crypto.randomUUID(),
-      createdAt: now,
-      updatedAt: now,
-    };
-    this.events.update(events => [...events, created]);
-    return created;
-  }
-
-  async updateEvent(id: string, partial: Partial<CalendarEvent>): Promise<CalendarEvent | null> {
-    let updated: CalendarEvent | null = null;
-    this.events.update(events =>
-      events.map(event => {
-        if (event.id !== id) return event;
-        updated = { ...event, ...partial, id: event.id, updatedAt: new Date() };
-        return updated;
-      }),
-    );
-    return updated;
-  }
-
-  async deleteEvent(id: string): Promise<void> {
-    this.events.update(events => events.filter(event => event.id !== id));
+  onEventUpdated(payload: { id: string; partial: Partial<CalendarEvent> }): void {
+    this.calendar.updateEvent(payload.id, payload.partial).subscribe({
+      next: updated => {
+        this.events.update(events => events.map(e => (e.id === payload.id ? updated : e)));
+        this.closeForm();
+      },
+      error: () => {},
+    });
   }
 }

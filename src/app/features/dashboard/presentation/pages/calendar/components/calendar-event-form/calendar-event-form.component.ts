@@ -263,6 +263,7 @@ export class CalendarEventFormComponent {
   readonly errorMessage = signal('');
   readonly dateErrorMessage = signal('');
   readonly timeErrorMessage = signal('');
+  readonly url = signal('');
 
   constructor() {
     effect(() => {
@@ -284,6 +285,7 @@ export class CalendarEventFormComponent {
             : String(DEFAULT_DURATION_MINUTES),
         );
         this.location.set(current.location ?? '');
+        this.url.set(current.url ?? '');
         return;
       }
 
@@ -304,6 +306,7 @@ export class CalendarEventFormComponent {
       );
       this.durationMinutes.set(String(DEFAULT_DURATION_MINUTES));
       this.location.set('');
+      this.url.set('');
     });
 
     effect(() => {
@@ -360,6 +363,9 @@ export class CalendarEventFormComponent {
     const endDate = new Date(startDate.getTime() + duration * 60000);
     const type = FORM_TYPE_TO_EVENT_TYPE[this.activeFormType()];
     const trimmedLocation = this.location().trim();
+    const trimmedUrl = this.url().trim();
+    const normalizedUrl =
+      trimmedUrl && !trimmedUrl.startsWith('http') ? `https://${trimmedUrl}` : trimmedUrl || null;
     const trimmedDescription = this.description().trim();
 
     const existing = this.event();
@@ -373,6 +379,7 @@ export class CalendarEventFormComponent {
           endDate,
           type,
           location: trimmedLocation || null,
+          url: normalizedUrl,
         },
       });
       return;
@@ -386,7 +393,7 @@ export class CalendarEventFormComponent {
       allDay: false,
       type,
       color: null,
-      url: null,
+      url: normalizedUrl,
       notes: null,
       location: trimmedLocation || null,
     });

@@ -60,6 +60,12 @@
       [ngModel]="location()"
       (ngModelChange)="location.set($event)" />
 
+    <app-custom-input
+      label="URL"
+      placeholder="Es. https://meet.google.com/xyz"
+      [ngModel]="url()"
+      (ngModelChange)="url.set($event)" />
+
     @if (errorMessage()) {
       <p appText variant="body-sm" color="error">{{ errorMessage() }}</p>
     }

@@ -106,6 +106,9 @@ import { GetProfiloUseCase } from './features/dashboard/application/usecases/get
 import { GetCarrieraInfoUseCase } from './features/dashboard/application/usecases/get-carriera-info.usecase';
 import { GetFotoUseCase } from './features/dashboard/application/usecases/get-foto.usecase';
 import { SwitchCarrieraUseCase } from './features/dashboard/application/usecases/switch-carriera.usecase';
+import { CalendarFacade } from './features/dashboard/application/facades/calendar.facade';
+import { CalendarRepository } from './features/dashboard/domain/repositories/calendar.repository';
+import { CalendarApiRepository } from './features/dashboard/infrastructure/api/calendar-api.repository';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -116,6 +119,7 @@ export const appConfig: ApplicationConfig = {
     // Auth
     { provide: AuthRepository, useClass: AuthApiRepository },
     { provide: CarrieraRepository, useClass: CarrieraApiRepository },
+    { provide: CalendarRepository, useClass: CalendarApiRepository },
     AuthFacade,
     LoginUseCase,
     LogoutUseCase,
@@ -136,6 +140,7 @@ export const appConfig: ApplicationConfig = {
     GetCarrieraInfoUseCase,
     GetFotoUseCase,
     SwitchCarrieraUseCase,
+    CalendarFacade,
 
     provideLucideIcons(
       LucideLayoutDashboard,
