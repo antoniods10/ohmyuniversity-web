@@ -14,6 +14,7 @@
     @case ('day') {
       <app-calendar-day-strip
         [selectedDate]="focusedDate()"
+        [events]="events()"
         (dateSelected)="selectDate($event)"
         (weekChanged)="selectDate($event)" />
 

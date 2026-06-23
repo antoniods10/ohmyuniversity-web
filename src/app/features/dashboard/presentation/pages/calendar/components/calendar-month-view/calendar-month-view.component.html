@@ -37,9 +37,22 @@
       [clickable]="true"
       (cardClick)="onDayClick(cell.date)">
       <div class="flex h-24 flex-col gap-1 overflow-hidden">
-        <p appText variant="h4" weight="extrabold" [color]="cell.isInMonth ? 'default' : 'subtle'">
-          {{ cell.date.getDate() }}
-        </p>
+        <div class="relative inline-block">
+          <p
+            appText
+            variant="h4"
+            weight="extrabold"
+            [color]="cell.isInMonth ? 'default' : 'subtle'">
+            {{ cell.date.getDate() }}
+          </p>
+          @if (cell.isToday) {
+            <svg
+              [lucideIcon]="iconToday"
+              [size]="14"
+              class="absolute -right-3 -top-1 text-red-500"
+              aria-hidden="true"></svg>
+          }
+        </div>
 
         @for (item of cell.visibleEvents; track $index) {
           <app-custom-badge
