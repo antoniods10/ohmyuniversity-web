@@ -127,7 +127,10 @@
 
       <!-- Current account header -->
       @if (currentAccount) {
-        <div class="flex items-start p-4 pb-3 gap-3">
+        <div
+          class="flex items-start p-4 pb-3 gap-3 cursor-pointer"
+          role="button"
+          (click)="onCurrentAccountClick()">
           <div class="shrink-0" [class]="position === 'left' ? 'order-last' : ''">
             <app-custom-avatar
               [src]="currentAccount.avatarSrc ?? ''"
@@ -175,7 +178,10 @@
 
       <!-- Current account header -->
       @if (currentAccount) {
-        <div class="flex items-start p-4 pb-3 gap-3">
+        <div
+          class="flex items-start p-4 pb-3 gap-3 cursor-pointer"
+          role="button"
+          (click)="onCurrentAccountClick()">
           <div class="shrink-0" [class]="position === 'left' ? 'order-last' : ''">
             <app-custom-avatar
               [src]="currentAccount.avatarSrc ?? ''"
