@@ -134,6 +134,53 @@
                   aria-hidden="true"></svg>
                 <p appText variant="caption" color="muted">{{ suggestion.tuitionRange }}</p>
               </div>
+
+              <!-- Campuses accordion -->
+              @if (suggestion.university.campuses.length > 0) {
+                <div class="mt-3 overflow-hidden rounded-lg border border-gray-100">
+                  <button
+                    type="button"
+                    class="flex w-full items-center justify-between gap-2 px-3 py-2.5 text-left transition-colors hover:bg-gray-50 cursor-pointer"
+                    (click)="toggleCampuses(suggestion.university.id)">
+                    <div class="flex items-center gap-1.5">
+                      <svg
+                        [lucideIcon]="iconMap"
+                        [size]="13"
+                        class="shrink-0 text-gray-500"
+                        aria-hidden="true"></svg>
+                      <p appText variant="caption" color="muted">
+                        {{
+                          suggestion.university.campuses.length === 1
+                            ? 'Vedi la sede'
+                            : 'Vedi le sedi (' + suggestion.university.campuses.length + ')'
+                        }}
+                      </p>
+                    </div>
+                    <svg
+                      [lucideIcon]="iconChevron"
+                      [size]="14"
+                      class="shrink-0 text-gray-400 transition-transform duration-200"
+                      [class.rotate-180]="isCampusesExpanded(suggestion.university.id)"
+                      aria-hidden="true"></svg>
+                  </button>
+
+                  @if (isCampusesExpanded(suggestion.university.id)) {
+                    <div class="space-y-2.5 border-t border-gray-100 bg-gray-50 px-3 py-3">
+                      @for (campus of suggestion.university.campuses; track campus.id) {
+                        <div class="flex items-start gap-2">
+                          <div class="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400"></div>
+                          <div class="min-w-0">
+                            <p appText variant="caption" weight="semibold">{{ campus.name }}</p>
+                            <p appText variant="caption" color="subtle">
+                              {{ campus.address ?? campus.city }}
+                            </p>
+                          </div>
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+              }
             </div>
           }
         </div>

@@ -1,4 +1,4 @@
-import { Component, output, inject, computed } from '@angular/core';
+import { Component, output, inject, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
@@ -14,6 +14,7 @@ import {
   LucideBuilding2,
   LucideEuro,
   LucideBookOpen,
+  LucideChevronDown,
 } from '@lucide/angular';
 import { OrientationStateService } from '@orientation/application/state/orientation.state';
 
@@ -55,8 +56,12 @@ export class OrientationResultComponent {
   readonly iconBuilding = LucideBuilding2;
   readonly iconEuro = LucideEuro;
   readonly iconCourse = LucideBookOpen;
+  readonly iconChevron = LucideChevronDown;
 
   readonly result = computed(() => this.state.result());
+
+  /** id dell'università con l'accordion sedi attualmente aperto (una sola alla volta) */
+  private readonly expandedCampuses = signal<string | null>(null);
 
   getUniversityTypeLabel(type: string): string {
     return UNIVERSITY_TYPE_LABELS[type] ?? type;
@@ -70,5 +75,13 @@ export class OrientationResultComponent {
     if (index === 0) return 'primary';
     if (index === 1) return 'info';
     return 'neutral';
+  }
+
+  isCampusesExpanded(universityId: string): boolean {
+    return this.expandedCampuses() === universityId;
+  }
+
+  toggleCampuses(universityId: string): void {
+    this.expandedCampuses.set(this.isCampusesExpanded(universityId) ? null : universityId);
   }
 }

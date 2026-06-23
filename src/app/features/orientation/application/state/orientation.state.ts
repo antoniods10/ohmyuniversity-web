@@ -1,6 +1,6 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { ORIENTATION_TOPICS } from '@constants';
-import { TopicId } from '@types';
+import { TopicId, InlineQuestion } from '@types';
 import { computeOrientationResult, OrientationResult } from './orientation-scoring';
 
 export interface SavedAnswer {
@@ -10,17 +10,45 @@ export interface SavedAnswer {
   label: string;
 }
 
+/** Flat list of every inline question across all topics, computed once */
+const ALL_QUESTIONS: InlineQuestion[] = ORIENTATION_TOPICS.flatMap(t => t.questions);
+
 @Injectable({ providedIn: 'root' })
 export class OrientationStateService {
   private readonly _answers = signal<Map<string, SavedAnswer>>(new Map());
 
   readonly answers = computed(() => Array.from(this._answers().values()));
 
-  readonly totalQuestions = computed(() =>
-    ORIENTATION_TOPICS.reduce((sum, t) => sum + t.questions.length, 0),
+  /**
+   * Whether a question is currently reachable given the answers saved so far.
+   * A question with no `dependsOn` is always reachable. A question that
+   * depends on another one is reachable only if that other question was
+   * answered with one of the expected values.
+   */
+  isQuestionReachable(question: InlineQuestion): boolean {
+    if (!question.dependsOn) return true;
+    const { questionId, values } = question.dependsOn;
+    const parentValue = this._answers().get(questionId)?.value;
+    return parentValue !== undefined && values.includes(parentValue);
+  }
+
+  /** Only the questions that are actually reachable given the current answers */
+  readonly reachableQuestions = computed(() =>
+    ALL_QUESTIONS.filter(q => this.isQuestionReachable(q)),
   );
 
-  readonly answeredCount = computed(() => this._answers().size);
+  readonly totalQuestions = computed(() => this.reachableQuestions().length);
+
+  /**
+   * Count of saved answers that belong to a currently reachable question.
+   * If a dependency answer changes and a follow-up question becomes
+   * unreachable, its leftover saved answer (if any) is not counted here,
+   * keeping the completion percentage consistent with what the user can see.
+   */
+  readonly answeredCount = computed(() => {
+    const reachableIds = new Set(this.reachableQuestions().map(q => q.id));
+    return this.answers().filter(a => reachableIds.has(a.questionId)).length;
+  });
 
   readonly isComplete = computed(() => this.answeredCount() === this.totalQuestions());
 
@@ -49,7 +77,9 @@ export class OrientationStateService {
   isTopicComplete(topicId: TopicId): boolean {
     const topic = ORIENTATION_TOPICS.find(t => t.id === topicId);
     if (!topic) return false;
-    return topic.questions.every(q => this._answers().has(q.id));
+    return topic.questions
+      .filter(q => this.isQuestionReachable(q))
+      .every(q => this._answers().has(q.id));
   }
 
   clearAnswer(questionId: string): void {

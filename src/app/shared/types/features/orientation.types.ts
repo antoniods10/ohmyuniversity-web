@@ -123,6 +123,17 @@ export interface InlineOption {
   label: string;
 }
 
+/**
+ * Declares that a question is only reachable when another question was
+ * answered with one of the given values. Used for conditional follow-up
+ * questions (e.g. "which TOLC?" only appears if the student already took
+ * or is planning to take one).
+ */
+export interface QuestionDependency {
+  questionId: string;
+  values: string[];
+}
+
 /** An inline question shown at the end of a topic, tied to a specific topic */
 export interface InlineQuestion {
   id: string;
@@ -133,6 +144,8 @@ export interface InlineQuestion {
   options?: InlineOption[];
   scaleMin?: number;
   scaleMax?: number;
+  /** If set, this question only counts/appears when the dependency condition is met */
+  dependsOn?: QuestionDependency;
 }
 
 /** A full orientation topic: title, subtitle and its inline questions */

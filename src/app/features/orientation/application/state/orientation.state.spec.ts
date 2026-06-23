@@ -141,7 +141,6 @@ describe('OrientationStateService', () => {
 
     it('returns false when only some questions of a multi-question topic are answered', () => {
       const erroriTopic = ORIENTATION_TOPICS.find(t => t.id === 'errori')!;
-      // errori has 4 questions — answer only the first one
       service.saveAnswer(erroriTopic.questions[0].id, 'errori', 'some-value', 'Some Label');
 
       expect(service.isTopicComplete('errori')).toBe(false);
@@ -179,7 +178,6 @@ describe('OrientationStateService', () => {
     it('calls computeOrientationResult only once all questions are answered', () => {
       const computeSpy = vi.spyOn(scoringModule, 'computeOrientationResult');
 
-      // Partially answered — result should stay null and the scorer should not run
       service.saveAnswer('corso-area', 'corso', 'ingegneria', 'Ingegneria & Informatica');
       expect(service.result()).toBeNull();
       expect(computeSpy).not.toHaveBeenCalled();
@@ -210,7 +208,6 @@ describe('OrientationStateService', () => {
       const firstResult = service.result();
       expect(firstResult).not.toBeNull();
 
-      // Change the dominant area answer — the result should be recalculated
       service.saveAnswer('corso-area', 'corso', 'artistica', 'Artistica & del Design');
 
       const secondResult = service.result();
