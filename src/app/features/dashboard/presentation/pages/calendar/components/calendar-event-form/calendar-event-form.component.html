@@ -44,7 +44,8 @@
           [required]="true"
           [errorMessage]="timeErrorMessage()"
           [ngModel]="startTime()"
-          (ngModelChange)="onTimeInput($event)" />
+          (ngModelChange)="onTimeInput($event)"
+          (inputBlur)="onStartTimeBlur()" />
         <div
           class="absolute right-1 top-7 flex flex-col overflow-hidden rounded-md border border-gray-200 bg-white">
           <button
@@ -71,7 +72,8 @@
           [required]="true"
           [errorMessage]="endTimeErrorMessage()"
           [ngModel]="endTime()"
-          (ngModelChange)="onEndTimeInput($event)" />
+          (ngModelChange)="onEndTimeInput($event)"
+          (inputBlur)="onEndTimeBlur()" />
         <div
           class="absolute right-1 top-7 flex flex-col overflow-hidden rounded-md border border-gray-200 bg-white">
           <button
@@ -101,6 +103,12 @@
       placeholder="Es. Aula 5"
       [ngModel]="location()"
       (ngModelChange)="location.set($event)" />
+
+    <app-custom-input
+      label="Link"
+      placeholder="https://..."
+      [ngModel]="url()"
+      (ngModelChange)="url.set($event)" />
 
     @if (errorMessage()) {
       <p appText variant="body-sm" color="error">{{ errorMessage() }}</p>

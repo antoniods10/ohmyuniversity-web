@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  input,
+  output,
+  ElementRef,
+  inject,
+  afterNextRender,
+  viewChild,
+} from '@angular/core';
 import { CalendarEventCardComponent } from '../calendar-event-card/calendar-event-card.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import type { CalendarEvent, CalendarEventLayout } from '@shared/types/dashboard/calendar.types';
@@ -10,6 +20,7 @@ import {
   calendarHourTop,
   calendarTimelineHours,
   calendarTimelineTotalHeight,
+  calendarHourTop as hourTopFn,
 } from '@shared/utils/calendar.utils';
 
 interface PositionedEventLayout {
@@ -31,16 +42,33 @@ const LANE_GAP_PX = 8;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarTimelineComponent {
-  readonly eventLayouts = input.required<CalendarEventLayout[]>();
+  private readonly el = inject(ElementRef);
 
+  readonly eventLayouts = input.required<CalendarEventLayout[]>();
   readonly eventSelected = output<CalendarEvent>();
 
   readonly hours = calendarTimelineHours();
   readonly leftGutter = CALENDAR_TIMELINE.leftGutter;
   readonly totalHeight = calendarTimelineTotalHeight();
-
   readonly hourTop = calendarHourTop;
   readonly hourLabel = calendarHourLabel;
+
+  readonly scrollContainer = viewChild.required<ElementRef>('scrollContainer');
+
+  readonly currentTimePx = computed(() => {
+    const now = new Date();
+    return hourTopFn(now.getHours()) + (now.getMinutes() / 60) * CALENDAR_TIMELINE.hourHeight;
+  });
+
+  constructor() {
+    afterNextRender(() => {
+      const container = this.scrollContainer().nativeElement;
+      const now = new Date();
+      const top =
+        hourTopFn(now.getHours()) + (now.getMinutes() / 60) * CALENDAR_TIMELINE.hourHeight;
+      container.scrollTop = Math.max(0, top - container.clientHeight / 3);
+    });
+  }
 
   readonly positionedEvents = computed<PositionedEventLayout[]>(() =>
     this.eventLayouts().map(layout => {
@@ -53,14 +81,7 @@ export class CalendarTimelineComponent {
       const laneOffset = `(100% - ${totalGapPx}px) / ${laneCount} + ${LANE_GAP_PX}px`;
       const leftExpr = lane === 0 ? '0px' : `calc(${lane} * (${laneOffset}))`;
 
-      return {
-        layout,
-        top,
-        height,
-        widthExpr,
-        leftExpr,
-        compact: height < 72,
-      };
+      return { layout, top, height, widthExpr, leftExpr, compact: height < 72 };
     }),
   );
 

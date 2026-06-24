@@ -226,13 +226,24 @@ function validateTimeLive(rawValue: string): string {
 
 /** Same digit-grouping idea as autoFormatDateInput, but for hh:mm (4 digits, one separator) */
 function autoFormatTimeInput(value: string): string {
-  const digitsOnly = value.replace(/\D/g, '').slice(0, 4);
+  const normalized = value.replace(/[.,]/g, ':');
+  const digitsOnly = normalized.replace(/[^\d]/g, '').slice(0, 4);
   const hours = digitsOnly.slice(0, 2);
   const minutes = digitsOnly.slice(2, 4);
 
   let result = hours;
   if (minutes) result += `:${minutes}`;
   return result;
+}
+
+function clampTime(value: string): string {
+  const match = /^(\d{1,2}):(\d{2})$/.exec(value.trim());
+  if (!match) return value;
+
+  const hours = Math.min(23, Math.max(0, Number(match[1])));
+  const minutes = Math.min(59, Math.max(0, Number(match[2])));
+
+  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 }
 
 @Component({
@@ -297,6 +308,7 @@ export class CalendarEventFormComponent {
   readonly startTime = signal('');
   readonly endTime = signal('');
   readonly location = signal('');
+  readonly url = signal('');
   readonly errorMessage = signal('');
   readonly dateErrorMessage = signal('');
   readonly timeErrorMessage = signal('');
@@ -426,6 +438,9 @@ export class CalendarEventFormComponent {
     const type = FORM_TYPE_TO_EVENT_TYPE[this.activeFormType()];
     const trimmedLocation = this.location().trim();
     const trimmedDescription = this.description().trim();
+    const trimmedUrl = this.url().trim();
+    const normalizedUrl =
+      trimmedUrl && !trimmedUrl.startsWith('http') ? `https://${trimmedUrl}` : trimmedUrl || null;
 
     const existing = this.event();
     if (existing?.id) {
@@ -438,6 +453,7 @@ export class CalendarEventFormComponent {
           endDate,
           type,
           location: trimmedLocation || null,
+          url: normalizedUrl,
         },
       });
       return;
@@ -451,7 +467,7 @@ export class CalendarEventFormComponent {
       allDay: false,
       type,
       color: null,
-      url: null,
+      url: normalizedUrl,
       notes: null,
       location: trimmedLocation || null,
     });
@@ -459,5 +475,37 @@ export class CalendarEventFormComponent {
 
   onCancel(): void {
     this.cancelled.emit();
+  }
+
+  onStartTimeBlur(): void {
+    const val = this.startTime().trim();
+    const normalized = autoFormatTimeInput(val);
+
+    let result: string;
+    if (/^\d{1,2}$/.test(normalized)) {
+      result = normalized.padStart(2, '0') + ':00';
+    } else {
+      result = normalized;
+    }
+
+    result = clampTime(result);
+    this.startTime.set(result);
+    this.timeErrorMessage.set('');
+  }
+
+  onEndTimeBlur(): void {
+    const val = this.endTime().trim();
+    const normalized = autoFormatTimeInput(val);
+
+    let result: string;
+    if (/^\d{1,2}$/.test(normalized)) {
+      result = normalized.padStart(2, '0') + ':00';
+    } else {
+      result = normalized;
+    }
+
+    result = clampTime(result);
+    this.endTime.set(result);
+    this.endTimeErrorMessage.set('');
   }
 }

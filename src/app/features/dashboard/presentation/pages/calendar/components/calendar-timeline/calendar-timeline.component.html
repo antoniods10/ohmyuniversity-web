@@ -1,28 +1,52 @@
-<div class="relative" [style.height.px]="totalHeight">
-  @for (hour of hours; track hour) {
-    <div class="absolute left-0 right-0 border-t border-gray-100" [style.top.px]="hourTop(hour)">
+<div
+  #scrollContainer
+  class="overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+  style="height: calc(100vh - 280px)">
+  <div class="relative" [style.height.px]="totalHeight + 16" style="padding-top: 12px">
+    @for (hour of hours; track hour) {
       <div
-        class="absolute shrink-0 pl-1 text-center"
-        [style.width.px]="leftGutter"
-        [style.top.px]="-7">
-        <p appText variant="caption" color="subtle" weight="semibold">{{ hourLabel(hour) }}</p>
-      </div>
-    </div>
-  }
-
-  <div class="absolute top-0 bottom-0" [style.left.px]="leftGutter" [style.right.px]="22">
-    @for (positioned of positionedEvents(); track $index) {
-      <div
-        class="absolute"
-        [style.top.px]="positioned.top"
-        [style.height.px]="positioned.height"
-        [style.left]="positioned.leftExpr"
-        [style.width]="positioned.widthExpr">
-        <app-calendar-event-card
-          [event]="positioned.layout.event"
-          [compact]="positioned.compact"
-          (cardClick)="onEventClick(positioned.layout.event)" />
+        class="absolute left-0 right-0 border-t border-gray-100"
+        [style.top.px]="hourTop(hour) + 12">
+        <div
+          class="absolute shrink-0 pl-1 text-center"
+          [style.width.px]="leftGutter"
+          [style.top.px]="-7">
+          <p appText variant="caption" color="subtle" weight="semibold">{{ hourLabel(hour) }}</p>
+        </div>
       </div>
     }
+
+    <!-- Red Line -->
+    <div
+      class="absolute left-0 right-0 z-10 flex items-center"
+      [style.top.px]="currentTimePx() + 12">
+      <div
+        class="shrink-0 rounded-full"
+        [style.width.px]="8"
+        [style.height.px]="8"
+        [style.margin-left.px]="leftGutter - 4"
+        style="background: var(--color-error-dark)"></div>
+      <div class="flex-1 h-px" style="background: var(--color-error-dark)"></div>
+    </div>
+
+    <div
+      class="absolute top-0 bottom-0"
+      [style.left.px]="leftGutter"
+      [style.right.px]="22"
+      style="top: 12px">
+      @for (positioned of positionedEvents(); track $index) {
+        <div
+          class="absolute"
+          [style.top.px]="positioned.top"
+          [style.height.px]="positioned.height"
+          [style.left]="positioned.leftExpr"
+          [style.width]="positioned.widthExpr">
+          <app-calendar-event-card
+            [event]="positioned.layout.event"
+            [compact]="positioned.compact"
+            (cardClick)="onEventClick(positioned.layout.event)" />
+        </div>
+      }
+    </div>
   </div>
 </div>

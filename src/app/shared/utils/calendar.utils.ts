@@ -55,9 +55,7 @@ export function calendarEventTypeVariant(type: CalendarEventType): CalendarEvent
 
 /** Hour-of-day label in AM/PM form (e.g. "9 AM", "12 PM"), used by the timeline's hour gutter */
 export function calendarHourLabel(hour: number): string {
-  if (hour === 0) return '12 AM';
-  if (hour === 12) return '12 PM';
-  return hour < 12 ? `${hour} AM` : `${hour - 12} PM`;
+  return `${hour.toString().padStart(2, '0')}:00`;
 }
 
 /** Precise 24h time (e.g. "09:30"), used on individual event cards */
@@ -232,15 +230,15 @@ function nextFreeLane(active: ActiveLane[]): number {
 
 /** Timeline layout constants, mirrors calendar_timeline.dart's startHour/endHour/hourHeight */
 export const CALENDAR_TIMELINE = {
-  startHour: 8,
-  endHour: 20,
+  startHour: 0,
+  endHour: 23,
   hourHeight: 104,
   leftGutter: 70,
 } as const;
 
 const TIME_STEP_MINUTES = 30;
-const MIN_TIME_MINUTES = CALENDAR_TIMELINE.startHour * 60;
-const MAX_TIME_MINUTES = CALENDAR_TIMELINE.endHour * 60;
+const MIN_TIME_MINUTES = 0;
+const MAX_TIME_MINUTES = 23 * 60 + 59;
 
 /**
  * Steps a "hh:mm" time string up or down by 30 minutes, snapping to the nearest 30-minute
