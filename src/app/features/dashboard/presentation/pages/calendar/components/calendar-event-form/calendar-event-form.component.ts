@@ -13,12 +13,18 @@ import { CustomModalComponent, type ModalType } from '@ui/custom-modal/custom-mo
 import { CustomInputComponent, type SelectOption } from '@ui/custom-input/custom-input.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
-import { LucideCheck } from '@lucide/angular';
+import {
+  LucideCheck,
+  LucideChevronDown,
+  LucideChevronUp,
+  LucideDynamicIcon,
+} from '@lucide/angular';
 import type {
   CalendarEvent,
   CalendarEventType,
   CalendarFormEventType,
 } from '@shared/types/dashboard/calendar.types';
+import { stepTime } from '@shared/utils/calendar.utils';
 
 const FORM_TYPE_OPTIONS: SelectOption[] = [
   { value: 'ESAME', label: 'Esame' },
@@ -42,6 +48,17 @@ const EVENT_TYPE_TO_FORM_TYPE: Record<CalendarEventType, CalendarFormEventType> 
 
 const DEFAULT_START_HOUR = 9;
 const DEFAULT_DURATION_MINUTES = 60;
+
+function addMinutesToTime(value: string, minutesToAdd: number): string {
+  const match = /^(\d{1,2}):(\d{2})$/.exec(value.trim());
+  if (!match) return value;
+  const totalMinutes = Number(match[1]) * 60 + Number(match[2]) + minutesToAdd;
+  const hours = Math.floor(totalMinutes / 60)
+    .toString()
+    .padStart(2, '0');
+  const minutes = (totalMinutes % 60).toString().padStart(2, '0');
+  return `${hours}:${minutes}`;
+}
 
 function formatTime(date: Date): string {
   const hours = date.getHours().toString().padStart(2, '0');
@@ -227,6 +244,7 @@ function autoFormatTimeInput(value: string): string {
     CustomInputComponent,
     CustomButtonComponent,
     CustomTextComponent,
+    LucideDynamicIcon,
   ],
   templateUrl: './calendar-event-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -250,20 +268,39 @@ export class CalendarEventFormComponent {
   readonly modalType: ModalType = 'center';
   readonly typeOptions = FORM_TYPE_OPTIONS;
   readonly iconSave = LucideCheck;
+  readonly iconChevronUp = LucideChevronUp;
+  readonly iconChevronDown = LucideChevronDown;
 
   readonly isEditing = computed(() => this.event() !== null);
+
+  readonly durationLabel = computed(() => {
+    const start = /^(\d{1,2}):(\d{2})$/.exec(this.startTime().trim());
+    const end = /^(\d{1,2}):(\d{2})$/.exec(this.endTime().trim());
+    if (!start || !end) return '';
+
+    const startMinutes = Number(start[1]) * 60 + Number(start[2]);
+    const endMinutes = Number(end[1]) * 60 + Number(end[2]);
+    const diff = endMinutes - startMinutes;
+    if (diff <= 0) return '';
+
+    const hours = Math.floor(diff / 60);
+    const minutes = diff % 60;
+    if (hours > 0 && minutes > 0) return `${hours}h ${minutes}m`;
+    if (hours > 0) return `${hours}h`;
+    return `${minutes}m`;
+  });
 
   readonly activeFormType = signal<CalendarFormEventType>('EVENTO');
   readonly title = signal('');
   readonly description = signal('');
   readonly eventDate = signal('');
   readonly startTime = signal('');
-  readonly durationMinutes = signal(String(DEFAULT_DURATION_MINUTES));
+  readonly endTime = signal('');
   readonly location = signal('');
   readonly errorMessage = signal('');
   readonly dateErrorMessage = signal('');
   readonly timeErrorMessage = signal('');
-  readonly url = signal('');
+  readonly endTimeErrorMessage = signal('');
 
   constructor() {
     effect(() => {
@@ -272,6 +309,7 @@ export class CalendarEventFormComponent {
       this.errorMessage.set('');
       this.dateErrorMessage.set('');
       this.timeErrorMessage.set('');
+      this.endTimeErrorMessage.set('');
 
       if (current) {
         this.activeFormType.set(EVENT_TYPE_TO_FORM_TYPE[current.type]);
@@ -279,13 +317,12 @@ export class CalendarEventFormComponent {
         this.description.set(current.description ?? '');
         this.eventDate.set(formatDate(current.startDate));
         this.startTime.set(formatTime(current.startDate));
-        this.durationMinutes.set(
+        this.endTime.set(
           current.endDate
-            ? String(Math.round((current.endDate.getTime() - current.startDate.getTime()) / 60000))
-            : String(DEFAULT_DURATION_MINUTES),
+            ? formatTime(current.endDate)
+            : addMinutesToTime(formatTime(current.startDate), DEFAULT_DURATION_MINUTES),
         );
         this.location.set(current.location ?? '');
-        this.url.set(current.url ?? '');
         return;
       }
 
@@ -293,20 +330,18 @@ export class CalendarEventFormComponent {
       this.title.set('');
       this.description.set('');
       this.eventDate.set(formatDate(defaultDate));
-      this.startTime.set(
-        formatTime(
-          new Date(
-            defaultDate.getFullYear(),
-            defaultDate.getMonth(),
-            defaultDate.getDate(),
-            DEFAULT_START_HOUR,
-            0,
-          ),
+      const defaultStartTime = formatTime(
+        new Date(
+          defaultDate.getFullYear(),
+          defaultDate.getMonth(),
+          defaultDate.getDate(),
+          DEFAULT_START_HOUR,
+          0,
         ),
       );
-      this.durationMinutes.set(String(DEFAULT_DURATION_MINUTES));
+      this.startTime.set(defaultStartTime);
+      this.endTime.set(addMinutesToTime(defaultStartTime, DEFAULT_DURATION_MINUTES));
       this.location.set('');
-      this.url.set('');
     });
 
     effect(() => {
@@ -326,6 +361,21 @@ export class CalendarEventFormComponent {
   onTimeInput(value: string): void {
     this.timeErrorMessage.set(validateTimeLive(value));
     this.startTime.set(autoFormatTimeInput(value));
+  }
+
+  onEndTimeInput(value: string): void {
+    this.endTimeErrorMessage.set(validateTimeLive(value));
+    this.endTime.set(autoFormatTimeInput(value));
+  }
+
+  onStartTimeStep(direction: 1 | -1): void {
+    this.startTime.set(stepTime(this.startTime(), direction));
+    this.timeErrorMessage.set('');
+  }
+
+  onEndTimeStep(direction: 1 | -1): void {
+    this.endTime.set(stepTime(this.endTime(), direction));
+    this.endTimeErrorMessage.set('');
   }
 
   onTypeChange(formType: string): void {
@@ -351,21 +401,30 @@ export class CalendarEventFormComponent {
       return;
     }
 
-    const duration = Number.parseInt(this.durationMinutes(), 10);
-    if (Number.isNaN(duration) || duration <= 0) {
-      this.errorMessage.set('Inserisci una durata valida in minuti.');
+    const endTimeParsed = parseTime(this.endTime());
+    if (!endTimeParsed.ok) {
+      this.endTimeErrorMessage.set(endTimeParsed.message);
       return;
     }
 
     this.errorMessage.set('');
 
     const startDate = new Date(date.year, date.month - 1, date.day, time.hours, time.minutes);
-    const endDate = new Date(startDate.getTime() + duration * 60000);
+    const endDate = new Date(
+      date.year,
+      date.month - 1,
+      date.day,
+      endTimeParsed.hours,
+      endTimeParsed.minutes,
+    );
+
+    if (endDate.getTime() <= startDate.getTime()) {
+      this.endTimeErrorMessage.set("L'ora fine deve essere dopo l'ora inizio.");
+      return;
+    }
+
     const type = FORM_TYPE_TO_EVENT_TYPE[this.activeFormType()];
     const trimmedLocation = this.location().trim();
-    const trimmedUrl = this.url().trim();
-    const normalizedUrl =
-      trimmedUrl && !trimmedUrl.startsWith('http') ? `https://${trimmedUrl}` : trimmedUrl || null;
     const trimmedDescription = this.description().trim();
 
     const existing = this.event();
@@ -379,7 +438,6 @@ export class CalendarEventFormComponent {
           endDate,
           type,
           location: trimmedLocation || null,
-          url: normalizedUrl,
         },
       });
       return;
@@ -393,7 +451,7 @@ export class CalendarEventFormComponent {
       allDay: false,
       type,
       color: null,
-      url: normalizedUrl,
+      url: null,
       notes: null,
       location: trimmedLocation || null,
     });

@@ -37,34 +37,70 @@
       (ngModelChange)="description.set($event)" />
 
     <div class="grid grid-cols-2 gap-3">
-      <app-custom-input
-        label="Ora"
-        placeholder="09:00"
-        [required]="true"
-        [errorMessage]="timeErrorMessage()"
-        [ngModel]="startTime()"
-        (ngModelChange)="onTimeInput($event)" />
+      <div class="relative">
+        <app-custom-input
+          label="Ora inizio"
+          placeholder="09:00"
+          [required]="true"
+          [errorMessage]="timeErrorMessage()"
+          [ngModel]="startTime()"
+          (ngModelChange)="onTimeInput($event)" />
+        <div
+          class="absolute right-1 top-7 flex flex-col overflow-hidden rounded-md border border-gray-200 bg-white">
+          <button
+            type="button"
+            class="flex h-4 w-6 items-center justify-center hover:bg-gray-50"
+            aria-label="Aumenta ora inizio"
+            (click)="onStartTimeStep(1)">
+            <svg [lucideIcon]="iconChevronUp" [size]="11" aria-hidden="true"></svg>
+          </button>
+          <button
+            type="button"
+            class="flex h-4 w-6 items-center justify-center border-t border-gray-200 hover:bg-gray-50"
+            aria-label="Diminuisci ora inizio"
+            (click)="onStartTimeStep(-1)">
+            <svg [lucideIcon]="iconChevronDown" [size]="11" aria-hidden="true"></svg>
+          </button>
+        </div>
+      </div>
 
-      <app-custom-input
-        type="number"
-        label="Durata (min)"
-        placeholder="60"
-        [required]="true"
-        [ngModel]="durationMinutes()"
-        (ngModelChange)="durationMinutes.set($event)" />
+      <div class="relative">
+        <app-custom-input
+          label="Ora fine"
+          placeholder="10:00"
+          [required]="true"
+          [errorMessage]="endTimeErrorMessage()"
+          [ngModel]="endTime()"
+          (ngModelChange)="onEndTimeInput($event)" />
+        <div
+          class="absolute right-1 top-7 flex flex-col overflow-hidden rounded-md border border-gray-200 bg-white">
+          <button
+            type="button"
+            class="flex h-4 w-6 items-center justify-center hover:bg-gray-50"
+            aria-label="Aumenta ora fine"
+            (click)="onEndTimeStep(1)">
+            <svg [lucideIcon]="iconChevronUp" [size]="11" aria-hidden="true"></svg>
+          </button>
+          <button
+            type="button"
+            class="flex h-4 w-6 items-center justify-center border-t border-gray-200 hover:bg-gray-50"
+            aria-label="Diminuisci ora fine"
+            (click)="onEndTimeStep(-1)">
+            <svg [lucideIcon]="iconChevronDown" [size]="11" aria-hidden="true"></svg>
+          </button>
+        </div>
+      </div>
     </div>
+
+    @if (durationLabel()) {
+      <p appText variant="caption" color="subtle">Durata: {{ durationLabel() }}</p>
+    }
 
     <app-custom-input
       label="Luogo"
       placeholder="Es. Aula 5"
       [ngModel]="location()"
       (ngModelChange)="location.set($event)" />
-
-    <app-custom-input
-      label="URL"
-      placeholder="Es. https://meet.google.com/xyz"
-      [ngModel]="url()"
-      (ngModelChange)="url.set($event)" />
 
     @if (errorMessage()) {
       <p appText variant="body-sm" color="error">{{ errorMessage() }}</p>
