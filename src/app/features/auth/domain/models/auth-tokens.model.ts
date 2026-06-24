@@ -21,5 +21,6 @@ export interface AuthTokens {
   refreshToken: string;
   nome: string;
   cognome: string;
+  hasCarriera: boolean;
   profili: ProfiloCarriera[];
 }

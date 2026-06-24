@@ -55,6 +55,11 @@ export class SchedulePage implements OnInit {
       error: () => {},
     });
 
+    if (!this.auth.hasCarriera()) {
+      this.loading.set(false);
+      return;
+    }
+
     this.carriera.getCarrieraInfo().subscribe({
       next: info => {
         const degreeType = DEGREE_TYPE_MAP[info.tipoCorsoCod ?? ''] ?? 'triennali';
@@ -148,5 +153,9 @@ export class SchedulePage implements OnInit {
       .replace(/[ùú]/g, 'u');
 
     return schedules.filter(s => s.timetablePageUrl.includes(slug));
+  }
+
+  get hasCarriera(): boolean {
+    return this.auth.hasCarriera();
   }
 }

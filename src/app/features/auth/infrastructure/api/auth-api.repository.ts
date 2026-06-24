@@ -11,10 +11,8 @@ export class AuthApiRepository extends AuthRepository {
   private readonly http = inject(HttpClient);
 
   login(request: LoginRequest): Observable<AuthTokens> {
-    return this.http.post<AuthTokens>(API.auth.login, {
-      ...request,
-      universityId: request.universityId.toUpperCase(),
-    });
+    const payload = { ...request, universityId: request.universityId.toUpperCase() };
+    return this.http.post<AuthTokens>(API.auth.login, payload);
   }
 
   refresh(refreshToken: string, universityId: string): Observable<string> {

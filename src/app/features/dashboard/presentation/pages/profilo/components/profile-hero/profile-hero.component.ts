@@ -4,6 +4,7 @@ import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomAvatarComponent } from '@ui/custom-avatar/custom-avatar.component';
 import { ProfiloResponse } from '../../../../../domain/models/profilo.model';
 import { CarrieraFacade } from '../../../../../application/facades/carriera.facade';
+import { AuthFacade } from 'src/app/features/auth/application/facades/auth.facade';
 
 @Component({
   selector: 'app-profile-hero',
@@ -15,6 +16,7 @@ export class ProfileHeroComponent implements OnInit {
   readonly profilo = input.required<ProfiloResponse>();
 
   private readonly carriera = inject(CarrieraFacade);
+  private readonly auth = inject(AuthFacade);
 
   readonly iconMail = LucideMail;
   readonly iconPhone = LucidePhone;
@@ -23,10 +25,9 @@ export class ProfileHeroComponent implements OnInit {
   readonly fotoUrl = signal<string>('');
 
   ngOnInit(): void {
+    if (!this.auth.hasCarriera()) return;
     this.carriera.getFoto().subscribe({
-      next: blob => {
-        this.fotoUrl.set(URL.createObjectURL(blob));
-      },
+      next: blob => this.fotoUrl.set(URL.createObjectURL(blob)),
       error: () => {},
     });
   }

@@ -251,7 +251,7 @@ export const UNIVERSITIES: University[] = [
     id: 'univpm',
     name: 'Università Politecnica delle Marche',
     shortName: 'UnivPM',
-    emailDomains: ['univpm.it'],
+    emailDomains: ['univpm.it', 'studenti.univpm.it'],
     city: 'Ancona',
     type: 'statale',
     campuses: [

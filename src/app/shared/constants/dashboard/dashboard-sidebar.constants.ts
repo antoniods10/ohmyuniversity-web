@@ -1,4 +1,3 @@
-import { Type } from '@angular/core';
 import {
   LucideLayoutDashboard,
   LucideChartLine,
@@ -15,15 +14,16 @@ import {
   LucideDoorOpen,
   LucideExternalLink,
 } from '@lucide/angular';
+import { Icon } from '@types';
 
 export type UserRole = 'student' | 'admin' | 'professor';
 
 export interface SidebarItem {
   id: string;
   label: string;
-  icon: Type<unknown>;
+  icon: Icon;
   route: string;
-  roles: UserRole[];
+  requiresCarriera: boolean;
   color: string;
   dividerAfter?: boolean;
 }
@@ -38,7 +38,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Dashboard',
     icon: LucideLayoutDashboard,
     route: '/dashboard',
-    roles: ['student', 'admin', 'professor'],
+    requiresCarriera: false,
     color: 'dashboard',
   },
   {
@@ -46,16 +46,15 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Carriera',
     icon: LucideChartLine,
     route: '/dashboard/carriera',
-    roles: ['student', 'admin', 'professor'],
+    requiresCarriera: true,
     color: 'career',
   },
-
   {
     id: 'exams',
     label: 'Appelli',
     icon: LucideBookOpenCheck,
     route: '/dashboard/appelli',
-    roles: ['student', 'admin', 'professor'],
+    requiresCarriera: true,
     color: 'exams',
   },
   {
@@ -63,7 +62,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Agenda',
     icon: LucideCalendarDays,
     route: '/dashboard/agenda',
-    roles: ['student', 'admin', 'professor'],
+    requiresCarriera: false,
     color: 'agenda',
   },
   {
@@ -71,7 +70,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Orario Lezioni',
     icon: LucideCalendarClock,
     route: '/dashboard/orario-lezioni',
-    roles: ['student', 'admin', 'professor'],
+    requiresCarriera: false,
     color: 'schedules',
   },
   {
@@ -79,7 +78,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Sviluppi Futuri',
     icon: LucideSignpostBig,
     route: '/dashboard/sviluppi-futuri',
-    roles: ['student', 'admin', 'professor'],
+    requiresCarriera: false,
     color: 'future',
     dividerAfter: true,
   },
@@ -88,7 +87,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Messaggi',
     icon: LucideMessageSquare,
     route: '/dashboard/messaggi',
-    roles: ['student', 'admin', 'professor'],
+    requiresCarriera: false,
     color: 'messages',
     dividerAfter: true,
   },
@@ -97,7 +96,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Trasporti',
     icon: LucideBus,
     route: '/dashboard/trasporti',
-    roles: ['student', 'admin', 'professor'],
+    requiresCarriera: false,
     color: 'transport',
     dividerAfter: true,
   },
@@ -106,7 +105,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Aule',
     icon: LucideDoorOpen,
     route: '/dashboard/aule',
-    roles: ['student', 'admin', 'professor'],
+    requiresCarriera: false,
     color: 'classrooms',
   },
   {
@@ -114,7 +113,7 @@ export const SIDEBAR_ITEMS: SidebarItem[] = [
     label: 'Portali',
     icon: LucideExternalLink,
     route: '/dashboard/portali',
-    roles: ['student', 'admin', 'professor'],
+    requiresCarriera: false,
     color: 'portals',
     dividerAfter: true,
   },
@@ -129,7 +128,7 @@ export const SIDEBAR_BOTTOM_ITEMS: SidebarItem[] = [
     label: 'Partner',
     icon: LucideHandshake,
     route: '/dashboard/partner-universitari',
-    roles: ['student', 'admin', 'professor'],
+    requiresCarriera: false,
     color: 'partner',
   },
   {
@@ -137,7 +136,7 @@ export const SIDEBAR_BOTTOM_ITEMS: SidebarItem[] = [
     label: 'Contatti',
     icon: LucideContactRound,
     route: '/dashboard/contatti-universitari',
-    roles: ['student', 'admin', 'professor'],
+    requiresCarriera: false,
     color: 'contacts',
   },
   {
@@ -145,7 +144,7 @@ export const SIDEBAR_BOTTOM_ITEMS: SidebarItem[] = [
     label: 'Segreteria',
     icon: LucidePrinter,
     route: '/dashboard/segreteria',
-    roles: ['student', 'admin', 'professor'],
+    requiresCarriera: false,
     color: 'secretariat',
   },
   {
@@ -153,7 +152,7 @@ export const SIDEBAR_BOTTOM_ITEMS: SidebarItem[] = [
     label: 'Impostazioni',
     icon: LucideSettings,
     route: '/dashboard/impostazioni',
-    roles: ['student', 'admin', 'professor'],
+    requiresCarriera: false,
     color: 'settings',
   },
 ];

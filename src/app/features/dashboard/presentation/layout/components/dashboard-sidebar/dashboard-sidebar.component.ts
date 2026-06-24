@@ -67,8 +67,10 @@ export class DashboardSidebarComponent implements OnInit {
 
   readonly accounts = signal<AccountEntry[]>([this.currentAccount()]);
   readonly fotoUrl = signal<string>('');
+  readonly hasCarriera = signal(false);
 
   ngOnInit(): void {
+    this.hasCarriera.set(this.auth.hasCarriera());
     const profili = this.auth.getProfili();
     const tuttiAccounts: AccountEntry[] = profili.map(p => ({
       id: String(p.stuId),
@@ -80,9 +82,24 @@ export class DashboardSidebarComponent implements OnInit {
       status: p.attivo ? 'active' : ('withdrawn' as AccountStatus),
       isCurrent: p.attivo,
     }));
-    this.accounts.set(tuttiAccounts);
-    const attivo = tuttiAccounts.find(a => a.isCurrent) ?? tuttiAccounts[0];
+
+    const defaultAccount: AccountEntry = {
+      id: 'current',
+      name: this.auth.getNomeCompleto(),
+      email: '',
+      courseLabel: '',
+      courseAcronym: '',
+      universityLabel: this.universityLabel(this.auth.getUniversityId()),
+      status: 'active',
+      isCurrent: true,
+    };
+
+    const finalAccounts = tuttiAccounts.length > 0 ? tuttiAccounts : [defaultAccount];
+    this.accounts.set(finalAccounts);
+    const attivo = finalAccounts.find(a => a.isCurrent) ?? finalAccounts[0];
     this.currentAccount.set(attivo);
+
+    if (!this.auth.hasCarriera()) return;
 
     forkJoin({
       badge: this.carriera.getBadge(),

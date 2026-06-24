@@ -5,11 +5,11 @@ import { LoginRequest } from '../../domain/models/login-request.model';
 import {
   LoginUseCase,
   ACCESS_TOKEN_KEY,
-  REFRESH_TOKEN_KEY,
   UNIVERSITY_ID_KEY,
   USER_COGNOME_KEY,
   USER_NOME_KEY,
   PROFILI_KEY,
+  HAS_CARRIERA_KEY,
 } from '../usecases/login.usecase';
 import { LogoutUseCase } from '../usecases/logout.usecase';
 import { RefreshTokenUseCase } from '../usecases/refresh-token.usecase';
@@ -83,6 +83,17 @@ export class AuthFacade {
       return JSON.parse(raw) as ProfiloCarriera[];
     } catch {
       return [];
+    }
+  }
+
+  hasCarriera(): boolean {
+    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+    if (!token) return false;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.hasCarriera === true;
+    } catch {
+      return false;
     }
   }
 

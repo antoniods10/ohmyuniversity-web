@@ -3,12 +3,14 @@
     title="Orari Lezioni"
     description="Accedi agli orari dei tuoi corsi attivi o cerca l'orario di qualsiasi corso dell'ateneo." />
 
-  @if (loading()) {
-    <div class="flex justify-center py-16">
-      <span class="text-sm" style="color: var(--color-neutral-400)">Caricamento orari...</span>
-    </div>
-  } @else {
-    <app-my-schedules [schedules]="mySchedules()" />
+  @if (hasCarriera) {
+    @if (loading()) {
+      <div class="flex justify-center py-16">
+        <span class="text-sm" style="color: var(--color-neutral-400)">Caricamento orari...</span>
+      </div>
+    } @else {
+      <app-my-schedules [schedules]="mySchedules()" />
+    }
   }
 
   <app-custom-card variant="neutral" padding="md" shadow="none" [bordered]="true" radius="lg">

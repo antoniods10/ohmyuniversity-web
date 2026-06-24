@@ -1,0 +1,101 @@
+<div class="flex flex-col gap-3">
+  <div class="flex items-center justify-between">
+    <h2 appText variant="h6" class="m-0">Borse disponibili</h2>
+    <span class="text-[0.75rem]" style="color: var(--color-neutral-400)">
+      {{ scholarships().length }} borse
+    </span>
+  </div>
+
+  @for (s of scholarships(); track s.id) {
+    <app-custom-card
+      variant="default"
+      padding="md"
+      shadow="sm"
+      [bordered]="true"
+      radius="lg"
+      [accentBar]="s.status === 'open' || s.status === 'closing'">
+      <div class="flex flex-col gap-4">
+        <div class="flex items-start justify-between gap-3 flex-wrap">
+          <div class="flex-1 min-w-0">
+            <h3 appText variant="h6" class="m-0">{{ s.name }}</h3>
+            <p class="text-[0.75rem] m-0 mt-0.5" style="color: var(--color-neutral-400)">
+              Ente erogatore:
+              <span style="color: var(--color-neutral-600); font-weight: 600">{{
+                s.provider
+              }}</span>
+            </p>
+          </div>
+          <app-custom-badge
+            [label]="statusLabel(s.status)"
+            [variant]="statusVariant(s.status)"
+            size="sm"
+            shape="pill"
+            [dot]="true" />
+        </div>
+
+        <p appText variant="body-sm" color="muted" class="m-0">{{ s.description }}</p>
+
+        <div class="flex flex-col gap-1.5">
+          <span
+            class="text-[0.7rem] font-semibold uppercase tracking-wide"
+            style="color: var(--color-neutral-400)"
+            >Requisiti</span
+          >
+          <ul class="list-none m-0 p-0 flex flex-col gap-1">
+            @for (req of s.requirements; track req) {
+              <li class="flex items-start gap-2">
+                <svg
+                  [lucideIcon]="iconChevron"
+                  [size]="12"
+                  style="color: var(--color-primary-dark); margin-top: 2px; flex-shrink: 0"
+                  aria-hidden="true"></svg>
+                <span class="text-[0.78rem]" style="color: var(--color-neutral-600)">{{
+                  req
+                }}</span>
+              </li>
+            }
+          </ul>
+        </div>
+
+        <div
+          class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3"
+          style="border-top: 1px solid var(--color-neutral-200)">
+          <div class="flex items-center gap-4 flex-wrap">
+            <div class="flex items-center gap-1.5">
+              <svg
+                [lucideIcon]="iconEuro"
+                [size]="13"
+                style="color: var(--color-success-dark)"
+                aria-hidden="true"></svg>
+              <span class="text-[0.82rem] font-semibold" style="color: var(--color-success-dark)">{{
+                s.amount
+              }}</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <svg
+                [lucideIcon]="iconCalendar"
+                [size]="13"
+                style="color: var(--color-neutral-400)"
+                aria-hidden="true"></svg>
+              <span class="text-[0.75rem]" style="color: var(--color-neutral-500)"
+                >Scadenza: {{ s.deadline }}</span
+              >
+            </div>
+          </div>
+          <app-custom-button
+            [variant]="s.status === 'closed' ? 'ghost' : 'primary'"
+            size="sm"
+            [label]="s.status === 'closed' ? 'Bando chiuso' : 'Fai domanda'"
+            [icon]="iconExternalLink"
+            iconPosition="right"
+            [disabled]="s.status === 'closed'"
+            (clicked)="onApply(s)" />
+        </div>
+      </div>
+    </app-custom-card>
+  }
+
+  @if (scholarships().length === 0) {
+    <ng-content />
+  }
+</div>

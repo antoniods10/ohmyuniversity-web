@@ -12,6 +12,7 @@ export { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY };
 export const UNIVERSITY_ID_KEY = 'omu_university_id';
 export const USER_NOME_KEY = 'omu_nome';
 export const USER_COGNOME_KEY = 'omu_cognome';
+export const HAS_CARRIERA_KEY = 'omu_has_carriera';
 export const PROFILI_KEY = 'omu_profili';
 
 @Injectable()

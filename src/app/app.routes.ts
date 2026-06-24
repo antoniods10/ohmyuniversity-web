@@ -57,12 +57,13 @@ import { PortalsPage } from './features/dashboard/presentation/pages/portals/por
 // =============================================
 import { UniversityPartnerPage } from './features/dashboard/presentation/pages/university-partner/university-partner.page';
 import { UniversityContactsPage } from './features/dashboard/presentation/pages/university-contacts/university-contacts.page';
-import { SecretariatPage } from './features/dashboard/presentation/pages/secretariat/secretariat.page';
+import { SecretariatPage } from './features/dashboard/presentation/pages/secretariat/pages/secretariat.page';
 import { SettingsPage } from './features/dashboard/presentation/pages/settings/settings.page';
-import { ProfiloPage } from './features/dashboard/presentation/pages/profilo/profilo.page';
+import { ProfiloPage } from './features/dashboard/presentation/pages/profilo/pages/profilo.page';
 
 // Shared
 import { NotFoundPage } from './shared/components/pages/not-found/not-found.page';
+import { carrieraGuard } from './core/guards/carriera.guard';
 
 export const routes: Routes = [
   // =============================================
@@ -166,14 +167,8 @@ export const routes: Routes = [
         path: '',
         component: DashboardHomePage,
       },
-      {
-        path: 'carriera',
-        component: CareerPage,
-      },
-      {
-        path: 'appelli',
-        component: ExamsPage,
-      },
+      { path: 'carriera', component: CareerPage, canActivate: [carrieraGuard] },
+      { path: 'appelli', component: ExamsPage, canActivate: [carrieraGuard] },
       {
         path: 'agenda',
         component: CalendarPage,
@@ -220,18 +215,12 @@ export const routes: Routes = [
         path: 'contatti-universitari',
         component: UniversityContactsPage,
       },
-      {
-        path: 'segreteria',
-        component: SecretariatPage,
-      },
+      { path: 'segreteria', component: SecretariatPage },
       {
         path: 'impostazioni',
         component: SettingsPage,
       },
-      {
-        path: 'profilo',
-        component: ProfiloPage,
-      },
+      { path: 'profilo', component: ProfiloPage },
     ],
   },
 

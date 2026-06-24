@@ -1,0 +1,86 @@
+<div class="flex flex-col gap-3">
+  <div class="flex items-center justify-between">
+    <h2 appText variant="h6" class="m-0">Bandi attivi e recenti</h2>
+    <span class="text-[0.75rem]" style="color: var(--color-neutral-400)"
+      >{{ bandi().length }} bandi</span
+    >
+  </div>
+
+  @if (bandi().length === 0) {
+    <ng-content />
+  }
+
+  @for (b of bandi(); track b.id) {
+    <app-custom-card variant="default" padding="md" shadow="sm" [bordered]="true" radius="lg">
+      <div class="flex flex-col gap-3">
+        <div class="flex items-start justify-between gap-3 flex-wrap">
+          <div class="flex-1 min-w-0">
+            <h3 appText variant="h6" class="m-0">{{ b.title }}</h3>
+            <div class="flex items-center gap-2 mt-1 flex-wrap">
+              <span
+                class="text-[0.65rem] font-semibold px-2 py-0.5 rounded-md"
+                style="
+                  background: var(--color-neutral-100);
+                  color: var(--color-neutral-500);
+                  border: 1px solid var(--color-neutral-200);
+                ">
+                {{ b.category }}
+              </span>
+              <span class="text-[0.7rem]" style="color: var(--color-neutral-400)"
+                >Pubblicato il {{ b.publishedAt }}</span
+              >
+            </div>
+          </div>
+          <app-custom-badge
+            [label]="statusLabel(b.status)"
+            [variant]="statusVariant(b.status)"
+            size="sm"
+            shape="pill"
+            [dot]="true" />
+        </div>
+
+        <p appText variant="body-sm" color="muted" class="m-0">{{ b.description }}</p>
+
+        <div
+          class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3"
+          style="border-top: 1px solid var(--color-neutral-200)">
+          <div class="flex items-center gap-4 flex-wrap">
+            @if (b.amount) {
+              <div class="flex items-center gap-1.5">
+                <svg
+                  [lucideIcon]="iconEuro"
+                  [size]="13"
+                  style="color: var(--color-success-dark)"
+                  aria-hidden="true"></svg>
+                <span
+                  class="text-[0.82rem] font-semibold"
+                  style="color: var(--color-success-dark)"
+                  >{{ b.amount }}</span
+                >
+              </div>
+            }
+            <div class="flex items-center gap-1.5">
+              <svg
+                [lucideIcon]="iconCalendar"
+                [size]="13"
+                style="color: var(--color-neutral-400)"
+                aria-hidden="true"></svg>
+              <span class="text-[0.75rem]" style="color: var(--color-neutral-500)"
+                >Scadenza: {{ b.deadline }}</span
+              >
+            </div>
+          </div>
+          <app-custom-button
+            [variant]="b.status === 'closed' ? 'ghost' : 'primary'"
+            size="sm"
+            label="Vai al bando"
+            [icon]="iconExternalLink"
+            iconPosition="right"
+            mode="link-external"
+            [href]="b.url"
+            target="_blank" />
+        </div>
+      </div>
+    </app-custom-card>
+  }
+</div>

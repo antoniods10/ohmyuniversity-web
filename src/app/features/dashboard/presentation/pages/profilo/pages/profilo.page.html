@@ -13,12 +13,12 @@
       [icon]="lucideAlertTriangle"
       title="Errore nel caricamento"
       description="Impossibile recuperare il profilo. Riprova più tardi." />
-  } @else if (profilo() && carrieraInfo()) {
+  } @else if (profilo()) {
     <app-profile-hero [profilo]="profilo()!" />
 
     <div class="flex justify-start mt-2 mb-2">
       <app-custom-tabs
-        [tabs]="tabs"
+        [tabs]="tabs()"
         [activeTab]="activeTab()"
         tabStyle="pill"
         size="md"
@@ -29,7 +29,7 @@
       <app-profile-information [profilo]="profilo()!" />
     }
 
-    @if (activeTab() === 'corso') {
+    @if (activeTab() === 'corso' && hasCarriera && carrieraInfo()) {
       <app-profile-course [info]="carrieraInfo()!" />
     }
 

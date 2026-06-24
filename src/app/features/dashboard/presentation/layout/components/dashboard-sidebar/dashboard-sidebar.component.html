@@ -40,41 +40,40 @@
     aria-label="Menu principale">
     <ul class="list-none m-0 p-0">
       @for (item of sidebarItems; track item.id) {
-        <li>
-          <a
-            [routerLink]="item.route"
-            routerLinkActive="sidebar-item-active"
-            #rla="routerLinkActive"
-            [routerLinkActiveOptions]="{ exact: item.id === 'dashboard' }"
-            [attr.title]="!open() ? item.label : null"
-            class="flex items-center gap-2.5 py-1.5 mx-2 rounded-xl no-underline text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-150 group"
-            [class]="open() ? 'px-2' : 'justify-center px-0'"
-            [style]="rla.isActive ? linkActiveBgStyle(item) : ''"
-            (click)="linkClicked.emit()">
-            <!-- Icon wrapper -->
-            <span
-              class="flex items-center justify-center w-7 h-7 rounded-lg shrink-0 transition-all duration-150"
-              [style]="rla.isActive ? iconActiveStyle(item) : iconColorStyle(item)">
-              <ng-container *ngComponentOutlet="item.icon; inputs: { size: 18 }" />
-            </span>
-
-            @if (open()) {
+        @if (!item.requiresCarriera || hasCarriera()) {
+          <li>
+            <a
+              [routerLink]="item.route"
+              routerLinkActive="sidebar-item-active"
+              #rla="routerLinkActive"
+              [routerLinkActiveOptions]="{ exact: item.id === 'dashboard' }"
+              [attr.title]="!open() ? item.label : null"
+              class="flex items-center gap-2.5 py-1.5 mx-2 rounded-xl no-underline text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-150 group"
+              [class]="open() ? 'px-2' : 'justify-center px-0'"
+              [style]="rla.isActive ? linkActiveBgStyle(item) : ''"
+              (click)="linkClicked.emit()">
               <span
-                class="flex-1 overflow-hidden text-ellipsis text-sm transition-colors duration-150"
-                [style]="
-                  rla.isActive
-                    ? 'color: var(--color-neutral-900); font-weight: 600;'
-                    : 'color: var(--color-neutral-500)'
-                ">
-                {{ item.label }}
+                class="flex items-center justify-center w-7 h-7 rounded-lg shrink-0 transition-all duration-150"
+                [style]="rla.isActive ? iconActiveStyle(item) : iconColorStyle(item)">
+                <ng-container *ngComponentOutlet="item.icon; inputs: { size: 18 }" />
               </span>
+              @if (open()) {
+                <span
+                  class="flex-1 overflow-hidden text-ellipsis text-sm transition-colors duration-150"
+                  [style]="
+                    rla.isActive
+                      ? 'color: var(--color-neutral-900); font-weight: 600;'
+                      : 'color: var(--color-neutral-500)'
+                  ">
+                  {{ item.label }}
+                </span>
+              }
+            </a>
+            @if (item.dividerAfter) {
+              <div class="h-px mx-3 my-1.5" style="background: var(--color-neutral-200)"></div>
             }
-          </a>
-
-          @if (item.dividerAfter) {
-            <div class="h-px mx-3 my-1.5" style="background: var(--color-neutral-200)"></div>
-          }
-        </li>
+          </li>
+        }
       }
     </ul>
   </nav>
@@ -83,36 +82,37 @@
   <div class="shrink-0 py-2" style="border-top: 1px solid var(--color-neutral-200)">
     <ul class="list-none m-0 p-0">
       @for (item of sidebarBottomItems; track item.id) {
-        <li>
-          <a
-            [routerLink]="item.route"
-            routerLinkActive="sidebar-item-active"
-            #rla="routerLinkActive"
-            [routerLinkActiveOptions]="{ exact: false }"
-            [attr.title]="!open() ? item.label : null"
-            class="flex items-center gap-2.5 py-1.5 mx-2 rounded-xl no-underline text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-150"
-            [class]="open() ? 'px-2' : 'justify-center px-0'"
-            [style]="rla.isActive ? linkActiveBgStyle(item) : ''"
-            (click)="linkClicked.emit()">
-            <span
-              class="flex items-center justify-center w-7 h-7 rounded-lg shrink-0 transition-all duration-150"
-              [style]="rla.isActive ? iconActiveStyle(item) : iconColorStyle(item)">
-              <ng-container *ngComponentOutlet="item.icon; inputs: { size: 18 }" />
-            </span>
-
-            @if (open()) {
+        @if (!item.requiresCarriera || hasCarriera()) {
+          <li>
+            <a
+              [routerLink]="item.route"
+              routerLinkActive="sidebar-item-active"
+              #rla="routerLinkActive"
+              [routerLinkActiveOptions]="{ exact: false }"
+              [attr.title]="!open() ? item.label : null"
+              class="flex items-center gap-2.5 py-1.5 mx-2 rounded-xl no-underline text-sm font-medium whitespace-nowrap overflow-hidden transition-all duration-150"
+              [class]="open() ? 'px-2' : 'justify-center px-0'"
+              [style]="rla.isActive ? linkActiveBgStyle(item) : ''"
+              (click)="linkClicked.emit()">
               <span
-                class="flex-1 overflow-hidden text-ellipsis text-sm transition-colors duration-150"
-                [style]="
-                  rla.isActive
-                    ? 'color: var(--color-neutral-900); font-weight: 600;'
-                    : 'color: var(--color-neutral-500)'
-                ">
-                {{ item.label }}
+                class="flex items-center justify-center w-7 h-7 rounded-lg shrink-0 transition-all duration-150"
+                [style]="rla.isActive ? iconActiveStyle(item) : iconColorStyle(item)">
+                <ng-container *ngComponentOutlet="item.icon; inputs: { size: 18 }" />
               </span>
-            }
-          </a>
-        </li>
+              @if (open()) {
+                <span
+                  class="flex-1 overflow-hidden text-ellipsis text-sm transition-colors duration-150"
+                  [style]="
+                    rla.isActive
+                      ? 'color: var(--color-neutral-900); font-weight: 600;'
+                      : 'color: var(--color-neutral-500)'
+                  ">
+                  {{ item.label }}
+                </span>
+              }
+            </a>
+          </li>
+        }
       }
     </ul>
   </div>
