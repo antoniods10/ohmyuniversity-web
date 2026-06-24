@@ -139,4 +139,17 @@ export class UniversityLoginFormComponent {
   openRecoveryModal(): void {
     this.recoveryModal()?.open();
   }
+
+  get emailPlaceholder(): string {
+    if (!this.selectedUniversity) return 'username@università.it';
+    const domains = this.selectedUniversity.emailDomains;
+    const studentDomain = domains.find(d => d.startsWith('studenti.'));
+    return `username@${studentDomain ?? domains[0]}`;
+  }
+
+  get emailHint(): string {
+    if (!this.selectedUniversity || this.selectedUniversity.emailDomains.length <= 1) return '';
+    const list = this.selectedUniversity.emailDomains.join(', ');
+    return `Domini accettati: ${list}`;
+  }
 }

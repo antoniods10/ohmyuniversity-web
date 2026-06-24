@@ -1205,13 +1205,13 @@ export const UNIVERSITIES: University[] = [
     campuses: [
       {
         id: 'unimol-campobasso',
-        name: 'Campus di Vazzieri - Campobasso',
+        name: 'Sede di Campobasso',
         city: 'Campobasso',
         address: 'Via Francesco De Sanctis, 86100 Campobasso',
       },
       {
         id: 'unimol-termoli',
-        name: 'Sede di Termoli (Ingegneria)',
+        name: 'Sede di Termoli',
         city: 'Termoli',
         address: 'Via Duca degli Abruzzi 221, 86039 Termoli',
       },

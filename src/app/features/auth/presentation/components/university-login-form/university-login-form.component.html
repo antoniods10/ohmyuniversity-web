@@ -27,7 +27,8 @@
       <app-custom-input
         type="email"
         label="Email istituzionale"
-        placeholder="nome.cognome@studenti.ateneo.it"
+        [placeholder]="emailPlaceholder"
+        [hint]="emailHint"
         [(ngModel)]="email"
         name="email"
         [disabled]="!selectedUniversity || domainUnavailable"
