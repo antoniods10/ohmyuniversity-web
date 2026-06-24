@@ -4,6 +4,7 @@ import { filter, Subscription } from 'rxjs';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomModalComponent } from '@ui/custom-modal/custom-modal.component';
+import { ToastService } from '@ui/custom-toast/toast.service';
 import {
   LucideDynamicIcon,
   LucideBell,
@@ -13,6 +14,9 @@ import {
   LucideMessageSquare,
   LucideBriefcase,
   LucideInfo,
+  LucideSearch,
+  LucideHeart,
+  LucideMail,
 } from '@lucide/angular';
 
 export interface Notification {
@@ -56,11 +60,15 @@ const SEGMENT_LABELS: Record<string, string> = {
 })
 export class DashboardTopbarComponent implements OnInit, OnDestroy {
   private readonly router = inject(Router);
+  private readonly toast = inject(ToastService);
   private sub!: Subscription;
 
   readonly iconBell = LucideBell;
   readonly iconHome = LucideHouse;
   readonly iconChevron = LucideChevronRight;
+  readonly iconSearch = LucideSearch;
+  readonly iconHeart = LucideHeart;
+  readonly iconMail = LucideMail;
 
   rootHovered = false;
 
@@ -117,6 +125,18 @@ export class DashboardTopbarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub?.unsubscribe();
+  }
+
+  onSearchClick(): void {
+    this.toast.info('Funzione non ancora disponibile');
+  }
+
+  onMailClick(): void {
+    this.toast.info('Funzione non ancora disponibile');
+  }
+
+  onFavoritesClick(): void {
+    this.toast.info('Funzione non ancora disponibile');
   }
 
   private updateBreadcrumbs(url: string): void {

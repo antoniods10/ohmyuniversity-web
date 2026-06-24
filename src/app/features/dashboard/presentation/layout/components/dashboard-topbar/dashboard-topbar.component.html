@@ -19,7 +19,7 @@
         </a>
       </li>
 
-      <!-- Dynamic Segment -->
+      <!-- Dynamic Segments -->
       @for (crumb of breadcrumbs(); track crumb.path; let last = $last) {
         <!-- Divider -->
         <li class="flex items-center" aria-hidden="true">
@@ -56,6 +56,33 @@
 
   <!-- Right — actions -->
   <div class="flex items-center gap-1">
+    <!-- Search -->
+    <app-custom-button
+      variant="ghost"
+      size="sm"
+      [iconOnly]="true"
+      [icon]="iconSearch"
+      aria-label="Cerca"
+      (click)="onSearchClick()" />
+
+    <!-- Mail -->
+    <app-custom-button
+      variant="ghost"
+      size="sm"
+      [iconOnly]="true"
+      [icon]="iconMail"
+      aria-label="Mail"
+      (click)="onMailClick()" />
+
+    <!-- Favorites -->
+    <app-custom-button
+      variant="ghost"
+      size="sm"
+      [iconOnly]="true"
+      [icon]="iconHeart"
+      aria-label="Preferiti"
+      (click)="onFavoritesClick()" />
+
     <!-- Notifications -->
     <div class="relative">
       <app-custom-button
