@@ -1,5 +1,5 @@
 /** Possible states of an exam booking lifecycle */
-export type ExamStatus = 'open' | 'closing' | 'closed' | 'booked';
+export type ExamStatus = 'open' | 'closing' | 'closed' | 'booked' | 'no-exam';
 
 /** Possible states of a course questionnaire */
 export type QuestionnaireStatus = 'pending' | 'completed';

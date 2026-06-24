@@ -18,6 +18,22 @@
       (bookClicked)="onBookExam($event)" />
   }
 
+  @if (activeTab() === 'suggested') {
+    <div
+      class="flex items-start gap-2 px-3 py-2.5 my-4 rounded-xl"
+      style="background: var(--color-info-light)">
+      <p appText variant="body-sm" color="muted" class="m-0">
+        Gli esami sono ordinati dal più accessibile al più impegnativo, in base all'anno di corso e
+        ai CFU. Gli esami con appelli aperti mostrano tutte le informazioni disponibili.
+      </p>
+    </div>
+    <app-exam-list
+      [exams]="suggestedExams()"
+      [loading]="suggestedLoading()"
+      [error]="suggestedError()"
+      (bookClicked)="onBookExam($event)" />
+  }
+
   @if (activeTab() === 'questionnaires') {
     <app-questionnaire-list />
   }

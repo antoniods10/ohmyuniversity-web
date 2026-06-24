@@ -3,7 +3,7 @@ import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 import { ToastService } from '@ui/custom-toast/toast.service';
-import { LucideCalendarDays, LucideClipboardList } from '@lucide/angular';
+import { LucideCalendarDays, LucideClipboardList, LucideSparkles } from '@lucide/angular';
 import { Exam, Questionnaire, ExamStatus } from '@shared/types/dashboard/exams.types';
 import { CarrieraFacade } from 'src/app/features/dashboard/application/facades/carriera.facade';
 import {
@@ -32,8 +32,13 @@ export class ExamsPage implements OnInit {
 
   readonly tabs: TabItem[] = [
     { id: 'exams', label: 'Appelli', icon: LucideCalendarDays },
+    { id: 'suggested', label: 'Suggeriti', icon: LucideSparkles },
     { id: 'questionnaires', label: 'Questionari', icon: LucideClipboardList },
   ];
+
+  readonly suggestedLoading = signal(true);
+  readonly suggestedError = signal(false);
+  readonly suggestedExams = signal<Exam[]>([]);
 
   readonly activeTab = signal<string>('exams');
   readonly examsLoading = signal(true);
@@ -45,8 +50,9 @@ export class ExamsPage implements OnInit {
       appelli: this.carriera.getAppelliPrenotabili(),
       prenotazioni: this.carriera.getPrenotazioniLibretto(),
       piano: this.carriera.getPiano(),
+      suggeriti: this.carriera.getEsamiSuggeriti(),
     }).subscribe({
-      next: ({ appelli, prenotazioni, piano }) => {
+      next: ({ appelli, prenotazioni, piano, suggeriti }) => {
         const pianoMap = new Map<string, { cfu: number; annoCorso: number }>();
         for (const riga of piano.righe ?? []) {
           if (riga.adCod)
@@ -67,10 +73,43 @@ export class ExamsPage implements OnInit {
 
         this.exams.set([...mapAppelli, ...prenotatiExtra]);
         this.examsLoading.set(false);
+
+        const appelliMap = new Map<string, AppelloLibretto>();
+        for (const a of appelli.appelli) {
+          if (a.adCod) appelliMap.set(a.adCod, a);
+        }
+
+        const suggested = (suggeriti.esami ?? []).map(s => {
+          const appello = appelliMap.get(s.adCod);
+          if (appello) {
+            return this.mapAppello(appello, pianoMap, prenotazioniMap, prenotatiAdsceIds);
+          }
+          return {
+            id: s.adCod,
+            courseName: s.adDes ?? 'N/D',
+            courseAcronym: s.adCod ?? 'N/D',
+            cfu: s.cfu ?? 0,
+            year: s.annoCorso ?? 0,
+            date: 'N/D',
+            time: 'N/D',
+            location: 'N/D',
+            building: 'N/D',
+            professor: 'N/D',
+            enrollDeadline: 'N/D',
+            spotsLeft: 0,
+            spotsTotal: 0,
+            status: 'no-exam' as ExamStatus,
+            dataInizioIscr: 'N/D',
+          };
+        });
+        this.suggestedExams.set(suggested);
+        this.suggestedLoading.set(false);
       },
       error: () => {
         this.examsError.set(true);
         this.examsLoading.set(false);
+        this.suggestedError.set(true);
+        this.suggestedLoading.set(false);
       },
     });
   }

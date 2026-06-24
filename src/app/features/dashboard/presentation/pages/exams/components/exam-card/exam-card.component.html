@@ -98,6 +98,40 @@
           }}</span>
         </div>
       </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.68rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >CFU</span
+        >
+        <div class="flex items-center gap-1.5">
+          <svg
+            [lucideIcon]="iconAward"
+            [size]="12"
+            style="color: var(--color-neutral-400)"
+            aria-hidden="true"></svg>
+          <span class="text-[0.82rem] font-semibold" style="color: var(--color-neutral-900)">{{
+            exam().cfu
+          }}</span>
+        </div>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <span
+          class="text-[0.68rem] font-semibold uppercase tracking-wide"
+          style="color: var(--color-neutral-400)"
+          >Anno</span
+        >
+        <div class="flex items-center gap-1.5">
+          <svg
+            [lucideIcon]="iconBookOpen"
+            [size]="12"
+            style="color: var(--color-neutral-400)"
+            aria-hidden="true"></svg>
+          <span class="text-[0.82rem] font-semibold" style="color: var(--color-neutral-900)"
+            >{{ exam().year }}°</span
+          >
+        </div>
+      </div>
     </div>
 
     @if (countdownDays() !== null && exam().status === 'closed') {
@@ -148,7 +182,7 @@
         size="sm"
         [label]="bookLabel(exam().status)"
         [icon]="exam().status === 'booked' ? iconCalendarCheck : iconCalendarDays"
-        [disabled]="exam().status === 'closed'"
+        [disabled]="exam().status === 'closed' || exam().status === 'no-exam'"
         (clicked)="bookClicked.emit(exam())" />
     </div>
   </div>

@@ -6,6 +6,8 @@ import {
   LucideClock,
   LucideUser,
   LucideUsers,
+  LucideAward,
+  LucideBookOpen,
 } from '@lucide/angular';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
@@ -20,6 +22,9 @@ import { acronymVariant } from '@shared/utils/ui.utils';
   templateUrl: './exam-card.component.html',
 })
 export class ExamCardComponent {
+  readonly iconAward = LucideAward;
+  readonly iconBookOpen = LucideBookOpen;
+
   readonly exam = input.required<Exam>();
   readonly bookClicked = output<Exam>();
 
@@ -36,6 +41,7 @@ export class ExamCardComponent {
       closing: 'In chiusura',
       closed: 'Chiuso',
       booked: 'Prenotato',
+      'no-exam': 'Nessun appello',
     };
     return map[status];
   }
@@ -46,6 +52,7 @@ export class ExamCardComponent {
       closing: 'warning',
       closed: 'error',
       booked: 'primary',
+      'no-exam': 'neutral',
     };
     return map[status];
   }
@@ -56,6 +63,7 @@ export class ExamCardComponent {
       closing: 'Prenota',
       closed: 'Chiuso',
       booked: 'Prenotato',
+      'no-exam': 'Nessun appello',
     };
     return map[status];
   }
@@ -66,18 +74,19 @@ export class ExamCardComponent {
       closing: 'primary',
       closed: 'ghost',
       booked: 'success',
+      'no-exam': 'ghost',
     };
     return map[status];
   }
 
   deadlineColor(status: ExamStatus): string {
-    if (status === 'closed') return 'var(--color-neutral-400)';
+    if (status === 'closed' || status === 'no-exam') return 'var(--color-neutral-400)';
     if (status === 'closing') return 'var(--color-warning-dark)';
     return 'var(--color-success-dark)';
   }
 
   deadlineBackground(status: ExamStatus): string {
-    if (status === 'closed') return 'var(--color-neutral-100)';
+    if (status === 'closed' || status === 'no-exam') return 'var(--color-neutral-100)';
     if (status === 'closing') return 'var(--color-warning-light)';
     return 'var(--color-success-light)';
   }
