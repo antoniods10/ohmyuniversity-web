@@ -21,13 +21,13 @@ import { Scholarship } from '@shared/types/dashboard/secretariat.types';
 import { APP } from '@shared/constants';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
-import { AuthFacade } from 'src/app/features/auth/application/facades/auth.facade';
+import { AuthFacade } from 'src/app/core/application/facades/auth.facade';
 import { ScholarshipsTabComponent } from '../components/scholarships-tab/scholarships-tab.component';
 import { FormsTabComponent } from '../components/forms-tab/forms-tab.component';
 import { BandiTabComponent } from '../components/bandi-tab/bandi-tab.component';
 import { FeesTabComponent } from '../components/fees-tab/fees-tab.component';
-import { CarrieraFacade } from 'src/app/features/dashboard/application/facades/carriera.facade';
-import { TasseResponse } from 'src/app/features/dashboard/domain/models/tasse.model';
+import { TasseResponse } from 'src/app/core/domain/models/career/tasse.model';
+import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
 
 @Component({
   selector: 'app-secretariat',

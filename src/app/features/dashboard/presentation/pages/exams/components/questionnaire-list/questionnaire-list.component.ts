@@ -12,9 +12,9 @@ import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
-import { CarrieraFacade } from 'src/app/features/dashboard/application/facades/carriera.facade';
-import { QuestionarioEsame } from 'src/app/features/dashboard/domain/models/questionari.model';
+import { QuestionarioEsame } from 'src/app/core/domain/models/career/questionari.model';
 import { ToastService } from '@ui/custom-toast/toast.service';
+import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
 
 @Component({
   selector: 'app-questionnaire-list',

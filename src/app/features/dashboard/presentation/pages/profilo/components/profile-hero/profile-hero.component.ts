@@ -2,9 +2,9 @@ import { Component, input, inject, OnInit, signal } from '@angular/core';
 import { LucideDynamicIcon, LucideMail, LucidePhone, LucideMapPin } from '@lucide/angular';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomAvatarComponent } from '@ui/custom-avatar/custom-avatar.component';
-import { ProfiloResponse } from '../../../../../domain/models/profilo.model';
-import { CarrieraFacade } from '../../../../../application/facades/carriera.facade';
-import { AuthFacade } from 'src/app/features/auth/application/facades/auth.facade';
+import { ProfiloResponse } from '../../../../../../../core/domain/models/career/profilo.model';
+import { AuthFacade } from 'src/app/core/application/facades/auth.facade';
+import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
 
 @Component({
   selector: 'app-profile-hero',

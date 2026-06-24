@@ -8,7 +8,7 @@ import {
   LucideShield,
 } from '@lucide/angular';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
-import { ProfiloResponse } from '../../../../../domain/models/profilo.model';
+import { ProfiloResponse } from '../../../../../../../core/domain/models/career/profilo.model';
 
 @Component({
   selector: 'app-profile-information',

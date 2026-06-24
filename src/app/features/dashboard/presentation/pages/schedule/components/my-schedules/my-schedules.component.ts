@@ -8,7 +8,7 @@ import {
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
-import { TimetableResponse } from '../../../../../domain/models/timetable.model';
+import { TimetableResponse } from '../../../../../../../core/domain/models/timetable/timetable.model';
 
 const DEGREE_TYPE_LABEL: Record<string, string> = {
   triennali: 'Triennale',

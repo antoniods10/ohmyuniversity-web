@@ -15,7 +15,7 @@ import { CustomButtonComponent } from '@ui/custom-button/custom-button.component
 import { CustomInputComponent, SelectOption } from '@ui/custom-input/custom-input.component';
 import { CustomModalComponent } from '@ui/custom-modal/custom-modal.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
-import { TimetableResponse } from '../../../../../domain/models/timetable.model';
+import { TimetableResponse } from '../../../../../../../core/domain/models/timetable/timetable.model';
 import { APP } from '@shared/constants';
 
 @Component({

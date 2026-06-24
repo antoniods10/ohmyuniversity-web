@@ -18,9 +18,9 @@ import {
   RING_COLORS,
   STATUS_VARIANT,
 } from '@ui/avatar-profile-panel/avatar-profile-panel.component';
-import { AuthFacade } from 'src/app/features/auth/application/facades/auth.facade';
-import { CarrieraFacade } from 'src/app/features/dashboard/application/facades/carriera.facade';
+import { AuthFacade } from 'src/app/core/application/facades/auth.facade';
 import { forkJoin } from 'rxjs';
+import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
 
 @Component({
   selector: 'app-dashboard-sidebar',

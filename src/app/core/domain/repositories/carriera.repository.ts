@@ -1,22 +1,19 @@
 import { Observable } from 'rxjs';
-import { LibrettoResponse } from '../../../features/dashboard/domain/models/libretto.model';
-import { MediaResponse } from '../../../features/dashboard/domain/models/media.model';
-import { PianoStudioResponse } from '../../../features/dashboard/domain/models/piano.model';
-import {
-  PrenotazioneRequest,
-  PrenotazioneResponse,
-} from '../../../features/dashboard/domain/models/prenotazioni.model';
-import { BadgeResponse } from '../../../features/dashboard/domain/models/badge.model';
-import { SuggerimentiResponse } from '../../../features/dashboard/domain/models/suggerimenti.model';
-import { TasseResponse } from '../../../features/dashboard/domain/models/tasse.model';
+import { LibrettoResponse } from '../models/career/libretto.model';
+import { MediaResponse } from '../models/career/media.model';
+import { PianoStudioResponse } from '../models/career/piano.model';
+import { PrenotazioneRequest, PrenotazioneResponse } from '../models/career/prenotazioni.model';
+import { BadgeResponse } from '../models/career/badge.model';
+import { SuggerimentiResponse } from '../models/career/suggerimenti.model';
+import { TasseResponse } from '../models/career/tasse.model';
 import {
   AppelliLibrettoResponse,
   PrenotazioniLibrettoResponse,
-} from '../../../features/dashboard/domain/models/appelli.model';
-import { StoricoEsamiResponse } from '../../../features/dashboard/domain/models/storico-esami.model';
-import { QuestionariResponse } from '../../../features/dashboard/domain/models/questionari.model';
-import { ProfiloResponse } from '../../../features/dashboard/domain/models/profilo.model';
-import { CarrieraInfoResponse } from '../../../features/dashboard/domain/models/carriera-info.model';
+} from '../models/career/appelli.model';
+import { StoricoEsamiResponse } from '../models/career/storico-esami.model';
+import { QuestionariResponse } from '../models/career/questionari.model';
+import { ProfiloResponse } from '../models/career/profilo.model';
+import { CarrieraInfoResponse } from '../models/career/carriera-info.model';
 
 export abstract class CarrieraRepository {
   abstract getTasse(): Observable<TasseResponse>;

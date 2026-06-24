@@ -1,8 +1,8 @@
 import { HttpInterceptorFn, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, switchMap, throwError } from 'rxjs';
-import { ACCESS_TOKEN_KEY } from 'src/app/features/auth/application/usecases/login.usecase';
-import { AuthFacade } from 'src/app/features/auth/application/facades/auth.facade';
+import { AuthFacade } from '../application/facades/auth.facade';
+import { ACCESS_TOKEN_KEY } from '../application/usecases/auth/login.usecase';
 
 const addBearer = (req: HttpRequest<unknown>, token: string) =>
   req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });

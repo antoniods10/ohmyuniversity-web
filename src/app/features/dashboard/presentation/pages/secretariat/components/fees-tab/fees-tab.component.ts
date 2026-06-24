@@ -12,7 +12,10 @@ import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 import { APP } from '@shared/constants';
 import { FeeStatus } from '@shared/types/dashboard/secretariat.types';
-import { Addebito, TasseResponse } from '../../../../../domain/models/tasse.model';
+import {
+  Addebito,
+  TasseResponse,
+} from '../../../../../../../core/domain/models/career/tasse.model';
 
 @Component({
   selector: 'app-fees-tab',

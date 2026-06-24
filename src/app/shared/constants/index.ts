@@ -26,7 +26,7 @@ export * from './features/team.constants';
 export * from './features/user.constants';
 
 // Shared
-export * from './shared/api.constants';
+export * from '../../core/infrastructure/api/api-endpoints';
 export * from './shared/common.constants';
 export * from './shared/footer.constants';
 export * from './shared/university.constants';

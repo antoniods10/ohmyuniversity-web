@@ -4,15 +4,15 @@ import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-c
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 import { ToastService } from '@ui/custom-toast/toast.service';
 import { LucideCalendarDays, LucideClipboardList, LucideSparkles } from '@lucide/angular';
-import { Exam, Questionnaire, ExamStatus } from '@shared/types/dashboard/exams.types';
-import { CarrieraFacade } from 'src/app/features/dashboard/application/facades/carriera.facade';
+import { Exam, ExamStatus } from '@shared/types/dashboard/exams.types';
 import {
   AppelloLibretto,
   IscrizioneAppello,
-} from 'src/app/features/dashboard/domain/models/appelli.model';
+} from 'src/app/core/domain/models/career/appelli.model';
 import { ExamListComponent } from '../components/exam-list/exam-list.component';
 import { QuestionnaireListComponent } from '../components/questionnaire-list/questionnaire-list.component';
 import { forkJoin } from 'rxjs';
+import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
 
 @Component({
   selector: 'app-exams',

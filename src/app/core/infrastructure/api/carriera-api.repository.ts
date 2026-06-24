@@ -2,25 +2,25 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API } from '@constants';
-import { CarrieraInfoResponse } from 'src/app/features/dashboard/domain/models/carriera-info.model';
-import { ProfiloResponse } from 'src/app/features/dashboard/domain/models/profilo.model';
-import { QuestionariResponse } from 'src/app/features/dashboard/domain/models/questionari.model';
-import { StoricoEsamiResponse } from 'src/app/features/dashboard/domain/models/storico-esami.model';
-import { SuggerimentiResponse } from 'src/app/features/dashboard/domain/models/suggerimenti.model';
-import { BadgeResponse } from 'src/app/features/dashboard/domain/models/badge.model';
+import { CarrieraInfoResponse } from 'src/app/core/domain/models/career/carriera-info.model';
+import { ProfiloResponse } from 'src/app/core/domain/models/career/profilo.model';
+import { QuestionariResponse } from 'src/app/core/domain/models/career/questionari.model';
+import { StoricoEsamiResponse } from 'src/app/core/domain/models/career/storico-esami.model';
+import { SuggerimentiResponse } from 'src/app/core/domain/models/career/suggerimenti.model';
+import { BadgeResponse } from 'src/app/core/domain/models/career/badge.model';
 import {
   PrenotazioneRequest,
   PrenotazioneResponse,
-} from 'src/app/features/dashboard/domain/models/prenotazioni.model';
+} from 'src/app/core/domain/models/career/prenotazioni.model';
 import { CarrieraRepository } from '../../domain/repositories/carriera.repository';
-import { TasseResponse } from 'src/app/features/dashboard/domain/models/tasse.model';
-import { LibrettoResponse } from 'src/app/features/dashboard/domain/models/libretto.model';
-import { MediaResponse } from 'src/app/features/dashboard/domain/models/media.model';
-import { PianoStudioResponse } from 'src/app/features/dashboard/domain/models/piano.model';
+import { TasseResponse } from 'src/app/core/domain/models/career/tasse.model';
+import { LibrettoResponse } from 'src/app/core/domain/models/career/libretto.model';
+import { MediaResponse } from 'src/app/core/domain/models/career/media.model';
+import { PianoStudioResponse } from 'src/app/core/domain/models/career/piano.model';
 import {
   AppelliLibrettoResponse,
   PrenotazioniLibrettoResponse,
-} from 'src/app/features/dashboard/domain/models/appelli.model';
+} from 'src/app/core/domain/models/career/appelli.model';
 
 @Injectable()
 export class CarrieraApiRepository extends CarrieraRepository {

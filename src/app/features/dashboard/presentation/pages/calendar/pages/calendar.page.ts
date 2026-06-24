@@ -15,7 +15,7 @@ import { CalendarEventFormComponent } from '../components/calendar-event-form/ca
 import { CalendarEventDetailComponent } from '../components/calendar-event-detail/calendar-event-detail.component';
 import type { CalendarEvent, CalendarEventLayout } from '@shared/types/dashboard/calendar.types';
 import { calculateEventLayouts, calendarIsSameDay } from '@shared/utils/calendar.utils';
-import { CalendarFacade } from '../../../../application/facades/calendar.facade';
+import { CalendarFacade } from 'src/app/core/application/facades/calendar.facade';
 
 @Component({
   selector: 'app-dashboard-calendar-page',

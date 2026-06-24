@@ -7,7 +7,7 @@ import {
   CalendarEventResponse,
   UniversityEventResponse,
 } from '../../domain/models/agenda/calendar.model';
-import { API } from '@shared/constants/shared/api.constants';
+import { API } from 'src/app/core/infrastructure/api/api-endpoints';
 
 @Injectable()
 export class CalendarApiRepository extends CalendarRepository {

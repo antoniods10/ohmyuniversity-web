@@ -2,8 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TimetableRepository } from '../../domain/repositories/timetable.repository';
-import { TimetableResponse } from 'src/app/features/dashboard/domain/models/timetable.model';
-import { API } from '@shared/constants/shared/api.constants';
+import { TimetableResponse } from 'src/app/core/domain/models/timetable/timetable.model';
+import { API } from 'src/app/core/infrastructure/api/api-endpoints';
 
 @Injectable()
 export class TimetableApiRepository extends TimetableRepository {

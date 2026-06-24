@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthFacade } from 'src/app/features/auth/application/facades/auth.facade';
+import { AuthFacade } from '../application/facades/auth.facade';
 
 export const authGuard: CanActivateFn = () => {
   const auth = inject(AuthFacade);

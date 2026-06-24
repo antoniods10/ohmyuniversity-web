@@ -11,7 +11,7 @@ import {
 } from '@lucide/angular';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
-import { CarrieraInfoResponse } from 'src/app/features/dashboard/domain/models/carriera-info.model';
+import { CarrieraInfoResponse } from 'src/app/core/domain/models/career/carriera-info.model';
 
 @Component({
   selector: 'app-profile-course',

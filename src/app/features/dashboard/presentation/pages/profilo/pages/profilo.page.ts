@@ -9,15 +9,15 @@ import {
   LucideTriangleAlert,
   LucideGraduationCap,
 } from '@lucide/angular';
-import { CarrieraFacade } from '../../../../application/facades/carriera.facade';
-import { AuthFacade } from 'src/app/features/auth/application/facades/auth.facade';
-import { ProfiloResponse } from '../../../../domain/models/profilo.model';
+import { AuthFacade } from 'src/app/core/application/facades/auth.facade';
+import { ProfiloResponse } from '../../../../../../core/domain/models/career/profilo.model';
 import { ProfileHeroComponent } from '../components/profile-hero/profile-hero.component';
 import { ProfileInformationComponent } from '../components/profile-information/profile-information.component';
 import { ProfileSecurityComponent } from '../components/profile-security/profile-security.component';
-import { CarrieraInfoResponse } from '../../../../domain/models/carriera-info.model';
+import { CarrieraInfoResponse } from '../../../../../../core/domain/models/career/carriera-info.model';
 import { forkJoin } from 'rxjs';
 import { ProfileCourseComponent } from '../components/profile-course/profile-course.component';
+import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
 
 @Component({
   selector: 'app-profilo',

@@ -5,10 +5,7 @@ import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { AuthRepository } from './core/domain/repositories/auth.repository';
 import { AuthApiRepository } from './core/infrastructure/api/auth-api.repository';
-import { AuthFacade } from './features/auth/application/facades/auth.facade';
-import { LoginUseCase } from './features/auth/application/usecases/login.usecase';
-import { LogoutUseCase } from './features/auth/application/usecases/logout.usecase';
-import { RefreshTokenUseCase } from './features/auth/application/usecases/refresh-token.usecase';
+import { AuthFacade } from './core/application/facades/auth.facade';
 import {
   provideLucideIcons,
   LucideLayoutDashboard,
@@ -88,30 +85,33 @@ import {
   LucideCalculator,
   LucideHourglass,
 } from '@lucide/angular';
-import { CarrieraFacade } from './features/dashboard/application/facades/carriera.facade';
-import { GetTasseUseCase } from './features/dashboard/application/usecases/get-tasse.usecase';
 import { CarrieraRepository } from './core/domain/repositories/carriera.repository';
 import { CarrieraApiRepository } from './core/infrastructure/api/carriera-api.repository';
-import { GetBadgeUseCase } from './features/dashboard/application/usecases/get-badge.usecase';
-import { GetEsamiSuggeриtiUseCase } from './features/dashboard/application/usecases/get-esami-suggeriti.usecase';
-import { GetLibrettoUseCase } from './features/dashboard/application/usecases/get-libretto.usecase';
-import { GetMediaUseCase } from './features/dashboard/application/usecases/get-media.usecase';
-import { GetPianoUseCase } from './features/dashboard/application/usecases/get-piano.usecase';
-import { GetPrenotazioniUseCase } from './features/dashboard/application/usecases/get-prenotazioni.usecase';
-import { GetAppelliPrenotabiliUseCase } from './features/dashboard/application/usecases/get-appelli-prenotabili.usecase';
-import { GetPrenotazioniLibrettoUseCase } from './features/dashboard/application/usecases/get-prenotazioni-libretto.usecase';
-import { GetStoricoEsamiUseCase } from './features/dashboard/application/usecases/get-storico-esami.usecase';
-import { GetQuestionariUseCase } from './features/dashboard/application/usecases/get-questionari.usecase';
-import { GetProfiloUseCase } from './features/dashboard/application/usecases/get-profilo.usecase';
-import { GetCarrieraInfoUseCase } from './features/dashboard/application/usecases/get-carriera-info.usecase';
-import { GetFotoUseCase } from './features/dashboard/application/usecases/get-foto.usecase';
-import { SwitchCarrieraUseCase } from './features/dashboard/application/usecases/switch-carriera.usecase';
-import { CalendarFacade } from './features/dashboard/application/facades/calendar.facade';
+import { CalendarFacade } from './core/application/facades/calendar.facade';
 import { CalendarRepository } from './core/domain/repositories/calendar.repository';
 import { CalendarApiRepository } from './core/infrastructure/api/calendar-api.repository';
-import { TimetableFacade } from './features/dashboard/application/facades/timetable.facade';
 import { TimetableRepository } from './core/domain/repositories/timetable.repository';
 import { TimetableApiRepository } from './core/infrastructure/api/timetable-api.repository';
+import { CarrieraFacade } from './core/application/facades/carriera.facade';
+import { TimetableFacade } from './core/application/facades/timetable.facade';
+import { LoginUseCase } from './core/application/usecases/auth/login.usecase';
+import { LogoutUseCase } from './core/application/usecases/auth/logout.usecase';
+import { RefreshTokenUseCase } from './core/application/usecases/auth/refresh-token.usecase';
+import { GetTasseUseCase } from './core/application/usecases/fees/get-tasse.usecase';
+import { GetAppelliPrenotabiliUseCase } from './core/application/usecases/career/get-appelli-prenotabili.usecase';
+import { GetBadgeUseCase } from './core/application/usecases/career/get-badge.usecase';
+import { GetCarrieraInfoUseCase } from './core/application/usecases/career/get-carriera-info.usecase';
+import { GetEsamiSuggeриtiUseCase } from './core/application/usecases/career/get-esami-suggeriti.usecase';
+import { GetFotoUseCase } from './core/application/usecases/career/get-foto.usecase';
+import { GetLibrettoUseCase } from './core/application/usecases/career/get-libretto.usecase';
+import { GetMediaUseCase } from './core/application/usecases/career/get-media.usecase';
+import { GetPianoUseCase } from './core/application/usecases/career/get-piano.usecase';
+import { GetPrenotazioniLibrettoUseCase } from './core/application/usecases/career/get-prenotazioni-libretto.usecase';
+import { GetPrenotazioniUseCase } from './core/application/usecases/career/get-prenotazioni.usecase';
+import { GetProfiloUseCase } from './core/application/usecases/career/get-profilo.usecase';
+import { GetQuestionariUseCase } from './core/application/usecases/career/get-questionari.usecase';
+import { GetStoricoEsamiUseCase } from './core/application/usecases/career/get-storico-esami.usecase';
+import { SwitchCarrieraUseCase } from './core/application/usecases/career/switch-carriera.usecase';
 
 export const appConfig: ApplicationConfig = {
   providers: [

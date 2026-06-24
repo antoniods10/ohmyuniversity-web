@@ -15,7 +15,7 @@ import { HomeWidgetPanelComponent } from '../components/home-widget-panel/home-w
 import { HomePlacingGridComponent } from '../components/home-placing-grid/home-placing-grid.component';
 import { HomeWidgetGridComponent } from '../components/home-widget-grid/home-widget-grid.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
-import { AuthFacade } from 'src/app/features/auth/application/facades/auth.facade';
+import { AuthFacade } from 'src/app/core/application/facades/auth.facade';
 
 export type DashboardStep = 'idle' | 'selecting-size' | 'placing';
 

@@ -6,11 +6,11 @@ import { CustomButtonComponent } from '@ui/custom-button/custom-button.component
 import { LucideDynamicIcon, LucideSearch } from '@lucide/angular';
 import { MySchedulesComponent } from '../components/my-schedules/my-schedules.component';
 import { ScheduleSearchModalComponent } from '../components/schedule-search-modal/schedule-search-modal.component';
-import { AuthFacade } from 'src/app/features/auth/application/facades/auth.facade';
-import { UNIVERSITY_ID_KEY } from 'src/app/features/auth/application/usecases/login.usecase';
-import { CarrieraFacade } from 'src/app/features/dashboard/application/facades/carriera.facade';
-import { TimetableFacade } from 'src/app/features/dashboard/application/facades/timetable.facade';
-import { TimetableResponse } from 'src/app/features/dashboard/domain/models/timetable.model';
+import { AuthFacade } from 'src/app/core/application/facades/auth.facade';
+import { TimetableResponse } from 'src/app/core/domain/models/timetable/timetable.model';
+import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
+import { TimetableFacade } from 'src/app/core/application/facades/timetable.facade';
+import { UNIVERSITY_ID_KEY } from 'src/app/core/application/usecases/auth/login.usecase';
 
 const DEGREE_TYPE_MAP: Record<string, string> = {
   L: 'triennali',

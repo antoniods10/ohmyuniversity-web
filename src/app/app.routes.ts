@@ -3,33 +3,33 @@ import { authGuard } from './core/guards/auth.guard';
 
 // Public
 import { PublicLayoutComponent } from './core/layout/public-layout/public-layout.component';
-import { HomePage } from './features/home/presentation/pages/home.page';
-import { AboutPage } from './features/about/presentation/pages/about.page';
-import { ContattiPage } from './features/contatti/presentation/pages/contatti.page';
-import { PartnerPage } from './features/partner/presentation/pages/partner.page';
+import { HomePage } from './features/home/pages/home.page';
+import { AboutPage } from './features/about/pages/about.page';
+import { ContattiPage } from './features/contatti/pages/contatti.page';
+import { PartnerPage } from './features/partner/pages/partner.page';
 
 // Auth
-import { LoginPage } from './features/auth/presentation/pages/login.page';
+import { LoginPage } from './features/auth/pages/login.page';
 
 // Orientation
-import { OrientationPage } from './features/orientation/presentation/pages/orientation.page';
+import { OrientationPage } from '@orientation/pages/orientation.page';
 
 // FAQ
-import { FaqPage } from './features/faq/presentation/pages/faq/faq.page';
-import { FaqBusinessPage } from './features/faq/presentation/pages/faq-business/faq-business.page';
+import { FaqBusinessPage } from './features/faq/pages/faq-business/faq-business.page';
+import { FaqPage } from './features/faq/pages/faq/faq.page';
 
 // Business
-import { PricingPage } from './features/pricing/presentation/pages/pricing.page';
-import { BusinessOffertaPage } from './features/business/presentation/pages/business-offerta/business-offerta.page';
-import { BusinessCollettiviPage } from './features/business/presentation/pages/business-collettivi/business-collettivi.page';
-import { BusinessVisibilitaPage } from './features/business/presentation/pages/business-visibilita/business-visibilita.page';
-import { BusinessRegistrazionePage } from './features/business/presentation/pages/business-registrazione/business-registrazione.page';
-import { BusinessContattiPage } from './features/business/presentation/pages/business-contatti/business-contatti.page';
+import { BusinessCollettiviPage } from './features/business/pages/business-collettivi/business-collettivi.page';
+import { BusinessContattiPage } from './features/business/pages/business-contatti/business-contatti.page';
+import { BusinessOffertaPage } from './features/business/pages/business-offerta/business-offerta.page';
+import { BusinessRegistrazionePage } from './features/business/pages/business-registrazione/business-registrazione.page';
+import { BusinessVisibilitaPage } from './features/business/pages/business-visibilita/business-visibilita.page';
+import { PricingPage } from './features/pricing/pages/pricing.page';
 
 // Legal
-import { PrivacyPolicyPage } from './features/legal/presentation/pages/privacy-policy/privacy-policy.page';
-import { CookiePolicyPage } from './features/legal/presentation/pages/cookie-policy/cookie-policy.page';
-import { TermsPage } from './features/legal/presentation/pages/terms-conditions/terms-conditions.page';
+import { PrivacyPolicyPage } from './features/legal/pages/privacy-policy/privacy-policy.page';
+import { CookiePolicyPage } from './features/legal/pages/cookie-policy/cookie-policy.page';
+import { TermsPage } from './features/legal/pages/terms-conditions/terms-conditions.page';
 
 // Dashboard Layout
 import { DashboardLayoutComponent } from './features/dashboard/presentation/layout/dashboard-layout.component';

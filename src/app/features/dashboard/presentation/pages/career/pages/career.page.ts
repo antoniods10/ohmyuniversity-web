@@ -12,8 +12,8 @@ import type {
 import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { SelectOption } from '@ui/custom-input/custom-input.component';
-import { CarrieraFacade } from 'src/app/features/dashboard/application/facades/carriera.facade';
-import { MediaResponse } from 'src/app/features/dashboard/domain/models/media.model';
+import { MediaResponse } from 'src/app/core/domain/models/career/media.model';
+import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
 
 const MAX_GRADE = 30;
 const GRADUATION_BASE_MAX = 110;
