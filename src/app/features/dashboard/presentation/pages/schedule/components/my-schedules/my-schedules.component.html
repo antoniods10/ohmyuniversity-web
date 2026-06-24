@@ -1,0 +1,71 @@
+<div class="flex flex-col gap-3">
+  <h2 appText variant="h6" class="m-0">I miei corsi</h2>
+
+  @for (schedule of schedules(); track schedule.id) {
+    <app-custom-card
+      variant="default"
+      padding="md"
+      shadow="sm"
+      [bordered]="true"
+      radius="lg"
+      [accentBar]="true">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-start gap-4 flex-1 min-w-0">
+          <div
+            class="flex items-center justify-center w-10 h-10 rounded-xl shrink-0"
+            style="background: var(--color-primary-light)">
+            <svg
+              [lucideIcon]="iconCalendar"
+              [size]="18"
+              style="color: var(--color-primary-dark)"
+              aria-hidden="true"></svg>
+          </div>
+          <div class="flex flex-col gap-1 min-w-0">
+            <div class="flex items-center gap-2 flex-wrap">
+              <h3 appText variant="h6" class="m-0 truncate">
+                {{ schedule.label ?? 'Orario lezioni' }}
+              </h3>
+              <app-custom-badge
+                [label]="degreeTypeLabel(schedule.degreeType)"
+                variant="primary"
+                size="xs"
+                shape="rounded" />
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span class="text-[0.75rem]" style="color: var(--color-neutral-400)">
+                {{ schedule.departmentName }}
+              </span>
+              <span class="text-[0.75rem]" style="color: var(--color-neutral-400)"> - </span>
+              <span class="text-[0.75rem]" style="color: var(--color-neutral-400)">
+                {{ courseNameFromUrl(schedule.timetablePageUrl) }}
+              </span>
+            </div>
+            <div class="flex items-center gap-2 flex-wrap mt-0.5">
+              <span class="text-[0.68rem]" style="color: var(--color-neutral-400)">
+                Aggiornato il {{ formatDate(schedule.fetchedAt) }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+          <app-custom-button
+            variant="ghost"
+            size="sm"
+            label="Download"
+            [icon]="iconDownload"
+            (clicked)="downloadFile(schedule.pdfUrl)" />
+          <app-custom-button
+            variant="primary"
+            size="sm"
+            label="Visualizza"
+            [icon]="iconExternalLink"
+            iconPosition="right"
+            mode="link-external"
+            [href]="schedule.pdfUrl"
+            target="_blank" />
+        </div>
+      </div>
+    </app-custom-card>
+  }
+</div>

@@ -31,4 +31,7 @@ export const API = {
     importEvent: (id: string) => `${BASE}/v1/calendar/university-events/${id}/import`,
     event: (id: string) => `${BASE}/v1/calendar/events/${id}`,
   },
+  fetcher: {
+    timetables: `${BASE}/v1/fetcher/timetables`,
+  },
 } as const;

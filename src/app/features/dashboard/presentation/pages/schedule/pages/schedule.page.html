@@ -1,0 +1,43 @@
+<app-dashboard-container>
+  <app-dashboard-header
+    title="Orari Lezioni"
+    description="Accedi agli orari dei tuoi corsi attivi o cerca l'orario di qualsiasi corso dell'ateneo." />
+
+  @if (loading()) {
+    <div class="flex justify-center py-16">
+      <span class="text-sm" style="color: var(--color-neutral-400)">Caricamento orari...</span>
+    </div>
+  } @else {
+    <app-my-schedules [schedules]="mySchedules()" />
+  }
+
+  <app-custom-card variant="neutral" padding="md" shadow="none" [bordered]="true" radius="lg">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div class="flex items-start gap-3">
+        <div
+          class="flex items-center justify-center w-9 h-9 rounded-lg shrink-0"
+          style="background: var(--color-neutral-200)">
+          <svg
+            [lucideIcon]="iconSearch"
+            [size]="16"
+            style="color: var(--color-neutral-500)"
+            aria-hidden="true"></svg>
+        </div>
+        <div>
+          <p appText variant="label" class="m-0">Non è l'orario che cercavi?</p>
+          <p appText variant="body-sm" color="muted" class="m-0 mt-0.5">
+            Cerca l'orario di qualsiasi corso per dipartimento, corso di laurea e semestre.
+          </p>
+        </div>
+      </div>
+      <app-custom-button
+        variant="outline"
+        size="sm"
+        label="Cerca orario"
+        [icon]="iconSearch"
+        (clicked)="openSearch()" />
+    </div>
+  </app-custom-card>
+
+  <app-schedule-search-modal [timetables]="allTimetables()" />
+</app-dashboard-container>

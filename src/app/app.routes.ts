@@ -39,7 +39,7 @@ import { DashboardHomePage } from './features/dashboard/presentation/pages/home/
 import { CareerPage } from './features/dashboard/presentation/pages/career/pages/career.page';
 import { ExamsPage } from './features/dashboard/presentation/pages/exams/pages/exams.page';
 import { CalendarPage } from './features/dashboard/presentation/pages/calendar/pages/calendar.page';
-import { SchedulePage } from './features/dashboard/presentation/pages/schedule/schedule.page';
+import { SchedulePage } from './features/dashboard/presentation/pages/schedule/pages/schedule.page';
 
 // =============================================
 import { SviluppiFuturiPage } from './features/dashboard/presentation/pages/sviluppi-futuri/sviluppi-futuri.page';

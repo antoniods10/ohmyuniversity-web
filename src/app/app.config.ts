@@ -109,6 +109,9 @@ import { SwitchCarrieraUseCase } from './features/dashboard/application/usecases
 import { CalendarFacade } from './features/dashboard/application/facades/calendar.facade';
 import { CalendarRepository } from './features/dashboard/domain/repositories/calendar.repository';
 import { CalendarApiRepository } from './features/dashboard/infrastructure/api/calendar-api.repository';
+import { TimetableFacade } from './features/dashboard/application/facades/timetable.facade';
+import { TimetableRepository } from './features/dashboard/domain/repositories/timetable.repository';
+import { TimetableApiRepository } from './features/dashboard/infrastructure/api/timetable-api.repository';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -120,6 +123,7 @@ export const appConfig: ApplicationConfig = {
     { provide: AuthRepository, useClass: AuthApiRepository },
     { provide: CarrieraRepository, useClass: CarrieraApiRepository },
     { provide: CalendarRepository, useClass: CalendarApiRepository },
+    { provide: TimetableRepository, useClass: TimetableApiRepository },
     AuthFacade,
     LoginUseCase,
     LogoutUseCase,
@@ -141,6 +145,7 @@ export const appConfig: ApplicationConfig = {
     GetFotoUseCase,
     SwitchCarrieraUseCase,
     CalendarFacade,
+    TimetableFacade,
 
     provideLucideIcons(
       LucideLayoutDashboard,

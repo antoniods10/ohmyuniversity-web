@@ -1,0 +1,104 @@
+<app-custom-modal #modal [showCloseButton]="true" [closeOnBackdrop]="true" [closeOnEsc]="true">
+  <div class="flex items-center gap-3 mb-5">
+    <div
+      class="flex items-center justify-center w-9 h-9 rounded-lg shrink-0"
+      style="background: var(--color-primary-light)">
+      <svg
+        [lucideIcon]="iconCalendar"
+        [size]="16"
+        style="color: var(--color-primary-dark)"
+        aria-hidden="true"></svg>
+    </div>
+    <div>
+      <h2 appText variant="h6" class="m-0">Cerca orario lezioni</h2>
+      <p appText variant="caption" color="muted" class="m-0">
+        Seleziona dipartimento e corso di laurea
+      </p>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-3 mb-5">
+    <app-custom-input
+      label="Dipartimento"
+      type="select"
+      [options]="departmentOptions()"
+      selectPlaceholder="Seleziona un dipartimento"
+      size="md"
+      [fullWidth]="true"
+      [iconLeft]="iconBuilding"
+      (inputChange)="onDepartmentChange($event)" />
+
+    <app-custom-input
+      label="Corso di laurea"
+      type="select"
+      [options]="courseOptions()"
+      selectPlaceholder="Seleziona un corso"
+      size="md"
+      [fullWidth]="true"
+      [disabled]="!searchDepartment()"
+      [iconLeft]="iconGraduation"
+      (inputChange)="onCourseChange($event)" />
+  </div>
+
+  <app-custom-button
+    variant="primary"
+    size="md"
+    label="Cerca orario"
+    [icon]="iconSearch"
+    [fullWidth]="true"
+    [disabled]="!canSearch"
+    [loading]="searching()"
+    (clicked)="searchSchedule()" />
+
+  @if (searchResults().length > 0) {
+    <div
+      class="mt-5 pt-5 flex flex-col gap-3"
+      style="border-top: 1px solid var(--color-neutral-200)">
+      @for (result of searchResults(); track result.id) {
+        <app-custom-card variant="default" padding="md" shadow="sm" [bordered]="true" radius="lg">
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <div class="flex flex-col gap-0.5">
+                <span class="text-[0.85rem] font-semibold" style="color: var(--color-neutral-900)">
+                  {{ result.label ?? 'Orario lezioni' }}
+                </span>
+                <span class="text-[0.72rem]" style="color: var(--color-neutral-400)">
+                  {{ result.departmentName }} · Aggiornato il {{ formatDate(result.fetchedAt) }}
+                </span>
+              </div>
+              <div class="flex items-center gap-2">
+                <app-custom-button
+                  variant="ghost"
+                  size="sm"
+                  label="Download"
+                  [icon]="iconDownload"
+                  (clicked)="downloadFile(result.pdfUrl)" />
+                <app-custom-button
+                  variant="primary"
+                  size="sm"
+                  label="Visualizza"
+                  [icon]="iconExternalLink"
+                  iconPosition="right"
+                  mode="link-external"
+                  [href]="result.pdfUrl"
+                  target="_blank" />
+              </div>
+            </div>
+          </div>
+        </app-custom-card>
+      }
+
+      <div class="flex items-start gap-2 mt-1">
+        <svg
+          [lucideIcon]="iconInfo"
+          [size]="13"
+          style="color: var(--color-neutral-400); margin-top: 1px"
+          aria-hidden="true"></svg>
+        <p appText variant="caption" color="subtle" class="m-0">
+          Gli orari sono forniti direttamente dall'ateneo. {{ APP.name }} non garantisce
+          l'aggiornamento in tempo reale.
+        </p>
+      </div>
+    </div>
+  }
+</app-custom-modal>
