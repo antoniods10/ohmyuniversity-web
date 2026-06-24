@@ -31,7 +31,7 @@ export function calendarEventTypeIcon(type: CalendarEventType): any {
 }
 
 /**
- * The 3 variant values actually used to color an event by type, a subset shared by both
+ * The 3 variant values actually used to color an event by type — a subset shared by both
  * custom-card's CardVariant and custom-badge's BadgeVariant, so it's safely assignable to
  * either [variant] input without a type mismatch (BadgeVariant has members like 'ghost'
  * that don't exist on CardVariant, so the full BadgeVariant type isn't assignable to it).
@@ -176,12 +176,12 @@ interface ActiveLane {
  *
  * Events must be sorted by startDate ascending before calling this function. Each event gets
  * a 0-based lane index; `laneCount` is the max number of simultaneous lanes seen across the
- * whole overlap group the event belongs to, not just at the moment it starts, an event
+ * whole overlap group the event belongs to, not just at the moment it starts — an event
  * that begins alone but is later joined by two others must still report the resulting lane
  * count of 3, so all three render at one-third width.
  *
  * Events are tracked by their position in `sortedEvents`, not by object identity or `id`
- * (which can be `null` for an unsaved event), safe even if the caller clones events between
+ * (which can be `null` for an unsaved event) — safe even if the caller clones events between
  * calls, as long as the array order matches the events passed in.
  */
 export function calculateEventLayouts(sortedEvents: CalendarEvent[]): CalendarEventLayout[] {
@@ -237,6 +237,36 @@ export const CALENDAR_TIMELINE = {
   hourHeight: 104,
   leftGutter: 70,
 } as const;
+
+const TIME_STEP_MINUTES = 30;
+const MIN_TIME_MINUTES = CALENDAR_TIMELINE.startHour * 60;
+const MAX_TIME_MINUTES = CALENDAR_TIMELINE.endHour * 60;
+
+/**
+ * Steps a "hh:mm" time string up or down by 30 minutes, snapping to the nearest 30-minute
+ * mark first (so "09:17" + step becomes "09:30", not "09:47"), then clamping to the
+ * calendar's available hours (CALENDAR_TIMELINE.startHour/endHour).
+ */
+export function stepTime(value: string, direction: 1 | -1): string {
+  const match = /^(\d{1,2}):(\d{2})$/.exec(value.trim());
+  const currentMinutes = match ? Number(match[1]) * 60 + Number(match[2]) : MIN_TIME_MINUTES;
+
+  const snapped =
+    direction > 0
+      ? Math.ceil(currentMinutes / TIME_STEP_MINUTES) * TIME_STEP_MINUTES
+      : Math.floor(currentMinutes / TIME_STEP_MINUTES) * TIME_STEP_MINUTES;
+
+  // If already exactly on a 30-minute mark, snapping alone wouldn't move — step explicitly
+  const stepped = snapped === currentMinutes ? snapped + direction * TIME_STEP_MINUTES : snapped;
+
+  const clamped = Math.min(MAX_TIME_MINUTES, Math.max(MIN_TIME_MINUTES, stepped));
+
+  const hours = Math.floor(clamped / 60)
+    .toString()
+    .padStart(2, '0');
+  const minutes = (clamped % 60).toString().padStart(2, '0');
+  return `${hours}:${minutes}`;
+}
 
 /** Clamps an hour to the visible timeline range [startHour, endHour] */
 function visibleHour(hour: number): number {
