@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable, forkJoin, map } from 'rxjs';
-import { CarrieraRepository } from '../../domain/repositories/carriera.repository';
+import { CarrieraRepository } from '../../../../core/domain/repositories/carriera.repository';
 import { Exam } from '@shared/types/dashboard/career.types';
 import { mergeToExams } from '../mappers/carriera.mapper';
 

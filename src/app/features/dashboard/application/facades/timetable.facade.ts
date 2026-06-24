@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TimetableRepository } from '../../domain/repositories/timetable.repository';
+import { TimetableRepository } from '../../../../core/domain/repositories/timetable.repository';
 import { TimetableResponse } from '../../domain/models/timetable.model';
 
 @Injectable()

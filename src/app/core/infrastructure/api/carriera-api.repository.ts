@@ -1,23 +1,26 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CarrieraRepository } from '../../domain/repositories/carriera.repository';
-import { TasseResponse } from '../../domain/models/tasse.model';
-import { LibrettoResponse } from '../../domain/models/libretto.model';
-import { MediaResponse } from '../../domain/models/media.model';
-import { PianoStudioResponse } from '../../domain/models/piano.model';
-import { PrenotazioneRequest, PrenotazioneResponse } from '../../domain/models/prenotazioni.model';
-import { BadgeResponse } from '../../domain/models/badge.model';
-import { SuggerimentiResponse } from '../../domain/models/suggerimenti.model';
 import { API } from '@constants';
+import { CarrieraInfoResponse } from 'src/app/features/dashboard/domain/models/carriera-info.model';
+import { ProfiloResponse } from 'src/app/features/dashboard/domain/models/profilo.model';
+import { QuestionariResponse } from 'src/app/features/dashboard/domain/models/questionari.model';
+import { StoricoEsamiResponse } from 'src/app/features/dashboard/domain/models/storico-esami.model';
+import { SuggerimentiResponse } from 'src/app/features/dashboard/domain/models/suggerimenti.model';
+import { BadgeResponse } from 'src/app/features/dashboard/domain/models/badge.model';
+import {
+  PrenotazioneRequest,
+  PrenotazioneResponse,
+} from 'src/app/features/dashboard/domain/models/prenotazioni.model';
+import { CarrieraRepository } from '../../domain/repositories/carriera.repository';
+import { TasseResponse } from 'src/app/features/dashboard/domain/models/tasse.model';
+import { LibrettoResponse } from 'src/app/features/dashboard/domain/models/libretto.model';
+import { MediaResponse } from 'src/app/features/dashboard/domain/models/media.model';
+import { PianoStudioResponse } from 'src/app/features/dashboard/domain/models/piano.model';
 import {
   AppelliLibrettoResponse,
   PrenotazioniLibrettoResponse,
-} from '../../domain/models/appelli.model';
-import { StoricoEsamiResponse } from '../../domain/models/storico-esami.model';
-import { QuestionariResponse } from '../../domain/models/questionari.model';
-import { ProfiloResponse } from '../../domain/models/profilo.model';
-import { CarrieraInfoResponse } from '../../domain/models/carriera-info.model';
+} from 'src/app/features/dashboard/domain/models/appelli.model';
 
 @Injectable()
 export class CarrieraApiRepository extends CarrieraRepository {

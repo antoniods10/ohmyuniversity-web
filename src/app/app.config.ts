@@ -3,8 +3,8 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
-import { AuthRepository } from './features/auth/domain/repositories/auth.repository';
-import { AuthApiRepository } from './features/auth/infrastructure/api/auth-api.repository';
+import { AuthRepository } from './core/domain/repositories/auth.repository';
+import { AuthApiRepository } from './core/infrastructure/api/auth-api.repository';
 import { AuthFacade } from './features/auth/application/facades/auth.facade';
 import { LoginUseCase } from './features/auth/application/usecases/login.usecase';
 import { LogoutUseCase } from './features/auth/application/usecases/logout.usecase';
@@ -90,8 +90,8 @@ import {
 } from '@lucide/angular';
 import { CarrieraFacade } from './features/dashboard/application/facades/carriera.facade';
 import { GetTasseUseCase } from './features/dashboard/application/usecases/get-tasse.usecase';
-import { CarrieraRepository } from './features/dashboard/domain/repositories/carriera.repository';
-import { CarrieraApiRepository } from './features/dashboard/infrastructure/api/carriera-api.repository';
+import { CarrieraRepository } from './core/domain/repositories/carriera.repository';
+import { CarrieraApiRepository } from './core/infrastructure/api/carriera-api.repository';
 import { GetBadgeUseCase } from './features/dashboard/application/usecases/get-badge.usecase';
 import { GetEsamiSuggeриtiUseCase } from './features/dashboard/application/usecases/get-esami-suggeriti.usecase';
 import { GetLibrettoUseCase } from './features/dashboard/application/usecases/get-libretto.usecase';
@@ -107,11 +107,11 @@ import { GetCarrieraInfoUseCase } from './features/dashboard/application/usecase
 import { GetFotoUseCase } from './features/dashboard/application/usecases/get-foto.usecase';
 import { SwitchCarrieraUseCase } from './features/dashboard/application/usecases/switch-carriera.usecase';
 import { CalendarFacade } from './features/dashboard/application/facades/calendar.facade';
-import { CalendarRepository } from './features/dashboard/domain/repositories/calendar.repository';
-import { CalendarApiRepository } from './features/dashboard/infrastructure/api/calendar-api.repository';
+import { CalendarRepository } from './core/domain/repositories/calendar.repository';
+import { CalendarApiRepository } from './core/infrastructure/api/calendar-api.repository';
 import { TimetableFacade } from './features/dashboard/application/facades/timetable.facade';
-import { TimetableRepository } from './features/dashboard/domain/repositories/timetable.repository';
-import { TimetableApiRepository } from './features/dashboard/infrastructure/api/timetable-api.repository';
+import { TimetableRepository } from './core/domain/repositories/timetable.repository';
+import { TimetableApiRepository } from './core/infrastructure/api/timetable-api.repository';
 
 export const appConfig: ApplicationConfig = {
   providers: [

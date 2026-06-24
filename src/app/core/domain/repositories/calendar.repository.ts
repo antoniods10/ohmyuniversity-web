@@ -3,7 +3,7 @@ import {
   CalendarEventResponse,
   CalendarEventCreateRequest,
   UniversityEventResponse,
-} from '../models/calendar.model';
+} from '../models/agenda/calendar.model';
 
 export abstract class CalendarRepository {
   abstract getEvents(from?: string, to?: string): Observable<CalendarEventResponse[]>;

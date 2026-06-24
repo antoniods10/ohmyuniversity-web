@@ -2,8 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthRepository } from '../../domain/repositories/auth.repository';
-import { AuthTokens } from '../../domain/models/auth-tokens.model';
-import { LoginRequest } from '../../domain/models/login-request.model';
+import { AuthTokens } from '../../../features/auth/domain/models/auth-tokens.model';
+import { LoginRequest } from '../../../features/auth/domain/models/login-request.model';
 import { API } from '@shared/constants';
 
 @Injectable()

@@ -3,10 +3,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CalendarRepository } from '../../domain/repositories/calendar.repository';
 import {
-  CalendarEventResponse,
   CalendarEventCreateRequest,
+  CalendarEventResponse,
   UniversityEventResponse,
-} from '../../domain/models/calendar.model';
+} from '../../domain/models/agenda/calendar.model';
 import { API } from '@shared/constants/shared/api.constants';
 
 @Injectable()

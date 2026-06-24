@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { TimetableResponse } from '../models/timetable.model';
+import { TimetableResponse } from '../../../features/dashboard/domain/models/timetable.model';
 
 export abstract class TimetableRepository {
   abstract getTimetables(

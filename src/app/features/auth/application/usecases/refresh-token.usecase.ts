@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
-import { AuthRepository } from '../../domain/repositories/auth.repository';
+import { AuthRepository } from '../../../../core/domain/repositories/auth.repository';
 import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from './login.usecase';
 
 @Injectable()

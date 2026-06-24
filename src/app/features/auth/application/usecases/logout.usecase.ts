@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable, tap, catchError, EMPTY } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthRepository } from '../../domain/repositories/auth.repository';
+import { AuthRepository } from '../../../../core/domain/repositories/auth.repository';
 import {
   ACCESS_TOKEN_KEY,
   HAS_CARRIERA_KEY,

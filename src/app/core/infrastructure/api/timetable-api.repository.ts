@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TimetableRepository } from '../../domain/repositories/timetable.repository';
-import { TimetableResponse } from '../../domain/models/timetable.model';
+import { TimetableResponse } from 'src/app/features/dashboard/domain/models/timetable.model';
 import { API } from '@shared/constants/shared/api.constants';
 
 @Injectable()

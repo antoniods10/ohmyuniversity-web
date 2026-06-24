@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthRepository } from '../../domain/repositories/auth.repository';
+import { AuthRepository } from '../../../../core/domain/repositories/auth.repository';
 import { AuthTokens } from '../../domain/models/auth-tokens.model';
 import { LoginRequest } from '../../domain/models/login-request.model';
 

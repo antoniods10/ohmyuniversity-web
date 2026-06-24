@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { CalendarRepository } from '../../domain/repositories/calendar.repository';
+import { CalendarRepository } from '../../../../core/domain/repositories/calendar.repository';
 import type { CalendarEvent, UniversityEvent } from '@shared/types/dashboard/calendar.types';
 
 @Injectable()
@@ -78,7 +78,7 @@ export class CalendarFacade {
   }
 
   private mapEvent(
-    e: import('../../domain/models/calendar.model').CalendarEventResponse,
+    e: import('../../../../core/domain/models/agenda/calendar.model').CalendarEventResponse,
   ): CalendarEvent {
     return {
       id: e.id,

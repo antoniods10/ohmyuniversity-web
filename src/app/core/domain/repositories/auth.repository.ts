@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import { AuthTokens } from '../models/auth-tokens.model';
-import { LoginRequest } from '../models/login-request.model';
+import { AuthTokens } from '../../../features/auth/domain/models/auth-tokens.model';
+import { LoginRequest } from '../../../features/auth/domain/models/login-request.model';
 
 export abstract class AuthRepository {
   abstract login(request: LoginRequest): Observable<AuthTokens>;

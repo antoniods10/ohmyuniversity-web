@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CarrieraRepository } from '../../domain/repositories/carriera.repository';
+import { CarrieraRepository } from '../../../../core/domain/repositories/carriera.repository';
 import { PianoStudioResponse } from '../../domain/models/piano.model';
 
 @Injectable()
