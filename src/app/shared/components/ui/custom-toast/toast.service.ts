@@ -20,6 +20,7 @@
  */
 
 import { Injectable, signal, computed } from '@angular/core';
+import { generateId as cryptoId } from '@shared/utils/crypto-rand';
 
 /**
  * Defines the visual and semantic variants available for toast notifications.
@@ -282,6 +283,6 @@ export class ToastService {
    * @returns Generated toast id.
    */
   private generateId(): string {
-    return `toast-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    return `toast-${Date.now()}-${cryptoId()}`;
   }
 }
