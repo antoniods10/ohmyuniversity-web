@@ -9,12 +9,9 @@ import {
   afterNextRender,
   viewChild,
 } from '@angular/core';
-import { CalendarEventCardComponent } from '../calendar-event-card/calendar-event-card.component';
+import { AgendaEventCardComponent } from '../agenda-event-card/agenda-event-card.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
-import type {
-  CalendarEvent,
-  CalendarEventLayout,
-} from '@shared/types/dashboard/dashboard-agenda.types';
+import type { CalendarEvent, CalendarEventLayout, PositionedEventLayout } from '@shared/types';
 import {
   CALENDAR_TIMELINE,
   calendarEventHeight,
@@ -25,26 +22,16 @@ import {
   calendarTimelineTotalHeight,
   calendarHourTop as hourTopFn,
 } from '@shared/utils/calendar.utils';
-
-interface PositionedEventLayout {
-  layout: CalendarEventLayout;
-  top: number;
-  height: number;
-  widthExpr: string;
-  leftExpr: string;
-  compact: boolean;
-}
-
-const LANE_GAP_PX = 8;
+import { LANE_GAP_PX } from '@shared/constants';
 
 @Component({
-  selector: 'app-calendar-timeline',
+  selector: 'app-agenda-timeline',
   standalone: true,
-  imports: [CalendarEventCardComponent, CustomTextComponent],
-  templateUrl: './calendar-timeline.component.html',
+  imports: [AgendaEventCardComponent, CustomTextComponent],
+  templateUrl: './agenda-timeline.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CalendarTimelineComponent {
+export class AgendaTimelineComponent {
   private readonly el = inject(ElementRef);
 
   readonly eventLayouts = input.required<CalendarEventLayout[]>();

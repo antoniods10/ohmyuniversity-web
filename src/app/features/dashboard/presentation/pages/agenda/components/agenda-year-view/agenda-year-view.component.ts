@@ -3,36 +3,22 @@ import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { LucideChevronLeft, LucideChevronRight } from '@lucide/angular';
-import type { CalendarEvent } from '@shared/types/dashboard/dashboard-agenda.types';
+import type { CalendarEvent, CalendarYearMonth } from '@shared/types';
 import {
   calendarEventTypeVariant,
   calendarIsSameDay,
   calendarMonthGridDays,
   calendarMonthLabel,
-  type CalendarEventVariant,
-  type CalendarMonthGridDay,
 } from '@shared/utils/calendar.utils';
 
-interface CalendarYearGridDay extends CalendarMonthGridDay {
-  isToday: boolean;
-  isWeekend: boolean;
-  dotVariant: CalendarEventVariant | null;
-}
-
-interface CalendarYearMonth {
-  date: Date;
-  label: string;
-  days: CalendarYearGridDay[];
-}
-
 @Component({
-  selector: 'app-calendar-year-view',
+  selector: 'app-agenda-year-view',
   standalone: true,
   imports: [CustomCardComponent, CustomTextComponent, CustomButtonComponent],
-  templateUrl: './calendar-year-view.component.html',
+  templateUrl: './agenda-year-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CalendarYearViewComponent {
+export class AgendaYearViewComponent {
   readonly focusedDate = input.required<Date>();
   readonly events = input.required<CalendarEvent[]>();
 

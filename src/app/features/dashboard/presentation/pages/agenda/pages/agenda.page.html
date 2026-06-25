@@ -3,7 +3,7 @@
 
   @if (currentView() !== 'year') {
     <div class="mt-4 flex items-center justify-between">
-      <app-calendar-view-header
+      <app-agenda-view-header
         [currentView]="currentView()"
         [focusedDate]="focusedDate()"
         (back)="goBack()" />
@@ -12,21 +12,21 @@
 
   @switch (currentView()) {
     @case ('day') {
-      <app-calendar-day-strip
+      <app-agenda-day-strip
         [selectedDate]="focusedDate()"
         [events]="events()"
         (dateSelected)="selectDate($event)"
         (weekChanged)="selectDate($event)" />
 
       <div class="mt-2">
-        <app-calendar-timeline
+        <app-agenda-timeline
           [eventLayouts]="eventLayouts()"
           (eventSelected)="onEventSelected($event)" />
       </div>
     }
     @case ('month') {
       <div class="mt-4">
-        <app-calendar-month-view
+        <app-agenda-month-view
           [focusedDate]="focusedDate()"
           [events]="events()"
           (daySelected)="onMonthDaySelected($event)"
@@ -35,7 +35,7 @@
     }
     @case ('year') {
       <div class="mt-4">
-        <app-calendar-year-view
+        <app-agenda-year-view
           [focusedDate]="focusedDate()"
           [events]="events()"
           (monthSelected)="onYearMonthSelected($event)"
@@ -55,7 +55,7 @@
       (clicked)="openCreateForm()" />
   </div>
 
-  <app-calendar-event-form
+  <app-agenda-event-form
     [isOpen]="isFormOpen()"
     [event]="eventBeingEdited()"
     [defaultDate]="focusedDate()"
@@ -63,7 +63,7 @@
     (updated)="onEventUpdated($event)"
     (cancelled)="closeForm()" />
 
-  <app-calendar-event-detail
+  <app-agenda-event-detail
     [isOpen]="isDetailOpen()"
     [event]="eventBeingViewed()"
     (edit)="onDetailEditRequested($event)"

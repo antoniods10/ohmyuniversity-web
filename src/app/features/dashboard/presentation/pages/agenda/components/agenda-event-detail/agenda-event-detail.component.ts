@@ -18,24 +18,19 @@ import {
   calendarEventTimeRange,
   calendarEventTypeIcon,
   calendarEventTypeVariant,
+  formatDateLabel,
   type CalendarEventVariant,
 } from '@shared/utils/calendar.utils';
 import { getLabelColorClass } from '@shared/utils/orientation.utils';
 
-function formatDateLabel(date: Date): string {
-  const day = date.getDate().toString().padStart(2, '0');
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  return `${day}/${month}/${date.getFullYear()}`;
-}
-
 @Component({
-  selector: 'app-calendar-event-detail',
+  selector: 'app-agenda-event-detail',
   standalone: true,
   imports: [CustomModalComponent, CustomButtonComponent, CustomTextComponent, LucideDynamicIcon],
-  templateUrl: './calendar-event-detail.component.html',
+  templateUrl: './agenda-event-detail.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CalendarEventDetailComponent {
+export class AgendaEventDetailComponent {
   readonly isOpen = input<boolean>(false);
   readonly event = input<CalendarEvent | null>(null);
 

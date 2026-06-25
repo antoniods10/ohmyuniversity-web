@@ -3,41 +3,35 @@ import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-c
 import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { LucidePlus } from '@lucide/angular';
-import {
-  CalendarViewHeaderComponent,
-  type CalendarViewMode,
-} from '../components/calendar-view-header/calendar-view-header.component';
-import { CalendarDayStripComponent } from '../components/calendar-day-strip/calendar-day-strip.component';
-import { CalendarTimelineComponent } from '../components/calendar-timeline/calendar-timeline.component';
-import { CalendarMonthViewComponent } from '../components/calendar-month-view/calendar-month-view.component';
-import { CalendarYearViewComponent } from '../components/calendar-year-view/calendar-year-view.component';
-import { CalendarEventFormComponent } from '../components/calendar-event-form/calendar-event-form.component';
-import { CalendarEventDetailComponent } from '../components/calendar-event-detail/calendar-event-detail.component';
-import type {
-  CalendarEvent,
-  CalendarEventLayout,
-} from '@shared/types/dashboard/dashboard-agenda.types';
+import { AgendaViewHeaderComponent } from '../components/agenda-view-header/agenda-view-header.component';
+import { AgendaDayStripComponent } from '../components/agenda-day-strip/agenda-day-strip.component';
+import { AgendaTimelineComponent } from '../components/agenda-timeline/agenda-timeline.component';
+import { AgendaMonthViewComponent } from '../components/agenda-month-view/agenda-month-view.component';
+import { AgendaYearViewComponent } from '../components/agenda-year-view/agenda-year-view.component';
+import { AgendaEventFormComponent } from '../components/agenda-event-form/agenda-event-form.component';
+import { AgendaEventDetailComponent } from '../components/agenda-event-detail/agenda-event-detail.component';
+import type { CalendarEvent, CalendarEventLayout, CalendarViewMode } from '@shared/types';
 import { calculateEventLayouts, calendarIsSameDay } from '@shared/utils/calendar.utils';
 import { CalendarFacade } from 'src/app/core/application/facades/calendar.facade';
 
 @Component({
-  selector: 'app-dashboard-calendar-page',
+  selector: 'app-agenda-page',
   standalone: true,
   imports: [
     DashboardContainerComponent,
     DashboardHeaderComponent,
     CustomButtonComponent,
-    CalendarViewHeaderComponent,
-    CalendarDayStripComponent,
-    CalendarTimelineComponent,
-    CalendarMonthViewComponent,
-    CalendarYearViewComponent,
-    CalendarEventFormComponent,
-    CalendarEventDetailComponent,
+    AgendaViewHeaderComponent,
+    AgendaDayStripComponent,
+    AgendaTimelineComponent,
+    AgendaMonthViewComponent,
+    AgendaYearViewComponent,
+    AgendaEventFormComponent,
+    AgendaEventDetailComponent,
   ],
-  templateUrl: './calendar.page.html',
+  templateUrl: './agenda.page.html',
 })
-export class CalendarPage implements OnInit {
+export class AgendaPage implements OnInit {
   private readonly calendar = inject(CalendarFacade);
 
   readonly events = signal<CalendarEvent[]>([]);

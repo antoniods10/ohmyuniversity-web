@@ -1,3 +1,6 @@
+import { CalendarEventVariant, CalendarMonthGridDay } from '@shared/utils/calendar.utils';
+import { TextColor } from '@ui/custom-text/custom-text.component';
+
 /** Classification of a calendar event, mirrors the backend CalendarEventType enum */
 export type CalendarEventType = 'PERSONAL' | 'EXAM' | 'DEADLINE' | 'REMINDER' | 'UNIVERSITY';
 
@@ -72,4 +75,58 @@ export interface CalendarEventLayout {
   lane: number;
   /** Max number of simultaneous lanes within this event's overlap group */
   laneCount: number;
+}
+
+export interface DayStripDay {
+  date: Date;
+  weekdayLabel: string;
+  isSelected: boolean;
+  isToday: boolean;
+  weekdayColor: TextColor;
+  dayNumberColor: TextColor;
+  dotVariant: CalendarEventVariant | null;
+}
+
+export type DateParseResult =
+  | { ok: true; day: number; month: number; year: number }
+  | { ok: false; message: string };
+
+export type TimeParseResult =
+  | { ok: true; hours: number; minutes: number }
+  | { ok: false; message: string };
+
+export interface CalendarMonthCellEvent {
+  event: CalendarEvent;
+  labelMobile: string;
+  labelTablet: string;
+  labelDesktop: string;
+}
+
+export interface CalendarMonthCell extends CalendarMonthGridDay {
+  isToday: boolean;
+  visibleEvents: CalendarMonthCellEvent[];
+  overflowCount: number;
+}
+
+export interface PositionedEventLayout {
+  layout: CalendarEventLayout;
+  top: number;
+  height: number;
+  widthExpr: string;
+  leftExpr: string;
+  compact: boolean;
+}
+
+export type CalendarViewMode = 'year' | 'month' | 'day';
+
+export interface CalendarYearGridDay extends CalendarMonthGridDay {
+  isToday: boolean;
+  isWeekend: boolean;
+  dotVariant: CalendarEventVariant | null;
+}
+
+export interface CalendarYearMonth {
+  date: Date;
+  label: string;
+  days: CalendarYearGridDay[];
 }

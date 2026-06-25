@@ -20,7 +20,7 @@ import { ProfileCourseComponent } from '../components/profile-course/profile-cou
 import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
 
 @Component({
-  selector: 'app-profilo',
+  selector: 'app-profile',
   standalone: true,
   imports: [
     DashboardContainerComponent,
@@ -32,9 +32,9 @@ import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade
     ProfileSecurityComponent,
     ProfileCourseComponent,
   ],
-  templateUrl: './profilo.page.html',
+  templateUrl: './profile.page.html',
 })
-export class ProfiloPage implements OnInit {
+export class ProfilePage implements OnInit {
   private readonly carriera = inject(CarrieraFacade);
   private readonly auth = inject(AuthFacade);
 

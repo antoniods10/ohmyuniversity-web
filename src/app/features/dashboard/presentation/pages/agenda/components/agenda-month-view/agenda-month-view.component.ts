@@ -9,43 +9,24 @@ import {
   LucideChevronRight,
   LucideDynamicIcon,
 } from '@lucide/angular';
-import type { CalendarEvent } from '@shared/types/dashboard/dashboard-agenda.types';
+import type { CalendarEvent, CalendarMonthCell } from '@shared/types';
 import {
   calendarEventTypeVariant,
   calendarIsSameDay,
   calendarMonthGridDays,
   calendarMonthLabel,
+  truncateLabel,
   WEEKDAY_LABELS,
-  type CalendarMonthGridDay,
 } from '@shared/utils/calendar.utils';
-
-const MAX_VISIBLE_EVENTS_PER_CELL = 2;
-
-/** Max badge label length per breakpoint — narrower screens get a shorter truncation */
-const LABEL_LENGTH_MOBILE = 6;
-const LABEL_LENGTH_TABLET = 10;
-const LABEL_LENGTH_DESKTOP = 14;
-
-interface CalendarMonthCellEvent {
-  event: CalendarEvent;
-  labelMobile: string;
-  labelTablet: string;
-  labelDesktop: string;
-}
-
-interface CalendarMonthCell extends CalendarMonthGridDay {
-  isToday: boolean;
-  visibleEvents: CalendarMonthCellEvent[];
-  overflowCount: number;
-}
-
-function truncateLabel(label: string, maxLength: number): string {
-  if (label.length <= maxLength) return label;
-  return `${label.slice(0, maxLength - 1)}…`;
-}
+import {
+  MAX_VISIBLE_EVENTS_PER_CELL,
+  LABEL_LENGTH_MOBILE,
+  LABEL_LENGTH_TABLET,
+  LABEL_LENGTH_DESKTOP,
+} from '@shared/constants';
 
 @Component({
-  selector: 'app-calendar-month-view',
+  selector: 'app-agenda-month-view',
   standalone: true,
   imports: [
     CustomCardComponent,
@@ -54,10 +35,10 @@ function truncateLabel(label: string, maxLength: number): string {
     CustomButtonComponent,
     LucideDynamicIcon,
   ],
-  templateUrl: './calendar-month-view.component.html',
+  templateUrl: './agenda-month-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CalendarMonthViewComponent {
+export class AgendaMonthViewComponent {
   readonly focusedDate = input.required<Date>();
   readonly events = input.required<CalendarEvent[]>();
 

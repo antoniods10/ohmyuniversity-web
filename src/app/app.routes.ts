@@ -38,11 +38,11 @@ import { DashboardLayoutComponent } from './features/dashboard/presentation/layo
 import { DashboardHomePage } from './features/dashboard/presentation/pages/home/pages/home.page';
 import { CareerPage } from './features/dashboard/presentation/pages/career/pages/career.page';
 import { ExamsPage } from './features/dashboard/presentation/pages/exams/pages/exams.page';
-import { CalendarPage } from './features/dashboard/presentation/pages/calendar/pages/calendar.page';
+import { AgendaPage } from './features/dashboard/presentation/pages/agenda/pages/agenda.page';
 import { SchedulePage } from './features/dashboard/presentation/pages/schedule/pages/schedule.page';
 
 // =============================================
-import { SviluppiFuturiPage } from './features/dashboard/presentation/pages/sviluppi-futuri/sviluppi-futuri.page';
+import { RoadmapPage } from './features/dashboard/presentation/pages/roadmap/roadmap.page';
 
 // =============================================
 import { ChatPage } from './features/dashboard/presentation/pages/chat/chat.page';
@@ -59,7 +59,7 @@ import { UniversityPartnerPage } from './features/dashboard/presentation/pages/u
 import { UniversityContactsPage } from './features/dashboard/presentation/pages/university-contacts/university-contacts.page';
 import { SecretariatPage } from './features/dashboard/presentation/pages/secretariat/pages/secretariat.page';
 import { SettingsPage } from './features/dashboard/presentation/pages/settings/settings.page';
-import { ProfiloPage } from './features/dashboard/presentation/pages/profilo/pages/profilo.page';
+import { ProfilePage } from './features/dashboard/presentation/pages/profile/pages/profile.page';
 
 // Shared
 import { NotFoundPage } from './shared/components/pages/not-found/not-found.page';
@@ -171,7 +171,7 @@ export const routes: Routes = [
       { path: 'appelli', component: ExamsPage, canActivate: [carrieraGuard] },
       {
         path: 'agenda',
-        component: CalendarPage,
+        component: AgendaPage,
       },
       {
         path: 'orario-lezioni',
@@ -181,7 +181,7 @@ export const routes: Routes = [
       // ============================
       {
         path: 'sviluppi-futuri',
-        component: SviluppiFuturiPage,
+        component: RoadmapPage,
       },
 
       // ============================
@@ -220,7 +220,7 @@ export const routes: Routes = [
         path: 'impostazioni',
         component: SettingsPage,
       },
-      { path: 'profilo', component: ProfiloPage },
+      { path: 'profilo', component: ProfilePage },
     ],
   },
 

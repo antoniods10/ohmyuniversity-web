@@ -5,10 +5,10 @@ import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-c
 import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
 
 @Component({
-  selector: 'app-sviluppi-futuri-page',
+  selector: 'app-roadmap-page',
   imports: [DashboardContainerComponent, DashboardHeaderComponent, CardStatusComponent],
-  templateUrl: './sviluppi-futuri.page.html',
+  templateUrl: './roadmap.page.html',
 })
-export class SviluppiFuturiPage {
+export class RoadmapPage {
   readonly lucideAlertTriangle = LucideTriangleAlert;
 }

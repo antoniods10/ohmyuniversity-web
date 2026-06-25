@@ -3,33 +3,22 @@ import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomTextComponent, type TextColor } from '@ui/custom-text/custom-text.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { LucideChevronLeft, LucideChevronRight } from '@lucide/angular';
-import type { CalendarEvent } from '@shared/types/dashboard/dashboard-agenda.types';
+import type { CalendarEvent, DayStripDay } from '@shared/types';
 import {
   calendarEventTypeVariant,
   calendarIsSameDay,
   calendarWeekDays,
   calendarWeekdayLabel,
-  type CalendarEventVariant,
 } from '@shared/utils/calendar.utils';
 
-interface DayStripDay {
-  date: Date;
-  weekdayLabel: string;
-  isSelected: boolean;
-  isToday: boolean;
-  weekdayColor: TextColor;
-  dayNumberColor: TextColor;
-  dotVariant: CalendarEventVariant | null;
-}
-
 @Component({
-  selector: 'app-calendar-day-strip',
+  selector: 'app-agenda-day-strip',
   standalone: true,
   imports: [CustomCardComponent, CustomTextComponent, CustomButtonComponent],
-  templateUrl: './calendar-day-strip.component.html',
+  templateUrl: './agenda-day-strip.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CalendarDayStripComponent {
+export class AgendaDayStripComponent {
   readonly selectedDate = input.required<Date>();
   readonly events = input<CalendarEvent[]>([]);
 

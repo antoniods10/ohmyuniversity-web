@@ -14,7 +14,7 @@ import { getLabelColorClass } from '@shared/utils/orientation.utils';
 import { CustomLinkComponent } from '@ui/custom-link/custom-link.component';
 
 @Component({
-  selector: 'app-calendar-event-card',
+  selector: 'app-agenda-event-card',
   standalone: true,
   imports: [
     CustomCardComponent,
@@ -23,11 +23,11 @@ import { CustomLinkComponent } from '@ui/custom-link/custom-link.component';
     CustomLinkComponent,
     LucideDynamicIcon,
   ],
-  templateUrl: './calendar-event-card.component.html',
-  styleUrls: ['./calendar-event-card.component.css'],
+  templateUrl: './agenda-event-card.component.html',
+  styleUrls: ['./agenda-event-card.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CalendarEventCardComponent {
+export class AgendaEventCardComponent {
   readonly iconMapPin = LucideMapPin;
   readonly iconLink = LucideLink;
 

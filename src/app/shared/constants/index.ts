@@ -1,4 +1,5 @@
 // Dashboard
+export * from './dashboard/dashboard-agenda.constants';
 export * from './dashboard/dashboard-career.constants';
 export * from './dashboard/dashboard-home.constants';
 export * from './dashboard/dashboard-sidebar.constants';

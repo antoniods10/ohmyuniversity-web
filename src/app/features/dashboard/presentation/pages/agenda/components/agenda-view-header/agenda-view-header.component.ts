@@ -2,17 +2,16 @@ import { ChangeDetectionStrategy, Component, computed, input, output } from '@an
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { LucideChevronLeft } from '@lucide/angular';
 import { calendarMonthLabel } from '@shared/utils/calendar.utils';
-
-export type CalendarViewMode = 'year' | 'month' | 'day';
+import { CalendarViewMode } from '@shared/types';
 
 @Component({
-  selector: 'app-calendar-view-header',
+  selector: 'app-agenda-view-header',
   standalone: true,
   imports: [CustomButtonComponent],
-  templateUrl: './calendar-view-header.component.html',
+  templateUrl: './agenda-view-header.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CalendarViewHeaderComponent {
+export class AgendaViewHeaderComponent {
   readonly currentView = input.required<CalendarViewMode>();
   readonly focusedDate = input.required<Date>();
 
