@@ -44,7 +44,7 @@
         </div>
       }
       @if (!compact() && event().url) {
-        <div class="mt-0.5" (click)="$event.stopPropagation()">
+        <div class="mt-0.5" (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
           <app-custom-link
             [href]="event().url!"
             [label]="event().url!"

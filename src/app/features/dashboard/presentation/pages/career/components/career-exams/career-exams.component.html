@@ -47,7 +47,11 @@
                   <!-- Accordion -->
                   <div
                     class="flex min-w-0 flex-1 cursor-pointer items-center gap-3"
-                    (click)="toggleExam(exam.courseCode)">
+                    role="button"
+                    tabindex="0"
+                    (click)="toggleExam(exam.courseCode)"
+                    (keydown.enter)="toggleExam(exam.courseCode)"
+                    (keydown.space)="toggleExam(exam.courseCode)">
                     <svg
                       [lucideIcon]="iconChevron"
                       [size]="16"
@@ -209,7 +213,11 @@
               <div class="flex w-full items-center gap-2 px-4 py-3.5">
                 <div
                   class="flex min-w-0 flex-1 cursor-pointer items-center gap-3"
-                  (click)="toggleExam(exam.courseCode)">
+                  role="button"
+                  tabindex="0"
+                  (click)="toggleExam(exam.courseCode)"
+                  (keydown.enter)="toggleExam(exam.courseCode)"
+                  (keydown.space)="toggleExam(exam.courseCode)">
                   <svg
                     [lucideIcon]="iconChevron"
                     [size]="16"

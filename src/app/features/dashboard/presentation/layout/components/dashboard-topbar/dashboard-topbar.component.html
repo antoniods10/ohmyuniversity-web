@@ -63,7 +63,8 @@
       [iconOnly]="true"
       [icon]="iconSearch"
       aria-label="Cerca"
-      (click)="onSearchClick()" />
+      (click)="onSearchClick()"
+      (keydown.enter)="onSearchClick()" />
 
     <!-- Mail -->
     <app-custom-button
@@ -72,7 +73,8 @@
       [iconOnly]="true"
       [icon]="iconMail"
       aria-label="Mail"
-      (click)="onMailClick()" />
+      (click)="onMailClick()"
+      (keydown.enter)="onMailClick()" />
 
     <!-- Favorites -->
     <app-custom-button
@@ -81,7 +83,8 @@
       [iconOnly]="true"
       [icon]="iconHeart"
       aria-label="Preferiti"
-      (click)="onFavoritesClick()" />
+      (click)="onFavoritesClick()"
+      (keydown.enter)="onFavoritesClick()" />
 
     <!-- Notifications -->
     <div class="relative">

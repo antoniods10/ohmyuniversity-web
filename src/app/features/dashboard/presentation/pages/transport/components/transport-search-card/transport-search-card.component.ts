@@ -69,11 +69,17 @@ export class TransportSearchCardComponent implements OnInit, AfterViewInit {
     const from = this._confirmedFrom();
     const to = this._confirmedTo();
 
-    const url = from
+    const rawUrl = from
       ? `https://maps.google.com/maps?saddr=${encodeURIComponent(from)}&daddr=${encodeURIComponent(to)}&output=embed`
       : `https://maps.google.com/maps?q=${encodeURIComponent(to)}&output=embed`;
 
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    const allowed = /^https:\/\/maps\.google\.com\/maps\?/.test(rawUrl);
+    if (!allowed) {
+      console.error('URL non valido, bypass negato');
+      return this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
+    }
+
+    return this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl); // NOSONAR - URL validated above
   });
 
   onFromChange(val: string | number): void {

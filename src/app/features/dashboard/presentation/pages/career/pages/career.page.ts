@@ -85,7 +85,7 @@ export class CareerPage implements OnInit {
           .filter(e => e.category === 'MANDATORY')
           .map(e => e.academicYear),
       ),
-    ].sort();
+    ].sort((a, b) => a - b);
 
     return [
       { value: 'ALL', label: 'Tutti gli anni' },

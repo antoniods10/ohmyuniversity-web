@@ -16,6 +16,7 @@ import { HomePlacingGridComponent } from '../components/home-placing-grid/home-p
 import { HomeWidgetGridComponent } from '../components/home-widget-grid/home-widget-grid.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 import { AuthFacade } from 'src/app/core/application/facades/auth.facade';
+import { cryptoRandInt } from '@shared/utils/crypto-rand';
 
 export type DashboardStep = 'idle' | 'selecting-size' | 'placing';
 
@@ -54,7 +55,7 @@ export class DashboardHomePage {
     return 'Buonasera';
   });
 
-  readonly quote = MOTIVATIONAL_QUOTES[Math.floor(Math.random() * MOTIVATIONAL_QUOTES.length)];
+  readonly quote = MOTIVATIONAL_QUOTES[cryptoRandInt(MOTIVATIONAL_QUOTES.length)];
   readonly availableWidgets = AVAILABLE_WIDGETS;
 
   readonly step = signal<DashboardStep>('idle');

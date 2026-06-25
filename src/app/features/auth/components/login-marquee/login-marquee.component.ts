@@ -1,4 +1,5 @@
 import { Component, input, computed } from '@angular/core';
+import { cryptoRandInt } from '@shared/utils/crypto-rand';
 import { MarqueeImage, LoginStat } from '@types';
 
 type MarqueeCell = { type: 'image'; data: MarqueeImage } | { type: 'stat'; data: LoginStat };
@@ -9,18 +10,10 @@ type MarqueeCell = { type: 'image'; data: MarqueeImage } | { type: 'stat'; data:
   templateUrl: './login-marquee.component.html',
 })
 export class LoginMarqueeComponent {
-  /** Pool of images shared across all 4 columns (will be redistributed). */
   readonly images = input.required<MarqueeImage[]>();
 
-  /** Statistic cards to intersperse among the images (recommended: 6). */
   readonly stats = input.required<LoginStat[]>();
 
-  /**
-   * Builds 4 independent columns mixing images and stat cards.
-   * Order is shuffled once (stable for the component's lifetime, not
-   * re-shuffled on every change detection) so stats don't repeat within
-   * the same pass, then each column is duplicated for seamless looping.
-   */
   readonly columns = computed<MarqueeCell[][]>(() => {
     const columnCount = 4;
 
@@ -54,11 +47,10 @@ export class LoginMarqueeComponent {
     return speeds[index % speeds.length];
   }
 
-  /** Fisher-Yates shuffle, returns a new array without mutating the input. */
   private shuffle<T>(array: T[]): T[] {
     const result = [...array];
     for (let i = result.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+      const j = cryptoRandInt(i + 1);
       [result[i], result[j]] = [result[j], result[i]];
     }
     return result;

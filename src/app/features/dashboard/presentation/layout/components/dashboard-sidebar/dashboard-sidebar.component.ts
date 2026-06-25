@@ -107,7 +107,7 @@ export class DashboardSidebarComponent implements OnInit {
       info: this.carriera.getCareerInfo(),
       foto: this.carriera.getAvatar(),
     }).subscribe({
-      next: ({ badge, profilo, info, foto }) => {
+      next: ({ badge: _badge, profilo, info: _info, foto }) => {
         const fotoUrl = URL.createObjectURL(foto);
         this.fotoUrl.set(fotoUrl);
 

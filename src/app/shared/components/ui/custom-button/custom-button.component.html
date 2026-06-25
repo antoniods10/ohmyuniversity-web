@@ -31,7 +31,9 @@ modes, interactive states, icon support, and accessibility features.
     [attr.aria-disabled]="isInert ? 'true' : null"
     [attr.aria-pressed]="succeeded ? 'true' : null"
     [attr.tabindex]="isInert ? -1 : 0"
-    (click)="onButtonClick($event); onRipple($event)">
+    (click)="onButtonClick($event); onRipple($event)"
+    (keydown.enter)="onButtonClick($any($event)); onRipple($any($event))"
+    (keydown.space)="onButtonClick($any($event)); onRipple($any($event))">
     <ng-container *ngTemplateOutlet="btnContent" />
   </a>
 }
@@ -49,7 +51,9 @@ modes, interactive states, icon support, and accessibility features.
     [attr.aria-disabled]="isInert ? 'true' : null"
     [attr.aria-pressed]="succeeded ? 'true' : null"
     [attr.tabindex]="isInert ? -1 : 0"
-    (click)="onButtonClick($event); onRipple($event)">
+    (click)="onButtonClick($event); onRipple($event)"
+    (keydown.enter)="onButtonClick($any($event)); onRipple($any($event))"
+    (keydown.space)="onButtonClick($any($event)); onRipple($any($event))">
     <ng-container *ngTemplateOutlet="btnContent" />
   </a>
 }

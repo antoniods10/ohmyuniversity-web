@@ -6,7 +6,11 @@ container layout, header, body and footer projection areas.
 
 @if (isOpen) {
   <!-- Backdrop -->
-  <div [class]="backdropClasses" (click)="onBackdropClick()" aria-hidden="true"></div>
+  <div
+    [class]="backdropClasses"
+    (click)="onBackdropClick()"
+    (keydown.escape)="onBackdropClick()"
+    aria-hidden="true"></div>
 
   <!-- Modal container -->
   <div

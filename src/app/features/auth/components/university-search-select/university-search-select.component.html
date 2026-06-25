@@ -3,7 +3,9 @@
     <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
       <svg [lucideIcon]="iconSearch" [size]="16" class="text-gray-400"></svg>
     </div>
+    <label for="university-search" class="sr-only">Cerca università</label>
     <input
+      id="university-search"
       type="text"
       [value]="displayValue"
       (focus)="onFocus()"

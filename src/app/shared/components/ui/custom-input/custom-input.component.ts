@@ -35,6 +35,7 @@ import {
   LucideCircleAlert,
   LucideCircleCheck,
 } from '@lucide/angular';
+import { generateId } from '@shared/utils/crypto-rand';
 
 /**
  * Supported input rendering modes.
@@ -229,7 +230,7 @@ export class CustomInputComponent implements ControlValueAccessor {
   /**
    * Unique identifier used to bind label and input elements.
    */
-  @Input() inputId: string = `input-${Math.random().toString(36).slice(2, 7)}`;
+  @Input() inputId: string = `input-${generateId()}`;
 
   /**
    * Minimum numeric value (for number-based inputs).

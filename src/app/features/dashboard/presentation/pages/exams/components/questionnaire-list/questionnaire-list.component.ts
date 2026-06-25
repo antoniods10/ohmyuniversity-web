@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, computed } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import {
   LucideDynamicIcon,
   LucideClipboardList,
@@ -58,7 +58,7 @@ export class QuestionnaireListComponent implements OnInit {
     });
   }
 
-  onCompila(adsceId: number): void {
+  onCompila(_adsceId: number): void {
     this.toast.show('La compilazione diretta dei questionari sarà disponibile a breve.', 'warning');
   }
 

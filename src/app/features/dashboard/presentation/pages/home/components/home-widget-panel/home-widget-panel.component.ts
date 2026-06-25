@@ -18,18 +18,11 @@ import {
   LucideHandshake,
   LucideContactRound,
   LucidePrinter,
-  LucideGraduationCap,
   LucideLayoutDashboard,
   LucideSquareDashed,
   LucideSquare,
 } from '@lucide/angular';
-import {
-  WidgetDefinition,
-  WidgetSection,
-  WidgetSize,
-  WidgetSizeConfig,
-  PlacedWidget,
-} from '@shared/types';
+import { WidgetDefinition, WidgetSize, WidgetSizeConfig, PlacedWidget } from '@shared/types';
 import { WIDGET_SIZE_CONFIG, WIDGET_SECTIONS, GRID_COLS } from '@shared/constants';
 
 type PanelStep = 'list' | 'size';

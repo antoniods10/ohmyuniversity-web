@@ -18,14 +18,13 @@
   [style.grid-template-columns]="'repeat(' + GRID_COLS + ', minmax(0, 1fr))'">
   @for (cell of gridCells; track cell.row + '-' + cell.col) {
     <div
-      class="h-[120px] border-dashed border-gray-300 transition-all duration-150 border-r border-b"
-      [class.border-t]="cell.row === 0"
-      [class.border-l]="cell.col === 0"
-      [class.cursor-not-allowed]="isCellOccupied(cell.row, cell.col)"
-      [class.cursor-crosshair]="!isCellOccupied(cell.row, cell.col)"
+      class="h-30 border-dashed border-gray-300 transition-all duration-150 border-r border-b"
+      role="button"
+      [attr.tabindex]="isCellOccupied(cell.row, cell.col) ? -1 : 0"
       (mouseenter)="hoveredCell.set(cell)"
       (mouseleave)="hoveredCell.set(null)"
-      (click)="onCellClick(cell.row, cell.col)">
+      (click)="onCellClick(cell.row, cell.col)"
+      (keydown.enter)="onCellClick(cell.row, cell.col)">
       @if (isPreviewCell(cell.row, cell.col)) {
         <div
           class="w-full h-full transition-all duration-150"
