@@ -1,5 +1,14 @@
 <div class="hidden h-screen w-full overflow-hidden bg-white p-3 lg:block">
-  <div class="h-full w-full overflow-hidden rounded-3xl bg-gray-900">
+  <div
+    class="h-full w-full overflow-hidden rounded-3xl"
+    style="
+      background: linear-gradient(
+        135deg,
+        var(--color-primary-light) 0%,
+        var(--color-primary-dark) 50%,
+        var(--color-secondary-dark) 100%
+      );
+    ">
     <div class="grid h-full grid-cols-4 gap-3 overflow-hidden p-4">
       @for (column of columns(); track $index) {
         <div class="relative h-full overflow-hidden rounded-2xl">

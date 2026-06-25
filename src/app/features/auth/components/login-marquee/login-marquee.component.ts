@@ -22,31 +22,24 @@ export class LoginMarqueeComponent {
    * the same pass, then each column is duplicated for seamless looping.
    */
   readonly columns = computed<MarqueeCell[][]>(() => {
-    const imgs = this.shuffle(this.images());
-    const stats = this.shuffle(this.stats());
     const columnCount = 4;
 
-    const columns: MarqueeCell[][] = Array.from({ length: columnCount }, () => []);
+    const shuffledImgs = this.shuffle(this.images());
+    const shuffledStats = this.shuffle(this.stats());
 
-    imgs.forEach((img, i) => {
-      columns[i % columnCount].push({ type: 'image', data: img });
+    const imgColumns: MarqueeImage[][] = Array.from({ length: columnCount }, () => []);
+    shuffledImgs.forEach((img, i) => {
+      imgColumns[i % columnCount].push(img);
     });
 
-    // Insert each stat into a different column, spaced out so it doesn't
-    // land at the very top/bottom edge of the loop.
-    stats.forEach((stat, i) => {
+    const columns: MarqueeCell[][] = imgColumns.map(colImgs =>
+      colImgs.map(img => ({ type: 'image' as const, data: img })),
+    );
+
+    shuffledStats.forEach((stat, i) => {
       const targetColumn = columns[i % columnCount];
       const insertAt = Math.min(targetColumn.length, 2 + i);
-      targetColumn.splice(insertAt, 0, { type: 'stat', data: stat });
-    });
-
-    // Ensure every column has enough cells to fill the viewport height
-    // more than once before looping (prevents visible empty gaps).
-    const minCellsPerColumn = 6;
-    columns.forEach(col => {
-      while (col.length < minCellsPerColumn) {
-        col.push(...col.slice(0, minCellsPerColumn - col.length));
-      }
+      targetColumn.splice(insertAt, 0, { type: 'stat' as const, data: stat });
     });
 
     return columns.map(col => [...col, ...col]);

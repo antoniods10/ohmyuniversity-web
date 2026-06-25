@@ -3,62 +3,86 @@ import { MarqueeImage, LoginStat } from '@shared/types';
 // Universities Marquee
 export const UNIVERSITY_MARQUEE_IMAGES: MarqueeImage[] = [
   {
-    url: 'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=400&q=80',
-    alt: 'Studenti in biblioteca',
+    url: '/login-marquee/academy-1.webp',
+    alt: 'Unimol University',
   },
   {
-    url: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400&q=80',
-    alt: 'Aula universitaria',
+    url: '/login-marquee/academy-2.webp',
+    alt: 'Sapienza University',
   },
   {
-    url: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=400&q=80',
-    alt: 'Studenti che studiano insieme',
+    url: '/login-marquee/academy-3.webp',
+    alt: 'Students Easter Egg',
   },
   {
-    url: 'https://images.unsplash.com/photo-1592280771190-3e2e4d571952?w=400&q=80',
-    alt: 'Campus universitario',
+    url: '/login-marquee/academy-4.webp',
+    alt: 'Campus University',
   },
   {
-    url: 'https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=400&q=80',
-    alt: 'Studenti con laptop',
+    url: '/login-marquee/academy-5.webp',
+    alt: 'Easter Love',
   },
   {
-    url: 'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=400&q=80',
-    alt: 'Laurea e festeggiamenti',
+    url: '/login-marquee/academy-6.webp',
+    alt: 'People from Ibiza',
   },
   {
-    url: 'https://images.unsplash.com/photo-1562774053-701939374585?w=400&q=80',
-    alt: 'Lezione universitaria',
+    url: '/login-marquee/academy-7.webp',
+    alt: 'People from NOT Ibiza',
   },
   {
-    url: 'https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=400&q=80',
-    alt: 'Studio di gruppo',
+    url: '/login-marquee/academy-8.webp',
+    alt: 'Graduation',
   },
   {
-    url: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=400&q=80',
-    alt: 'Studenti in aula magna',
+    url: '/login-marquee/academy-9.webp',
+    alt: 'Aula magna',
   },
   {
-    url: 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=400&q=80',
-    alt: 'Studio individuale',
+    url: '/login-marquee/academy-10.webp',
+    alt: 'Laboratory',
   },
   {
-    url: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&q=80',
-    alt: 'Edificio universitario',
+    url: '/login-marquee/academy-11.webp',
+    alt: 'Venice University',
   },
   {
-    url: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=400&q=80',
-    alt: 'Studenti che camminano nel campus',
+    url: '/login-marquee/academy-12.webp',
+    alt: 'DAnnunzio Univeristy',
   },
 ];
 
 export const UNIVERSITY_LOGIN_STATS: LoginStat[] = [
-  { value: '120k+', label: 'Studenti attivi ogni settimana', bgColor: '#F97316' },
-  { value: '50+', label: 'Atenei italiani convenzionati', bgColor: '#22C55E' },
-  { value: '4.8★', label: 'Valutazione media sugli store', bgColor: '#2563EB' },
-  { value: '98%', label: 'Accessi SSO senza errori', bgColor: '#A855F7' },
-  { value: '24/7', label: 'Accesso ai dati accademici', bgColor: '#0EA5E9' },
-  { value: '3 min', label: 'Tempo medio di primo accesso', bgColor: '#EC4899' },
+  {
+    value: '85k+',
+    label: 'Studenti universitari italiani',
+    bgColor: 'linear-gradient(135deg, var(--color-secondary-light), var(--color-secondary-dark))',
+  },
+  {
+    value: '40+',
+    label: 'Atenei italiani convenzionati',
+    bgColor: 'linear-gradient(135deg, var(--color-success-light), var(--color-success-dark))',
+  },
+  {
+    value: '4.6★',
+    label: 'Valutazione media sugli store',
+    bgColor: 'linear-gradient(135deg, var(--color-warning-light), var(--color-warning-dark))',
+  },
+  {
+    value: '99.9%',
+    label: "Uptime del servizio nell'ultimo anno",
+    bgColor: 'linear-gradient(135deg, var(--color-success-light), var(--color-success-dark))',
+  },
+  {
+    value: '24/7',
+    label: 'Disponibilità dati accademici',
+    bgColor: 'linear-gradient(135deg, var(--color-info-light), var(--color-info-dark))',
+  },
+  {
+    value: '< 2s',
+    label: 'Tempo medio di caricamento',
+    bgColor: 'linear-gradient(135deg, var(--color-tertiary-light), var(--color-tertiary-dark))',
+  },
 ];
 
 // Partner Marquee
@@ -114,10 +138,34 @@ export const PARTNER_MARQUEE_IMAGES: MarqueeImage[] = [
 ];
 
 export const PARTNER_LOGIN_STATS: LoginStat[] = [
-  { value: '92%', label: 'Aziende che rinnovano il piano', bgColor: '#2563EB' },
-  { value: '< 2 gg', label: 'Tempo medio di prima risposta', bgColor: '#A855F7' },
-  { value: '40%', label: 'Sconto per collettivi studenteschi', bgColor: '#F97316' },
-  { value: '14 gg', label: 'Prova gratuita su tutti i piani', bgColor: '#22C55E' },
-  { value: '3x', label: 'Candidature in più rispetto ai portali generici', bgColor: '#0EA5E9' },
-  { value: '9,90€', label: 'Piano Starter al mese', bgColor: '#EC4899' },
+  {
+    value: '89%',
+    label: 'Aziende che rinnovano il piano annuale',
+    bgColor: 'linear-gradient(135deg, var(--color-info-light), var(--color-info-dark))',
+  },
+  {
+    value: '< 24h',
+    label: 'Tempo medio di prima risposta al supporto',
+    bgColor: 'linear-gradient(135deg, var(--color-secondary-light), var(--color-secondary-dark))',
+  },
+  {
+    value: '2.8x',
+    label: 'Candidature in più rispetto ai portali generici',
+    bgColor: 'linear-gradient(135deg, var(--color-warning-light), var(--color-warning-dark))',
+  },
+  {
+    value: '14 gg',
+    label: 'Prova gratuita su tutti i piani',
+    bgColor: 'linear-gradient(135deg, var(--color-success-light), var(--color-success-dark))',
+  },
+  {
+    value: '6.000+',
+    label: 'Studenti che cercano stage e lavoro ogni mese',
+    bgColor: 'linear-gradient(135deg, var(--color-partner-light), var(--color-partner-dark))',
+  },
+  {
+    value: '9,90€',
+    label: 'Piano Starter mensile, senza vincoli',
+    bgColor: 'linear-gradient(135deg, var(--color-tertiary-light), var(--color-tertiary-dark))',
+  },
 ];
