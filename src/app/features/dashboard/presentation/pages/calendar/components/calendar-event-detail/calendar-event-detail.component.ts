@@ -12,7 +12,7 @@ import { CustomModalComponent } from '@ui/custom-modal/custom-modal.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { LucideDynamicIcon, LucidePencil, LucideTrash2 } from '@lucide/angular';
-import type { CalendarEvent } from '@shared/types/dashboard/calendar.types';
+import type { CalendarEvent } from '@shared/types/dashboard/dashboard-agenda.types';
 import {
   calendarEventDurationLabel,
   calendarEventTimeRange,

@@ -4,7 +4,7 @@ import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-c
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 import { ToastService } from '@ui/custom-toast/toast.service';
 import { LucideCalendarDays, LucideClipboardList, LucideSparkles } from '@lucide/angular';
-import { Exam, ExamStatus } from '@shared/types/dashboard/exams.types';
+import { Exam, BookingExamStatus } from '@shared/types/dashboard/dashboard-exams.types';
 import {
   AppelloLibretto,
   IscrizioneAppello,
@@ -98,7 +98,7 @@ export class ExamsPage implements OnInit {
             enrollDeadline: 'N/D',
             spotsLeft: 0,
             spotsTotal: 0,
-            status: 'no-exam' as ExamStatus,
+            status: 'no-exam' as BookingExamStatus,
             dataInizioIscr: 'N/D',
           };
         });
@@ -160,7 +160,7 @@ export class ExamsPage implements OnInit {
       ora = a.oraEsa.split(' ')[1].substring(0, 5);
     }
 
-    let status: ExamStatus;
+    let status: BookingExamStatus;
     if (isPrenotato) {
       status = 'booked';
     } else if (a.stato === 'S') {
@@ -222,7 +222,7 @@ export class ExamsPage implements OnInit {
       enrollDeadline: this.formatData(p.dataFineIscr),
       spotsLeft: 0,
       spotsTotal: 0,
-      status: 'booked' as ExamStatus,
+      status: 'booked' as BookingExamStatus,
       dataInizioIscr: this.formatData(p.dataInizioIscr),
     } as any;
   }

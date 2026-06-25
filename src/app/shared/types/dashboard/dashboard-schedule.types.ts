@@ -19,6 +19,3 @@ export interface CourseSchedule extends ScheduleInfo {
   status: ScheduleStatus;
   updatedAt: string;
 }
-
-/** Lightweight schedule result returned from a search query */
-export type ScheduleSearchResult = ScheduleInfo;

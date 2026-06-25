@@ -11,7 +11,10 @@ import {
 } from '@angular/core';
 import { CalendarEventCardComponent } from '../calendar-event-card/calendar-event-card.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
-import type { CalendarEvent, CalendarEventLayout } from '@shared/types/dashboard/calendar.types';
+import type {
+  CalendarEvent,
+  CalendarEventLayout,
+} from '@shared/types/dashboard/dashboard-agenda.types';
 import {
   CALENDAR_TIMELINE,
   calendarEventHeight,

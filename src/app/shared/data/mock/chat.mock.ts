@@ -4,7 +4,7 @@ import {
   ChatMember,
   SharedFile,
   SharedLink,
-} from '@shared/types/dashboard/chat.types';
+} from '@shared/types/dashboard/dashboard-chat.types';
 
 export const MOCK_CHAT_ROOMS: ChatRoom[] = [
   {

@@ -9,7 +9,7 @@ import {
   LucideChevronRight,
   LucideDynamicIcon,
 } from '@lucide/angular';
-import type { CalendarEvent } from '@shared/types/dashboard/calendar.types';
+import type { CalendarEvent } from '@shared/types/dashboard/dashboard-agenda.types';
 import {
   calendarEventTypeVariant,
   calendarIsSameDay,

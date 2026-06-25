@@ -4,7 +4,7 @@ import { CustomInputComponent } from '@ui/custom-input/custom-input.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 import { ExamCardComponent } from '../exam-card/exam-card.component';
-import { Exam, ExamStatus } from '@shared/types/dashboard/exams.types';
+import { Exam } from '@shared/types/dashboard/dashboard-exams.types';
 import { LucideTriangleAlert } from '@lucide/angular';
 
 type ExamFilter = 'all' | 'open' | 'booked';

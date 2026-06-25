@@ -1,3 +1,5 @@
+import { Identifiable } from '@shared/types';
+
 /** Available classroom features */
 export type ClassroomFeature = 'projector' | 'lim' | 'wifi' | 'power' | 'ac';
 
@@ -5,9 +7,7 @@ export type ClassroomFeature = 'projector' | 'lim' | 'wifi' | 'power' | 'ac';
 export type ClassroomType = 'lecture' | 'lab' | 'seminar' | 'exam';
 
 /** A bookable classroom with its features and availability */
-export interface Classroom {
-  id: string;
-  name: string;
+export interface Classroom extends Identifiable {
   building: string;
   floor: string;
   capacity: number;
@@ -17,17 +17,13 @@ export interface Classroom {
 }
 
 /** A university building containing classrooms */
-export interface Building {
-  id: string;
-  name: string;
+export interface Building extends Identifiable {
   address: string;
   classrooms: Classroom[];
 }
 
 /** A university campus in a specific city */
-export interface Campus {
-  id: string;
+export interface Campus extends Identifiable {
   city: string;
-  label: string;
   buildings: Building[];
 }

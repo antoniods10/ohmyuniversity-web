@@ -23,7 +23,7 @@ import type {
   CalendarEvent,
   CalendarEventType,
   CalendarFormEventType,
-} from '@shared/types/dashboard/calendar.types';
+} from '@shared/types/dashboard/dashboard-agenda.types';
 import { stepTime } from '@shared/utils/calendar.utils';
 
 const FORM_TYPE_OPTIONS: SelectOption[] = [

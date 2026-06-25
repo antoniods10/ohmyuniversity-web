@@ -12,7 +12,7 @@ import {
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
-import { Exam, ExamStatus } from '@shared/types/dashboard/exams.types';
+import { Exam, BookingExamStatus } from '@shared/types/dashboard/dashboard-exams.types';
 import { acronymVariant } from '@shared/utils/ui.utils';
 
 @Component({
@@ -35,8 +35,8 @@ export class ExamCardComponent {
   readonly iconUsers = LucideUsers;
   readonly acronymVariant = acronymVariant;
 
-  statusLabel(status: ExamStatus): string {
-    const map: Record<ExamStatus, string> = {
+  statusLabel(status: BookingExamStatus): string {
+    const map: Record<BookingExamStatus, string> = {
       open: 'Aperto',
       closing: 'In chiusura',
       closed: 'Chiuso',
@@ -46,19 +46,22 @@ export class ExamCardComponent {
     return map[status];
   }
 
-  statusVariant(status: ExamStatus): 'success' | 'warning' | 'neutral' | 'primary' | 'error' {
-    const map: Record<ExamStatus, 'success' | 'warning' | 'neutral' | 'primary' | 'error'> = {
-      open: 'success',
-      closing: 'warning',
-      closed: 'error',
-      booked: 'primary',
-      'no-exam': 'neutral',
-    };
+  statusVariant(
+    status: BookingExamStatus,
+  ): 'success' | 'warning' | 'neutral' | 'primary' | 'error' {
+    const map: Record<BookingExamStatus, 'success' | 'warning' | 'neutral' | 'primary' | 'error'> =
+      {
+        open: 'success',
+        closing: 'warning',
+        closed: 'error',
+        booked: 'primary',
+        'no-exam': 'neutral',
+      };
     return map[status];
   }
 
-  bookLabel(status: ExamStatus): string {
-    const map: Record<ExamStatus, string> = {
+  bookLabel(status: BookingExamStatus): string {
+    const map: Record<BookingExamStatus, string> = {
       open: 'Prenota',
       closing: 'Prenota',
       closed: 'Chiuso',
@@ -68,8 +71,8 @@ export class ExamCardComponent {
     return map[status];
   }
 
-  bookVariant(status: ExamStatus): 'primary' | 'success' | 'ghost' {
-    const map: Record<ExamStatus, 'primary' | 'success' | 'ghost'> = {
+  bookVariant(status: BookingExamStatus): 'primary' | 'success' | 'ghost' {
+    const map: Record<BookingExamStatus, 'primary' | 'success' | 'ghost'> = {
       open: 'primary',
       closing: 'primary',
       closed: 'ghost',
@@ -79,13 +82,13 @@ export class ExamCardComponent {
     return map[status];
   }
 
-  deadlineColor(status: ExamStatus): string {
+  deadlineColor(status: BookingExamStatus): string {
     if (status === 'closed' || status === 'no-exam') return 'var(--color-neutral-400)';
     if (status === 'closing') return 'var(--color-warning-dark)';
     return 'var(--color-success-dark)';
   }
 
-  deadlineBackground(status: ExamStatus): string {
+  deadlineBackground(status: BookingExamStatus): string {
     if (status === 'closed' || status === 'no-exam') return 'var(--color-neutral-100)';
     if (status === 'closing') return 'var(--color-warning-light)';
     return 'var(--color-success-light)';

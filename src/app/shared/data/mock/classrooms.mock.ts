@@ -1,10 +1,10 @@
-import { Campus } from '@shared/types/dashboard/classrooms.types';
+import { Campus } from '@shared/types/dashboard/dashboard-classrooms.types';
 
 export const MOCK_CAMPUSES: Campus[] = [
   {
     id: 'campobasso',
     city: 'Campobasso',
-    label: 'Sede principale',
+    name: 'Sede principale',
     buildings: [
       {
         id: 'b-cb-1',
@@ -95,7 +95,7 @@ export const MOCK_CAMPUSES: Campus[] = [
   {
     id: 'termoli',
     city: 'Termoli',
-    label: 'Sede di Termoli',
+    name: 'Sede di Termoli',
     buildings: [
       {
         id: 'b-te-1',
@@ -139,7 +139,7 @@ export const MOCK_CAMPUSES: Campus[] = [
   {
     id: 'pesche',
     city: 'Pesche',
-    label: 'Sede di Pesche',
+    name: 'Sede di Pesche',
     buildings: [
       {
         id: 'b-pe-1',

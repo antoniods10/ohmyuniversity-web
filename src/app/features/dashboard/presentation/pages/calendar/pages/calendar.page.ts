@@ -13,7 +13,10 @@ import { CalendarMonthViewComponent } from '../components/calendar-month-view/ca
 import { CalendarYearViewComponent } from '../components/calendar-year-view/calendar-year-view.component';
 import { CalendarEventFormComponent } from '../components/calendar-event-form/calendar-event-form.component';
 import { CalendarEventDetailComponent } from '../components/calendar-event-detail/calendar-event-detail.component';
-import type { CalendarEvent, CalendarEventLayout } from '@shared/types/dashboard/calendar.types';
+import type {
+  CalendarEvent,
+  CalendarEventLayout,
+} from '@shared/types/dashboard/dashboard-agenda.types';
 import { calculateEventLayouts, calendarIsSameDay } from '@shared/utils/calendar.utils';
 import { CalendarFacade } from 'src/app/core/application/facades/calendar.facade';
 

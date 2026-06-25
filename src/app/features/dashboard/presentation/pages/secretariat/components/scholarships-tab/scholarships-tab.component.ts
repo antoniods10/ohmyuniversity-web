@@ -9,7 +9,10 @@ import {
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
-import { Scholarship, ScholarshipStatus } from '@shared/types/dashboard/secretariat.types';
+import {
+  Scholarship,
+  ScholarshipStatus,
+} from '@shared/types/dashboard/dashboard-secretariat.types';
 
 @Component({
   selector: 'app-scholarships-tab',

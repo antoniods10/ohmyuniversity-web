@@ -17,7 +17,7 @@ import {
   MOCK_BANDI,
   MOCK_FEES,
 } from '@shared/data/mock/secretariat.mock';
-import { Scholarship } from '@shared/types/dashboard/secretariat.types';
+import { Scholarship } from '@shared/types/dashboard/dashboard-secretariat.types';
 import { APP } from '@shared/constants';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';

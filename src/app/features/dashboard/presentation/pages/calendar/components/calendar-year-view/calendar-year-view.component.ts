@@ -3,7 +3,7 @@ import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { LucideChevronLeft, LucideChevronRight } from '@lucide/angular';
-import type { CalendarEvent } from '@shared/types/dashboard/calendar.types';
+import type { CalendarEvent } from '@shared/types/dashboard/dashboard-agenda.types';
 import {
   calendarEventTypeVariant,
   calendarIsSameDay,

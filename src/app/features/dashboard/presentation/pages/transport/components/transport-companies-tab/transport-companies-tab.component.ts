@@ -12,7 +12,7 @@ import {
   LucideInfo,
   LucideWifi,
 } from '@lucide/angular';
-import { TransportCompany } from '@shared/types/dashboard/transport.types';
+import { TransportCompany } from '@shared/types/dashboard/dashboard-transport.types';
 import { APP } from '@shared/constants';
 
 @Component({

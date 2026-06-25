@@ -3,7 +3,10 @@ import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.component';
 import { LucideBus, LucideTrainFront, LucideTriangleAlert } from '@lucide/angular';
-import { TransportCompany, TransportRoute } from '@shared/types/dashboard/transport.types';
+import {
+  TransportCompany,
+  TransportRoute,
+} from '@shared/types/dashboard/dashboard-transport.types';
 import { MOCK_TRANSPORT_ROUTES, MOCK_TRANSPORT_COMPANIES } from '@shared/data/mock/transport.mock';
 import { APP } from '@shared/constants';
 import { TransportRoutesTabComponent } from '../components/transport-routes-tab/transport-routes-tab.component';

@@ -3,7 +3,7 @@ import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomTextComponent } from '@ui/custom-text/custom-text.component';
 import { LucideDynamicIcon, LucideLink, LucideMapPin } from '@lucide/angular';
-import type { CalendarEvent } from '@shared/types/dashboard/calendar.types';
+import type { CalendarEvent } from '@shared/types/dashboard/dashboard-agenda.types';
 import {
   calendarEventDurationLabel,
   calendarEventTimeRange,

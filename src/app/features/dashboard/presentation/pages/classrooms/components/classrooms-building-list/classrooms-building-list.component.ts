@@ -12,7 +12,7 @@ import {
   LucideCalendarPlus,
   LucideSearch,
 } from '@lucide/angular';
-import { Building, Classroom } from '@shared/types/dashboard/classrooms.types';
+import { Building, Classroom } from '@shared/types/dashboard/dashboard-classrooms.types';
 
 @Component({
   selector: 'app-classrooms-building-list',

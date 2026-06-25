@@ -1,5 +1,5 @@
 /** Possible states of an exam booking lifecycle */
-export type ExamStatus = 'open' | 'closing' | 'closed' | 'booked' | 'no-exam';
+export type BookingExamStatus = 'open' | 'closing' | 'closed' | 'booked' | 'no-exam';
 
 /** Possible states of a course questionnaire */
 export type QuestionnaireStatus = 'pending' | 'completed';
@@ -13,7 +13,7 @@ export interface CourseEvent<TStatus = string> {
 }
 
 /** Bookable exam for a course, with date, location and seat availability */
-export interface Exam extends CourseEvent<ExamStatus> {
+export interface Exam extends CourseEvent<BookingExamStatus> {
   courseAcronym: string;
   date: string;
   time: string;

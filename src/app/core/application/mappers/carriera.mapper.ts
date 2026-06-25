@@ -1,4 +1,4 @@
-import { Exam } from '@shared/types/dashboard/career.types';
+import { Exam } from '@shared/types/dashboard/dashboard-career.types';
 import { RigaLibretto } from 'src/app/core/domain/models/career/libretto.model';
 import { RigaPiano } from 'src/app/core/domain/models/career/piano.model';
 

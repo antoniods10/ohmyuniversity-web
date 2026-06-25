@@ -3,7 +3,7 @@ import type {
   CalendarEvent,
   CalendarEventLayout,
   CalendarEventType,
-} from '@shared/types/dashboard/calendar.types';
+} from '@shared/types/dashboard/dashboard-agenda.types';
 
 /** Italian display label for the event's type, as shown on the form tabs */
 export function calendarEventTypeLabel(type: CalendarEventType): string {

@@ -8,7 +8,7 @@ import {
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
-import { Bando, BandoStatus } from '@shared/types/dashboard/secretariat.types';
+import { Bando, BandoStatus } from '@shared/types/dashboard/dashboard-secretariat.types';
 
 @Component({
   selector: 'app-bandi-tab',

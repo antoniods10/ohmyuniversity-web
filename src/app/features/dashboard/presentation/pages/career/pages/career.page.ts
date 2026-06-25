@@ -8,7 +8,7 @@ import type {
   ExamFilter,
   ExamGroup,
   FilterOption,
-} from '@shared/types/dashboard/career.types';
+} from '@shared/types/dashboard/dashboard-career.types';
 import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { SelectOption } from '@ui/custom-input/custom-input.component';

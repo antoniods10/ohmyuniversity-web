@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Exam } from '@shared/types/dashboard/career.types';
+import { Exam } from '@shared/types/dashboard/dashboard-career.types';
 import { CarrieraInfoResponse } from 'src/app/core/domain/models/career/carriera-info.model';
 import { ProfiloResponse } from 'src/app/core/domain/models/career/profilo.model';
 import { QuestionariResponse } from 'src/app/core/domain/models/career/questionari.model';

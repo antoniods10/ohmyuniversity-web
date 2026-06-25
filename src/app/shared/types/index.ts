@@ -1,14 +1,14 @@
 // Dashboard
-export * from './dashboard/calendar.types';
-export * from './dashboard/career.types';
-export * from './dashboard/chat.types';
-export * from './dashboard/classrooms.types';
+export * from './dashboard/dashboard-agenda.types';
+export * from './dashboard/dashboard-career.types';
+export * from './dashboard/dashboard-chat.types';
+export * from './dashboard/dashboard-classrooms.types';
 //export * from './dashboard/exams.types';
 export * from './dashboard/dashboard-home.types';
-export * from './dashboard/profile.types';
-export * from './dashboard/schedule.types';
-export * from './dashboard/secretariat.types';
-export * from './dashboard/transport.types';
+export * from './dashboard/dashboard-profile.types';
+export * from './dashboard/dashboard-schedule.types';
+export * from './dashboard/dashboard-secretariat.types';
+export * from './dashboard/dashboard-transport.types';
 export * from './dashboard/university-contacts.types';
 
 // Features

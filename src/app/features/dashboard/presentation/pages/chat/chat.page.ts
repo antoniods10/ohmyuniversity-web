@@ -28,7 +28,7 @@ import {
   ChatMember,
   SharedFile,
   SharedLink,
-} from '@shared/types/dashboard/chat.types';
+} from '@shared/types/dashboard/dashboard-chat.types';
 import {
   MOCK_CHAT_ROOMS,
   MOCK_CHAT_MESSAGES,

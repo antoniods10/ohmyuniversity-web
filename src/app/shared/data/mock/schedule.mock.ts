@@ -1,4 +1,4 @@
-import { CourseSchedule } from '@shared/types/dashboard/schedule.types';
+import { CourseSchedule } from '@shared/types/dashboard/dashboard-schedule.types';
 
 export const MOCK_MY_SCHEDULES: CourseSchedule[] = [
   {

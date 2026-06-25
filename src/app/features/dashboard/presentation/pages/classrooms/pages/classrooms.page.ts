@@ -7,7 +7,7 @@ import { ToastService } from '@ui/custom-toast/toast.service';
 import { LucideDynamicIcon, LucideInfo, LucideTriangleAlert } from '@lucide/angular';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
-import { Building, Campus } from '@shared/types/dashboard/classrooms.types';
+import { Building, Campus } from '@shared/types/dashboard/dashboard-classrooms.types';
 import { MOCK_CAMPUSES } from '@shared/data/mock/classrooms.mock';
 import { ClassroomsBuildingListComponent } from '../components/classrooms-building-list/classrooms-building-list.component';
 import { ClassroomsFiltersComponent } from '../components/classrooms-filters/classrooms-filters.component';

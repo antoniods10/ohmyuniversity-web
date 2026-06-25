@@ -12,7 +12,7 @@ import {
   LucideClock,
   LucideInfo,
 } from '@lucide/angular';
-import { TransportRoute } from '@shared/types/dashboard/transport.types';
+import { TransportRoute } from '@shared/types/dashboard/dashboard-transport.types';
 
 @Component({
   selector: 'app-transport-routes-tab',

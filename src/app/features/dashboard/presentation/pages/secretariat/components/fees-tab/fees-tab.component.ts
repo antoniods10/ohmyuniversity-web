@@ -11,7 +11,7 @@ import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 import { APP } from '@shared/constants';
-import { FeeStatus } from '@shared/types/dashboard/secretariat.types';
+import { FeeStatus } from '@shared/types/dashboard/dashboard-secretariat.types';
 import {
   Addebito,
   TasseResponse,

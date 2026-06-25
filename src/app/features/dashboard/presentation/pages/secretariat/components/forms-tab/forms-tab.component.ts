@@ -2,7 +2,7 @@ import { Component, input, computed } from '@angular/core';
 import { LucideDynamicIcon, LucideExternalLink, LucideFileText } from '@lucide/angular';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
-import { FormModule } from '@shared/types/dashboard/secretariat.types';
+import { FormModule } from '@shared/types/dashboard/dashboard-secretariat.types';
 
 @Component({
   selector: 'app-forms-tab',
