@@ -4,15 +4,13 @@ import { authGuard } from './core/guards/auth.guard';
 // Public
 import { PublicLayoutComponent } from './core/layout/public-layout/public-layout.component';
 import { HomePage } from './features/home/pages/home.page';
+import { OrientationPage } from './features/orientation/pages/orientation.page';
 import { AboutPage } from './features/about/pages/about.page';
-import { ContattiPage } from './features/contatti/pages/contatti.page';
 import { PartnerPage } from './features/partner/pages/partner.page';
+import { ContattiPage } from './features/contatti/pages/contatti.page';
 
 // Auth
 import { LoginPage } from './features/auth/pages/login.page';
-
-// Orientation
-import { OrientationPage } from '@orientation/pages/orientation.page';
 
 // FAQ
 import { FaqBusinessPage } from './features/faq/pages/faq-business/faq-business.page';

@@ -1,6 +1,6 @@
 import { Component, input, AfterViewInit, ElementRef, ViewChild, OnChanges } from '@angular/core';
-import { CFU_CHART_DEFAULT_DATA } from '@constants';
-import { CfuDataPoint } from '@types';
+import { CFU_CHART_DEFAULT_DATA } from '@shared/constants';
+import { CfuDataPoint } from '@shared/types';
 
 @Component({
   selector: 'app-cfu-chart',

@@ -65,7 +65,7 @@ describe('AboutHeroComponent', () => {
   it('should render the subtitle paragraph', () => {
     const p = fixture.nativeElement.querySelector('p');
     expect(p).not.toBeNull();
-    expect(p.textContent).toContain('OhMyUniversity nasce dalla frustrazione');
+    expect(p.textContent).toContain('OhMyUniversity! nasce dalla frustrazione');
   });
 
   it('should render a text-center container', () => {

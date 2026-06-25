@@ -9,8 +9,7 @@
       "@types": ["./src/app/shared/types/index.ts"],
       "@constants": ["./src/app/shared/constants/index.ts"],
       "@ui/*": ["./src/app/shared/components/ui/*"],
-      "@shared/*": ["./src/app/shared/*"],
-      "@orientation/*": ["./src/app/features/orientation/*"]
+      "@shared/*": ["./src/app/shared/*"]
     },
     "strict": true,
     "noImplicitOverride": true,

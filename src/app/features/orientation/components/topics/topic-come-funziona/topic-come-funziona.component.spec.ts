@@ -5,9 +5,9 @@ import { TopicComeFunzionaComponent } from './topic-come-funziona.component';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
 import { CfuChartComponent } from '../../charts/cfu-chart/cfu-chart.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
-import { OrientationStateService } from '@orientation/application/state/orientation.state';
+import { OrientationStateService } from 'src/app/core/application/state/orientation/orientation.state';
 import { ToastService } from '@ui/custom-toast/toast.service';
-import { UNIVERSITY_VS_SCHOOL_DIFFERENCES, EXAM_TYPES, EXAM_SESSIONS } from '@constants';
+import { UNIVERSITY_VS_SCHOOL_DIFFERENCES, EXAM_SESSIONS } from '@constants';
 
 if (!Element.prototype.scrollIntoView) {
   Element.prototype.scrollIntoView = function (): void {};
@@ -16,7 +16,10 @@ if (!Element.prototype.scrollIntoView) {
 describe('TopicComeFunzionaComponent', () => {
   let component: TopicComeFunzionaComponent;
   let fixture: ComponentFixture<TopicComeFunzionaComponent>;
-  let stateServiceMock: { getAnswer: ReturnType<typeof vi.fn>; saveAnswer: ReturnType<typeof vi.fn> };
+  let stateServiceMock: {
+    getAnswer: ReturnType<typeof vi.fn>;
+    saveAnswer: ReturnType<typeof vi.fn>;
+  };
   let toastServiceMock: { success: ReturnType<typeof vi.fn> };
 
   async function setupComponent(answers: Record<string, string | null> = {}): Promise<void> {
@@ -134,7 +137,9 @@ describe('TopicComeFunzionaComponent', () => {
 
   describe('getSessionSubtitle', () => {
     it('combines periodo and note with a separator', () => {
-      expect(component.getSessionSubtitle('Gennaio', 'Esami invernali')).toBe('Gennaio · Esami invernali');
+      expect(component.getSessionSubtitle('Gennaio', 'Esami invernali')).toBe(
+        'Gennaio · Esami invernali',
+      );
     });
   });
 

@@ -3,8 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TopicCostiGeograficiComponent } from './topic-aree-geografiche.component';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
-import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
-import { OrientationStateService } from '@orientation/application/state/orientation.state';
+import { OrientationStateService } from 'src/app/core/application/state/orientation/orientation.state';
 import { ToastService } from '@ui/custom-toast/toast.service';
 import { GEOGRAPHIC_AREA_COSTS, TOP_CITIES, GEO_TIPS } from '@constants';
 
@@ -15,7 +14,10 @@ if (!Element.prototype.scrollIntoView) {
 describe('TopicCostiGeograficiComponent', () => {
   let component: TopicCostiGeograficiComponent;
   let fixture: ComponentFixture<TopicCostiGeograficiComponent>;
-  let stateServiceMock: { getAnswer: ReturnType<typeof vi.fn>; saveAnswer: ReturnType<typeof vi.fn> };
+  let stateServiceMock: {
+    getAnswer: ReturnType<typeof vi.fn>;
+    saveAnswer: ReturnType<typeof vi.fn>;
+  };
   let toastServiceMock: { success: ReturnType<typeof vi.fn> };
 
   async function setupComponent(answers: Record<string, string | null> = {}): Promise<void> {

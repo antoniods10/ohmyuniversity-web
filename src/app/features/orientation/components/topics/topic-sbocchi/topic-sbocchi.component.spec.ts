@@ -6,7 +6,7 @@ import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.c
 import { SbocchiChartComponent } from '../../charts/sbocchi-chart/sbocchi-chart.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
-import { OrientationStateService } from '@orientation/application/state/orientation.state';
+import { OrientationStateService } from 'src/app/core/application/state/orientation/orientation.state';
 import { ToastService } from '@ui/custom-toast/toast.service';
 import { CAREER_AREAS, CAREER_TIPS } from '@constants';
 

@@ -3,15 +3,24 @@ import { LoginPage } from './login.page';
 import { provideRouter } from '@angular/router';
 import { APP, ORGANIZATION } from '@constants';
 import { LoginMode } from '@types';
+import { AuthFacade } from 'src/app/core/application/facades/auth.facade';
+import { of } from 'rxjs';
+import { vi } from 'vitest';
+
+const authFacadeMock = {
+  login: vi.fn(() => of({ accessToken: 'fake-token' })),
+};
 
 describe('LoginPage', () => {
   let component: LoginPage;
   let fixture: ComponentFixture<LoginPage>;
 
   beforeEach(async () => {
+    authFacadeMock.login.mockReturnValue(of({ accessToken: 'fake-token' }));
+
     await TestBed.configureTestingModule({
       imports: [LoginPage],
-      providers: [provideRouter([])],
+      providers: [provideRouter([]), { provide: AuthFacade, useValue: authFacadeMock }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginPage);
@@ -71,15 +80,14 @@ describe('LoginPage', () => {
   });
 
   it('should render the app logo with correct alt text', () => {
-    const img = fixture.nativeElement.querySelector('img');
-    expect(img).not.toBeNull();
-    expect(img.alt).toBe(APP.name);
+    const imgs = Array.from(fixture.nativeElement.querySelectorAll('img')) as HTMLImageElement[];
+    const logo = imgs.find(img => img.alt === APP.name);
+    expect(logo).not.toBeUndefined();
   });
 
   // Tab component
   it('should render the custom-tabs component', () => {
-    const tabs = fixture.nativeElement.querySelector('app-custom-tabs');
-    expect(tabs).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('app-custom-tabs')).not.toBeNull();
   });
 
   // Mode switching

@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { BusinessRegistrazionePage } from './business-registrazione.page';
+import { CardStatusComponent, CardMinimalComponent } from '@ui/custom-card/card-variants.component';
 import {
   BUSINESS_REGISTRAZIONE_STEPS,
   BUSINESS_REGISTRAZIONE_REQUIREMENTS,
@@ -73,14 +75,13 @@ describe('BusinessRegistrazionePage', () => {
   });
 
   it('should render one step block per step', () => {
-    const stepBlocks = nativeEl.querySelectorAll('div.rounded-xl.border.border-gray-100.bg-white');
-    expect(stepBlocks.length).toBe(BUSINESS_REGISTRAZIONE_STEPS.length);
+    const cards = fixture.debugElement.queryAll(By.directive(CardStatusComponent));
+    expect(cards.length).toBe(BUSINESS_REGISTRAZIONE_STEPS.length);
   });
 
   it('should render each step number badge', () => {
-    const badges = Array.from(nativeEl.querySelectorAll('div.bg-blue-600.rounded-full'));
-    const numbers = badges.map(b => Number.parseInt(b.textContent?.trim() ?? '0', 10));
-    BUSINESS_REGISTRAZIONE_STEPS.forEach(s => expect(numbers).toContain(s.number));
+    const allText = nativeEl.textContent ?? '';
+    BUSINESS_REGISTRAZIONE_STEPS.forEach(s => expect(allText).toContain(s.number.toString()));
   });
 
   it('should render each step title', () => {
@@ -154,8 +155,8 @@ describe('BusinessRegistrazionePage', () => {
       r => r.forType === 'collettivo' || r.forType === 'entrambi',
     ).length;
     const totalExpected = azCount + colCount;
-    const dots = nativeEl.querySelectorAll('div.bg-blue-100.rounded-full');
-    expect(dots.length).toBe(totalExpected);
+    const cards = fixture.debugElement.queryAll(By.directive(CardMinimalComponent));
+    expect(cards.length).toBe(totalExpected);
   });
 
   it('should render the requirements section with bg-gray-50', () => {
@@ -195,14 +196,15 @@ describe('BusinessRegistrazionePage', () => {
     expect(link).not.toBeNull();
   });
 
-  it('should set correct mailto href on the CTA link', () => {
+  // Il template usa mode="link-internal" href="/contatti?tab=organization"
+  it('should set correct href on the CTA link', () => {
     const link = nativeEl.querySelector('section.bg-blue-600 a');
-    expect(link?.getAttribute('href')).toContain('mailto:business@ohmyuniversity.it');
+    expect(link?.getAttribute('href')).toContain('/contatti');
   });
 
-  it('should include subject in mailto href', () => {
+  it('should include tab=organization in the CTA href', () => {
     const link = nativeEl.querySelector('section.bg-blue-600 a');
-    expect(link?.getAttribute('href')).toContain('subject=');
+    expect(link?.getAttribute('href')).toContain('tab=organization');
   });
 
   it('should render the CTA link text', () => {
@@ -214,10 +216,11 @@ describe('BusinessRegistrazionePage', () => {
     expect(nativeEl.textContent).toContain('business@ohmyuniversity.it');
   });
 
+  // L'email è resa via app-custom-email, non un <span> diretto
   it('should render the email with text-white font-medium styling', () => {
-    const emailSpan = nativeEl.querySelector('section.bg-blue-600 span.text-white.font-medium');
-    expect(emailSpan).not.toBeNull();
-    expect(emailSpan?.textContent?.trim()).toBe('business@ohmyuniversity.it');
+    const emailEl = nativeEl.querySelector('section.bg-blue-600 app-custom-email');
+    expect(emailEl).not.toBeNull();
+    expect(nativeEl.textContent).toContain('business@ohmyuniversity.it');
   });
 
   it('should render CTA heading in text-white', () => {

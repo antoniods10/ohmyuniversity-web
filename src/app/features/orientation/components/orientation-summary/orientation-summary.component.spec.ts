@@ -4,9 +4,9 @@ import { By } from '@angular/platform-browser';
 import { OrientationSummaryComponent } from './orientation-summary.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import {
-  OrientationStateService,
   SavedAnswer,
-} from '@orientation/application/state/orientation.state';
+  OrientationStateService,
+} from 'src/app/core/application/state/orientation/orientation.state';
 import { ORIENTATION_TOPICS } from '@constants';
 import { InlineQuestion } from '@types';
 

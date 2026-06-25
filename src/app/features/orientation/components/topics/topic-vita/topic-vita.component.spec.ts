@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { TopicVitaComponent } from './topic-vita.component';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
-import { OrientationStateService } from '@orientation/application/state/orientation.state';
+import { OrientationStateService } from 'src/app/core/application/state/orientation/orientation.state';
 import { ToastService } from '@ui/custom-toast/toast.service';
 import { VITA_TIMETABLE_TIPS, VITA_STUDY_TIPS } from '@constants';
 
@@ -15,7 +15,10 @@ if (!Element.prototype.scrollIntoView) {
 describe('TopicVitaComponent', () => {
   let component: TopicVitaComponent;
   let fixture: ComponentFixture<TopicVitaComponent>;
-  let stateServiceMock: { getAnswer: ReturnType<typeof vi.fn>; saveAnswer: ReturnType<typeof vi.fn> };
+  let stateServiceMock: {
+    getAnswer: ReturnType<typeof vi.fn>;
+    saveAnswer: ReturnType<typeof vi.fn>;
+  };
   let toastServiceMock: { success: ReturnType<typeof vi.fn> };
 
   async function setupComponent(answers: Record<string, string | null> = {}): Promise<void> {

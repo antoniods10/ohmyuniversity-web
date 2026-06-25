@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SbocchiChartComponent } from './sbocchi-chart.component';
 import { ComponentRef } from '@angular/core';
-import { SBOCCHI_CHART_DEFAULT_DATA } from '@constants';
+import { SBOCCHI_CHART_DEFAULT_DATA } from '@shared/constants';
 
 describe('SbocchiChartComponent', () => {
   let component: SbocchiChartComponent;

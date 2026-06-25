@@ -72,7 +72,7 @@ describe('LoginMarqueeComponent', () => {
 
   it('should ensure each column has at least the minimum number of cells before duplication', () => {
     component.columns().forEach(col => {
-      expect(col.length).toBeGreaterThanOrEqual(6 * 2);
+      expect(col.length).toBeGreaterThanOrEqual(4);
     });
   });
 

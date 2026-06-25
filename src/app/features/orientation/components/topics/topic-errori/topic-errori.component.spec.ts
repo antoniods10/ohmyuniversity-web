@@ -5,7 +5,7 @@ import { TopicErroriComponent } from './topic-errori.component';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
-import { OrientationStateService } from '@orientation/application/state/orientation.state';
+import { OrientationStateService } from 'src/app/core/application/state/orientation/orientation.state';
 import { ToastService } from '@ui/custom-toast/toast.service';
 import { COMMON_MISTAKES } from '@constants';
 
@@ -16,7 +16,10 @@ if (!Element.prototype.scrollIntoView) {
 describe('TopicErroriComponent', () => {
   let component: TopicErroriComponent;
   let fixture: ComponentFixture<TopicErroriComponent>;
-  let stateServiceMock: { getAnswer: ReturnType<typeof vi.fn>; saveAnswer: ReturnType<typeof vi.fn> };
+  let stateServiceMock: {
+    getAnswer: ReturnType<typeof vi.fn>;
+    saveAnswer: ReturnType<typeof vi.fn>;
+  };
   let toastServiceMock: { success: ReturnType<typeof vi.fn> };
 
   async function setupComponent(answers: Record<string, string | null> = {}): Promise<void> {

@@ -1,6 +1,6 @@
 import { Component, input, AfterViewInit, ElementRef, ViewChild, OnChanges } from '@angular/core';
-import { SBOCCHI_CHART_DEFAULT_DATA } from '@constants';
-import { CareerChartDataPoint } from '@types';
+import { SBOCCHI_CHART_DEFAULT_DATA } from '@shared/constants';
+import { CareerChartDataPoint } from '@shared/types';
 
 @Component({
   selector: 'app-sbocchi-chart',

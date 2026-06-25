@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CfuChartComponent } from './cfu-chart.component';
 import { ComponentRef } from '@angular/core';
-import { CFU_CHART_DEFAULT_DATA } from '@constants';
+import { CFU_CHART_DEFAULT_DATA } from '@shared/constants';
 
 describe('CfuChartComponent', () => {
   let component: CfuChartComponent;

@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { TopicCorsoComponent } from './topic-corso.component';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
-import { OrientationStateService } from '@orientation/application/state/orientation.state';
+import { OrientationStateService } from 'src/app/core/application/state/orientation/orientation.state';
 import { ToastService } from '@ui/custom-toast/toast.service';
 import { STUDY_AREA_TIPS } from '@constants';
 
@@ -15,7 +15,10 @@ if (!Element.prototype.scrollIntoView) {
 describe('TopicCorsoComponent', () => {
   let component: TopicCorsoComponent;
   let fixture: ComponentFixture<TopicCorsoComponent>;
-  let stateServiceMock: { getAnswer: ReturnType<typeof vi.fn>; saveAnswer: ReturnType<typeof vi.fn> };
+  let stateServiceMock: {
+    getAnswer: ReturnType<typeof vi.fn>;
+    saveAnswer: ReturnType<typeof vi.fn>;
+  };
   let toastServiceMock: { success: ReturnType<typeof vi.fn> };
 
   async function setupComponent(initialAnswer: string | null = null): Promise<void> {
@@ -176,10 +179,9 @@ describe('TopicCorsoComponent', () => {
 
       component.onSelect(option.value);
 
-      expect(toastServiceMock.success).toHaveBeenCalledWith(
-        `Area selezionata: ${option.label}`,
-        { duration: 3000 },
-      );
+      expect(toastServiceMock.success).toHaveBeenCalledWith(`Area selezionata: ${option.label}`, {
+        duration: 3000,
+      });
     });
   });
 

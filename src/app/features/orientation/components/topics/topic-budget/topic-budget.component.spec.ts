@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TopicBudgetComponent } from './topic-budget.component';
-import { OrientationStateService } from '@orientation/application/state/orientation.state';
+import { OrientationStateService } from 'src/app/core/application/state/orientation/orientation.state';
 import { ToastService } from '@ui/custom-toast/toast.service';
 
 if (!Element.prototype.scrollIntoView) {
@@ -17,7 +17,6 @@ describe('TopicBudgetComponent', () => {
   };
   let toastServiceMock: { success: ReturnType<typeof vi.fn> };
 
-  /** (Re)configures the TestBed with a fresh component instance and the given initial answer */
   async function setupComponent(initialAnswer: string | null = null): Promise<void> {
     TestBed.resetTestingModule();
 

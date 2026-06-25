@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { BusinessCollettiviPage } from './business-collettivi.page';
+import { BusinessHeroComponent } from '../../components/business-hero/business-hero.component';
+import { BusinessCtaComponent } from '../../components/business-cta/business-cta.component';
+import { CardSimpleComponent, CardMinimalComponent } from '@ui/custom-card/card-variants.component';
 import { USE_CASES, VANTAGGI } from '@constants';
 
 describe('BusinessCollettiviPage', () => {
@@ -42,8 +46,7 @@ describe('BusinessCollettiviPage', () => {
   });
 
   it('should render app-business-hero component', () => {
-    const hero = nativeEl.querySelector('app-business-hero');
-    expect(hero).not.toBeNull();
+    expect(nativeEl.querySelector('app-business-hero')).not.toBeNull();
   });
 
   it('should pass correct badge to app-business-hero', () => {
@@ -57,13 +60,14 @@ describe('BusinessCollettiviPage', () => {
   });
 
   it('should pass correct subtitle to app-business-hero', () => {
-    const hero = nativeEl.querySelector('app-business-hero');
-    expect(hero?.getAttribute('subtitle')).toContain('non è solo per le aziende');
+    const hero = fixture.debugElement.query(By.directive(BusinessHeroComponent));
+    expect((hero.componentInstance as BusinessHeroComponent).subtitle()).toContain(
+      'non è solo per le aziende',
+    );
   });
 
   it('should render app-business-cta component', () => {
-    const cta = nativeEl.querySelector('app-business-cta');
-    expect(cta).not.toBeNull();
+    expect(nativeEl.querySelector('app-business-cta')).not.toBeNull();
   });
 
   it('should pass correct badge to app-business-cta', () => {
@@ -72,8 +76,10 @@ describe('BusinessCollettiviPage', () => {
   });
 
   it('should pass correct title to app-business-cta', () => {
-    const cta = nativeEl.querySelector('app-business-cta');
-    expect(cta?.getAttribute('title')).toContain('collettivo su OhMyUniversity');
+    const cta = fixture.debugElement.query(By.directive(BusinessCtaComponent));
+    expect((cta.componentInstance as BusinessCtaComponent).title()).toContain(
+      'collettivo su OhMyUniversity',
+    );
   });
 
   it('should pass correct primaryLabel to app-business-cta', () => {
@@ -97,7 +103,7 @@ describe('BusinessCollettiviPage', () => {
   });
 
   it('should render one card per use case', () => {
-    const cards = nativeEl.querySelectorAll('div.rounded-xl.border.border-gray-100');
+    const cards = fixture.debugElement.queryAll(By.directive(CardSimpleComponent));
     expect(cards.length).toBe(USE_CASES.length);
   });
 
@@ -134,8 +140,8 @@ describe('BusinessCollettiviPage', () => {
   });
 
   it('should render one list item per vantaggio', () => {
-    const items = nativeEl.querySelectorAll('li');
-    expect(items.length).toBe(VANTAGGI.length);
+    const cards = fixture.debugElement.queryAll(By.directive(CardMinimalComponent));
+    expect(cards.length).toBe(VANTAGGI.length);
   });
 
   it('should render each vantaggio text', () => {
@@ -144,8 +150,11 @@ describe('BusinessCollettiviPage', () => {
   });
 
   it('should render a checkmark icon for each vantaggio', () => {
-    const icons = nativeEl.querySelectorAll('li svg');
-    expect(icons.length).toBe(VANTAGGI.length);
+    const cards = fixture.debugElement
+      .queryAll(By.directive(CardMinimalComponent))
+      .map(de => de.componentInstance as CardMinimalComponent);
+    expect(cards.length).toBe(VANTAGGI.length);
+    cards.forEach(c => expect(c.icon).toBeTruthy());
   });
 
   it('should render each checkmark icon with text-blue-600 class', () => {
@@ -154,47 +163,38 @@ describe('BusinessCollettiviPage', () => {
   });
 
   it('should render the discount callout box', () => {
-    const callout = nativeEl.querySelector('div.bg-amber-50');
-    expect(callout).not.toBeNull();
+    expect(nativeEl.querySelector('div.bg-amber-50')).not.toBeNull();
   });
 
   it('should render the callout amber border', () => {
-    const callout = nativeEl.querySelector('div.border-amber-200');
-    expect(callout).not.toBeNull();
+    expect(nativeEl.querySelector('div.border-amber-200')).not.toBeNull();
   });
 
   it('should render the callout heading about collettivi studenteschi', () => {
-    const allText = nativeEl.textContent ?? '';
-    expect(allText).toContain('Sei un collettivo studentesco universitario?');
+    expect(nativeEl.textContent).toContain('Sei un collettivo studentesco universitario?');
   });
 
   it('should render the 40% discount mention in the callout', () => {
-    const allText = nativeEl.textContent ?? '';
-    expect(allText).toContain('40%');
+    expect(nativeEl.textContent).toContain('40%');
   });
 
   it('should render the onboarding affiliation mention in the callout', () => {
-    const allText = nativeEl.textContent ?? '';
-    expect(allText).toContain('affiliazione universitaria');
+    expect(nativeEl.textContent).toContain('affiliazione universitaria');
   });
 
   it('should render callout title with text-amber-800 class', () => {
-    const title = nativeEl.querySelector('p.text-amber-800');
-    expect(title).not.toBeNull();
+    expect(nativeEl.querySelector('p.text-amber-800')).not.toBeNull();
   });
 
   it('should render callout body with text-amber-700 class', () => {
-    const body = nativeEl.querySelector('p.text-amber-700');
-    expect(body).not.toBeNull();
+    expect(nativeEl.querySelector('p.text-amber-700')).not.toBeNull();
   });
 
   it('should render use cases section with bg-white', () => {
-    const section = nativeEl.querySelector('section.bg-white');
-    expect(section).not.toBeNull();
+    expect(nativeEl.querySelector('section.bg-white')).not.toBeNull();
   });
 
   it('should render vantaggi section with bg-gray-50', () => {
-    const section = nativeEl.querySelector('section.bg-gray-50');
-    expect(section).not.toBeNull();
+    expect(nativeEl.querySelector('section.bg-gray-50')).not.toBeNull();
   });
 });

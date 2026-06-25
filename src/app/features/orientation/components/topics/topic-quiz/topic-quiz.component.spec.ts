@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { TopicQuizComponent } from './topic-quiz.component';
 import { OrientationNavComponent } from '../../orientation-nav/orientation-nav.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
-import { OrientationStateService } from '@orientation/application/state/orientation.state';
+import { OrientationStateService } from 'src/app/core/application/state/orientation/orientation.state';
 import { ToastService } from '@ui/custom-toast/toast.service';
 import { TOLC_TESTS, ACCESS_TIPS } from '@constants';
 
@@ -65,7 +65,9 @@ describe('TopicQuizComponent', () => {
   });
 
   it('should render one test card per TOLC_TESTS entry', () => {
-    const testCards = fixture.nativeElement.querySelectorAll('.rounded-xl.border.border-gray-100.bg-gray-50.p-4');
+    const testCards = fixture.nativeElement.querySelectorAll(
+      '.rounded-xl.border.border-gray-100.bg-gray-50.p-4',
+    );
     expect(testCards.length).toBeGreaterThanOrEqual(TOLC_TESTS.length);
   });
 

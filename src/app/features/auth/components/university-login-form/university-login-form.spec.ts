@@ -3,10 +3,16 @@ import { UniversityLoginFormComponent } from './university-login-form.component'
 import { provideRouter, Router } from '@angular/router';
 import { ToastService } from '@ui/custom-toast/toast.service';
 import { UNIVERSITIES, APP } from '@constants';
+import { AuthFacade } from 'src/app/core/application/facades/auth.facade';
+import { of } from 'rxjs';
 import { vi } from 'vitest';
 
 const UNI_WITH_DOMAINS = UNIVERSITIES.find(u => u.emailDomains.length > 0)!;
 const UNI_WITHOUT_DOMAINS = UNIVERSITIES.find(u => u.emailDomains.length === 0)!;
+
+const authFacadeMock = {
+  login: vi.fn(() => of({ accessToken: 'fake-token' })),
+};
 
 describe('UniversityLoginFormComponent', () => {
   let component: UniversityLoginFormComponent;
@@ -14,9 +20,11 @@ describe('UniversityLoginFormComponent', () => {
   let toastService: ToastService;
 
   beforeEach(async () => {
+    authFacadeMock.login.mockReturnValue(of({ accessToken: 'fake-token' }));
+
     await TestBed.configureTestingModule({
       imports: [UniversityLoginFormComponent],
-      providers: [provideRouter([])],
+      providers: [provideRouter([]), { provide: AuthFacade, useValue: authFacadeMock }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(UniversityLoginFormComponent);

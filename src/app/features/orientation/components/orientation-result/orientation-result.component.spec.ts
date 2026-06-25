@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { OrientationResultComponent } from './orientation-result.component';
-import { OrientationStateService } from '@orientation/application/state/orientation.state';
-import { OrientationResult } from '@orientation/application/state/orientation-scoring';
+import { OrientationResult } from 'src/app/core/application/state/orientation/orientation-scoring';
+import { OrientationStateService } from 'src/app/core/application/state/orientation/orientation.state';
 
 const SAMPLE_UNIVERSITY = {
   id: 'polimi',
@@ -32,7 +32,9 @@ const SAMPLE_RESULT: OrientationResult = {
   awarenessTips: [{ titolo: 'Hai le idee abbastanza chiare', testo: 'Testo di esempio.' }],
   estimatedMonthlyBudget: '750-1.050 €/mese (affitto + vitto + trasporti)',
   geoPreferenceLabel: 'Nord - grandi città',
-  budgetTips: [{ titolo: 'Il tuo budget è nella media per questa zona', testo: 'Testo di esempio.' }],
+  budgetTips: [
+    { titolo: 'Il tuo budget è nella media per questa zona', testo: 'Testo di esempio.' },
+  ],
 };
 
 describe('OrientationResultComponent', () => {
