@@ -12,8 +12,8 @@ import type {
 import { DashboardHeaderComponent } from '@ui/dashboard-header/dashboard-header.component';
 import { DashboardContainerComponent } from '@ui/dashboard-container/dashboard-container.component';
 import { SelectOption } from '@ui/custom-input/custom-input.component';
-import { MediaResponse } from 'src/app/core/domain/models/career/media.model';
-import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
+import { GradesResponse } from 'src/app/core/domain/models/career/grades.model';
+import { CareerFacade } from 'src/app/core/application/facades/career.facade';
 
 const MAX_GRADE = 30;
 const GRADUATION_BASE_MAX = 110;
@@ -32,12 +32,12 @@ const AVERAGE_DECIMALS = 2;
   templateUrl: './career.page.html',
 })
 export class CareerPage implements OnInit {
-  private readonly carriera = inject(CarrieraFacade);
+  private readonly carriera = inject(CareerFacade);
 
   readonly activeFilter = signal<ExamFilter>('ALL');
   readonly exams = signal<Exam[]>([]);
   readonly yearFilter = signal<number | 'ALL' | 'ELECTIVE'>('ALL');
-  readonly media = signal<MediaResponse | null>(null);
+  readonly media = signal<GradesResponse | null>(null);
 
   readonly loading = signal(true);
   readonly error = signal(false);
@@ -49,7 +49,7 @@ export class CareerPage implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.carriera.getLibretto().subscribe({
+    this.carriera.getTranscript().subscribe({
       next: exams => {
         this.exams.set(exams);
         this.loading.set(false);
@@ -60,7 +60,7 @@ export class CareerPage implements OnInit {
       },
     });
 
-    this.carriera.getMedia().subscribe({
+    this.carriera.getGrades().subscribe({
       next: media => this.media.set(media),
       error: () => {},
     });

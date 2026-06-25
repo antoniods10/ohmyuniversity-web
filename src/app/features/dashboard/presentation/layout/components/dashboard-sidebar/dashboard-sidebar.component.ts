@@ -20,7 +20,7 @@ import {
 } from '@ui/avatar-profile-panel/avatar-profile-panel.component';
 import { AuthFacade } from 'src/app/core/application/facades/auth.facade';
 import { forkJoin } from 'rxjs';
-import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
+import { CareerFacade } from 'src/app/core/application/facades/career.facade';
 
 @Component({
   selector: 'app-dashboard-sidebar',
@@ -40,7 +40,7 @@ export class DashboardSidebarComponent implements OnInit {
 
   private readonly router = inject(Router);
   private readonly auth = inject(AuthFacade);
-  private readonly carriera = inject(CarrieraFacade);
+  private readonly carriera = inject(CareerFacade);
 
   readonly open = input.required<boolean>();
   readonly toggleSidebar = output<void>();
@@ -103,9 +103,9 @@ export class DashboardSidebarComponent implements OnInit {
 
     forkJoin({
       badge: this.carriera.getBadge(),
-      profilo: this.carriera.getProfilo(),
-      info: this.carriera.getCarrieraInfo(),
-      foto: this.carriera.getFoto(),
+      profilo: this.carriera.getPersona(),
+      info: this.carriera.getCareerInfo(),
+      foto: this.carriera.getAvatar(),
     }).subscribe({
       next: ({ badge, profilo, info, foto }) => {
         const fotoUrl = URL.createObjectURL(foto);

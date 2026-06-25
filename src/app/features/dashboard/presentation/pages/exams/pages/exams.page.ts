@@ -5,14 +5,11 @@ import { CustomTabsComponent, TabItem } from '@ui/custom-tab/custom-tab.componen
 import { ToastService } from '@ui/custom-toast/toast.service';
 import { LucideCalendarDays, LucideClipboardList, LucideSparkles } from '@lucide/angular';
 import { Exam, BookingExamStatus } from '@shared/types/dashboard/dashboard-exams.types';
-import {
-  AppelloLibretto,
-  IscrizioneAppello,
-} from 'src/app/core/domain/models/career/appelli.model';
+import { BookableSession, Booking } from 'src/app/core/domain/models/career/sessions.model';
 import { ExamListComponent } from '../components/exam-list/exam-list.component';
 import { QuestionnaireListComponent } from '../components/questionnaire-list/questionnaire-list.component';
 import { forkJoin } from 'rxjs';
-import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
+import { CareerFacade } from 'src/app/core/application/facades/career.facade';
 
 @Component({
   selector: 'app-exams',
@@ -28,7 +25,7 @@ import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade
 })
 export class ExamsPage implements OnInit {
   private readonly toast = inject(ToastService);
-  private readonly carriera = inject(CarrieraFacade);
+  private readonly carriera = inject(CareerFacade);
 
   readonly tabs: TabItem[] = [
     { id: 'exams', label: 'Appelli', icon: LucideCalendarDays },
@@ -47,10 +44,10 @@ export class ExamsPage implements OnInit {
 
   ngOnInit(): void {
     forkJoin({
-      appelli: this.carriera.getAppelliPrenotabili(),
-      prenotazioni: this.carriera.getPrenotazioniLibretto(),
-      piano: this.carriera.getPiano(),
-      suggeriti: this.carriera.getEsamiSuggeriti(),
+      appelli: this.carriera.getBookableSessions(),
+      prenotazioni: this.carriera.getBookings(),
+      piano: this.carriera.getStudyPlan(),
+      suggeriti: this.carriera.getRecommendations(),
     }).subscribe({
       next: ({ appelli, prenotazioni, piano, suggeriti }) => {
         const pianoMap = new Map<string, { cfu: number; annoCorso: number }>();
@@ -74,7 +71,7 @@ export class ExamsPage implements OnInit {
         this.exams.set([...mapAppelli, ...prenotatiExtra]);
         this.examsLoading.set(false);
 
-        const appelliMap = new Map<string, AppelloLibretto>();
+        const appelliMap = new Map<string, BookableSession>();
         for (const a of appelli.appelli) {
           if (a.adCod) appelliMap.set(a.adCod, a);
         }
@@ -134,9 +131,9 @@ export class ExamsPage implements OnInit {
   }
 
   private mapAppello(
-    a: AppelloLibretto,
+    a: BookableSession,
     pianoMap: Map<string, { cfu: number; annoCorso: number }>,
-    prenotazioniMap: Map<number, IscrizioneAppello>,
+    prenotazioniMap: Map<number, Booking>,
     prenotatiAdsceIds: Set<number>,
   ): Exam {
     const oggi = new Date();
@@ -200,7 +197,7 @@ export class ExamsPage implements OnInit {
   }
 
   private mapIscrizione(
-    p: IscrizioneAppello,
+    p: Booking,
     pianoMap: Map<string, { cfu: number; annoCorso: number }>,
   ): Exam {
     const pianoInfo = pianoMap.get(p.adStuCod) ?? { cfu: 0, annoCorso: 0 };

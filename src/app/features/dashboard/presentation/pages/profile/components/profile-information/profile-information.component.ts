@@ -8,7 +8,7 @@ import {
   LucideShield,
 } from '@lucide/angular';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
-import { ProfiloResponse } from '../../../../../../../core/domain/models/career/profilo.model';
+import { PersonaResponse } from '../../../../../../../core/domain/models/career/persona.model';
 
 @Component({
   selector: 'app-profile-information',
@@ -17,7 +17,7 @@ import { ProfiloResponse } from '../../../../../../../core/domain/models/career/
   templateUrl: './profile-information.component.html',
 })
 export class ProfileInformationComponent {
-  readonly profilo = input.required<ProfiloResponse>();
+  readonly profilo = input.required<PersonaResponse>();
 
   readonly iconUser = LucideUser;
   readonly iconMail = LucideMail;

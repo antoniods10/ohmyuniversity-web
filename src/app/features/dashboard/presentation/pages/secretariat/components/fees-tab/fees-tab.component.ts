@@ -13,9 +13,9 @@ import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
 import { APP } from '@shared/constants';
 import { FeeStatus } from '@shared/types/dashboard/dashboard-secretariat.types';
 import {
-  Addebito,
-  TasseResponse,
-} from '../../../../../../../core/domain/models/career/tasse.model';
+  FeeStatusResponse,
+  Charge,
+} from '../../../../../../../core/domain/models/career/fees-status.model';
 
 @Component({
   selector: 'app-fees-tab',
@@ -24,7 +24,7 @@ import {
   templateUrl: './fees-tab.component.html',
 })
 export class FeesTabComponent {
-  readonly tasse = input.required<TasseResponse | null>();
+  readonly tasse = input.required<FeeStatusResponse | null>();
   readonly loading = input.required<boolean>();
   readonly error = input.required<boolean>();
   readonly hasCarriera = input.required<boolean>();
@@ -48,7 +48,7 @@ export class FeesTabComponent {
       .reduce((acc, a) => acc + (a.importoVoce ?? 0), 0),
   );
 
-  addebitoStatus(a: Addebito): FeeStatus {
+  addebitoStatus(a: Charge): FeeStatus {
     if (a.pagatoFlg === 1) return 'paid';
     if (a.scadutoFlg === 1 || a.fattScadutaFlg === 1) return 'overdue';
     return 'pending';

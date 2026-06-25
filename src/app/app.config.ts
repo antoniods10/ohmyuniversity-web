@@ -3,9 +3,60 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+
+// Repositories — domain
 import { AuthRepository } from './core/domain/repositories/auth.repository';
+import { CalendarRepository } from './core/domain/repositories/calendar.repository';
+import { TimetableRepository } from './core/domain/repositories/timetable.repository';
+import { ProfileRepository } from './core/domain/repositories/profile.repository';
+import { CareerRepository } from './core/domain/repositories/career.repository';
+import { ExamsRepository } from './core/domain/repositories/exams.repository';
+import { FeesRepository } from './core/domain/repositories/fees.repository';
+
+// Repositories — infrastructure
 import { AuthApiRepository } from './core/infrastructure/api/auth-api.repository';
+import { AgendaApiRepository } from './core/infrastructure/api/agenda-api.repository';
+import { TimetableApiRepository } from './core/infrastructure/api/timetable-api.repository';
+import { ProfileApiRepository } from './core/infrastructure/api/profile-api.repository';
+import { CareerApiRepository } from './core/infrastructure/api/career-api.repository';
+import { ExamsApiRepository } from './core/infrastructure/api/exams-api.repository';
+import { FeesApiRepository } from './core/infrastructure/api/fees-api.repository';
+
+// Facades
 import { AuthFacade } from './core/application/facades/auth.facade';
+import { CareerFacade } from './core/application/facades/career.facade';
+import { FeesFacade } from './core/application/facades/fees.facade';
+import { CalendarFacade } from './core/application/facades/calendar.facade';
+import { TimetableFacade } from './core/application/facades/timetable.facade';
+
+// Auth usecases
+import { LoginUseCase } from './core/application/usecases/auth/login.usecase';
+import { LogoutUseCase } from './core/application/usecases/auth/logout.usecase';
+import { RefreshTokenUseCase } from './core/application/usecases/auth/refresh-token.usecase';
+import { SwitchCarrieraUseCase } from './core/application/usecases/career/switch-carriera.usecase';
+
+// Profile usecases
+import { GetPersonaUseCase } from './core/application/usecases/profile/get-persona.usecase';
+import { GetCareerInfoUseCase } from './core/application/usecases/profile/get-career-info.usecase';
+import { GetAvatarUseCase } from './core/application/usecases/profile/get-avatar.usecase';
+import { GetBadgeUseCase } from './core/application/usecases/profile/get-badge.usecase';
+
+// Career usecases
+import { GetTranscriptUseCase } from './core/application/usecases/career/get-transcript.usecase';
+import { GetGradesUseCase } from './core/application/usecases/career/get-grades.usecase';
+import { GetStudyPlanUseCase } from './core/application/usecases/career/get-study-plan.usecase';
+import { GetExamHistoryUseCase } from './core/application/usecases/career/get-exam-history.usecase';
+import { GetRecommendationsUseCase } from './core/application/usecases/career/get-recommendations.usecase';
+
+// Exams usecases
+import { GetBookableSessionsUseCase } from './core/application/usecases/exams/get-bookable-sessions.usecase';
+import { GetBookingsUseCase } from './core/application/usecases/exams/get-bookings.usecase';
+import { GetLegacyBookingsUseCase } from './core/application/usecases/exams/get-legacy-bookings.usecase';
+import { GetSurveysUseCase } from './core/application/usecases/exams/get-surveys.usecase';
+
+// Fees usecases
+import { GetFeesStatusUseCase } from './core/application/usecases/fees/get-fees-status.usecase';
+
 import {
   provideLucideIcons,
   LucideLayoutDashboard,
@@ -85,33 +136,6 @@ import {
   LucideCalculator,
   LucideHourglass,
 } from '@lucide/angular';
-import { CarrieraRepository } from './core/domain/repositories/carriera.repository';
-import { CarrieraApiRepository } from './core/infrastructure/api/carriera-api.repository';
-import { CalendarFacade } from './core/application/facades/calendar.facade';
-import { CalendarRepository } from './core/domain/repositories/calendar.repository';
-import { CalendarApiRepository } from './core/infrastructure/api/calendar-api.repository';
-import { TimetableRepository } from './core/domain/repositories/timetable.repository';
-import { TimetableApiRepository } from './core/infrastructure/api/timetable-api.repository';
-import { CarrieraFacade } from './core/application/facades/carriera.facade';
-import { TimetableFacade } from './core/application/facades/timetable.facade';
-import { LoginUseCase } from './core/application/usecases/auth/login.usecase';
-import { LogoutUseCase } from './core/application/usecases/auth/logout.usecase';
-import { RefreshTokenUseCase } from './core/application/usecases/auth/refresh-token.usecase';
-import { GetTasseUseCase } from './core/application/usecases/fees/get-tasse.usecase';
-import { GetAppelliPrenotabiliUseCase } from './core/application/usecases/career/get-appelli-prenotabili.usecase';
-import { GetBadgeUseCase } from './core/application/usecases/career/get-badge.usecase';
-import { GetCarrieraInfoUseCase } from './core/application/usecases/career/get-carriera-info.usecase';
-import { GetEsamiSuggeриtiUseCase } from './core/application/usecases/career/get-esami-suggeriti.usecase';
-import { GetFotoUseCase } from './core/application/usecases/career/get-foto.usecase';
-import { GetLibrettoUseCase } from './core/application/usecases/career/get-libretto.usecase';
-import { GetMediaUseCase } from './core/application/usecases/career/get-media.usecase';
-import { GetPianoUseCase } from './core/application/usecases/career/get-piano.usecase';
-import { GetPrenotazioniLibrettoUseCase } from './core/application/usecases/career/get-prenotazioni-libretto.usecase';
-import { GetPrenotazioniUseCase } from './core/application/usecases/career/get-prenotazioni.usecase';
-import { GetProfiloUseCase } from './core/application/usecases/career/get-profilo.usecase';
-import { GetQuestionariUseCase } from './core/application/usecases/career/get-questionari.usecase';
-import { GetStoricoEsamiUseCase } from './core/application/usecases/career/get-storico-esami.usecase';
-import { SwitchCarrieraUseCase } from './core/application/usecases/career/switch-carriera.usecase';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -119,33 +143,49 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withInterceptors([authInterceptor])),
 
-    // Auth
+    // Repository bindings
     { provide: AuthRepository, useClass: AuthApiRepository },
-    { provide: CarrieraRepository, useClass: CarrieraApiRepository },
-    { provide: CalendarRepository, useClass: CalendarApiRepository },
+    { provide: CalendarRepository, useClass: AgendaApiRepository },
     { provide: TimetableRepository, useClass: TimetableApiRepository },
+    { provide: ProfileRepository, useClass: ProfileApiRepository },
+    { provide: CareerRepository, useClass: CareerApiRepository },
+    { provide: ExamsRepository, useClass: ExamsApiRepository },
+    { provide: FeesRepository, useClass: FeesApiRepository },
+
+    // Facades
     AuthFacade,
+    CareerFacade,
+    FeesFacade,
+    CalendarFacade,
+    TimetableFacade,
+
+    // Auth
     LoginUseCase,
     LogoutUseCase,
     RefreshTokenUseCase,
-    CarrieraFacade,
-    GetTasseUseCase,
-    GetLibrettoUseCase,
-    GetMediaUseCase,
-    GetPianoUseCase,
-    GetPrenotazioniUseCase,
-    GetBadgeUseCase,
-    GetEsamiSuggeриtiUseCase,
-    GetAppelliPrenotabiliUseCase,
-    GetPrenotazioniLibrettoUseCase,
-    GetStoricoEsamiUseCase,
-    GetQuestionariUseCase,
-    GetProfiloUseCase,
-    GetCarrieraInfoUseCase,
-    GetFotoUseCase,
     SwitchCarrieraUseCase,
-    CalendarFacade,
-    TimetableFacade,
+
+    // Profile
+    GetPersonaUseCase,
+    GetCareerInfoUseCase,
+    GetAvatarUseCase,
+    GetBadgeUseCase,
+
+    // Career
+    GetTranscriptUseCase,
+    GetGradesUseCase,
+    GetStudyPlanUseCase,
+    GetExamHistoryUseCase,
+    GetRecommendationsUseCase,
+
+    // Exams
+    GetBookableSessionsUseCase,
+    GetBookingsUseCase,
+    GetLegacyBookingsUseCase,
+    GetSurveysUseCase,
+
+    // Fees
+    GetFeesStatusUseCase,
 
     provideLucideIcons(
       LucideLayoutDashboard,

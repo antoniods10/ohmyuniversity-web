@@ -10,14 +10,14 @@ import {
   LucideGraduationCap,
 } from '@lucide/angular';
 import { AuthFacade } from 'src/app/core/application/facades/auth.facade';
-import { ProfiloResponse } from '../../../../../../core/domain/models/career/profilo.model';
+import { PersonaResponse } from '../../../../../../core/domain/models/career/persona.model';
 import { ProfileHeroComponent } from '../components/profile-hero/profile-hero.component';
 import { ProfileInformationComponent } from '../components/profile-information/profile-information.component';
 import { ProfileSecurityComponent } from '../components/profile-security/profile-security.component';
-import { CarrieraInfoResponse } from '../../../../../../core/domain/models/career/carriera-info.model';
+import { CareerInfoResponse } from '../../../../../../core/domain/models/career/career-info.model';
 import { forkJoin } from 'rxjs';
 import { ProfileCourseComponent } from '../components/profile-course/profile-course.component';
-import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
+import { CareerFacade } from 'src/app/core/application/facades/career.facade';
 
 @Component({
   selector: 'app-profile',
@@ -35,7 +35,7 @@ import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade
   templateUrl: './profile.page.html',
 })
 export class ProfilePage implements OnInit {
-  private readonly carriera = inject(CarrieraFacade);
+  private readonly carriera = inject(CareerFacade);
   private readonly auth = inject(AuthFacade);
 
   readonly lucideAlertTriangle = LucideTriangleAlert;
@@ -55,14 +55,14 @@ export class ProfilePage implements OnInit {
   readonly activeTab = signal<string>('informazioni');
   readonly loading = signal(true);
   readonly error = signal(false);
-  readonly profilo = signal<ProfiloResponse | null>(null);
-  readonly carrieraInfo = signal<CarrieraInfoResponse | null>(null);
+  readonly profilo = signal<PersonaResponse | null>(null);
+  readonly carrieraInfo = signal<CareerInfoResponse | null>(null);
 
   ngOnInit(): void {
     if (this.hasCarriera) {
       forkJoin({
-        profilo: this.carriera.getProfilo(),
-        info: this.carriera.getCarrieraInfo(),
+        profilo: this.carriera.getPersona(),
+        info: this.carriera.getCareerInfo(),
       }).subscribe({
         next: ({ profilo, info }) => {
           this.profilo.set(profilo);
@@ -76,7 +76,7 @@ export class ProfilePage implements OnInit {
       });
     } else {
       console.log('PROFILO - ramo docente, chiamo getProfilo()');
-      this.carriera.getProfilo().subscribe({
+      this.carriera.getPersona().subscribe({
         next: profilo => {
           console.log('PROFILO DOCENTE OK:', profilo);
           this.profilo.set(profilo);

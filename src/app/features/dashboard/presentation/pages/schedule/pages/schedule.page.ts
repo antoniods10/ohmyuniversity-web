@@ -8,7 +8,7 @@ import { MySchedulesComponent } from '../components/my-schedules/my-schedules.co
 import { ScheduleSearchModalComponent } from '../components/schedule-search-modal/schedule-search-modal.component';
 import { AuthFacade } from 'src/app/core/application/facades/auth.facade';
 import { TimetableResponse } from 'src/app/core/domain/models/timetable/timetable.model';
-import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
+import { CareerFacade } from 'src/app/core/application/facades/career.facade';
 import { TimetableFacade } from 'src/app/core/application/facades/timetable.facade';
 import { UNIVERSITY_ID_KEY } from 'src/app/core/application/usecases/auth/login.usecase';
 
@@ -38,7 +38,7 @@ const DEGREE_TYPE_MAP: Record<string, string> = {
 export class SchedulePage implements OnInit {
   private readonly timetable = inject(TimetableFacade);
   private readonly auth = inject(AuthFacade);
-  private readonly carriera = inject(CarrieraFacade);
+  private readonly carriera = inject(CareerFacade);
 
   private readonly searchModal = viewChild.required(ScheduleSearchModalComponent);
 
@@ -60,7 +60,7 @@ export class SchedulePage implements OnInit {
       return;
     }
 
-    this.carriera.getCarrieraInfo().subscribe({
+    this.carriera.getCareerInfo().subscribe({
       next: info => {
         const degreeType = DEGREE_TYPE_MAP[info.tipoCorsoCod ?? ''] ?? 'triennali';
         const departmentId = info.facCod ? this.mapDepartmentId(info.facDes) : undefined;

@@ -15,7 +15,6 @@ import {
   MOCK_SCHOLARSHIPS,
   MOCK_FORM_MODULES,
   MOCK_BANDI,
-  MOCK_FEES,
 } from '@shared/data/mock/secretariat.mock';
 import { Scholarship } from '@shared/types/dashboard/dashboard-secretariat.types';
 import { APP } from '@shared/constants';
@@ -26,8 +25,8 @@ import { ScholarshipsTabComponent } from '../components/scholarships-tab/scholar
 import { FormsTabComponent } from '../components/forms-tab/forms-tab.component';
 import { BandiTabComponent } from '../components/bandi-tab/bandi-tab.component';
 import { FeesTabComponent } from '../components/fees-tab/fees-tab.component';
-import { TasseResponse } from 'src/app/core/domain/models/career/tasse.model';
-import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
+import { FeeStatusResponse } from 'src/app/core/domain/models/career/fees-status.model';
+import { FeesFacade } from 'src/app/core/application/facades/fees.facade';
 
 @Component({
   selector: 'app-secretariat',
@@ -50,12 +49,12 @@ export class SecretariatPage implements OnInit {
   readonly APP = APP;
 
   private readonly toast = inject(ToastService);
-  private readonly carriera = inject(CarrieraFacade);
+  private readonly fees = inject(FeesFacade);
   private readonly auth = inject(AuthFacade);
 
   readonly hasCarriera = this.auth.hasCarriera();
 
-  tasse = signal<TasseResponse | null>(null);
+  tasse = signal<FeeStatusResponse | null>(null);
   tasseLoading = signal(true);
   tasseError = signal(false);
 
@@ -128,7 +127,7 @@ export class SecretariatPage implements OnInit {
   ngOnInit(): void {
     if (!this.hasCarriera) return;
 
-    this.carriera.getTasse().subscribe({
+    this.fees.getStatus().subscribe({
       next: data => {
         this.tasse.set(data);
         this.tasseLoading.set(false);

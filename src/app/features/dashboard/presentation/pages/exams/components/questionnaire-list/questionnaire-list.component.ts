@@ -12,9 +12,9 @@ import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
 import { CustomButtonComponent } from '@ui/custom-button/custom-button.component';
 import { CardStatusComponent } from '@ui/custom-card/card-variants.component';
-import { QuestionarioEsame } from 'src/app/core/domain/models/career/questionari.model';
+import { SurveyExam } from 'src/app/core/domain/models/career/surveys.model';
 import { ToastService } from '@ui/custom-toast/toast.service';
-import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
+import { CareerFacade } from 'src/app/core/application/facades/career.facade';
 
 @Component({
   selector: 'app-questionnaire-list',
@@ -29,7 +29,7 @@ import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade
   templateUrl: './questionnaire-list.component.html',
 })
 export class QuestionnaireListComponent implements OnInit {
-  private readonly carriera = inject(CarrieraFacade);
+  private readonly carriera = inject(CareerFacade);
   private readonly toast = inject(ToastService);
 
   readonly iconClipboard = LucideClipboardList;
@@ -41,11 +41,11 @@ export class QuestionnaireListComponent implements OnInit {
 
   readonly loading = signal(true);
   readonly error = signal(false);
-  readonly daCompilare = signal<QuestionarioEsame[]>([]);
-  readonly compilati = signal<QuestionarioEsame[]>([]);
+  readonly daCompilare = signal<SurveyExam[]>([]);
+  readonly compilati = signal<SurveyExam[]>([]);
 
   ngOnInit(): void {
-    this.carriera.getQuestionari().subscribe({
+    this.carriera.getSurveys().subscribe({
       next: response => {
         this.daCompilare.set(response.daCompilare);
         this.compilati.set(response.compilati);

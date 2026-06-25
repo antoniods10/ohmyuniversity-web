@@ -1,0 +1,34 @@
+export interface PersonaResponse {
+  persId: number;
+  nome: string;
+  cognome: string;
+  codFis: string;
+  dataNascita: string;
+  sesso: string;
+  luogoNascita: string;
+  provinciaNascita: string;
+  cittadinanza: string;
+  statoCivile: string;
+  professione: string;
+  email: string;
+  emailAte: string;
+  emailCertificata: string;
+  cellulare: string;
+  telefono: string;
+  userId: string;
+  indirizzoResidenza: string;
+  capResidenza: string;
+  comuneResidenza: string;
+  provinciaResidenza: string;
+  nazioneResidenza: string;
+  domicilioComeResidenza: boolean;
+  indirizzoDomicilio: string | null;
+  capDomicilio: string | null;
+  comuneDomicilio: string | null;
+  nazioneDomicilio: string | null;
+  emergenzaNome: string;
+  emergenzaCognome: string;
+  emergenzaTelefono: string;
+  emergenzaEmail: string;
+  emergenzaRapporto: string;
+}

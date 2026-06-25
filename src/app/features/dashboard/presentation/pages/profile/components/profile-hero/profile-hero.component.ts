@@ -2,9 +2,9 @@ import { Component, input, inject, OnInit, signal } from '@angular/core';
 import { LucideDynamicIcon, LucideMail, LucidePhone, LucideMapPin } from '@lucide/angular';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomAvatarComponent } from '@ui/custom-avatar/custom-avatar.component';
-import { ProfiloResponse } from '../../../../../../../core/domain/models/career/profilo.model';
+import { PersonaResponse } from '../../../../../../../core/domain/models/career/persona.model';
 import { AuthFacade } from 'src/app/core/application/facades/auth.facade';
-import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade';
+import { CareerFacade } from 'src/app/core/application/facades/career.facade';
 
 @Component({
   selector: 'app-profile-hero',
@@ -13,9 +13,9 @@ import { CarrieraFacade } from 'src/app/core/application/facades/carriera.facade
   templateUrl: './profile-hero.component.html',
 })
 export class ProfileHeroComponent implements OnInit {
-  readonly profilo = input.required<ProfiloResponse>();
+  readonly profilo = input.required<PersonaResponse>();
 
-  private readonly carriera = inject(CarrieraFacade);
+  private readonly carriera = inject(CareerFacade);
   private readonly auth = inject(AuthFacade);
 
   readonly iconMail = LucideMail;
@@ -26,7 +26,7 @@ export class ProfileHeroComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.auth.hasCarriera()) return;
-    this.carriera.getFoto().subscribe({
+    this.carriera.getAvatar().subscribe({
       next: blob => this.fotoUrl.set(URL.createObjectURL(blob)),
       error: () => {},
     });

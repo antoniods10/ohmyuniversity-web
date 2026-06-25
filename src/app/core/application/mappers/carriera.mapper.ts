@@ -1,6 +1,6 @@
 import { Exam } from '@shared/types/dashboard/dashboard-career.types';
-import { RigaLibretto } from 'src/app/core/domain/models/career/libretto.model';
-import { RigaPiano } from 'src/app/core/domain/models/career/piano.model';
+import { TranscriptRow } from 'src/app/core/domain/models/career/transcript.model';
+import { StudyPlanRow } from 'src/app/core/domain/models/career/study-plan.model';
 
 function rigaToExam(
   adCod: string,
@@ -9,7 +9,7 @@ function rigaToExam(
   annoCorso: number,
   tipoInsCod: string,
   superata: boolean,
-  librettoRiga?: RigaLibretto,
+  transcriptRow?: TranscriptRow,
 ): Exam {
   return {
     courseCode: adCod,
@@ -19,7 +19,7 @@ function rigaToExam(
     category: tipoInsCod === 'S' ? 'ELECTIVE' : 'MANDATORY',
     status: superata ? 'PASSED' : 'TO_TAKE',
     grade:
-      librettoRiga?.voto != null ? (librettoRiga.lode ? '30L' : String(librettoRiga.voto)) : '',
+      transcriptRow?.voto != null ? (transcriptRow.lode ? '30L' : String(transcriptRow.voto)) : '',
     simulatedGrade: undefined,
     language: 'N/D',
     period: 'N/D' as any,
@@ -32,23 +32,23 @@ function rigaToExam(
   };
 }
 
-export function mergeToExams(righe: RigaPiano[], libretto: RigaLibretto[]): Exam[] {
-  const librettoByAdsceId = new Map<number, RigaLibretto>();
-  const librettoByAdCod = new Map<string, RigaLibretto>();
-  for (const riga of libretto) {
-    if (riga.adsceId != null) librettoByAdsceId.set(riga.adsceId, riga);
-    librettoByAdCod.set(riga.adCod, riga);
+export function mergeToExams(righe: StudyPlanRow[], libretto: TranscriptRow[]): Exam[] {
+  const librettoByAdsceId = new Map<number, TranscriptRow>();
+  const librettoByAdCod = new Map<string, TranscriptRow>();
+  for (const row of libretto) {
+    if (row.adsceId != null) librettoByAdsceId.set(row.adsceId, row);
+    librettoByAdCod.set(row.adCod, row);
   }
 
   const pianoAdCods = new Set(righe.map(r => r.adCod));
   const result: Exam[] = [];
 
   for (const riga of righe) {
-    const librettoRiga =
+    const transcriptRow =
       (riga.adsceId != null ? librettoByAdsceId.get(riga.adsceId) : undefined) ??
       librettoByAdCod.get(riga.adCod);
 
-    const superata = riga.superata ?? librettoRiga?.superata ?? false;
+    const superata = riga.superata ?? transcriptRow?.superata ?? false;
 
     result.push(
       rigaToExam(
@@ -58,22 +58,22 @@ export function mergeToExams(righe: RigaPiano[], libretto: RigaLibretto[]): Exam
         riga.annoCorso,
         riga.tipoInsCod,
         superata,
-        librettoRiga,
+        transcriptRow,
       ),
     );
   }
 
-  for (const riga of libretto) {
-    if (!pianoAdCods.has(riga.adCod)) {
+  for (const row of libretto) {
+    if (!pianoAdCods.has(row.adCod)) {
       result.push(
         rigaToExam(
-          riga.adCod,
-          riga.adDes,
-          riga.peso ?? 0,
-          riga.annoCorso,
-          riga.tipoInsCod ?? '',
-          riga.superata ?? false,
-          riga,
+          row.adCod,
+          row.adDes,
+          row.peso ?? 0,
+          row.annoCorso,
+          row.tipoInsCod ?? '',
+          row.superata ?? false,
+          row,
         ),
       );
     }

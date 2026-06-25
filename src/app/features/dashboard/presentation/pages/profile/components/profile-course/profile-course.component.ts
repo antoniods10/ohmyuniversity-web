@@ -11,7 +11,7 @@ import {
 } from '@lucide/angular';
 import { CustomCardComponent } from '@ui/custom-card/custom-card.component';
 import { CustomBadgeComponent } from '@ui/custom-badge/custom-badge.component';
-import { CarrieraInfoResponse } from 'src/app/core/domain/models/career/carriera-info.model';
+import { CareerInfoResponse } from 'src/app/core/domain/models/career/career-info.model';
 
 @Component({
   selector: 'app-profile-course',
@@ -20,7 +20,7 @@ import { CarrieraInfoResponse } from 'src/app/core/domain/models/career/carriera
   templateUrl: './profile-course.component.html',
 })
 export class ProfileCourseComponent {
-  readonly info = input.required<CarrieraInfoResponse>();
+  readonly info = input.required<CareerInfoResponse>();
 
   readonly iconGraduationCap = LucideGraduationCap;
   readonly iconBuilding = LucideBuilding;
